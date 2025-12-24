@@ -1,0 +1,774 @@
+{% comment %}
+  Customizer Widget - T-Shirt Mode
+  Usage: {% render 'customizer-widget-tshirt', product: product %}
+
+  Customizer App ile entegre 3D T-shirt özelleştirici
+{% endcomment %}
+
+{% assign app_url = 'http://5.78.136.98' %}
+{% assign colors = product.metafields.custom.customizer_colors | default: '#ffffff,#000000,#3b82f6,#ef4444,#22c55e' | split: ',' %}
+
+<div
+  id="customizer-tshirt-{{ product.id }}"
+  class="customizer-widget-container"
+  data-product-id="{{ product.id }}"
+  data-product-handle="{{ product.handle }}"
+  data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+  data-price="{{ product.price | money_without_currency }}"
+  data-app-url="{{ app_url }}"
+>
+  <div class="cw-grid">
+    <!-- Sol: 3D Görüntüleyici -->
+    <div class="cw-viewer-section">
+      <div class="cw-canvas-container">
+        <canvas id="cw-canvas-{{ product.id }}" class="cw-canvas"></canvas>
+
+        <!-- Kontroller -->
+        <div class="cw-viewer-controls">
+          <button type="button" class="cw-ctrl-btn" data-action="rotate-left" title="Sola Döndür">
+            <i class="ti ti-rotate-clockwise-2"></i>
+          </button>
+          <button type="button" class="cw-ctrl-btn" data-action="reset" title="Sıfırla">
+            <i class="ti ti-refresh"></i>
+          </button>
+          <button type="button" class="cw-ctrl-btn" data-action="rotate-right" title="Sağa Döndür">
+            <i class="ti ti-rotate-2"></i>
+          </button>
+        </div>
+
+        <!-- Loading -->
+        <div class="cw-loading" id="cw-loading-{{ product.id }}">
+          <div class="cw-spinner"></div>
+          <span>3D Model Yükleniyor...</span>
+        </div>
+      </div>
+
+      <!-- Renk Seçimi -->
+      <div class="cw-color-picker">
+        <p class="cw-label">T-Shirt Rengi:</p>
+        <div class="cw-colors">
+          {% for color in colors %}
+            <button
+              type="button"
+              class="cw-color-btn {% if forloop.first %}active{% endif %}"
+              data-color="{{ color | strip }}"
+              style="background-color: {{ color | strip }};"
+              title="{{ color | strip }}"
+            ></button>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Sağ: Seçenekler -->
+    <div class="cw-options-section">
+      <!-- T-Shirt Toggle -->
+      <div class="cw-option-group">
+        <label class="cw-toggle">
+          <input type="checkbox" id="cw-tshirt-toggle-{{ product.id }}" checked>
+          <span class="cw-toggle-switch"></span>
+          <span class="cw-toggle-text">T-Shirt Baskı Olsun mu?</span>
+        </label>
+      </div>
+
+      <!-- Upload -->
+      <div class="cw-option-group">
+        <p class="cw-label">Tasarımınızı Yükleyin:</p>
+        <div class="cw-upload-area" id="cw-upload-{{ product.id }}">
+          <input type="file" id="cw-file-{{ product.id }}" accept="image/*" class="cw-file-input">
+          <div class="cw-upload-content">
+            <i class="ti ti-cloud-upload" style="font-size: 2rem; color: #9ca3af;"></i>
+            <p>Sürükleyin veya <span style="color: #7367f0; font-weight: 600;">seçin</span></p>
+            <small>PNG, JPG, SVG - Max 10MB</small>
+          </div>
+        </div>
+        <div class="cw-uploaded-preview" id="cw-preview-{{ product.id }}" style="display: none;">
+          <img id="cw-preview-img-{{ product.id }}" src="" alt="Uploaded design">
+          <button type="button" class="cw-remove-btn" data-action="remove-design">×</button>
+        </div>
+      </div>
+
+      <!-- Baskı Bölgeleri -->
+      <div class="cw-option-group">
+        <p class="cw-label">Baskı Bölgesi:</p>
+        <div class="cw-print-areas">
+          <button type="button" class="cw-area-btn active" data-area="front">
+            <i class="ti ti-shirt"></i>
+            <span>Ön</span>
+          </button>
+          <button type="button" class="cw-area-btn" data-area="back">
+            <i class="ti ti-shirt"></i>
+            <span>Arka</span>
+          </button>
+          <button type="button" class="cw-area-btn" data-area="left-sleeve">
+            <i class="ti ti-sleeve"></i>
+            <span>Sol Kol</span>
+          </button>
+          <button type="button" class="cw-area-btn" data-area="right-sleeve">
+            <i class="ti ti-sleeve"></i>
+            <span>Sağ Kol</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Koordinat Ayarları -->
+      <div class="cw-option-group cw-position-controls" id="cw-position-{{ product.id }}" style="display: none;">
+        <p class="cw-label">Konum Ayarları:</p>
+        <div class="cw-slider-row">
+          <label>Boyut:</label>
+          <input type="range" id="cw-size-{{ product.id }}" min="10" max="100" value="50">
+          <span id="cw-size-val-{{ product.id }}">50%</span>
+        </div>
+        <div class="cw-slider-row">
+          <label>Yatay:</label>
+          <input type="range" id="cw-posx-{{ product.id }}" min="-50" max="50" value="0">
+        </div>
+        <div class="cw-slider-row">
+          <label>Dikey:</label>
+          <input type="range" id="cw-posy-{{ product.id }}" min="-50" max="50" value="0">
+        </div>
+      </div>
+
+      <!-- Sepete Ekle -->
+      <div class="cw-actions">
+        <button type="button" id="cw-add-cart-{{ product.id }}" class="cw-add-to-cart-btn">
+          <i class="ti ti-shopping-cart"></i>
+          <span>Sepete Ekle</span>
+          <span class="cw-btn-price">{{ product.price | money }}</span>
+        </button>
+
+        <button type="button" id="cw-save-{{ product.id }}" class="cw-save-btn">
+          <i class="ti ti-device-floppy"></i>
+          <span>Tasarımı Kaydet</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .customizer-widget-container {
+    --cw-primary: #7367f0;
+    --cw-primary-hover: #5e50ee;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  .cw-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 24px;
+  }
+
+  @media (max-width: 900px) {
+    .cw-grid { grid-template-columns: 1fr; }
+  }
+
+  .cw-viewer-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 16px;
+    padding: 16px;
+  }
+
+  .cw-canvas-container {
+    position: relative;
+    aspect-ratio: 1;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  }
+
+  .cw-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .cw-viewer-controls {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    background: rgba(255,255,255,0.95);
+    padding: 8px 16px;
+    border-radius: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+
+  .cw-ctrl-btn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-size: 18px;
+    transition: all 0.2s;
+  }
+
+  .cw-ctrl-btn:hover {
+    background: #f0f0f0;
+    color: var(--cw-primary);
+  }
+
+  .cw-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.9);
+    color: #666;
+  }
+
+  .cw-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #e5e7eb;
+    border-top-color: var(--cw-primary);
+    border-radius: 50%;
+    animation: cw-spin 1s linear infinite;
+    margin-bottom: 10px;
+  }
+
+  @keyframes cw-spin { to { transform: rotate(360deg); } }
+
+  .cw-color-picker { margin-top: 16px; }
+
+  .cw-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 10px;
+  }
+
+  .cw-colors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .cw-color-btn {
+    width: 36px;
+    height: 36px;
+    border: 3px solid transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .cw-color-btn:hover { transform: scale(1.1); }
+  .cw-color-btn.active { border-color: var(--cw-primary); transform: scale(1.1); }
+
+  .cw-options-section {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  .cw-option-group { margin-bottom: 20px; }
+
+  .cw-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+  }
+
+  .cw-toggle input { display: none; }
+
+  .cw-toggle-switch {
+    width: 48px;
+    height: 26px;
+    background: #e5e7eb;
+    border-radius: 13px;
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .cw-toggle-switch::after {
+    content: '';
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    background: white;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+
+  .cw-toggle input:checked + .cw-toggle-switch { background: var(--cw-primary); }
+  .cw-toggle input:checked + .cw-toggle-switch::after { transform: translateX(22px); }
+  .cw-toggle-text { font-weight: 500; }
+
+  .cw-upload-area {
+    border: 2px dashed #d1d5db;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s;
+  }
+
+  .cw-upload-area:hover {
+    border-color: var(--cw-primary);
+    background: #f8f7ff;
+  }
+
+  .cw-file-input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .cw-upload-content { pointer-events: none; color: #6b7280; }
+
+  .cw-uploaded-preview {
+    position: relative;
+    display: inline-block;
+    margin-top: 10px;
+  }
+
+  .cw-uploaded-preview img {
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+
+  .cw-remove-btn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 24px;
+    height: 24px;
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  .cw-print-areas {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  .cw-area-btn {
+    padding: 12px 8px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: #666;
+  }
+
+  .cw-area-btn:hover { border-color: var(--cw-primary); }
+  .cw-area-btn.active { border-color: var(--cw-primary); background: #f8f7ff; color: var(--cw-primary); }
+  .cw-area-btn i { font-size: 20px; }
+
+  .cw-position-controls {
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 12px;
+  }
+
+  .cw-slider-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .cw-slider-row label {
+    width: 60px;
+    font-size: 13px;
+    color: #666;
+  }
+
+  .cw-slider-row input[type="range"] {
+    flex: 1;
+    height: 6px;
+    -webkit-appearance: none;
+    background: #e5e7eb;
+    border-radius: 3px;
+  }
+
+  .cw-slider-row input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    background: var(--cw-primary);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .cw-actions { margin-top: 24px; }
+
+  .cw-add-to-cart-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--cw-primary) 0%, #9c27b0 100%);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(115, 103, 240, 0.4);
+  }
+
+  .cw-add-to-cart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(115, 103, 240, 0.5);
+  }
+
+  .cw-btn-price {
+    background: rgba(255,255,255,0.2);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+
+  .cw-save-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 14px;
+    background: transparent;
+    color: var(--cw-primary);
+    border: 2px solid var(--cw-primary);
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s;
+  }
+
+  .cw-save-btn:hover {
+    background: var(--cw-primary);
+    color: white;
+  }
+</style>
+
+<script>
+(function() {
+  const productId = '{{ product.id }}';
+  const variantId = '{{ product.selected_or_first_available_variant.id }}';
+  const appUrl = '{{ app_url }}';
+
+  let scene, camera, renderer, controls, tshirt;
+  let currentColor = '{{ colors.first | strip | default: "#ffffff" }}';
+  let uploadedDesign = null;
+  let activePrintArea = 'front';
+
+  // Initialize when DOM ready
+  document.addEventListener('DOMContentLoaded', function() {
+    initWidget();
+    setupEvents();
+  });
+
+  function initWidget() {
+    const canvas = document.getElementById('cw-canvas-' + productId);
+    if (!canvas || typeof THREE === 'undefined') {
+      console.log('[CustomizerWidget] Canvas or Three.js not found');
+      return;
+    }
+
+    const wrapper = canvas.parentElement;
+
+    // Scene
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xffffff);
+
+    // Camera
+    camera = new THREE.PerspectiveCamera(35, wrapper.clientWidth / wrapper.clientHeight, 0.1, 1000);
+    camera.position.set(0, 0, 2.5);
+
+    // Renderer
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    renderer.setSize(wrapper.clientWidth, wrapper.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    directionalLight.position.set(2, 3, 4);
+    scene.add(directionalLight);
+
+    // T-shirt (placeholder)
+    const geometry = new THREE.CylinderGeometry(0.5, 0.45, 0.9, 32);
+    const material = new THREE.MeshStandardMaterial({ color: currentColor, roughness: 0.9 });
+    tshirt = new THREE.Mesh(geometry, material);
+    scene.add(tshirt);
+
+    // Load GLB model if available
+    if (typeof THREE.GLTFLoader !== 'undefined' && window.GLB_MODEL_URL) {
+      const loader = new THREE.GLTFLoader();
+      loader.load(window.GLB_MODEL_URL, function(gltf) {
+        scene.remove(tshirt);
+        tshirt = gltf.scene;
+        tshirt.traverse(function(child) {
+          if (child.isMesh) {
+            child.material = material;
+          }
+        });
+        scene.add(tshirt);
+        hideLoading();
+      }, undefined, function(error) {
+        console.error('[CustomizerWidget] GLB load error:', error);
+        hideLoading();
+      });
+    } else {
+      hideLoading();
+    }
+
+    // Controls
+    if (typeof THREE.OrbitControls !== 'undefined') {
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.enablePan = false;
+      controls.autoRotate = true;
+      controls.autoRotateSpeed = 1;
+    }
+
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+      if (controls) controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // Resize
+    window.addEventListener('resize', function() {
+      camera.aspect = wrapper.clientWidth / wrapper.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(wrapper.clientWidth, wrapper.clientHeight);
+    });
+  }
+
+  function hideLoading() {
+    const loading = document.getElementById('cw-loading-' + productId);
+    if (loading) loading.style.display = 'none';
+  }
+
+  function setupEvents() {
+    // Color buttons
+    document.querySelectorAll('#customizer-tshirt-' + productId + ' .cw-color-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('#customizer-tshirt-' + productId + ' .cw-color-btn').forEach(function(b) {
+          b.classList.remove('active');
+        });
+        this.classList.add('active');
+        currentColor = this.dataset.color;
+        if (tshirt) {
+          tshirt.traverse(function(child) {
+            if (child.isMesh) child.material.color.set(currentColor);
+          });
+        }
+      });
+    });
+
+    // Control buttons
+    document.querySelectorAll('#customizer-tshirt-' + productId + ' .cw-ctrl-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        const action = this.dataset.action;
+        if (action === 'rotate-left' && tshirt) tshirt.rotation.y -= 0.5;
+        if (action === 'rotate-right' && tshirt) tshirt.rotation.y += 0.5;
+        if (action === 'reset') {
+          if (tshirt) tshirt.rotation.y = 0;
+          if (controls) controls.reset();
+        }
+      });
+    });
+
+    // File upload
+    const fileInput = document.getElementById('cw-file-' + productId);
+    if (fileInput) {
+      fileInput.addEventListener('change', function(e) {
+        if (e.target.files[0]) handleFileUpload(e.target.files[0]);
+      });
+    }
+
+    // Remove design
+    document.querySelector('#customizer-tshirt-' + productId + ' .cw-remove-btn')?.addEventListener('click', function() {
+      uploadedDesign = null;
+      document.getElementById('cw-upload-' + productId).style.display = 'block';
+      document.getElementById('cw-preview-' + productId).style.display = 'none';
+      document.getElementById('cw-position-' + productId).style.display = 'none';
+    });
+
+    // Print area buttons
+    document.querySelectorAll('#customizer-tshirt-' + productId + ' .cw-area-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('#customizer-tshirt-' + productId + ' .cw-area-btn').forEach(function(b) {
+          b.classList.remove('active');
+        });
+        this.classList.add('active');
+        activePrintArea = this.dataset.area;
+      });
+    });
+
+    // Size slider
+    const sizeSlider = document.getElementById('cw-size-' + productId);
+    if (sizeSlider) {
+      sizeSlider.addEventListener('input', function() {
+        document.getElementById('cw-size-val-' + productId).textContent = this.value + '%';
+      });
+    }
+
+    // Add to cart
+    document.getElementById('cw-add-cart-' + productId)?.addEventListener('click', addToCart);
+
+    // Save design
+    document.getElementById('cw-save-' + productId)?.addEventListener('click', saveDesign);
+  }
+
+  function handleFileUpload(file) {
+    if (!file.type.startsWith('image/')) {
+      alert('Lütfen bir görsel dosyası seçin');
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      alert('Dosya 10MB\'dan küçük olmalı');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      uploadedDesign = e.target.result;
+      document.getElementById('cw-preview-img-' + productId).src = uploadedDesign;
+      document.getElementById('cw-upload-' + productId).style.display = 'none';
+      document.getElementById('cw-preview-' + productId).style.display = 'block';
+      document.getElementById('cw-position-' + productId).style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async function addToCart() {
+    const btn = document.getElementById('cw-add-cart-' + productId);
+    const originalHtml = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="ti ti-loader"></i> Ekleniyor...';
+
+    try {
+      const designData = {
+        color: currentColor,
+        printArea: activePrintArea,
+        hasDesign: !!uploadedDesign,
+        size: document.getElementById('cw-size-' + productId)?.value || 50,
+        posX: document.getElementById('cw-posx-' + productId)?.value || 0,
+        posY: document.getElementById('cw-posy-' + productId)?.value || 0
+      };
+
+      const response = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: [{
+            id: variantId,
+            quantity: 1,
+            properties: {
+              '_customizer_design': JSON.stringify(designData),
+              '_customizer_color': currentColor,
+              '_customizer_area': activePrintArea,
+              '_customizer_has_design': uploadedDesign ? 'Yes' : 'No'
+            }
+          }]
+        })
+      });
+
+      if (response.ok) {
+        btn.innerHTML = '<i class="ti ti-check"></i> Eklendi!';
+        btn.style.background = '#22c55e';
+        setTimeout(function() {
+          btn.innerHTML = originalHtml;
+          btn.style.background = '';
+          btn.disabled = false;
+        }, 2000);
+      } else {
+        throw new Error('Cart error');
+      }
+    } catch (error) {
+      console.error('Add to cart error:', error);
+      btn.innerHTML = 'Hata!';
+      btn.style.background = '#ef4444';
+      setTimeout(function() {
+        btn.innerHTML = originalHtml;
+        btn.style.background = '';
+        btn.disabled = false;
+      }, 2000);
+    }
+  }
+
+  async function saveDesign() {
+    const btn = document.getElementById('cw-save-' + productId);
+    btn.disabled = true;
+    btn.innerHTML = '<i class="ti ti-loader"></i> Kaydediliyor...';
+
+    try {
+      const response = await fetch(appUrl + '/api/designs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          productId: productId,
+          modType: 'MOD1_TSHIRT',
+          designData: {
+            color: currentColor,
+            printArea: activePrintArea,
+            hasDesign: !!uploadedDesign
+          }
+        })
+      });
+
+      if (response.ok) {
+        btn.innerHTML = '<i class="ti ti-check"></i> Kaydedildi!';
+        setTimeout(function() {
+          btn.innerHTML = '<i class="ti ti-device-floppy"></i> Tasarımı Kaydet';
+          btn.disabled = false;
+        }, 2000);
+      }
+    } catch (error) {
+      console.error('Save error:', error);
+      btn.innerHTML = '<i class="ti ti-device-floppy"></i> Tasarımı Kaydet';
+      btn.disabled = false;
+    }
+  }
+})();
+</script>
+

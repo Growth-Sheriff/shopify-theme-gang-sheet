@@ -1,0 +1,583 @@
+{
+  "sections": {
+    "hero": {
+      "type": "homepage-hero",
+      "settings": {
+        "title_line1": "Premium DTF Transfers",
+        "title_line2": "& Custom Gang Sheets",
+        "subtitle": "High-quality DTF printing with vibrant colors, soft feel, and exceptional durability. See your design in real-time 3D before you order.",
+        "button1_text": "Design Your Transfer",
+        "button1_icon": "fa-solid fa-wand-magic-sparkles",
+        "button1_link": "/collections/dtf-transfers",
+        "button2_text": "Gang Sheet Builder",
+        "button2_link": "/pages/gang-sheet-builder",
+        "preview_label": "3D Preview",
+        "download_btn_text": "Download Preview",
+        "rotate_left_text": "Rotate Left",
+        "reset_view_text": "Reset View",
+        "rotate_right_text": "Rotate Right",
+        "upload_btn_text": "Upload Design"
+      },
+      "blocks": {
+        "stat-1": {
+          "type": "stat",
+          "settings": {
+            "value": "50K+",
+            "label": "Orders Shipped"
+          }
+        },
+        "stat-2": {
+          "type": "stat",
+          "settings": {
+            "value": "10K+",
+            "label": "Happy Customers"
+          }
+        },
+        "stat-3": {
+          "type": "stat",
+          "settings": {
+            "value": "24hr",
+            "label": "Fast Turnaround"
+          }
+        },
+        "stat-4": {
+          "type": "stat",
+          "settings": {
+            "value": "99%",
+            "label": "5 Star Reviews"
+          }
+        },
+        "color-1": {
+          "type": "color",
+          "settings": {
+            "color": "#7dd3fc",
+            "name": "Light Blue"
+          }
+        },
+        "color-2": {
+          "type": "color",
+          "settings": {
+            "color": "#3b82f6",
+            "name": "Blue"
+          }
+        },
+        "color-3": {
+          "type": "color",
+          "settings": {
+            "color": "#ffffff",
+            "name": "White"
+          }
+        },
+        "color-4": {
+          "type": "color",
+          "settings": {
+            "color": "#1a1a1a",
+            "name": "Black"
+          }
+        },
+        "color-5": {
+          "type": "color",
+          "settings": {
+            "color": "#ef4444",
+            "name": "Red"
+          }
+        },
+        "color-6": {
+          "type": "color",
+          "settings": {
+            "color": "#22c55e",
+            "name": "Green"
+          }
+        },
+        "color-7": {
+          "type": "color",
+          "settings": {
+            "color": "#f59e0b",
+            "name": "Orange"
+          }
+        },
+        "color-8": {
+          "type": "color",
+          "settings": {
+            "color": "#ec4899",
+            "name": "Pink"
+          }
+        }
+      },
+      "block_order": [
+        "stat-1",
+        "stat-2",
+        "stat-3",
+        "stat-4",
+        "color-1",
+        "color-2",
+        "color-3",
+        "color-4",
+        "color-5",
+        "color-6",
+        "color-7",
+        "color-8"
+      ]
+    },
+    "categories": {
+      "type": "homepage-categories",
+      "settings": {
+        "star_rating": 5,
+        "review_count": "18,624 reviews",
+        "video_count": "985+",
+        "recommend_percent": 99,
+        "recommend_text": "Recommended"
+      },
+      "blocks": {
+        "cat-1": {
+          "type": "category",
+          "settings": {
+            "title": "DTF Transfers",
+            "icon": "fa-solid fa-shirt",
+            "link": "/collections/dtf-transfers",
+            "active": true
+          }
+        },
+        "cat-2": {
+          "type": "category",
+          "settings": {
+            "title": "Gang Sheets",
+            "icon": "fa-solid fa-layer-group",
+            "link": "/collections/gang-sheets"
+          }
+        },
+        "cat-3": {
+          "type": "category",
+          "settings": {
+            "title": "UV DTF",
+            "icon": "fa-solid fa-sun",
+            "link": "/collections/uv-dtf"
+          }
+        },
+        "cat-4": {
+          "type": "category",
+          "settings": {
+            "title": "Screen Print",
+            "icon": "fa-solid fa-print",
+            "link": "/collections/screen-print"
+          }
+        },
+        "cat-5": {
+          "type": "category",
+          "settings": {
+            "title": "Rhinestone",
+            "icon": "fa-solid fa-gem",
+            "link": "/collections/rhinestone"
+          }
+        },
+        "cat-6": {
+          "type": "category",
+          "settings": {
+            "title": "Blank Apparel",
+            "icon": "fa-solid fa-tags",
+            "link": "/collections/blank-apparel"
+          }
+        },
+        "cat-7": {
+          "type": "category",
+          "settings": {
+            "title": "Heat Press",
+            "icon": "fa-solid fa-temperature-high",
+            "link": "/collections/heat-press"
+          }
+        },
+        "avatar-1": {
+          "type": "review_avatar",
+          "settings": {
+            "image_url": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop",
+            "name": "Sarah"
+          }
+        },
+        "avatar-2": {
+          "type": "review_avatar",
+          "settings": {
+            "image_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop",
+            "name": "Mike"
+          }
+        },
+        "avatar-3": {
+          "type": "review_avatar",
+          "settings": {
+            "image_url": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop",
+            "name": "Emily"
+          }
+        },
+        "avatar-4": {
+          "type": "review_avatar",
+          "settings": {
+            "image_url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop",
+            "name": "John"
+          }
+        },
+        "avatar-5": {
+          "type": "review_avatar",
+          "settings": {
+            "image_url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop",
+            "name": "Lisa"
+          }
+        }
+      },
+      "block_order": ["cat-1", "cat-2", "cat-3", "cat-4", "cat-5", "cat-6", "cat-7", "avatar-1", "avatar-2", "avatar-3", "avatar-4", "avatar-5"]
+    },
+    "product-bar": {
+      "type": "homepage-product-bar",
+      "settings": {
+        "section_bg": "#ffffff",
+        "show_header": false,
+        "view_product_text": "VIEW PRODUCT",
+        "add_to_cart_text": "Add to Cart",
+        "sold_out_text": "Sold Out",
+        "show_upload_area": true,
+        "upload_text": "My Device",
+        "show_pickup_alert": true,
+        "pickup_badge": "LOCAL PICKUP",
+        "pickup_location": "Dallas, TX",
+        "pickup_time": "Ready in 24 hours",
+        "pickup_btn_text": "Check Availability",
+        "show_floating_cart": true
+      },
+      "blocks": {
+        "product-1": {
+          "type": "product_card",
+          "settings": {
+            "show_3d_viewer": true,
+            "show_4d_badge": true,
+            "badge_discount_text": "20% OFF",
+            "title": "Premium DTF Transfer | Custom Design",
+            "price": "$4.99",
+            "compare_price": "$9.99",
+            "rating": 5,
+            "review_count": 128
+          }
+        },
+        "product-2": {
+          "type": "product_card",
+          "settings": {
+            "show_3d_viewer": false,
+            "show_4d_badge": true,
+            "badge_discount_text": "15% OFF",
+            "title": "Gang Sheet DTF | 22x60 Bulk Print",
+            "price": "$24.99",
+            "compare_price": "$34.99",
+            "rating": 5,
+            "half_star": true,
+            "review_count": 89
+          }
+        },
+        "product-3": {
+          "type": "product_card",
+          "settings": {
+            "show_3d_viewer": false,
+            "show_4d_badge": true,
+            "badge_discount_text": "50% OFF",
+            "title": "UV DTF Sticker | Premium Quality",
+            "price": "$2.99",
+            "compare_price": "$5.99",
+            "rating": 5,
+            "review_count": 67
+          }
+        },
+        "product-4": {
+          "type": "product_card",
+          "settings": {
+            "show_3d_viewer": false,
+            "show_4d_badge": true,
+            "badge_discount_text": "30% OFF",
+            "title": "Rhinestone Transfer | Bling Design",
+            "price": "$8.99",
+            "compare_price": "$12.99",
+            "rating": 4,
+            "review_count": 34
+          }
+        },
+        "product-5": {
+          "type": "product_card",
+          "settings": {
+            "show_3d_viewer": false,
+            "show_4d_badge": true,
+            "badge_discount_text": "50% OFF",
+            "title": "Screen Print Transfer | Classic Quality",
+            "price": "$3.49",
+            "compare_price": "$6.99",
+            "rating": 5,
+            "half_star": true,
+            "review_count": 56
+          }
+        }
+      },
+      "block_order": ["product-1", "product-2", "product-3", "product-4", "product-5"]
+    },
+    "featured-product": {
+      "type": "homepage-featured",
+      "settings": {
+        "title": "Featured DTF Transfer",
+        "subtitle": "Our most popular custom printing solution",
+        "show_urgency": true,
+        "urgency_text": "Only 12 left in stock!",
+        "bestseller_badge": "BESTSELLER"
+      }
+    },
+    "product-grid": {
+      "type": "homepage-grid",
+      "settings": {
+        "badge_text": "Our Products",
+        "title": "Premium Transfer Products",
+        "subtitle": "High-quality DTF, UV DTF, Screen Print and Rhinestone transfers for your custom printing needs."
+      }
+    },
+    "collection-cards": {
+      "type": "homepage-collections",
+      "settings": {
+        "badge_text": "Collections",
+        "title": "Shop by Category",
+        "subtitle": "Find the perfect transfer type for your project"
+      }
+    },
+    "features": {
+      "type": "homepage-features",
+      "settings": {
+        "badge": "Why Choose Us",
+        "title": "The Best DTF Transfer Experience",
+        "subtitle": "From gang sheet printing to custom designs, we deliver premium quality every time."
+      },
+      "blocks": {
+        "feature-1": {
+          "type": "feature",
+          "settings": {
+            "icon": "fa-solid fa-print",
+            "title": "Premium DTF Quality",
+            "description": "Vibrant colors, soft hand feel, and exceptional durability. Our transfers last 50+ washes."
+          }
+        },
+        "feature-2": {
+          "type": "feature",
+          "settings": {
+            "icon": "fa-solid fa-truck-fast",
+            "title": "Fast Turnaround",
+            "description": "Same-day processing on orders before 2PM. Get your transfers in 2-3 business days."
+          }
+        },
+        "feature-3": {
+          "type": "feature",
+          "settings": {
+            "icon": "fa-solid fa-layer-group",
+            "title": "Gang Sheet Savings",
+            "description": "Maximize your print area with gang sheets. Save up to 40% on bulk orders."
+          }
+        },
+        "feature-4": {
+          "type": "feature",
+          "settings": {
+            "icon": "fa-solid fa-palette",
+            "title": "Unlimited Colors",
+            "description": "Full color CMYK printing. Photos, gradients, and complex designs - no color limits."
+          }
+        },
+        "feature-5": {
+          "type": "feature",
+          "settings": {
+            "icon": "fa-solid fa-headset",
+            "title": "Expert Support",
+            "description": "Design help, heat press guidance, and order support from DTF printing experts."
+          }
+        },
+        "feature-6": {
+          "type": "feature",
+          "settings": {
+            "icon": "fa-solid fa-shield-check",
+            "title": "Quality Guarantee",
+            "description": "Not satisfied? We reprint or refund. 100% satisfaction guaranteed on every order."
+          }
+        }
+      },
+      "block_order": ["feature-1", "feature-2", "feature-3", "feature-4", "feature-5", "feature-6"]
+    },
+    "testimonials": {
+      "type": "homepage-testimonials",
+      "settings": {
+        "badge": "Customer Reviews",
+        "title": "What Our Customers Say",
+        "subtitle": "Join thousands of happy customers who trust us for their DTF transfer needs."
+      },
+      "blocks": {
+        "review-1": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "text": "Best DTF transfers I've ever used! The colors are vibrant and they apply so easily. My customers love the soft feel.",
+            "name": "Sarah M.",
+            "role": "T-Shirt Business Owner",
+            "avatar_url": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop"
+          }
+        },
+        "review-2": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "text": "Gang sheets saved me so much money! I can fit 20+ designs on one sheet. Fast shipping too - always arrives in 2 days.",
+            "name": "Mike T.",
+            "role": "Custom Apparel Shop",
+            "avatar_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop"
+          }
+        },
+        "review-3": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "text": "Finally found a reliable DTF supplier! Quality is consistent, prices are fair, and support is amazing. Highly recommend!",
+            "name": "Emily R.",
+            "role": "Etsy Seller",
+            "avatar_url": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop"
+          }
+        }
+      },
+      "block_order": ["review-1", "review-2", "review-3"]
+    },
+    "cta": {
+      "type": "homepage-cta",
+      "settings": {
+        "title": "Ready to Start Your DTF Order?",
+        "description": "Join 10,000+ businesses who trust CloudyPrints for premium DTF transfers. No minimum orders, fast turnaround, exceptional quality.",
+        "button_text": "Start Designing Now",
+        "button_icon": "fa-solid fa-arrow-right"
+      }
+    },
+    "carousel-3d": {
+      "type": "homepage-3d-carousel",
+      "settings": {
+        "header_text": "BLACK FRIDAY",
+        "subtitle": "Exclusive deals on premium DTF transfers"
+      },
+      "blocks": {
+        "product-1": {
+          "type": "product",
+          "settings": {
+            "enable_4d": true,
+            "badge_text": "4D",
+            "rating": 5,
+            "review_count": 89
+          }
+        },
+        "product-2": {
+          "type": "product",
+          "settings": {
+            "enable_4d": true,
+            "badge_text": "4D",
+            "rating": 5,
+            "review_count": 67
+          }
+        },
+        "product-3": {
+          "type": "product",
+          "settings": {
+            "enable_4d": true,
+            "badge_text": "4D",
+            "rating": 4,
+            "review_count": 45
+          }
+        },
+        "product-4": {
+          "type": "product",
+          "settings": {
+            "enable_4d": true,
+            "badge_text": "4D",
+            "rating": 5,
+            "review_count": 78
+          }
+        },
+        "product-5": {
+          "type": "product",
+          "settings": {
+            "enable_4d": true,
+            "badge_text": "4D",
+            "rating": 5,
+            "review_count": 56
+          }
+        },
+        "product-6": {
+          "type": "product",
+          "settings": {
+            "enable_4d": true,
+            "badge_text": "4D",
+            "rating": 4,
+            "review_count": 34
+          }
+        }
+      },
+      "block_order": ["product-1", "product-2", "product-3", "product-4", "product-5", "product-6"]
+    },
+    "product-showcase": {
+      "type": "homepage-product-showcase",
+      "settings": {
+        "header_text": "SPECIAL OFFERS",
+        "subtitle": "Handpicked products just for you"
+      },
+      "blocks": {
+        "left-1": {
+          "type": "left_product",
+          "settings": {
+            "enable_4d": true,
+            "badge_text": "4D",
+            "rating": 5,
+            "review_count": 42
+          }
+        },
+        "left-2": {
+          "type": "left_product",
+          "settings": {
+            "enable_4d": true,
+            "badge_text": "4D",
+            "rating": 5,
+            "review_count": 38
+          }
+        },
+        "left-3": {
+          "type": "left_product",
+          "settings": {
+            "enable_4d": true,
+            "badge_text": "4D",
+            "rating": 4,
+            "review_count": 27
+          }
+        },
+        "left-4": {
+          "type": "left_product",
+          "settings": {
+            "enable_4d": true,
+            "badge_text": "4D",
+            "rating": 5,
+            "review_count": 55
+          }
+        },
+        "main-1": {
+          "type": "main_product",
+          "settings": {
+            "enable_4d": true,
+            "badge_text": "4D PREMIUM",
+            "rating": 5,
+            "review_count": 128
+          }
+        }
+      },
+      "block_order": ["left-1", "left-2", "left-3", "left-4", "main-1"]
+    }
+  },
+  "order": [
+    "hero",
+    "categories",
+    "carousel-3d",
+    "product-showcase",
+    "product-bar",
+    "featured-product",
+    "product-grid",
+    "collection-cards",
+    "features",
+    "testimonials",
+    "cta"
+  ]
+}

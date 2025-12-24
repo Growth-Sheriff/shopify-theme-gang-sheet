@@ -1,0 +1,150 @@
+{% comment %}
+  CTA Section - Fully Dynamic
+  All elements customizable via Theme Editor
+{% endcomment %}
+
+<section class="cp-cta" style="background: {{ section.settings.background | default: 'linear-gradient(135deg, #7367F0 0%, #9e95f5 100%)' }}; padding: {{ section.settings.section_padding | default: '4rem 0' }};">
+  <div class="container" style="text-align: center;">
+    <h2 style="color: {{ section.settings.title_color | default: '#ffffff' }}; font-size: {{ section.settings.title_size | default: '2rem' }}; margin-bottom: 1rem;">{{ section.settings.title }}</h2>
+    <p style="color: {{ section.settings.desc_color | default: 'rgba(255,255,255,0.9)' }}; max-width: 600px; margin: 0 auto 2rem; font-size: {{ section.settings.desc_size | default: '1rem' }};">{{ section.settings.description }}</p>
+    {% if section.settings.button_text != blank %}
+      <a href="{{ section.settings.button_link }}" class="cp-btn" style="
+        background: {{ section.settings.button_bg | default: '#ffffff' }};
+        color: {{ section.settings.button_color | default: '#7367F0' }};
+        padding: {{ section.settings.button_padding | default: '0.875rem 2rem' }};
+        border-radius: {{ section.settings.button_radius | default: '8px' }};
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        transition: all 0.2s ease;
+      ">
+        {% if section.settings.button_icon != blank %}
+          <i class="{{ section.settings.button_icon }}"></i>
+        {% endif %}
+        {{ section.settings.button_text }}
+      </a>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CTA Section",
+  "tag": "section",
+  "class": "homepage-cta",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Background"
+    },
+    {
+      "type": "color_background",
+      "id": "background",
+      "label": "Background",
+      "default": "linear-gradient(135deg, #7367F0 0%, #9e95f5 100%)"
+    },
+    {
+      "type": "text",
+      "id": "section_padding",
+      "label": "Padding",
+      "default": "4rem 0"
+    },
+    {
+      "type": "header",
+      "content": "Title"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Ready to Start Your Order?"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "title_size",
+      "label": "Title Size",
+      "default": "2rem"
+    },
+    {
+      "type": "header",
+      "content": "Description"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Join thousands of businesses who trust CloudyPrints for their custom printing needs. No minimum orders, fast turnaround, and exceptional quality."
+    },
+    {
+      "type": "color",
+      "id": "desc_color",
+      "label": "Description Color",
+      "default": "#ffffffE6"
+    },
+    {
+      "type": "text",
+      "id": "desc_size",
+      "label": "Description Size",
+      "default": "1rem"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Get Started Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "text",
+      "id": "button_icon",
+      "label": "Button Icon Class",
+      "default": "fa-solid fa-rocket"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button Text Color",
+      "default": "#7367F0"
+    },
+    {
+      "type": "text",
+      "id": "button_padding",
+      "label": "Button Padding",
+      "default": "0.875rem 2rem"
+    },
+    {
+      "type": "text",
+      "id": "button_radius",
+      "label": "Button Border Radius",
+      "default": "8px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "CTA Section"
+    }
+  ]
+}
+{% endschema %}

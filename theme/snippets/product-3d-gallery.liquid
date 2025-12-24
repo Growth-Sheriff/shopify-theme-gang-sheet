@@ -1,0 +1,78 @@
+{% comment %}
+  3D Product Gallery Snippet
+  Usage: {% render 'product-3d-gallery', product: product %}
+  
+  3D T-shirt viewer with controls
+{% endcomment %}
+
+<div class="product-gallery">
+  <div class="threejs-container">
+    <canvas id="tshirt-canvas"></canvas>
+    
+    <!-- Wishlist Button -->
+    <button class="wishlist-btn" title="{{ 'products.product.add_to_wishlist' | t | default: 'Add to wishlist' }}" 
+            data-product-id="{{ product.id }}">
+      <i class="ti ti-heart" style="font-size: 1.125rem;"></i>
+    </button>
+    
+    <!-- Stock Badge -->
+    <span class="position-absolute cloudy-badge {% if product.available %}badge-success{% else %}badge-danger{% endif %}" style="top: 1rem; left: 1rem; z-index: 10;">
+      <i class="ti ti-{% if product.available %}check{% else %}x{% endif %} me-1"></i>
+      {% if product.available %}
+        {{ section.settings.in_stock_text | default: 'In Stock' }}
+      {% else %}
+        {{ section.settings.out_of_stock_text | default: 'Out of Stock' }}
+      {% endif %}
+    </span>
+    
+    <!-- Loading Spinner -->
+    <div class="loading-spinner" id="loadingSpinner">
+      <div class="spinner"></div>
+      <span class="loading-text">{{ section.settings.loading_text | default: 'Loading 3D Model...' }}</span>
+    </div>
+    
+    <!-- Canvas Controls -->
+    <div class="canvas-controls">
+      <button onclick="resetCamera()" title="{{ 'products.product.reset_view' | t | default: 'Reset View' }}">
+        <i class="ti ti-refresh"></i>
+      </button>
+      <button onclick="rotateLeft()" title="{{ 'products.product.rotate_left' | t | default: 'Rotate Left' }}">
+        <i class="ti ti-rotate-clockwise"></i>
+      </button>
+      <button onclick="rotateRight()" title="{{ 'products.product.rotate_right' | t | default: 'Rotate Right' }}">
+        <i class="ti ti-rotate-2"></i>
+      </button>
+      <button onclick="zoomIn()" title="{{ 'products.product.zoom_in' | t | default: 'Zoom In' }}">
+        <i class="ti ti-zoom-in"></i>
+      </button>
+      <button onclick="zoomOut()" title="{{ 'products.product.zoom_out' | t | default: 'Zoom Out' }}">
+        <i class="ti ti-zoom-out"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Color Picker -->
+  {% render 'product-color-picker', product: product %}
+</div>
+
+<script>
+  // 3D Model URL - Ürün bazlı veya varsayılan
+  {% if product.metafields.custom.model_3d %}
+    const GLB_MODEL_URL = '{{ product.metafields.custom.model_3d }}';
+  {% else %}
+    const GLB_MODEL_URL = '{{ section.settings.default_model | default: "shirt_baked.glb" | asset_url }}';
+  {% endif %}
+  
+  // Initial color from product variant or default
+  {% if product.selected_or_first_available_variant.metafields.custom.color_hex %}
+    const INITIAL_COLOR = '{{ product.selected_or_first_available_variant.metafields.custom.color_hex }}';
+  {% else %}
+    const INITIAL_COLOR = '{{ section.settings.default_color | default: "#3b82f6" }}';
+  {% endif %}
+</script>
+
+
+
+
+
+

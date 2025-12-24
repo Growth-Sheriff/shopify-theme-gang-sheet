@@ -1,0 +1,980 @@
+{{ 'product-page.css' | asset_url | stylesheet_tag }}
+
+<style>
+/* ==================== Position Selector 3D Previews ==================== */
+.position-selector {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.position-box {
+  border: 2px solid var(--vuexy-border-color, #dbdade);
+  border-radius: 10px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: var(--vuexy-card-bg, #fff);
+  text-align: center;
+}
+
+.position-box:hover {
+  border-color: var(--vuexy-primary, #7367f0);
+  transform: translateY(-2px);
+}
+
+.position-box.active {
+  border-color: var(--vuexy-primary, #7367f0);
+  background: var(--vuexy-primary-lighter, #f3f2ff);
+  box-shadow: 0 4px 12px rgba(115, 103, 240, 0.2);
+}
+
+.position-canvas-container {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f3f2ff 0%, #ebe9fe 100%);
+  margin-bottom: 0.25rem;
+}
+
+.position-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.position-coords {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--vuexy-muted-color, #a5a3ae);
+  margin-bottom: 0.25rem;
+}
+
+.position-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--vuexy-heading-color, #5d596c);
+}
+
+@media (max-width: 576px) {
+  .position-selector {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+/* ==================== Step Cards ==================== */
+.step-card {
+  background: var(--vuexy-card-bg, #fff);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--vuexy-border-color, #dbdade);
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--vuexy-heading-color, #5d596c);
+  margin-bottom: 1rem;
+}
+
+.step-number {
+  width: 28px;
+  height: 28px;
+  background: var(--vuexy-primary, #7367f0);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+/* ==================== Upload Area ==================== */
+.upload-area {
+  border: 2px dashed var(--vuexy-border-color, #dbdade);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background: var(--vuexy-primary-lighter, #f3f2ff);
+}
+
+.upload-area:hover, .upload-area.dragover {
+  border-color: var(--vuexy-primary, #7367f0);
+  background: rgba(115, 103, 240, 0.1);
+}
+
+.upload-icon {
+  font-size: 2.5rem;
+  color: var(--vuexy-primary, #7367f0);
+  margin-bottom: 0.5rem;
+}
+
+.upload-text {
+  font-weight: 600;
+  color: var(--vuexy-heading-color, #5d596c);
+  margin-bottom: 0.25rem;
+}
+
+.upload-hint {
+  font-size: 0.8125rem;
+  color: var(--vuexy-muted-color, #a5a3ae);
+}
+
+/* ==================== Size Inputs ==================== */
+.size-inputs {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.size-input-group {
+  flex: 1;
+  min-width: 70px;
+}
+
+.size-input-group label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--vuexy-muted-color, #a5a3ae);
+  margin-bottom: 0.25rem;
+}
+
+.size-input-group input[type="number"] {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--vuexy-border-color, #dbdade);
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.size-multiply {
+  font-size: 1.25rem;
+  color: var(--vuexy-muted-color, #a5a3ae);
+  padding-bottom: 0.5rem;
+}
+
+/* ==================== Quantity Control ==================== */
+.quantity-control {
+  display: flex;
+  border: 1px solid var(--vuexy-border-color, #dbdade);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.quantity-control button {
+  width: 32px;
+  height: 36px;
+  border: none;
+  background: var(--vuexy-body-bg, #f4f5fa);
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--vuexy-heading-color, #5d596c);
+}
+
+.quantity-control button:hover {
+  background: var(--vuexy-primary-lighter, #f3f2ff);
+  color: var(--vuexy-primary, #7367f0);
+}
+
+.quantity-control input {
+  width: 50px;
+  border: none;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* ==================== Price Display ==================== */
+.price-display {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--vuexy-primary, #7367f0);
+}
+
+/* ==================== Position Sliders ==================== */
+.position-sliders {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: var(--vuexy-primary-lighter, #f3f2ff);
+  border-radius: 8px;
+}
+
+.position-sliders input[type="range"] {
+  width: 100%;
+  height: 6px;
+  accent-color: var(--vuexy-primary, #7367f0);
+}
+
+/* ==================== Add to Cart Button ==================== */
+.add-cart-btn {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, var(--vuexy-primary, #7367f0) 0%, #8b5cf6 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.add-cart-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(115, 103, 240, 0.4);
+}
+
+/* ==================== Pricing Tables ==================== */
+.pricing-section {
+  background: var(--vuexy-card-bg, #fff);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+  border: 1px solid var(--vuexy-border-color, #dbdade);
+}
+
+.pricing-header {
+  margin-bottom: 0.75rem;
+}
+
+.pricing-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: var(--vuexy-heading-color, #5d596c);
+}
+
+.pricing-title i {
+  color: var(--vuexy-primary, #7367f0);
+}
+
+.pricing-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+}
+
+.pricing-table th,
+.pricing-table td {
+  padding: 0.5rem;
+  text-align: center;
+  border-bottom: 1px solid var(--vuexy-border-color, #dbdade);
+}
+
+.pricing-table th {
+  background: var(--vuexy-body-bg, #f4f5fa);
+  font-weight: 600;
+  color: var(--vuexy-heading-color, #5d596c);
+}
+
+.price-original {
+  text-decoration: line-through;
+  color: var(--vuexy-muted-color, #a5a3ae);
+  margin-right: 0.25rem;
+  font-size: 0.75rem;
+}
+
+.price-sale {
+  color: var(--vuexy-success, #28c76f);
+  font-weight: 600;
+}
+
+.discount-badge {
+  background: var(--vuexy-success, #28c76f);
+  color: #fff;
+  font-size: 0.65rem;
+  padding: 0.15rem 0.35rem;
+  border-radius: 4px;
+  margin-left: 0.25rem;
+}
+</style>
+
+<div class="product-info">
+  {% comment %} Rating Section {% endcomment %}
+  <div class="rating-section mb-3">
+    <div class="rating-stars">
+      <i class="ti ti-star-filled"></i>
+      <i class="ti ti-star-filled"></i>
+      <i class="ti ti-star-filled"></i>
+      <i class="ti ti-star-filled"></i>
+      <i class="ti ti-star-filled"></i>
+    </div>
+    <span class="rating-count"><a href="#reviews">18,624 reviews</a></span>
+    <span class="cloudy-badge badge-success ms-2">
+      <i class="ti ti-thumb-up me-1"></i>99% Recommended
+    </span>
+  </div>
+
+  {% comment %} Product Title {% endcomment %}
+  <p class="product-category text-muted small mb-1">{{ product.type | default: 'DTF Transfers by Size' }}</p>
+  <h1 class="product-title mb-3">{{ product.title }}</h1>
+
+  {% comment %} Delivery Card {% endcomment %}
+  <div class="delivery-card p-3 mb-3" style="background: var(--vuexy-body-bg, #f4f5fa); border-radius: 10px;">
+    <div class="delivery-title" style="font-weight: 600;">
+      <i class="ti ti-truck-delivery me-2" style="color: var(--vuexy-primary, #7367f0);"></i>
+      Get it <span class="delivery-time" style="color: var(--vuexy-success, #28c76f);">Tomorrow 5PM – 9PM</span>
+    </div>
+    <div style="font-size: 0.8125rem; color: var(--vuexy-body-color, #6f6b7d); margin-top: 0.25rem;">Order by 3PM</div>
+    <div class="delivery-location mt-2" style="font-size: 0.875rem;">
+      <i class="ti ti-map-pin me-1"></i>
+      Deliver To Dallas 75201
+      <a href="#" style="color: var(--vuexy-primary, #7367f0); margin-left: 0.5rem; font-size: 0.8125rem;">Change</a>
+    </div>
+  </div>
+
+  {% comment %} Step 1: Upload Design {% endcomment %}
+  <div class="step-card">
+    <div class="step-header">
+      <span class="step-number">1</span>
+      Upload Your Design(s)
+    </div>
+    <div class="upload-area" id="uploadArea">
+      <div class="upload-row" style="display: flex; align-items: center; gap: 1rem; width: 100%;">
+        <div class="upload-icon" style="flex-shrink: 0;">
+          <i class="ti ti-cloud-upload"></i>
+        </div>
+        <div style="flex: 1; text-align: left;">
+          <p class="upload-text mb-0">Drag your design here</p>
+          <p class="upload-hint mb-0">or click to browse (PNG, JPG, PDF)</p>
+        </div>
+      </div>
+      <input type="file" id="designInput" accept="image/*,.pdf" style="display: none;" multiple>
+    </div>
+    <div id="uploadedFiles" style="margin-top: 1rem; display: none;">
+      <div class="uploaded-file-preview"></div>
+    </div>
+  </div>
+
+  {% comment %} Step 2: Select Print Position with 3D Previews {% endcomment %}
+  <div class="step-card">
+    <div class="step-header">
+      <span class="step-number">2</span>
+      Select Print Position
+    </div>
+    <div class="position-selector">
+      {% comment %} Front Body {% endcomment %}
+      <div class="position-box active" onclick="selectPosition('front', this)" data-position="front">
+        <div class="position-canvas-container">
+          <canvas id="pos-front-canvas" class="position-canvas"></canvas>
+        </div>
+        <div class="position-coords" id="coords-front">0, 0, 0.15</div>
+        <div class="position-label">Front Body</div>
+      </div>
+      {% comment %} Back Body {% endcomment %}
+      <div class="position-box" onclick="selectPosition('back', this)" data-position="back">
+        <div class="position-canvas-container">
+          <canvas id="pos-back-canvas" class="position-canvas"></canvas>
+        </div>
+        <div class="position-coords" id="coords-back">0, 0, -0.15</div>
+        <div class="position-label">Back Body</div>
+      </div>
+      {% comment %} Left Sleeve {% endcomment %}
+      <div class="position-box" onclick="selectPosition('left-sleeve', this)" data-position="left-sleeve">
+        <div class="position-canvas-container">
+          <canvas id="pos-left-canvas" class="position-canvas"></canvas>
+        </div>
+        <div class="position-coords" id="coords-left">-0.18, 0.08, 0</div>
+        <div class="position-label">Left Sleeve</div>
+      </div>
+      {% comment %} Right Sleeve {% endcomment %}
+      <div class="position-box" onclick="selectPosition('right-sleeve', this)" data-position="right-sleeve">
+        <div class="position-canvas-container">
+          <canvas id="pos-right-canvas" class="position-canvas"></canvas>
+        </div>
+        <div class="position-coords" id="coords-right">0.18, 0.08, 0</div>
+        <div class="position-label">Right Sleeve</div>
+      </div>
+    </div>
+    <p style="font-size: 0.75rem; color: var(--vuexy-muted-color, #a5a3ae); margin-top: 0.75rem; text-align: center;">
+      <i class="ti ti-info-circle me-1"></i>Click to select where your design will be placed
+    </p>
+
+    {% comment %} Position Adjustment Sliders {% endcomment %}
+    <div class="position-sliders">
+      <div style="background: linear-gradient(135deg, rgba(40, 199, 111, 0.1), rgba(0, 207, 232, 0.1)); border: 1px solid var(--vuexy-success, #28c76f); border-radius: 6px; padding: 0.5rem 0.75rem; margin-bottom: 0.75rem;">
+        <p style="font-size: 0.7rem; color: var(--vuexy-success, #28c76f); margin: 0; line-height: 1.4;">
+          <i class="ti ti-info-circle me-1"></i>
+          <strong>Don't worry!</strong> If you can't position the image correctly, our technicians will configure it optimally and call you for approval.
+        </p>
+      </div>
+      <div id="coordinateDisplay" style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 0.75rem; padding: 0.5rem; background: var(--vuexy-dark-bg, #25293c); border-radius: 6px;">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #28c76f;">X: <span id="liveX">0.00</span></span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #ff9f43;">Y: <span id="liveY">0.00</span></span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #00cfe8;">Z: <span id="liveZ">0.00</span></span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+        <label style="font-size: 0.75rem; font-weight: 600; color: var(--vuexy-primary, #7367f0); min-width: 70px;">
+          <i class="ti ti-arrows-horizontal me-1"></i>X Pos
+        </label>
+        <input type="range" id="positionXSlider" min="-100" max="100" value="0" step="1" style="flex: 1;">
+        <span id="positionXValue" style="font-size: 0.7rem; color: var(--vuexy-body-color, #6f6b7d); min-width: 30px; text-align: right;">0</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <label style="font-size: 0.75rem; font-weight: 600; color: var(--vuexy-primary, #7367f0); min-width: 70px;">
+          <i class="ti ti-arrows-vertical me-1"></i>Y Pos
+        </label>
+        <input type="range" id="positionYSlider" min="-100" max="100" value="0" step="1" style="flex: 1;">
+        <span id="positionYValue" style="font-size: 0.7rem; color: var(--vuexy-body-color, #6f6b7d); min-width: 30px; text-align: right;">0</span>
+      </div>
+    </div>
+  </div>
+
+  {% comment %} Step 3: Set Design Size {% endcomment %}
+  <div class="step-card">
+    <div class="step-header">
+      <span class="step-number">3</span>
+      Set Design Size
+    </div>
+    <div class="size-inputs">
+      <div class="size-input-group">
+        <label>Width (Inch)</label>
+        <input type="number" value="9" min="1" max="14" id="widthInput">
+      </div>
+      <div class="size-multiply">×</div>
+      <div class="size-input-group">
+        <label>Height (Inch)</label>
+        <input type="number" value="9" min="1" max="12" id="heightInput">
+      </div>
+      <div class="size-input-group">
+        <label>Quantity</label>
+        <div class="quantity-control">
+          <button type="button" onclick="changeQuantity(-1)">−</button>
+          <input type="number" value="1" min="1" id="quantityInput">
+          <button type="button" onclick="changeQuantity(1)">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-between align-items-center mt-3 pt-3" style="border-top: 1px solid var(--vuexy-border-color, #dbdade);">
+      <span style="color: var(--vuexy-muted-color, #a5a3ae); font-size: 0.875rem;">Total Price:</span>
+      <span class="price-display" id="priceDisplay">$2.85</span>
+    </div>
+  </div>
+
+  {% comment %} Pricing Section {% endcomment %}
+  <div class="pricing-section">
+    <div class="pricing-header">
+      <div class="pricing-title">
+        <i class="ti ti-tag"></i>
+        Volume Discounts Available
+      </div>
+    </div>
+    <table class="pricing-table">
+      <thead>
+        <tr>
+          <th>Quantity</th>
+          <th>1 Sq In</th>
+          <th>25 Sq In</th>
+          <th>50 Sq In</th>
+          <th>100 Sq In</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><span class="price-original">$4.50</span><span class="price-sale">$2.85</span></td>
+          <td><span class="price-original">$4.70</span><span class="price-sale">$3.05</span></td>
+          <td><span class="price-original">$5.15</span><span class="price-sale">$3.50</span></td>
+          <td><span class="price-original">$5.80</span><span class="price-sale">$4.15</span></td>
+        </tr>
+        <tr>
+          <td>2-5</td>
+          <td><span class="price-sale">$2.71</span><span class="discount-badge">-5%</span></td>
+          <td><span class="price-sale">$2.90</span></td>
+          <td><span class="price-sale">$3.33</span></td>
+          <td><span class="price-sale">$3.95</span></td>
+        </tr>
+        <tr>
+          <td>6-11</td>
+          <td><span class="price-sale">$2.57</span><span class="discount-badge">-10%</span></td>
+          <td><span class="price-sale">$2.75</span></td>
+          <td><span class="price-sale">$3.15</span></td>
+          <td><span class="price-sale">$3.74</span></td>
+        </tr>
+        <tr>
+          <td>12-24</td>
+          <td><span class="price-sale">$2.43</span><span class="discount-badge">-15%</span></td>
+          <td><span class="price-sale">$2.59</span></td>
+          <td><span class="price-sale">$2.98</span></td>
+          <td><span class="price-sale">$3.53</span></td>
+        </tr>
+        <tr>
+          <td>25-99</td>
+          <td><span class="price-sale">$2.28</span><span class="discount-badge">-20%</span></td>
+          <td><span class="price-sale">$2.44</span></td>
+          <td><span class="price-sale">$2.80</span></td>
+          <td><span class="price-sale">$3.32</span></td>
+        </tr>
+        <tr>
+          <td>100+</td>
+          <td><span class="price-sale">$2.00</span><span class="discount-badge">-30%</span></td>
+          <td><span class="price-sale">$2.14</span></td>
+          <td><span class="price-sale">$2.45</span></td>
+          <td><span class="price-sale">$2.91</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  {% comment %} Add to Cart Button {% endcomment %}
+  <button class="add-cart-btn" type="button" onclick="addToCart()">
+    <i class="ti ti-shopping-cart"></i>
+    Add to Cart
+  </button>
+</div>
+
+<script>
+// ==================== Global Variables for Mini Scenes ====================
+const miniScenes = {};
+const miniRenderers = {};
+const miniCameras = {};
+const miniControls = {};
+const miniTshirts = {};
+let currentPosition = 'front';
+let currentColor = '#ffffff';
+
+// ==================== Initialize Position Previews ====================
+function initPositionPreviews() {
+  if (typeof THREE === 'undefined') {
+    console.log('Three.js not loaded yet, waiting...');
+    setTimeout(initPositionPreviews, 100);
+    return;
+  }
+  
+  const positions = ['front', 'back', 'left', 'right'];
+  
+  // Create gradient background texture
+  const gradientCanvas = document.createElement('canvas');
+  gradientCanvas.width = 1024;
+  gradientCanvas.height = 256;
+  const ctx = gradientCanvas.getContext('2d');
+  
+  const gradient = ctx.createLinearGradient(0, 0, gradientCanvas.width, 0);
+  gradient.addColorStop(0, '#f3f2ff');
+  gradient.addColorStop(0.25, '#ebe9fe');
+  gradient.addColorStop(0.5, '#e5e3fb');
+  gradient.addColorStop(0.75, '#ebe9fe');
+  gradient.addColorStop(1, '#f3f2ff');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, gradientCanvas.width, gradientCanvas.height);
+  
+  const vertGradient = ctx.createLinearGradient(0, 0, 0, gradientCanvas.height);
+  vertGradient.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
+  vertGradient.addColorStop(0.5, 'rgba(255, 255, 255, 0)');
+  vertGradient.addColorStop(1, 'rgba(115, 103, 240, 0.08)');
+  ctx.fillStyle = vertGradient;
+  ctx.fillRect(0, 0, gradientCanvas.width, gradientCanvas.height);
+  
+  const gradientTexture = new THREE.CanvasTexture(gradientCanvas);
+  
+  const panelOffsets = { 'front': 0, 'back': 0.25, 'left': 0.5, 'right': 0.75 };
+  
+  positions.forEach(pos => {
+    const canvasId = `pos-${pos}-canvas`;
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    
+    const panelTexture = gradientTexture.clone();
+    panelTexture.needsUpdate = true;
+    panelTexture.offset.x = panelOffsets[pos];
+    panelTexture.repeat.x = 0.25;
+    
+    const miniScene = new THREE.Scene();
+    miniScene.background = panelTexture;
+    
+    const miniCamera = new THREE.PerspectiveCamera(25, 1, 0.1, 100);
+    const cameraDistance = 2.0;
+    
+    if (pos === 'front') {
+      miniCamera.position.set(0, 0, cameraDistance);
+      miniCamera.lookAt(0, 0, 0);
+    } else if (pos === 'back') {
+      miniCamera.position.set(0, 0, -cameraDistance);
+      miniCamera.lookAt(0, 0, 0);
+    } else if (pos === 'left') {
+      miniCamera.position.set(-cameraDistance, 0.1, 0);
+      miniCamera.lookAt(0, 0.1, 0);
+    } else if (pos === 'right') {
+      miniCamera.position.set(cameraDistance, 0.1, 0);
+      miniCamera.lookAt(0, 0.1, 0);
+    }
+    
+    const rect = canvas.getBoundingClientRect();
+    const size = Math.max(rect.width || 80, rect.height || 80);
+    const miniRenderer = new THREE.WebGLRenderer({
+      canvas: canvas,
+      antialias: true,
+      alpha: true
+    });
+    miniRenderer.setSize(size, size);
+    miniRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    if (miniRenderer.outputEncoding !== undefined) {
+      miniRenderer.outputEncoding = THREE.sRGBEncoding;
+    }
+    
+    // Add orbit controls with limited movement
+    const miniControl = new THREE.OrbitControls(miniCamera, canvas);
+    miniControl.enableDamping = true;
+    miniControl.dampingFactor = 0.1;
+    miniControl.enableZoom = false;
+    miniControl.enablePan = false;
+    miniControl.rotateSpeed = 0.3;
+    
+    const range = 0.27;
+    if (pos === 'front') {
+      miniControl.minAzimuthAngle = -range;
+      miniControl.maxAzimuthAngle = range;
+    } else if (pos === 'back') {
+      miniControl.minAzimuthAngle = Math.PI - range;
+      miniControl.maxAzimuthAngle = Math.PI + range;
+    } else if (pos === 'left') {
+      miniControl.minAzimuthAngle = -Math.PI/2 - range;
+      miniControl.maxAzimuthAngle = -Math.PI/2 + range;
+    } else if (pos === 'right') {
+      miniControl.minAzimuthAngle = Math.PI/2 - range;
+      miniControl.maxAzimuthAngle = Math.PI/2 + range;
+    }
+    miniControl.minPolarAngle = Math.PI/2 - range;
+    miniControl.maxPolarAngle = Math.PI/2 + range;
+    
+    // Add lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    miniScene.add(ambientLight);
+    
+    const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
+    dirLight.position.set(2, 3, 2);
+    miniScene.add(dirLight);
+    
+    const dirLight2 = new THREE.DirectionalLight(0xffffff, 0.3);
+    dirLight2.position.set(-2, 2, -2);
+    miniScene.add(dirLight2);
+    
+    miniScenes[pos] = miniScene;
+    miniRenderers[pos] = miniRenderer;
+    miniCameras[pos] = miniCamera;
+    miniControls[pos] = miniControl;
+  });
+  
+  // Load t-shirt model for mini scenes
+  loadMiniTshirts();
+}
+
+// ==================== Load T-shirt for Mini Scenes ====================
+function loadMiniTshirts() {
+  if (typeof THREE === 'undefined' || typeof THREE.GLTFLoader === 'undefined') {
+    setTimeout(loadMiniTshirts, 100);
+    return;
+  }
+  
+  const loader = new THREE.GLTFLoader();
+  const modelUrl = '{{ "shirt_baked.glb" | asset_url }}';
+  
+  loader.load(modelUrl, function(gltf) {
+    const tshirt = gltf.scene;
+    
+    const positions = ['front', 'back', 'left', 'right'];
+    positions.forEach(pos => {
+      const miniScene = miniScenes[pos];
+      if (!miniScene) return;
+      
+      const miniTshirt = tshirt.clone();
+      miniTshirt.scale.multiplyScalar(0.75);
+      
+      miniTshirt.traverse((child) => {
+        if (child.isMesh && child.material) {
+          child.material = child.material.clone();
+          child.material.color = new THREE.Color(currentColor);
+        }
+      });
+      
+      if (pos === 'back') {
+        miniTshirt.rotation.y = Math.PI;
+      }
+      
+      miniScene.userData.tshirt = miniTshirt;
+      miniTshirts[pos] = miniTshirt;
+      miniScene.add(miniTshirt);
+    });
+    
+    animateMiniScenes();
+  }, undefined, function(error) {
+    console.log('Mini t-shirt load error:', error);
+  });
+}
+
+// ==================== Animate Mini Scenes ====================
+function animateMiniScenes() {
+  requestAnimationFrame(animateMiniScenes);
+  
+  const positions = ['front', 'back', 'left', 'right'];
+  positions.forEach(pos => {
+    const scene = miniScenes[pos];
+    const renderer = miniRenderers[pos];
+    const camera = miniCameras[pos];
+    const control = miniControls[pos];
+    
+    if (scene && renderer && camera) {
+      if (control) control.update();
+      renderer.render(scene, camera);
+    }
+  });
+}
+
+// ==================== Position Selection ====================
+function selectPosition(position, element) {
+  currentPosition = position;
+  
+  document.querySelectorAll('.position-box').forEach(box => box.classList.remove('active'));
+  element.classList.add('active');
+  
+  // Update main 3D viewer if exists
+  if (typeof window.setMainCameraPosition === 'function') {
+    window.setMainCameraPosition(position);
+  }
+}
+
+// ==================== Upload Handlers ====================
+document.addEventListener('DOMContentLoaded', function() {
+  const uploadArea = document.getElementById('uploadArea');
+  const designInput = document.getElementById('designInput');
+  
+  if (uploadArea && designInput) {
+    uploadArea.addEventListener('click', () => designInput.click());
+    
+    uploadArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadArea.classList.add('dragover');
+    });
+    
+    uploadArea.addEventListener('dragleave', () => {
+      uploadArea.classList.remove('dragover');
+    });
+    
+    uploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadArea.classList.remove('dragover');
+      if (e.dataTransfer.files.length) {
+        handleFiles(e.dataTransfer.files);
+      }
+    });
+    
+    designInput.addEventListener('change', (e) => {
+      if (e.target.files.length) {
+        handleFiles(e.target.files);
+      }
+    });
+  }
+  
+  // Initialize 3D position previews
+  setTimeout(initPositionPreviews, 500);
+});
+
+function handleFiles(files) {
+  Array.from(files).forEach(file => {
+    if (file.type.startsWith('image/') || file.type === 'application/pdf') {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (typeof window.loadDesignTexture === 'function') {
+          window.loadDesignTexture(e.target.result, file.name);
+        }
+        showUploadedPreview(e.target.result, file.name);
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+}
+
+function showUploadedPreview(dataUrl, fileName) {
+  const container = document.getElementById('uploadedFiles');
+  if (container) {
+    container.style.display = 'block';
+    container.innerHTML = `
+      <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: var(--vuexy-success-lighter, #dff7e9); border-radius: 8px;">
+        <img src="${dataUrl}" style="width: 50px; height: 50px; object-fit: contain; border-radius: 6px;">
+        <div style="flex: 1;">
+          <p style="margin: 0; font-weight: 600; font-size: 0.875rem;">${fileName}</p>
+          <p style="margin: 0; color: var(--vuexy-success, #28c76f); font-size: 0.75rem;"><i class="ti ti-check me-1"></i>Uploaded successfully</p>
+        </div>
+        <button onclick="removeUpload()" style="background: none; border: none; color: var(--vuexy-muted-color, #a5a3ae); cursor: pointer;"><i class="ti ti-x"></i></button>
+      </div>
+    `;
+  }
+}
+
+function removeUpload() {
+  const container = document.getElementById('uploadedFiles');
+  if (container) {
+    container.style.display = 'none';
+    container.innerHTML = '';
+  }
+  if (typeof window.removeDesign === 'function') {
+    window.removeDesign();
+  }
+}
+
+// ==================== Quantity Functions ====================
+function changeQuantity(delta) {
+  const input = document.getElementById('quantityInput');
+  if (input) {
+    let value = parseInt(input.value) || 1;
+    value = Math.max(1, value + delta);
+    input.value = value;
+    updatePrice();
+  }
+}
+
+function updatePrice() {
+  const width = parseFloat(document.getElementById('widthInput')?.value) || 9;
+  const height = parseFloat(document.getElementById('heightInput')?.value) || 9;
+  const quantity = parseInt(document.getElementById('quantityInput')?.value) || 1;
+  
+  const sqIn = width * height;
+  let basePrice = 2.85;
+  
+  if (sqIn > 50) basePrice = 3.50;
+  else if (sqIn > 25) basePrice = 3.05;
+  
+  // Apply quantity discounts
+  let discount = 0;
+  if (quantity >= 100) discount = 0.30;
+  else if (quantity >= 25) discount = 0.20;
+  else if (quantity >= 12) discount = 0.15;
+  else if (quantity >= 6) discount = 0.10;
+  else if (quantity >= 2) discount = 0.05;
+  
+  const finalPrice = (basePrice * (1 - discount) * quantity).toFixed(2);
+  
+  const priceDisplay = document.getElementById('priceDisplay');
+  if (priceDisplay) {
+    priceDisplay.textContent = `$${finalPrice}`;
+  }
+}
+
+// ==================== Add to Cart ====================
+function addToCart() {
+  alert('Adding to cart...');
+}
+
+// ==================== Update Mini Scenes Color ====================
+function updateMiniScenesColor(color) {
+  currentColor = color;
+  const positions = ['front', 'back', 'left', 'right'];
+  
+  positions.forEach(pos => {
+    const miniTshirt = miniTshirts[pos];
+    if (miniTshirt) {
+      miniTshirt.traverse((child) => {
+        if (child.isMesh && child.material) {
+          child.material.color = new THREE.Color(color);
+        }
+      });
+    }
+  });
+}
+
+// Expose to global
+window.updateMiniScenesColor = updateMiniScenesColor;
+window.selectPosition = selectPosition;
+</script>
+
+{% schema %}
+{
+  "name": "Product Options",
+  "tag": "section",
+  "class": "product-options-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_3d_position_previews",
+      "label": "Enable 3D Position Previews",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "color",
+      "name": "Color Option",
+      "settings": [
+        {
+          "type": "color",
+          "id": "color_hex",
+          "label": "Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "text",
+          "id": "color_name",
+          "label": "Color Name",
+          "default": "White"
+        }
+      ]
+    },
+    {
+      "type": "position",
+      "name": "Print Position",
+      "settings": [
+        {
+          "type": "text",
+          "id": "position_id",
+          "label": "Position ID",
+          "default": "front-center"
+        },
+        {
+          "type": "text",
+          "id": "position_label",
+          "label": "Position Label",
+          "default": "Front Center"
+        },
+        {
+          "type": "text",
+          "id": "position_icon",
+          "label": "Icon Name",
+          "default": "shirt"
+        }
+      ]
+    },
+    {
+      "type": "size",
+      "name": "Size Option",
+      "settings": [
+        {
+          "type": "text",
+          "id": "size_label",
+          "label": "Size Label",
+          "default": "9\" x 9\""
+        },
+        {
+          "type": "number",
+          "id": "size_price",
+          "label": "Price (cents)",
+          "default": 285
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Options"
+    }
+  ]
+}
+{% endschema %}

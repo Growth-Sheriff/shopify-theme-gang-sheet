@@ -1,0 +1,120 @@
+<!doctype html>
+<html
+  lang="{{ request.locale.iso_code }}"
+  class="layout-navbar-fixed layout-wide"
+  dir="{{ request.locale.text_direction }}"
+  data-skin="default"
+  data-bs-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    
+    <title>{{ page_title }} - {{ shop.name }}</title>
+    <meta name="description" content="{{ page_description | default: shop.description }}" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ canonical_url }}" />
+    
+    <!-- Favicon -->
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin />
+    
+    <!-- Google Fonts - Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    
+    <!-- Tabler Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+    
+    <!-- Font Awesome (for star ratings and icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    
+    <!-- Theme CSS -->
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+    
+    <!-- Page-specific CSS -->
+    {% if template.name == 'product' %}
+      {{ 'product-page.css' | asset_url | stylesheet_tag }}
+    {% endif %}
+    
+    <!-- Shopify Content for Header -->
+    {{ content_for_header }}
+    
+    <style>
+      /* Critical CSS - Above the fold */
+      :root {
+        --cp-primary: {{ settings.color_primary | default: '#7367F0' }};
+        --cp-primary-rgb: {{ settings.color_primary | default: '#7367F0' | color_to_rgb | replace: 'rgb(', '' | replace: ')', '' }};
+        --cp-success: {{ settings.color_success | default: '#28c76f' }};
+        --cp-danger: {{ settings.color_danger | default: '#ea5455' }};
+        --cp-warning: {{ settings.color_warning | default: '#ff9f43' }};
+        --cp-info: {{ settings.color_info | default: '#00cfe8' }};
+        --cp-body-bg: {{ settings.color_body_bg | default: '#f8f8f8' }};
+        --cp-card-bg: {{ settings.color_card_bg | default: '#ffffff' }};
+        --cp-heading-color: {{ settings.color_heading | default: '#5e5873' }};
+        --cp-body-color: {{ settings.color_body_text | default: '#6e6b7b' }};
+        --cp-muted-color: {{ settings.color_muted | default: '#b9b9c3' }};
+        --cp-border-color: {{ settings.color_border | default: '#ebe9f1' }};
+      }
+      
+      body {
+        font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background-color: var(--cp-body-bg);
+        color: var(--cp-body-color);
+        margin: 0;
+        padding: 0;
+      }
+      
+      .main-content {
+        min-height: 60vh;
+      }
+    </style>
+  </head>
+
+  <body class="template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix }}{% endif %}">
+    
+    <!-- Skip to content for accessibility -->
+    <a class="skip-to-content-link visually-hidden-focusable" href="#MainContent">
+      {{ 'accessibility.skip_to_content' | t }}
+    </a>
+    
+    <!-- Header Section -->
+    {% section 'header' %}
+    
+    <!-- Main Content -->
+    <main id="MainContent" class="main-content" role="main">
+      {{ content_for_layout }}
+    </main>
+    
+    <!-- Footer Section -->
+    {% section 'footer' %}
+    
+    <!-- Three.js Global (for all 3D viewers) -->
+    {% if template.name == 'index' or template.name == 'product' %}
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/geometries/DecalGeometry.js"></script>
+      {% if template.name == 'index' %}
+        <script src="{{ 'hero-3d.js' | asset_url }}" defer></script>
+      {% endif %}
+      {% if template.name == 'product' %}
+        <script src="{{ 'product-3d.js' | asset_url }}" defer></script>
+      {% endif %}
+    {% endif %}
+    
+    <!-- Theme JavaScript -->
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+    
+    <!-- Spin & Win Discount Wheel (Collection Pages) -->
+    {% if template.name == 'collection' %}
+      {% render 'spin-wheel' %}
+    {% endif %}
+    
+  </body>
+</html>

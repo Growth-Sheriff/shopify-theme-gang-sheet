@@ -1,0 +1,654 @@
+{% comment %}
+  cp Collection Cards - Featured Categories Display
+  Premium E-commerce Collection Showcase with Deep Customization
+{% endcomment %}
+
+<section class="cp-collections-section" style="background: {{ section.settings.section_bg }}; padding: {{ section.settings.section_padding }};">
+  <div class="container">
+    <!-- Section Header -->
+    {% if section.settings.show_header %}
+    <div class="cp-header-wrapper" style="text-align: {{ section.settings.header_align }}; margin-bottom: {{ section.settings.header_margin }};">
+      {% if section.settings.badge_text != blank %}
+        <span class="cp-header-badge" style="background: {{ section.settings.badge_bg }}; color: {{ section.settings.badge_color }};">
+          <i class="{{ section.settings.badge_icon }}"></i>
+          {{ section.settings.badge_text }}
+        </span>
+      {% endif %}
+      <h2 class="cp-header-title" style="background: {{ section.settings.title_gradient }}; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+        {{ section.settings.title }}
+      </h2>
+      {% if section.settings.subtitle != blank %}
+        <p class="cp-header-subtitle" style="color: {{ section.settings.subtitle_color }};">{{ section.settings.subtitle }}</p>
+      {% endif %}
+    </div>
+    {% endif %}
+    
+    <!-- Collection Cards Grid -->
+    <div class="cp-collection-grid" style="
+      display: grid;
+      grid-template-columns: repeat({{ section.settings.columns }}, 1fr);
+      gap: {{ section.settings.grid_gap }};
+    ">
+      {% for block in section.blocks %}
+        {% if block.type == 'collection_card' %}
+          <a href="{{ block.settings.link | default: '#' }}" class="cp-collection-card cp-card-style-{{ block.settings.card_style }}" {{ block.shopify_attributes }} style="
+            {% if block.settings.card_style == 'gradient' %}
+              background: {{ block.settings.gradient_bg }};
+            {% elsif block.settings.card_style == 'image' %}
+              background-image: url('{% if block.settings.image %}{{ block.settings.image | image_url: width: 600 }}{% else %}{{ block.settings.image_url }}{% endif %}');
+            {% else %}
+              background: {{ block.settings.solid_bg }};
+            {% endif %}
+            border-radius: {{ section.settings.card_radius }};
+          ">
+            <!-- Overlay -->
+            <div class="cp-card-overlay" style="background: {{ block.settings.overlay_color }}; opacity: {{ block.settings.overlay_opacity }};"></div>
+            
+            <!-- Icon -->
+            {% if block.settings.show_icon %}
+            <div class="cp-card-icon" style="background: {{ block.settings.icon_bg }}; color: {{ block.settings.icon_color }};">
+              <i class="{{ block.settings.icon }}"></i>
+            </div>
+            {% endif %}
+            
+            <!-- Content -->
+            <div class="cp-card-content">
+              {% if block.settings.label != blank %}
+                <span class="cp-card-label" style="background: {{ block.settings.label_bg }}; color: {{ block.settings.label_color }};">{{ block.settings.label }}</span>
+              {% endif %}
+              
+              <h3 class="cp-card-title" style="color: {{ block.settings.title_color }};">{{ block.settings.title }}</h3>
+              
+              {% if block.settings.description != blank %}
+                <p class="cp-card-desc" style="color: {{ block.settings.desc_color }};">{{ block.settings.description }}</p>
+              {% endif %}
+              
+              {% if block.settings.product_count > 0 %}
+                <span class="cp-card-count" style="color: {{ block.settings.count_color }};">
+                  {{ block.settings.product_count }} {{ section.settings.products_text }}
+                </span>
+              {% endif %}
+            </div>
+            
+            <!-- Arrow Button -->
+            {% if section.settings.show_arrow %}
+            <div class="cp-card-arrow" style="background: {{ block.settings.arrow_bg }}; color: {{ block.settings.arrow_color }};">
+              <i class="fa-solid fa-arrow-right"></i>
+            </div>
+            {% endif %}
+            
+            <!-- Stats (optional) -->
+            {% if block.settings.show_stats %}
+            <div class="cp-card-stats">
+              <div class="cp-stat-item">
+                <span class="cp-stat-value">{{ block.settings.stat_1_value }}</span>
+                <span class="cp-stat-label">{{ block.settings.stat_1_label }}</span>
+              </div>
+              <div class="cp-stat-item">
+                <span class="cp-stat-value">{{ block.settings.stat_2_value }}</span>
+                <span class="cp-stat-label">{{ block.settings.stat_2_label }}</span>
+              </div>
+            </div>
+            {% endif %}
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cp-collections-section .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .cp-header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 50px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .cp-header-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    font-family: 'Public Sans', sans-serif;
+  }
+  
+  .cp-header-subtitle {
+    font-size: 1.0625rem;
+    margin: 0;
+    max-width: 550px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+  
+  .cp-collection-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: {{ section.settings.card_min_height }};
+    padding: 1.5rem;
+    text-decoration: none;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .cp-collection-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(115, 103, 240, 0.25);
+  }
+  
+  .cp-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+  }
+  
+  .cp-collection-card:hover .cp-card-overlay {
+    opacity: 0.9 !important;
+  }
+  
+  .cp-card-icon {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    z-index: 2;
+    transition: transform 0.3s ease;
+  }
+  
+  .cp-collection-card:hover .cp-card-icon {
+    transform: scale(1.1) rotate(5deg);
+  }
+  
+  .cp-card-content {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .cp-card-label {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .cp-card-title {
+    font-size: 1.375rem;
+    font-weight: 600;
+    margin: 0 0 0.375rem;
+    font-family: 'Public Sans', sans-serif;
+  }
+  
+  .cp-card-desc {
+    font-size: 0.875rem;
+    margin: 0 0 0.5rem;
+    opacity: 0.9;
+    line-height: 1.5;
+  }
+  
+  .cp-card-count {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    opacity: 0.8;
+  }
+  
+  .cp-card-arrow {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    z-index: 2;
+    transition: all 0.3s ease;
+  }
+  
+  .cp-collection-card:hover .cp-card-arrow {
+    transform: translateX(5px);
+  }
+  
+  .cp-card-stats {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    z-index: 2;
+  }
+  
+  .cp-stat-item {
+    text-align: center;
+    padding: 0.5rem 0.75rem;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(5px);
+    border-radius: 8px;
+  }
+  
+  .cp-stat-value {
+    display: block;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #fff;
+  }
+  
+  .cp-stat-label {
+    display: block;
+    font-size: 0.6875rem;
+    color: rgba(255,255,255,0.8);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  @media (max-width: 1024px) {
+    .cp-collection-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .cp-collection-grid {
+      grid-template-columns: 1fr !important;
+    }
+    
+    .cp-collection-card {
+      min-height: 200px !important;
+    }
+    
+    .cp-header-title {
+      font-size: 1.75rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "cp Collection Cards",
+  "tag": "section",
+  "class": "cp-collections",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Layout"
+    },
+    {
+      "type": "color_background",
+      "id": "section_bg",
+      "label": "Section Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "section_padding",
+      "label": "Section Padding",
+      "default": "5rem 0"
+    },
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_header",
+      "label": "Show Header",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "Featured Categories"
+    },
+    {
+      "type": "text",
+      "id": "badge_icon",
+      "label": "Badge Icon",
+      "default": "fa-solid fa-sparkles"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg",
+      "label": "Badge Background",
+      "default": "#e5e3fb"
+    },
+    {
+      "type": "color",
+      "id": "badge_color",
+      "label": "Badge Text Color",
+      "default": "#7367F0"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Explore Our Collections"
+    },
+    {
+      "type": "color_background",
+      "id": "title_gradient",
+      "label": "Title Gradient",
+      "default": "linear-gradient(135deg, #5a4aff 0%, #ff3739 100%)"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Browse through our curated selection of premium transfer products for every need."
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#6e6b7b"
+    },
+    {
+      "type": "select",
+      "id": "header_align",
+      "label": "Header Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "text",
+      "id": "header_margin",
+      "label": "Header Bottom Margin",
+      "default": "3rem"
+    },
+    {
+      "type": "header",
+      "content": "Grid Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columns",
+      "min": 2,
+      "max": 4,
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "grid_gap",
+      "label": "Grid Gap",
+      "default": "1.5rem"
+    },
+    {
+      "type": "text",
+      "id": "card_min_height",
+      "label": "Card Min Height",
+      "default": "280px"
+    },
+    {
+      "type": "text",
+      "id": "card_radius",
+      "label": "Card Border Radius",
+      "default": "16px"
+    },
+    {
+      "type": "header",
+      "content": "Card Features"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrow",
+      "label": "Show Arrow Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "products_text",
+      "label": "Products Text",
+      "default": "Products"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_card",
+      "name": "Collection Card",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Card Content"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "DTF Transfers"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label Badge"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "number",
+          "id": "product_count",
+          "label": "Product Count",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Card Style"
+        },
+        {
+          "type": "select",
+          "id": "card_style",
+          "label": "Card Style",
+          "options": [
+            { "value": "gradient", "label": "Gradient" },
+            { "value": "image", "label": "Image" },
+            { "value": "solid", "label": "Solid Color" }
+          ],
+          "default": "gradient"
+        },
+        {
+          "type": "color_background",
+          "id": "gradient_bg",
+          "label": "Gradient Background",
+          "default": "linear-gradient(135deg, #7367F0 0%, #9e95f5 100%)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Background Image"
+        },
+        {
+          "type": "url",
+          "id": "image_url",
+          "label": "Image URL (fallback)"
+        },
+        {
+          "type": "color",
+          "id": "solid_bg",
+          "label": "Solid Background",
+          "default": "#7367F0"
+        },
+        {
+          "type": "color",
+          "id": "overlay_color",
+          "label": "Overlay Color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "label": "Overlay Opacity",
+          "min": 0,
+          "max": 1,
+          "step": 0.1,
+          "default": 0.3
+        },
+        {
+          "type": "header",
+          "content": "Icon Settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_icon",
+          "label": "Show Icon",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon Class",
+          "default": "fa-solid fa-shirt"
+        },
+        {
+          "type": "color",
+          "id": "icon_bg",
+          "label": "Icon Background",
+          "default": "rgba(255,255,255,0.2)"
+        },
+        {
+          "type": "color",
+          "id": "icon_color",
+          "label": "Icon Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "desc_color",
+          "label": "Description Color",
+          "default": "rgba(255,255,255,0.9)"
+        },
+        {
+          "type": "color",
+          "id": "label_bg",
+          "label": "Label Background",
+          "default": "rgba(255,255,255,0.2)"
+        },
+        {
+          "type": "color",
+          "id": "label_color",
+          "label": "Label Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "count_color",
+          "label": "Count Color",
+          "default": "rgba(255,255,255,0.8)"
+        },
+        {
+          "type": "color",
+          "id": "arrow_bg",
+          "label": "Arrow Background",
+          "default": "rgba(255,255,255,0.2)"
+        },
+        {
+          "type": "color",
+          "id": "arrow_color",
+          "label": "Arrow Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "Stats (Optional)"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_stats",
+          "label": "Show Stats",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "stat_1_value",
+          "label": "Stat 1 Value",
+          "default": "2.5K+"
+        },
+        {
+          "type": "text",
+          "id": "stat_1_label",
+          "label": "Stat 1 Label",
+          "default": "Orders"
+        },
+        {
+          "type": "text",
+          "id": "stat_2_value",
+          "label": "Stat 2 Value",
+          "default": "4.9"
+        },
+        {
+          "type": "text",
+          "id": "stat_2_label",
+          "label": "Stat 2 Label",
+          "default": "Rating"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "cp Collection Cards",
+      "blocks": [
+        { "type": "collection_card", "settings": { "title": "DTF Transfers", "description": "Premium quality direct-to-film transfers", "icon": "fa-solid fa-shirt", "product_count": 156, "gradient_bg": "linear-gradient(135deg, #7367F0 0%, #9e95f5 100%)" } },
+        { "type": "collection_card", "settings": { "title": "UV DTF Stickers", "description": "Durable UV-cured decals", "icon": "fa-solid fa-sun", "product_count": 89, "gradient_bg": "linear-gradient(135deg, #00cfe8 0%, #1e90ff 100%)" } },
+        { "type": "collection_card", "settings": { "title": "Rhinestone", "description": "Sparkle and shine designs", "icon": "fa-solid fa-gem", "product_count": 67, "gradient_bg": "linear-gradient(135deg, #ea5455 0%, #ff9f43 100%)" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+
+
+
+
+

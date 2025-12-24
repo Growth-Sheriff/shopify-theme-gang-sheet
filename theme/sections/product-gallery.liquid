@@ -1,0 +1,458 @@
+{% comment %}
+  Product Gallery & Info Section - CloudyPrints
+  Core product content: 3D viewer, title, price, description, cart
+  Note: Three.js is loaded globally in theme.liquid
+{% endcomment %}
+
+{{ 'product-page.css' | asset_url | stylesheet_tag }}
+
+<script>
+  var GLB_MODEL_URL = "{{ 'shirt_baked.glb' | asset_url }}";
+  console.log('GLB_MODEL_URL set to:', GLB_MODEL_URL);
+</script>
+
+{% comment %} ═══════════════════════════════════════════════════════════════
+   BREADCRUMB SECTION
+═══════════════════════════════════════════════════════════════ {% endcomment %}
+{% if section.settings.show_breadcrumb %}
+<div class="breadcrumb-section">
+  <div class="container">
+    <div class="breadcrumb-custom">
+      <a href="{{ routes.root_url }}"><i class="ti ti-home me-1"></i>{{ 'general.breadcrumbs.home' | t | default: 'Home' }}</a>
+      <span>/</span>
+      {% if product.collections.first %}
+        <a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a>
+        <span>/</span>
+      {% endif %}
+      <span class="cloudy-badge badge-primary">{{ product.title | truncate: 20 }}</span>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% comment %} ═══════════════════════════════════════════════════════════════
+   PRODUCT SECTION - MAIN CONTENT
+═══════════════════════════════════════════════════════════════ {% endcomment %}
+<section class="product-section" {{ section.shopify_attributes }}>
+  <div class="container">
+    <div class="row">
+      
+      {% comment %} ══════════════════════════════════════════════════════════
+         CUSTOMIZER WIDGET CHECK - Render appropriate widget based on metafield
+      ══════════════════════════════════════════════════════════ {% endcomment %}
+      {% assign customizer_enabled = product.metafields.custom.customizer_enabled | default: false %}
+      {% assign customizer_mode = product.metafields.custom.customizer_mode | default: '' %}
+
+      {% if customizer_enabled == true or customizer_mode != blank %}
+        {% comment %} Customizer Mode Active - Use Full Widget {% endcomment %}
+        <div class="col-12">
+          {% case customizer_mode %}
+            {% when 'MOD1_TSHIRT' %}
+              {% render 'customizer-widget-tshirt', product: product %}
+            {% when 'MOD2_GANGSHEET' %}
+              {% render 'customizer-widget-gangsheet', product: product %}
+            {% when 'MOD3_MOCKUP' %}
+              {% comment %} Mockup widget - coming soon {% endcomment %}
+              {% render 'customizer-widget-tshirt', product: product %}
+            {% else %}
+              {% comment %} Default to T-shirt mode {% endcomment %}
+              {% render 'customizer-widget-tshirt', product: product %}
+          {% endcase %}
+        </div>
+      {% else %}
+        {% comment %} Standard Product View - Original 3D Gallery {% endcomment %}
+        <div class="col-lg-5">
+          <div class="product-gallery">
+            <div class="threejs-container">
+              <canvas id="tshirt-canvas" style="position: relative; z-index: 1;"></canvas>
+
+              <button class="wishlist-btn" title="Add to wishlist" style="pointer-events: auto; z-index: 20;">
+                <i class="ti ti-heart" style="font-size: 1.125rem;"></i>
+              </button>
+
+              {% if product.available %}
+                <span class="position-absolute cloudy-badge badge-success" style="top: 1rem; left: 1rem; z-index: 10; pointer-events: none;">
+                  <i class="ti ti-check me-1"></i>In Stock
+                </span>
+              {% else %}
+                <span class="position-absolute cloudy-badge badge-danger" style="top: 1rem; left: 1rem; z-index: 10; pointer-events: none;">
+                  <i class="ti ti-x me-1"></i>Sold Out
+                </span>
+              {% endif %}
+
+              <div class="loading-spinner" id="loadingSpinner" style="pointer-events: none;">
+                <div class="spinner"></div>
+                <span class="loading-text">Loading 3D Model...</span>
+              </div>
+
+              <div class="viewer-controls" style="pointer-events: auto; z-index: 20;">
+                <button onclick="rotateModel(-1)" title="Rotate Left"><i class="ti ti-rotate-clockwise-2"></i></button>
+                <button onclick="resetModel()" title="Reset View"><i class="ti ti-refresh"></i></button>
+                <button onclick="rotateModel(1)" title="Rotate Right"><i class="ti ti-rotate-2"></i></button>
+              </div>
+            </div>
+
+            <!-- Thumbnail Gallery -->
+            <div class="gallery-thumbnails">
+              <div class="thumbnail active" onclick="show3DView(this)">
+                <div class="thumbnail-3d">
+                  <i class="ti ti-3d-cube-sphere"></i>
+                  <span>3D</span>
+                </div>
+              </div>
+              {% for image in product.images limit: 4 %}
+                <div class="thumbnail" onclick="showImageView('{{ image | image_url: width: 600 }}', this)">
+                  <img src="{{ image | image_url: width: 100 }}" alt="{{ product.title }}" width="100" height="100" loading="lazy">
+                </div>
+              {% endfor %}
+            </div>
+            {% comment %} Product Tabs moved to separate section: product-tabs.liquid {% endcomment %}
+          </div>
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+</section>
+
+{% comment %} ═══ FLOATING CART ═══ {% endcomment %}
+<div class="floating-cart-container" id="floatingCart">
+  <button class="floating-cart-btn" onclick="document.getElementById('product-form-{{ product.id }}').submit()">
+    <span class="floating-cart-icon"><i class="ti ti-truck-delivery"></i></span>
+    <span class="floating-cart-text">Add to Cart</span>
+    <span class="floating-cart-price" id="floatingPrice">{{ product.price | money }}</span>
+  </button>
+</div>
+
+{% comment %} ═══ JAVASCRIPT ═══ {% endcomment %}
+<script src="{{ 'product-3d.js' | asset_url }}" defer></script>
+
+<script>
+  window.productData = {
+    id: {{ product.id }},
+    title: {{ product.title | json }},
+    price: {{ product.price }},
+    compareAtPrice: {{ product.compare_at_price | default: 0 }},
+    available: {{ product.available }},
+    variants: {{ product.variants | json }}
+  };
+
+  function switchTab(tabId, btn) {
+    document.querySelectorAll('.product-tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.product-tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + tabId).classList.add('active');
+  }
+
+  function changeQuantity(delta) {
+    const input = document.getElementById('quickQuantity');
+    let value = parseInt(input.value) + delta;
+    if (value < 1) value = 1;
+    if (value > 999) value = 999;
+    input.value = value;
+    syncQuantity(value);
+  }
+
+  function syncQuantity(value) {
+    document.getElementById('cartQuantity').value = value;
+    updatePrices();
+  }
+
+  function updatePrices() {
+    const qty = parseInt(document.getElementById('quickQuantity').value) || 1;
+    const basePrice = window.productData.price / 100;
+    const total = (basePrice * qty).toFixed(2);
+    
+    document.getElementById('quickPrice').textContent = '$' + total;
+    document.getElementById('floatingPrice').textContent = '$' + total;
+    document.getElementById('cartBtnPrice').textContent = '$' + total;
+  }
+
+  function show3DView(el) {
+    document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    // Show 3D canvas, hide image
+    document.getElementById('tshirt-canvas').style.display = 'block';
+  }
+
+  function showImageView(src, el) {
+    document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    // Could implement image view overlay here
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    updatePrices();
+  });
+</script>
+
+<style>
+  /* Gallery Thumbnails - Horizontal Layout */
+  .gallery-thumbnails {
+    display: flex;
+    flex-direction: row;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+  
+  .gallery-thumbnails .thumbnail {
+    flex-shrink: 0;
+    width: 70px;
+    height: 70px;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+  }
+  
+  .gallery-thumbnails .thumbnail:hover {
+    border-color: rgba(115, 103, 240, 0.4);
+    transform: translateY(-2px);
+  }
+  
+  .gallery-thumbnails .thumbnail.active {
+    border-color: #7367F0;
+    box-shadow: 0 4px 12px rgba(115, 103, 240, 0.3);
+  }
+  
+  .gallery-thumbnails .thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .gallery-thumbnails .thumbnail-3d {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+  }
+  
+  .gallery-thumbnails .thumbnail-3d i {
+    font-size: 1.25rem;
+    margin-bottom: 2px;
+  }
+  
+  .gallery-thumbnails .thumbnail-3d span {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  
+  /* Product Gallery Container */
+  .product-gallery {
+    position: sticky;
+    top: 1rem;
+  }
+  
+  .threejs-container {
+    position: relative;
+    background: linear-gradient(180deg, #f8f9fa 0%, #fff 100%);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    aspect-ratio: 1;
+  }
+  
+  #tshirt-canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .trust-badges {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--cp-border-color);
+  }
+  
+  .trust-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+    color: var(--cp-text-secondary);
+  }
+  
+  .trust-badge i {
+    color: var(--cp-success);
+    font-size: 1.25rem;
+  }
+
+  @media (max-width: 768px) {
+    .trust-badges {
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .gallery-thumbnails .thumbnail {
+      width: 60px;
+      height: 60px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Product Gallery & Info",
+  "tag": "div",
+  "class": "cp-product-main-section",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb",
+      "label": "Show Breadcrumb",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tabs",
+      "label": "Show Product Tabs",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Rating & Reviews"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Review Count",
+      "default": "2,847"
+    },
+    {
+      "type": "text",
+      "id": "recommend_percent",
+      "label": "Recommend Percentage",
+      "default": "99%"
+    },
+    {
+      "type": "header",
+      "content": "Delivery"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_delivery",
+      "label": "Show Delivery Card",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "delivery_time",
+      "label": "Delivery Time",
+      "default": "Tomorrow 5PM – 9PM"
+    },
+    {
+      "type": "text",
+      "id": "order_by",
+      "label": "Order By Text",
+      "default": "Order by 3PM"
+    },
+    {
+      "type": "header",
+      "content": "Price Box"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price_box",
+      "label": "Show Price Box",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "price_badge",
+      "label": "Price Badge Text",
+      "default": "Limited Time Offer"
+    },
+    {
+      "type": "header",
+      "content": "Trust Badges"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust_badges",
+      "label": "Show Trust Badges",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "badge_1",
+      "label": "Badge 1",
+      "default": "Secure Checkout"
+    },
+    {
+      "type": "text",
+      "id": "badge_2",
+      "label": "Badge 2",
+      "default": "Fast Shipping"
+    },
+    {
+      "type": "text",
+      "id": "badge_3",
+      "label": "Badge 3",
+      "default": "Easy Returns"
+    },
+    {
+      "type": "header",
+      "content": "Shipping Info (Tabs)"
+    },
+    {
+      "type": "text",
+      "id": "processing_time",
+      "label": "Processing Time",
+      "default": "1-2 Business Days"
+    },
+    {
+      "type": "text",
+      "id": "standard_shipping",
+      "label": "Standard Shipping",
+      "default": "3-5 Business Days"
+    },
+    {
+      "type": "text",
+      "id": "express_shipping",
+      "label": "Express Shipping",
+      "default": "1-2 Business Days"
+    },
+    {
+      "type": "header",
+      "content": "Default Content"
+    },
+    {
+      "type": "richtext",
+      "id": "default_description",
+      "label": "Default Description",
+      "default": "<p>Premium quality DTF transfers for your custom apparel projects.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Gallery & Info"
+    }
+  ]
+}
+{% endschema %}

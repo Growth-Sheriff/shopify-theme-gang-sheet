@@ -1,0 +1,5339 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  class="layout-navbar-fixed layout-wide"
+  dir="ltr"
+  data-skin="default"
+  data-bs-theme="light"
+  data-assets-path="./assets/"
+  data-template="front-pages">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>DTF Transfers by Size - Standard | CloudyPrints</title>
+    <meta name="description" content="High quality DTF transfers for your apparel business" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="./assets/img/favicon/favicon.ico" />
+
+    <!-- Fonts - Vuexy Typography (Montserrat) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!-- Icons - Tabler Icons via CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/geometries/DecalGeometry.js"></script>
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="./assets/vendor/libs/node-waves/node-waves.css" />
+    <link rel="stylesheet" href="./assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="./assets/css/demo.css" />
+
+    <!-- Vuexy Admin Template - Full Theme Implementation -->
+    <style>
+      :root {
+        /* ══════════════════════════════════════════════════════════════
+           💜 VUEXY COMPLETE DESIGN SYSTEM
+           ══════════════════════════════════════════════════════════════ */
+        
+        /* ─────────────── PRIMARY COLORS ─────────────── */
+        --vuexy-primary: #7367F0;
+        --vuexy-primary-dark: #5e50ee;
+        --vuexy-primary-light: #9e95f5;
+        --vuexy-primary-lighter: #e5e3fb;
+        --vuexy-primary-rgb: 115, 103, 240;
+        --vuexy-primary-gradient: linear-gradient(118deg, #7367F0, rgba(115, 103, 240, 0.7));
+        
+        /* ─────────────── SEMANTIC COLORS ─────────────── */
+        --vuexy-secondary: #82868b;
+        --vuexy-secondary-light: rgba(130, 134, 139, 0.12);
+        
+        --vuexy-success: #28c76f;
+        --vuexy-success-dark: #1f9d57;
+        --vuexy-success-light: rgba(40, 199, 111, 0.12);
+        --vuexy-success-gradient: linear-gradient(118deg, #28c76f, rgba(40, 199, 111, 0.7));
+        
+        --vuexy-danger: #ea5455;
+        --vuexy-danger-dark: #e42728;
+        --vuexy-danger-light: rgba(234, 84, 85, 0.12);
+        --vuexy-danger-gradient: linear-gradient(118deg, #ea5455, rgba(234, 84, 85, 0.7));
+        
+        --vuexy-warning: #ff9f43;
+        --vuexy-warning-dark: #ff8510;
+        --vuexy-warning-light: rgba(255, 159, 67, 0.12);
+        --vuexy-warning-gradient: linear-gradient(118deg, #ff9f43, rgba(255, 159, 67, 0.7));
+        
+        --vuexy-info: #00cfe8;
+        --vuexy-info-dark: #00a1b5;
+        --vuexy-info-light: rgba(0, 207, 232, 0.12);
+        --vuexy-info-gradient: linear-gradient(118deg, #00cfe8, rgba(0, 207, 232, 0.7));
+        
+        /* ─────────────── BACKGROUNDS ─────────────── */
+        --vuexy-body-bg: #f8f8f8;
+        --vuexy-card-bg: #ffffff;
+        --vuexy-component-bg: #ffffff;
+        --vuexy-modal-bg: #ffffff;
+        --vuexy-input-bg: #ffffff;
+        --vuexy-dark-bg: #283046;
+        --vuexy-darker-bg: #161d31;
+        
+        /* ─────────────── BORDERS ─────────────── */
+        --vuexy-border-color: #ebe9f1;
+        --vuexy-border-dark: #d8d6de;
+        --vuexy-input-border: #d8d6de;
+        --vuexy-input-border-focus: var(--vuexy-primary);
+        
+        /* ─────────────── TEXT COLORS ─────────────── */
+        --vuexy-heading-color: #5e5873;
+        --vuexy-body-color: #6e6b7b;
+        --vuexy-muted-color: #b9b9c3;
+        --vuexy-placeholder-color: #b9b9c3;
+        --vuexy-label-color: #5e5873;
+        
+        /* ─────────────── SHADOWS - VUEXY SPECIFIC ─────────────── */
+        --vuexy-shadow-xs: 0 2px 4px 0 rgba(34, 41, 47, 0.08);
+        --vuexy-shadow-sm: 0 4px 8px 0 rgba(34, 41, 47, 0.1);
+        --vuexy-shadow-md: 0 4px 18px 0 rgba(34, 41, 47, 0.1);
+        --vuexy-shadow-lg: 0 8px 25px 0 rgba(34, 41, 47, 0.12);
+        --vuexy-shadow-xl: 0 12px 35px 0 rgba(34, 41, 47, 0.14);
+        --vuexy-shadow-primary: 0 0 10px 0 rgba(var(--vuexy-primary-rgb), 0.5);
+        --vuexy-shadow-primary-lg: 0 4px 18px 0 rgba(var(--vuexy-primary-rgb), 0.4);
+        
+        /* ─────────────── BORDER RADIUS ─────────────── */
+        --vuexy-radius-xs: 0.25rem;
+        --vuexy-radius-sm: 0.357rem;
+        --vuexy-radius-md: 0.428rem;
+        --vuexy-radius-lg: 0.5rem;
+        --vuexy-radius-xl: 0.625rem;
+        --vuexy-radius-pill: 1.5rem;
+        
+        /* ─────────────── SPACING ─────────────── */
+        --vuexy-spacer: 1rem;
+        --vuexy-card-spacer-y: 1.25rem;
+        --vuexy-card-spacer-x: 1.25rem;
+        
+        /* ─────────────── TYPOGRAPHY ─────────────── */
+        --vuexy-font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        --vuexy-font-size-base: 1rem;
+        --vuexy-font-size-sm: 0.857rem;
+        --vuexy-font-size-lg: 1.143rem;
+        --vuexy-font-weight-normal: 400;
+        --vuexy-font-weight-medium: 500;
+        --vuexy-font-weight-semibold: 600;
+        --vuexy-font-weight-bold: 700;
+        --vuexy-line-height-base: 1.45;
+        
+        /* ─────────────── TRANSITIONS ─────────────── */
+        --vuexy-transition-base: all 0.25s ease;
+        --vuexy-transition-fast: all 0.15s ease;
+        --vuexy-transition-slow: all 0.35s ease;
+      }
+
+      /* ══════════════════════════════════════════════════════════════
+         VUEXY GLOBAL STYLES
+         ══════════════════════════════════════════════════════════════ */
+      
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: var(--vuexy-font-family);
+        font-size: var(--vuexy-font-size-base);
+        font-weight: var(--vuexy-font-weight-normal);
+        line-height: var(--vuexy-line-height-base);
+        color: var(--vuexy-body-color);
+        background-color: var(--vuexy-body-bg);
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+      }
+
+      /* Vuexy Typography */
+      h1, h2, h3, h4, h5, h6, .heading {
+        font-family: var(--vuexy-font-family);
+        font-weight: var(--vuexy-font-weight-medium);
+        color: var(--vuexy-heading-color);
+        line-height: 1.2;
+        margin-bottom: 0.5rem;
+      }
+
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.714rem; }
+      h3 { font-size: 1.5rem; }
+      h4 { font-size: 1.286rem; }
+      h5 { font-size: 1.07rem; }
+      h6 { font-size: 1rem; }
+
+      p {
+        margin-bottom: 1rem;
+      }
+
+      a {
+        color: var(--vuexy-primary);
+        text-decoration: none;
+        transition: var(--vuexy-transition-fast);
+      }
+
+      a:hover {
+        color: var(--vuexy-primary-dark);
+      }
+
+      .mono {
+        font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+      }
+
+      /* Vuexy Selection */
+      ::selection {
+        background-color: var(--vuexy-primary);
+        color: #fff;
+      }
+
+      /* Vuexy Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--vuexy-body-bg);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--vuexy-border-color);
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--vuexy-border-dark);
+      }
+
+      /* ══════════════════════════════════════════════════════════════
+         VUEXY TOP BANNER
+         ══════════════════════════════════════════════════════════════ */
+      
+      .promo-banner {
+        background: var(--vuexy-dark-bg);
+        padding: 10px 0;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: var(--vuexy-font-size-sm);
+        font-family: var(--vuexy-font-family);
+      }
+
+      .promo-banner .container {
+        display: flex !important;
+      }
+
+      .promo-banner .promo-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 1rem;
+        border-right: 1px solid rgba(255,255,255,0.15);
+      }
+
+      .promo-banner .promo-item:last-child {
+        border-right: none;
+      }
+
+      .promo-banner .promo-item i {
+        font-size: 1.125rem;
+        color: var(--vuexy-primary-light);
+      }
+
+      /* ══════════════════════════════════════════════════════════════
+         VUEXY NAVBAR
+         ══════════════════════════════════════════════════════════════ */
+      
+      .main-navbar {
+        background: var(--vuexy-card-bg);
+        box-shadow: var(--vuexy-shadow-sm);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid var(--vuexy-border-color);
+      }
+
+      .navbar-brand-logo {
+        font-family: var(--vuexy-font-family);
+        font-weight: var(--vuexy-font-weight-bold);
+        font-size: 1.5rem;
+        color: var(--vuexy-heading-color);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .navbar-brand-logo .logo-icon {
+        width: 32px;
+        height: 22px;
+        color: var(--vuexy-primary);
+      }
+
+      .navbar-brand-logo span {
+        color: var(--vuexy-primary);
+      }
+
+      .nav-category {
+        display: flex;
+        gap: 0.25rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .nav-category a {
+        color: var(--vuexy-body-color);
+        text-decoration: none;
+        font-weight: var(--vuexy-font-weight-medium);
+        font-family: var(--vuexy-font-family);
+        transition: var(--vuexy-transition-fast);
+        padding: 0.5rem 1rem;
+        border-radius: var(--vuexy-radius-md);
+        transition: all 0.2s ease-in-out;
+        font-size: 0.9375rem;
+      }
+
+      .nav-category a:hover {
+        color: var(--vuexy-primary-dark);
+        background: var(--vuexy-primary-light);
+      }
+
+      .nav-search {
+        position: relative;
+      }
+
+      .nav-search input {
+        padding: 0.5rem 1rem 0.5rem 2.5rem;
+        border: 1px solid var(--vuexy-border-color);
+        border-radius: var(--vuexy-radius-md);
+        font-size: 0.9375rem;
+        min-width: 220px;
+        background: var(--vuexy-card-bg);
+        backdrop-filter: blur(10px);
+        transition: all 0.2s;
+      }
+
+      .nav-search input:focus {
+        outline: none;
+        border-color: var(--vuexy-primary);
+        box-shadow: 0 0 0 3px rgba(122, 143, 166, 0.15);
+        background: white;
+      }
+
+      .nav-search i {
+        position: absolute;
+        left: 0.875rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--vuexy-muted-color);
+      }
+
+      /* ========== BREADCRUMB ========== */
+      .breadcrumb-section {
+        padding: 1rem 0;
+        background: var(--vuexy-card-bg);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--vuexy-border-color);
+      }
+
+      .breadcrumb-custom {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+      }
+
+      .breadcrumb-custom a {
+        color: var(--vuexy-primary);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+
+      .breadcrumb-custom a:hover {
+        text-decoration: underline;
+      }
+
+      .breadcrumb-custom span {
+        color: var(--vuexy-muted-color);
+      }
+
+      /* ========== INSTAGRAM STORY STYLE CATEGORIES ========== */
+      .category-story-section {
+        padding: 1rem 0;
+        background: var(--vuexy-body-bg);
+        overflow: hidden;
+      }
+      
+      .story-scroll-container {
+        display: flex;
+        gap: 1.25rem;
+        overflow-x: auto;
+        padding: 0.6rem 1rem;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        justify-content: center;
+        background: var(--vuexy-card-bg);
+        border-radius: var(--vuexy-radius-lg);
+        margin: 0 1rem;
+        position: relative;
+        border: 1px solid transparent;
+        background-clip: padding-box;
+      }
+      
+      .story-scroll-container::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1px;
+        background: linear-gradient(90deg, rgba(115, 103, 240, 0.4), rgba(0, 207, 232, 0.3), rgba(40, 199, 111, 0.4), rgba(255, 159, 67, 0.3), rgba(115, 103, 240, 0.4));
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+      }
+      
+      .story-scroll-container::-webkit-scrollbar {
+        display: none;
+      }
+      
+      .story-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        min-width: 72px;
+        transition: transform 0.2s ease;
+      }
+      
+      .story-item:hover {
+        transform: scale(1.05);
+      }
+      
+      .story-ring {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        padding: 3px;
+        background: linear-gradient(135deg, #d8d8d8, #a0a0a0);
+        transition: all 0.3s ease;
+      }
+      
+      .story-item.active .story-ring {
+        background: var(--vuexy-primary-gradient);
+        box-shadow: 0 4px 15px rgba(115, 103, 240, 0.4);
+      }
+      
+      .story-item:not(.active):hover .story-ring {
+        background: linear-gradient(135deg, var(--vuexy-primary-light), var(--vuexy-primary));
+      }
+      
+      .story-avatar {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: var(--vuexy-card-bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: var(--vuexy-muted-color);
+        transition: all 0.3s ease;
+      }
+      
+      .story-item.active .story-avatar {
+        color: var(--vuexy-primary);
+        background: var(--vuexy-primary-lighter);
+      }
+      
+      .story-item:not(.active):hover .story-avatar {
+        color: var(--vuexy-primary);
+      }
+      
+      .story-label {
+        font-size: 0.7rem;
+        font-weight: 500;
+        color: var(--vuexy-muted-color);
+        text-align: center;
+        white-space: nowrap;
+        max-width: 72px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transition: color 0.2s;
+      }
+      
+      .story-item.active .story-label {
+        color: var(--vuexy-primary);
+        font-weight: 600;
+      }
+      
+      .story-item:not(.active):hover .story-label {
+        color: var(--vuexy-heading-color);
+      }
+      
+      /* Active story expanding effect */
+      .story-item.active::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 6px;
+        height: 6px;
+        background: var(--vuexy-primary);
+        border-radius: 50%;
+      }
+      
+      .story-item {
+        position: relative;
+      }
+
+      /* ========== REVIEW VIDEO STORIES ========== */
+      .review-stories-section {
+        margin-top: 1rem;
+        padding: 1rem;
+        background: var(--vuexy-card-bg);
+        border-radius: 12px;
+        border: 1px solid var(--vuexy-border-color);
+      }
+      
+      .review-stories-header {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+      }
+      
+      .review-stories-header i {
+        color: #ea5455;
+        font-size: 1.1rem;
+      }
+      
+      .review-stories-header span {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--vuexy-heading-color);
+      }
+      
+      .review-stories-header .count {
+        color: #ea5455;
+        font-weight: 700;
+      }
+      
+      .review-stories-scroll {
+        display: flex;
+        gap: 0.75rem;
+        overflow-x: auto;
+        padding: 0.25rem 0;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+      
+      .review-stories-scroll::-webkit-scrollbar {
+        display: none;
+      }
+      
+      .review-story-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.35rem;
+        cursor: pointer;
+        min-width: 56px;
+        transition: transform 0.2s ease;
+      }
+      
+      .review-story-item:hover {
+        transform: scale(1.05);
+      }
+      
+      .review-story-ring {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      
+      .review-story-ring {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        padding: 3px;
+        background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+        position: relative;
+      }
+      
+      .review-story-item:hover .review-story-ring {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(214, 41, 118, 0.5);
+      }
+      
+      .review-story-avatar {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: var(--vuexy-body-bg);
+        padding: 2px;
+        overflow: hidden;
+      }
+      
+      .review-story-avatar img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      
+      .review-story-name {
+        font-size: 0.65rem;
+        color: var(--vuexy-muted-color);
+        text-align: center;
+        white-space: nowrap;
+        max-width: 56px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      
+      /* ========== MINI VIDEO REVIEWS BAR ========== */
+      .mini-video-reviews {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-top: 0.25rem;
+        margin-bottom: 0.5rem;
+        padding: 0.25rem 0;
+      }
+      
+      .mini-video-reviews-inline {
+        display: flex;
+        align-items: center;
+        gap: 0.2rem;
+        margin-left: 0.5rem;
+        padding-left: 0.5rem;
+        border-left: 1px solid var(--vuexy-border-color);
+      }
+      
+      .mini-video-reviews-inline .mini-story {
+        width: 26px;
+        height: 26px;
+      }
+      
+      .mini-video-reviews-inline .mini-video-label {
+        font-size: 0.65rem;
+        margin-left: 0.25rem;
+      }
+
+      /* ========== PRICE ALERT BOX ========== */
+      .price-alert-box {
+        background: var(--vuexy-card-bg);
+        border: 1px solid rgba(115, 103, 240, 0.2);
+        border-radius: var(--vuexy-radius-lg);
+        margin-bottom: 1rem;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 2px 8px rgba(115, 103, 240, 0.08);
+      }
+      
+      .price-alert-header {
+        background: linear-gradient(135deg, rgba(115, 103, 240, 0.1), rgba(115, 103, 240, 0.05));
+        color: var(--vuexy-primary);
+        padding: 0.4rem 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-bottom: 1px solid rgba(115, 103, 240, 0.1);
+      }
+      
+      .price-alert-header i {
+        font-size: 0.85rem;
+        color: #ff9f43;
+      }
+      
+      .price-alert-content {
+        padding: 0.75rem;
+      }
+      
+      .quick-qty-label {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-weight: 500;
+        color: var(--vuexy-muted-color);
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        opacity: 0.7;
+        margin-bottom: 0.25rem;
+      }
+      
+      .quick-qty-label i {
+        font-size: 0.75rem;
+        color: var(--vuexy-primary);
+        opacity: 0.6;
+      }
+      
+      .quick-qty-controls {
+        display: inline-flex;
+        align-items: center;
+        gap: 0;
+        background: rgba(115, 103, 240, 0.04);
+        border-radius: 50px;
+        padding: 0.15rem;
+        border: 1px solid rgba(115, 103, 240, 0.1);
+      }
+      
+      .quick-qty-btn {
+        width: 26px;
+        height: 26px;
+        border: none;
+        background: transparent;
+        color: var(--vuexy-primary);
+        border-radius: 50%;
+        font-size: 0.9rem;
+        font-weight: 400;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.6;
+      }
+      
+      .quick-qty-btn:hover {
+        background: rgba(115, 103, 240, 0.15);
+        opacity: 1;
+      }
+      
+      .quick-qty-input {
+        width: 40px;
+        text-align: center;
+        border: none;
+        background: transparent;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--vuexy-primary);
+        padding: 0.15rem;
+      }
+      
+      .quick-qty-input:focus {
+        outline: none;
+      }
+      
+      .quick-price-wrapper {
+        display: flex;
+        align-items: baseline;
+        gap: 0.4rem;
+        margin-top: 0.35rem;
+        position: relative;
+      }
+      
+      .quick-price {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--vuexy-primary);
+        line-height: 1;
+      }
+      
+      .old-price {
+        font-size: 0.9rem;
+        color: #ff9f43;
+        text-decoration: line-through;
+        font-weight: 600;
+        position: relative;
+        top: 0;
+      }
+      
+      .discount-badge {
+        background: linear-gradient(135deg, #ff9f43, #ff6b35);
+        color: white;
+        font-size: 0.6rem;
+        font-weight: 700;
+        padding: 0.15rem 0.35rem;
+        border-radius: 20px;
+        position: relative;
+        top: 0;
+      }
+      
+      .view-campaigns-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.35rem;
+        margin-top: 0.5rem;
+        padding: 0.35rem 0.75rem;
+        background: transparent;
+        border: none;
+        color: var(--vuexy-primary);
+        font-size: 0.7rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        opacity: 0.7;
+      }
+      
+      .view-campaigns-btn:hover {
+        opacity: 1;
+        text-decoration: underline;
+      }
+      
+      .view-campaigns-btn i {
+        font-size: 0.85rem;
+      }
+
+      /* ========== FLOATING CART BUTTON ========== */
+      .floating-cart-container {
+        position: fixed;
+        top: 200px;
+        right: 30px;
+        z-index: 9999;
+        opacity: 1;
+        transition: all 0.3s ease;
+      }
+      
+      .floating-cart-container.hidden {
+        opacity: 0;
+        transform: translateX(100px);
+        pointer-events: none;
+      }
+      
+      .floating-cart-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        background: linear-gradient(135deg, var(--vuexy-primary), var(--vuexy-primary-dark));
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: 0.75rem 1.25rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 8px 25px rgba(115, 103, 240, 0.4);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      
+      .floating-cart-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 12px 35px rgba(115, 103, 240, 0.5);
+      }
+      
+      .floating-cart-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .floating-cart-icon i {
+        font-size: 0.95rem;
+        animation: truckDrive 3s ease-in-out infinite;
+      }
+      
+      @keyframes truckDrive {
+        0%, 70%, 100% { transform: translateX(0); }
+        75% { transform: translateX(4px); }
+        80% { transform: translateX(-2px); }
+        85% { transform: translateX(3px); }
+        90% { transform: translateX(-1px); }
+        95% { transform: translateX(2px); }
+      }
+      
+      .floating-cart-text {
+        white-space: nowrap;
+      }
+      
+      .floating-cart-price {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 0.2rem 0.6rem;
+        border-radius: 20px;
+        font-weight: 700;
+        font-size: 0.8rem;
+      }
+      
+      .mini-stories-container {
+        display: flex;
+        gap: 0.35rem;
+      }
+      
+      .mini-story {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        padding: 2px;
+        background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      
+      .mini-story:hover {
+        transform: scale(1.15);
+        box-shadow: 0 0 10px rgba(214, 41, 118, 0.4);
+      }
+      
+      .mini-story img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--vuexy-card-bg);
+      }
+      
+      .mini-video-label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: #d62976;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        cursor: pointer;
+        transition: color 0.2s;
+      }
+      
+      .mini-video-label:hover {
+        color: #fa7e1e;
+      }
+      
+      .mini-video-label i {
+        font-size: 0.8rem;
+      }
+      
+      /* Play icon overlay */
+      .review-story-avatar::after {
+        content: '▶';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 0.7rem;
+        color: white;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
+      
+      .review-story-item:hover .review-story-avatar::after {
+        opacity: 1;
+      }
+
+      /* ========== PRODUCT SECTION ========== */
+      .product-section {
+        padding: 1.5rem 0;
+      }
+
+      /* ========== GLASS CARD STYLES ========== */
+      .glass-card {
+        background: var(--vuexy-card-bg);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: var(--vuexy-radius-lg);
+        box-shadow: var(--vuexy-shadow-md);
+        border: 1px solid var(--vuexy-border-color);
+        overflow: hidden;
+      }
+
+      /* ══════════════════════════════════════════════════════════════
+         VUEXY 3D GALLERY
+         ══════════════════════════════════════════════════════════════ */
+      
+      .product-gallery {
+        background: var(--vuexy-card-bg);
+        border-radius: var(--vuexy-radius-lg);
+        padding: 1.25rem;
+        box-shadow: var(--vuexy-shadow-md);
+        border: 1px solid transparent;
+        background-clip: padding-box;
+        position: relative;
+      }
+      
+      .product-gallery::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1px;
+        background: linear-gradient(135deg, rgba(255, 193, 7, 0.25), rgba(255, 152, 0, 0.15), rgba(255, 215, 0, 0.2), rgba(218, 165, 32, 0.15));
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+      }
+
+      .threejs-container {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1;
+        border-radius: var(--vuexy-radius-md);
+        overflow: hidden;
+        background: linear-gradient(180deg, #ffffff 0%, #f8f8f8 50%, #f4f4f4 100%);
+        border: 1px solid var(--vuexy-border-color);
+      }
+
+      #tshirt-canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+        cursor: grab;
+      }
+
+      #tshirt-canvas:active {
+        cursor: grabbing;
+      }
+
+      .canvas-controls {
+        position: absolute;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 0.5rem;
+        background: var(--vuexy-card-bg);
+        backdrop-filter: blur(10px);
+        padding: 0.5rem;
+        border-radius: var(--vuexy-radius-md);
+        border: 1px solid var(--vuexy-border-color);
+      }
+
+      .canvas-controls button {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        border: 1px solid var(--vuexy-border-color);
+        background: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--vuexy-body-color);
+        transition: all 0.2s;
+      }
+
+      .canvas-controls button:hover {
+        background: var(--vuexy-primary-light);
+        color: var(--vuexy-primary-dark);
+        border-color: var(--vuexy-primary);
+      }
+
+      .canvas-controls button.active {
+        background: var(--vuexy-primary);
+        color: white;
+        border-color: var(--vuexy-primary);
+      }
+
+      .wishlist-btn {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 38px;
+        height: 38px;
+        border-radius: var(--vuexy-radius-md);
+        background: var(--vuexy-card-bg);
+        border: 1px solid var(--vuexy-border-color);
+        box-shadow: var(--vuexy-shadow-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        color: var(--vuexy-muted-color);
+        z-index: 10;
+      }
+
+      .wishlist-btn:hover {
+        background: var(--vuexy-danger-light);
+        color: var(--vuexy-danger);
+        border-color: var(--vuexy-danger);
+      }
+
+      /* ══════════════════════════════════════════════════════════════
+         VUEXY COLOR PICKER
+         ══════════════════════════════════════════════════════════════ */
+      
+      .color-picker-section {
+        margin-top: 1rem;
+        padding: 1rem;
+        background: var(--vuexy-body-bg);
+        border-radius: var(--vuexy-radius-md);
+        border: 1px solid var(--vuexy-border-color);
+      }
+
+      .color-picker-title {
+        font-family: var(--vuexy-font-family);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: var(--vuexy-muted-color);
+        margin-bottom: 0.75rem;
+        font-weight: var(--vuexy-font-weight-semibold);
+        letter-spacing: 0.8px;
+      }
+
+      .color-options {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .color-option {
+        width: 32px;
+        height: 32px;
+        border-radius: var(--vuexy-radius-sm);
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: var(--vuexy-transition-fast);
+        box-shadow: var(--vuexy-shadow-xs);
+      }
+
+      .color-option:hover {
+        transform: scale(1.15);
+        box-shadow: var(--vuexy-shadow-sm);
+      }
+
+      .color-option.active {
+        border-color: var(--vuexy-primary);
+        box-shadow: 0 0 0 3px rgba(var(--vuexy-primary-rgb), 0.25);
+      }
+
+      /* ══════════════════════════════════════════════════════════════
+         VUEXY PRODUCT TABS
+         ══════════════════════════════════════════════════════════════ */
+      
+      .product-tabs-section {
+        margin-top: 1.25rem;
+      }
+
+      .product-tabs-nav {
+        display: flex;
+        gap: 0;
+        background: var(--vuexy-body-bg);
+        border-radius: var(--vuexy-radius-md) var(--vuexy-radius-md) 0 0;
+        border: 1px solid var(--vuexy-border-color);
+        border-bottom: none;
+        overflow: hidden;
+      }
+
+      .product-tab-btn {
+        flex: 1;
+        padding: 0.875rem 1rem;
+        background: transparent;
+        border: none;
+        font-family: var(--vuexy-font-family);
+        font-size: 0.813rem;
+        font-weight: var(--vuexy-font-weight-medium);
+        color: var(--vuexy-muted-color);
+        cursor: pointer;
+        transition: var(--vuexy-transition-fast);
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border-right: 1px solid var(--vuexy-border-color);
+      }
+
+      .product-tab-btn:last-child {
+        border-right: none;
+      }
+
+      .product-tab-btn:hover {
+        color: var(--vuexy-primary);
+        background: rgba(var(--vuexy-primary-rgb), 0.04);
+      }
+
+      .product-tab-btn.active {
+        color: var(--vuexy-primary);
+        background: var(--vuexy-card-bg);
+        font-weight: var(--vuexy-font-weight-semibold);
+      }
+
+      .product-tab-btn.active::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--vuexy-primary-gradient);
+      }
+
+      .product-tab-btn i {
+        font-size: 1rem;
+      }
+
+      .product-tabs-content {
+        background: var(--vuexy-card-bg);
+        border: 1px solid var(--vuexy-border-color);
+        border-top: none;
+        border-radius: 0 0 var(--vuexy-radius-md) var(--vuexy-radius-md);
+        padding: 1.25rem;
+      }
+
+      .product-tab-pane {
+        display: none;
+      }
+
+      .product-tab-pane.active {
+        display: block;
+        animation: fadeIn 0.3s ease;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(5px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .tab-content-title {
+        font-size: 0.938rem;
+        font-weight: var(--vuexy-font-weight-semibold);
+        color: var(--vuexy-heading-color);
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .tab-content-title i {
+        color: var(--vuexy-primary);
+      }
+
+      .tab-spec-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .tab-spec-list li {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.625rem 0;
+        border-bottom: 1px dashed var(--vuexy-border-color);
+        font-size: 0.857rem;
+      }
+
+      .tab-spec-list li:last-child {
+        border-bottom: none;
+      }
+
+      .tab-spec-list .spec-label {
+        color: var(--vuexy-muted-color);
+        font-weight: var(--vuexy-font-weight-medium);
+      }
+
+      .tab-spec-list .spec-value {
+        color: var(--vuexy-heading-color);
+        font-weight: var(--vuexy-font-weight-semibold);
+      }
+
+      .tab-description p {
+        font-size: 0.875rem;
+        color: var(--vuexy-body-color);
+        line-height: 1.7;
+        margin-bottom: 0.75rem;
+      }
+
+      .tab-features-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        margin-top: 1rem;
+      }
+
+      .tab-feature-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.813rem;
+        color: var(--vuexy-body-color);
+      }
+
+      .tab-feature-item i {
+        color: var(--vuexy-success);
+        font-size: 1rem;
+      }
+
+      /* ══════════════════════════════════════════════════════════════
+         VUEXY PRODUCT INFO
+         ══════════════════════════════════════════════════════════════ */
+      
+      .product-info {
+        background: var(--vuexy-card-bg);
+        border-radius: var(--vuexy-radius-lg);
+        padding: 1.5rem;
+        box-shadow: var(--vuexy-shadow-md);
+        border: 1px solid transparent;
+        background-clip: padding-box;
+        position: relative;
+      }
+      
+      .product-info::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1px;
+        background: linear-gradient(135deg, rgba(255, 193, 7, 0.25), rgba(255, 152, 0, 0.15), rgba(255, 215, 0, 0.2), rgba(218, 165, 32, 0.15));
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+      }
+
+      /* ══════════════════════════════════════════════════════════════
+         VUEXY BADGES
+         ══════════════════════════════════════════════════════════════ */
+      
+      .cloudy-badge, .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.4em 0.7em;
+        font-family: var(--vuexy-font-family);
+        font-size: var(--vuexy-font-size-sm);
+        font-weight: var(--vuexy-font-weight-medium);
+        border-radius: var(--vuexy-radius-sm);
+        line-height: 1;
+      }
+
+      .badge-primary {
+        background: rgba(var(--vuexy-primary-rgb), 0.12);
+        color: var(--vuexy-primary);
+      }
+
+      .badge-success {
+        background: var(--vuexy-success-light);
+        color: var(--vuexy-success);
+      }
+
+      .badge-warning {
+        background: var(--vuexy-warning-light);
+        color: #c9a227;
+      }
+
+      .badge-info {
+        background: var(--vuexy-info-light);
+        color: var(--vuexy-info);
+      }
+
+      .badge-danger {
+        background: var(--vuexy-danger-light);
+        color: var(--vuexy-danger);
+      }
+
+      /* ========== RATING ========== */
+      .rating-section {
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+        margin-bottom: 1rem;
+        padding: 0.6rem 0.8rem;
+        background: linear-gradient(135deg, rgba(115, 103, 240, 0.03), rgba(40, 199, 111, 0.03));
+        border-radius: var(--vuexy-radius-lg);
+        border: 1px solid transparent;
+        background-clip: padding-box;
+        position: relative;
+      }
+      
+      .rating-section::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1px;
+        background: linear-gradient(135deg, rgba(255, 186, 0, 0.5), rgba(40, 199, 111, 0.4), rgba(115, 103, 240, 0.3));
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+      }
+
+      .rating-stars {
+        color: var(--vuexy-warning) !important;
+        display: flex;
+        gap: 2px;
+      }
+
+      .rating-stars i {
+        color: var(--vuexy-warning) !important;
+        font-size: 1rem;
+      }
+
+      .rating-count {
+        color: var(--vuexy-muted-color);
+        font-family: var(--vuexy-font-family);
+        font-size: var(--vuexy-font-size-sm);
+      }
+
+      .rating-count a {
+        color: var(--vuexy-primary);
+        text-decoration: none;
+      }
+
+      /* ========== PRODUCT TITLE ========== */
+      .product-category {
+        color: var(--vuexy-muted-color);
+        font-size: 0.8125rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.25rem;
+      }
+
+      .product-title {
+        font-family: var(--vuexy-font-family);
+        font-size: 1.75rem;
+        font-weight: var(--vuexy-font-weight-semibold);
+        color: var(--vuexy-heading-color);
+        margin-bottom: 0.75rem;
+        line-height: 1.3;
+      }
+
+      .product-description {
+        color: var(--vuexy-body-color);
+        font-family: var(--vuexy-font-family);
+        font-size: var(--vuexy-font-size-base);
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+      }
+
+      /* ══════════════════════════════════════════════════════════════
+         VUEXY DELIVERY CARD
+         ══════════════════════════════════════════════════════════════ */
+      
+      .delivery-card {
+        background: var(--vuexy-success-light);
+        border-radius: var(--vuexy-radius-md);
+        padding: 1rem 1.25rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid rgba(40, 199, 111, 0.15);
+      }
+
+      .delivery-title {
+        font-family: var(--vuexy-font-family);
+        font-weight: var(--vuexy-font-weight-semibold);
+        color: var(--vuexy-heading-color);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .delivery-title i {
+        color: var(--vuexy-success);
+        font-size: 1.25rem;
+      }
+
+      .delivery-time {
+        color: var(--vuexy-success);
+        font-weight: var(--vuexy-font-weight-bold);
+      }
+
+      .delivery-location {
+        font-family: var(--vuexy-font-family);
+        font-size: var(--vuexy-font-size-sm);
+        color: var(--vuexy-body-color);
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        margin-top: 0.5rem;
+      }
+
+      .delivery-location i {
+        color: var(--vuexy-muted-color);
+      }
+
+      /* ══════════════════════════════════════════════════════════════
+         VUEXY CARD STYLES
+         ══════════════════════════════════════════════════════════════ */
+      
+      .vuexy-card, .step-card {
+        background: var(--vuexy-card-bg);
+        border: none;
+        border-radius: var(--vuexy-radius-lg);
+        box-shadow: var(--vuexy-shadow-md);
+        padding: var(--vuexy-card-spacer-y) var(--vuexy-card-spacer-x);
+        margin-bottom: var(--vuexy-spacer);
+        transition: var(--vuexy-transition-base);
+        position: relative;
+      }
+
+      .step-card:hover {
+        box-shadow: var(--vuexy-shadow-lg);
+        transform: translateY(-2px);
+      }
+
+      .step-card::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: var(--vuexy-primary-gradient);
+        border-radius: var(--vuexy-radius-lg) 0 0 var(--vuexy-radius-lg);
+        opacity: 0;
+        transition: var(--vuexy-transition-fast);
+      }
+
+      .step-card:hover::before {
+        opacity: 1;
+      }
+
+      .step-header {
+        font-family: var(--vuexy-font-family);
+        font-weight: var(--vuexy-font-weight-semibold);
+        color: var(--vuexy-heading-color);
+        margin-bottom: 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 0.875rem;
+        font-size: 1.07rem;
+      }
+
+      .step-number {
+        background: var(--vuexy-primary-gradient);
+        color: white;
+        width: 34px;
+        height: 34px;
+        border-radius: var(--vuexy-radius-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        font-weight: var(--vuexy-font-weight-semibold);
+        font-family: var(--vuexy-font-family);
+        box-shadow: var(--vuexy-shadow-primary-lg);
+        box-shadow: 0 2px 8px rgba(122, 143, 166, 0.3);
+      }
+
+      /* ══════════════════════════════════════════════════════════════
+         VUEXY UPLOAD AREA
+         ══════════════════════════════════════════════════════════════ */
+      
+      .upload-area {
+        border: 2px dashed var(--vuexy-border-color);
+        border-radius: var(--vuexy-radius-lg);
+        padding: 0.875rem 1rem;
+        background: rgba(var(--vuexy-primary-rgb), 0.04);
+        transition: var(--vuexy-transition-base);
+        cursor: pointer;
+      }
+
+      .upload-area:hover {
+        border-color: var(--vuexy-primary);
+        background: rgba(var(--vuexy-primary-rgb), 0.08);
+        box-shadow: var(--vuexy-shadow-sm);
+      }
+
+      .upload-icon {
+        font-size: 2rem;
+        color: var(--vuexy-primary);
+        opacity: 0.7;
+        line-height: 1;
+      }
+
+      .upload-text {
+        color: var(--vuexy-heading-color);
+        font-family: var(--vuexy-font-family);
+        font-weight: var(--vuexy-font-weight-semibold);
+        margin-bottom: 0.125rem;
+        font-size: 0.875rem;
+      }
+
+      .upload-subtext {
+        color: var(--vuexy-muted-color);
+        font-family: var(--vuexy-font-family);
+        font-size: 0.7rem;
+        margin-bottom: 0;
+      }
+
+      .upload-btn {
+        background: var(--vuexy-primary-gradient);
+        color: white;
+        border: none;
+        padding: 0.5rem 1.25rem;
+        border-radius: var(--vuexy-radius-md);
+        font-family: var(--vuexy-font-family);
+        font-weight: var(--vuexy-font-weight-medium);
+        font-size: 0.8rem;
+        margin-top: 0;
+        cursor: pointer;
+        transition: var(--vuexy-transition-base);
+        box-shadow: var(--vuexy-shadow-primary-lg);
+      }
+
+      .upload-btn:hover {
+        box-shadow: 0 0 12px 0 rgba(var(--vuexy-primary-rgb), 0.5);
+        transform: translateY(-1px);
+      }
+
+      /* ══════════════════════════════════════════════════════════════
+         VUEXY SIZE INPUTS
+         ══════════════════════════════════════════════════════════════ */
+      
+      .size-inputs {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr 1fr;
+        gap: 1rem;
+        align-items: end;
+      }
+
+      .size-input-group label {
+        display: block;
+        font-family: var(--vuexy-font-family);
+        font-size: 0.75rem;
+        color: var(--vuexy-muted-color);
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        font-weight: var(--vuexy-font-weight-medium);
+        letter-spacing: 0.6px;
+      }
+
+      .size-input-group input {
+        width: 100%;
+        padding: 0.625rem 0.875rem;
+        border: 1px solid var(--vuexy-input-border);
+        border-radius: var(--vuexy-radius-md);
+        font-family: var(--vuexy-font-family);
+        font-size: var(--vuexy-font-size-base);
+        text-align: center;
+        color: var(--vuexy-heading-color);
+        transition: var(--vuexy-transition-fast);
+        background: var(--vuexy-input-bg);
+      }
+
+      .size-input-group input:focus {
+        outline: none;
+        border-color: var(--vuexy-primary);
+        box-shadow: 0 3px 10px 0 rgba(var(--vuexy-primary-rgb), 0.1);
+      }
+
+      .size-multiply {
+        font-size: 1.25rem;
+        color: var(--vuexy-muted-color);
+        padding-bottom: 0.625rem;
+      }
+
+      /* ══════════════════════════════════════════════════════════════
+         VUEXY QUANTITY CONTROL
+         ══════════════════════════════════════════════════════════════ */
+      
+      .quantity-control {
+        display: flex;
+        align-items: center;
+        border: 1px solid var(--vuexy-input-border);
+        border-radius: var(--vuexy-radius-md);
+        overflow: hidden;
+        background: var(--vuexy-input-bg);
+      }
+
+      .quantity-control button {
+        width: 40px;
+        height: 40px;
+        border: none;
+        background: rgba(var(--vuexy-primary-rgb), 0.08);
+        cursor: pointer;
+        font-size: 1.125rem;
+        font-family: var(--vuexy-font-family);
+        color: var(--vuexy-body-color);
+        transition: var(--vuexy-transition-fast);
+      }
+
+      .quantity-control button:hover {
+        background: rgba(var(--vuexy-primary-rgb), 0.15);
+        color: var(--vuexy-primary);
+      }
+
+      .quantity-control input {
+        width: 55px;
+        text-align: center;
+        border: none;
+        border-left: 1px solid var(--vuexy-border-color);
+        border-right: 1px solid var(--vuexy-border-color);
+        font-family: var(--vuexy-font-family);
+        font-size: var(--vuexy-font-size-base);
+        font-weight: var(--vuexy-font-weight-medium);
+        color: var(--vuexy-heading-color);
+        background: var(--vuexy-input-bg);
+      }
+
+      .price-display {
+        font-family: var(--vuexy-font-family);
+        font-size: 1.75rem;
+        font-weight: var(--vuexy-font-weight-bold);
+        color: var(--vuexy-primary);
+        text-align: right;
+        padding-bottom: 0.25rem;
+      }
+
+      /* ========== PRICING TABLE ========== */
+      .pricing-section {
+        margin-top: 1.5rem;
+      }
+
+      .pricing-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+      }
+
+      .pricing-title {
+        font-weight: 600;
+        color: var(--vuexy-success);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .pricing-title i {
+        font-size: 1.25rem;
+      }
+
+      .pricing-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        background: var(--vuexy-card-bg);
+        border-radius: var(--vuexy-radius-md);
+        overflow: hidden;
+        border: 1px solid var(--vuexy-border-color);
+      }
+
+      .pricing-table th {
+        background: linear-gradient(135deg, var(--vuexy-primary), var(--vuexy-primary-dark));
+        color: white;
+        padding: 0.875rem 1rem;
+        font-weight: 500;
+        font-size: 0.8125rem;
+        text-align: center;
+      }
+
+      .pricing-table td {
+        padding: 0.875rem 1rem;
+        text-align: center;
+        border-bottom: 1px solid var(--vuexy-border-color);
+        font-size: 0.875rem;
+      }
+
+      .pricing-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .pricing-table tbody tr {
+        transition: background 0.15s;
+      }
+
+      .pricing-table tbody tr:hover {
+        background: var(--vuexy-primary-lighter);
+      }
+
+      .price-original {
+        text-decoration: line-through;
+        color: var(--vuexy-muted-color);
+        font-size: 0.8125rem;
+        margin-right: 0.25rem;
+      }
+
+      .price-sale {
+        color: var(--vuexy-success);
+        font-weight: 600;
+      }
+
+      .discount-badge {
+        background: var(--vuexy-warning-light);
+        color: #c9a227;
+        font-size: 0.6875rem;
+        padding: 0.2em 0.5em;
+        border-radius: 4px;
+        font-weight: 600;
+        margin-left: 0.25rem;
+      }
+
+      /* ========== BULK DISCOUNT ========== */
+      .bulk-section {
+        background: var(--vuexy-info-light);
+        border-radius: var(--vuexy-radius-md);
+        padding: 1.25rem;
+        margin-top: 1.5rem;
+        border: 1px solid rgba(93, 173, 226, 0.2);
+      }
+
+      .bulk-title {
+        font-weight: 600;
+        color: var(--vuexy-info);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .bulk-title i {
+        font-size: 1.25rem;
+      }
+
+      .bulk-table {
+        width: 100%;
+        font-size: 0.8125rem;
+      }
+
+      .bulk-table th {
+        text-align: left;
+        padding: 0.625rem 0.5rem;
+        color: var(--vuexy-body-color);
+        font-weight: 500;
+        border-bottom: 1px solid rgba(93, 173, 226, 0.2);
+      }
+
+      .bulk-table td {
+        padding: 0.625rem 0.5rem;
+        color: var(--vuexy-heading-color);
+      }
+
+      /* ========== INSTRUCTIONS ========== */
+      .instructions-section {
+        background: var(--vuexy-card-bg);
+        backdrop-filter: blur(20px);
+        border-radius: var(--vuexy-radius-lg);
+        padding: 1.5rem;
+        margin-top: 1.5rem;
+        box-shadow: var(--vuexy-shadow-md);
+        border: 1px solid var(--vuexy-border-color);
+      }
+
+      .instructions-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--vuexy-heading-color);
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .instructions-title i {
+        color: var(--vuexy-primary);
+      }
+
+      .instruction-steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+      }
+
+      .instruction-step {
+        text-align: center;
+        padding: 1.5rem 1rem;
+        background: var(--vuexy-primary-lighter);
+        border-radius: var(--vuexy-radius-md);
+        border: 1px solid var(--vuexy-border-color);
+        transition: all 0.2s;
+      }
+
+      .instruction-step:hover {
+        border-color: var(--vuexy-primary);
+        box-shadow: 0 4px 16px rgba(122, 143, 166, 0.15);
+        transform: translateY(-2px);
+      }
+
+      .instruction-number {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, var(--vuexy-primary), var(--vuexy-primary-dark));
+        color: white;
+        border-radius: var(--vuexy-radius-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin: 0 auto 1rem;
+        box-shadow: 0 4px 12px rgba(122, 143, 166, 0.3);
+      }
+
+      .instruction-title {
+        font-weight: 600;
+        color: var(--vuexy-heading-color);
+        margin-bottom: 0.375rem;
+        font-size: 0.9375rem;
+      }
+
+      .instruction-desc {
+        font-size: 0.8125rem;
+        color: var(--vuexy-muted-color);
+      }
+
+      .instruction-time {
+        font-size: 0.75rem;
+        color: var(--vuexy-warning);
+        font-weight: 600;
+        margin-top: 0.5rem;
+        display: inline-block;
+        padding: 0.25em 0.5em;
+        background: var(--vuexy-warning-light);
+        border-radius: 4px;
+      }
+
+      /* ========== SETTINGS GRID ========== */
+      .settings-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--vuexy-border-color);
+      }
+
+      .setting-item {
+        text-align: center;
+        padding: 1rem;
+        background: var(--vuexy-primary-lighter);
+        border-radius: var(--vuexy-radius-md);
+      }
+
+      .setting-label {
+        font-size: 0.6875rem;
+        color: var(--vuexy-muted-color);
+        text-transform: uppercase;
+        margin-bottom: 0.375rem;
+        letter-spacing: 0.5px;
+      }
+
+      .setting-value {
+        font-weight: 700;
+        color: var(--vuexy-primary-dark);
+        font-size: 1.125rem;
+      }
+
+      .setting-note {
+        font-size: 0.6875rem;
+        color: var(--vuexy-muted-color);
+        margin-top: 0.25rem;
+      }
+
+      /* ========== REVIEWS ========== */
+      .reviews-section {
+        background: var(--vuexy-card-bg);
+        backdrop-filter: blur(20px);
+        border-radius: var(--vuexy-radius-lg);
+        padding: 1.5rem;
+        margin-top: 1.5rem;
+        box-shadow: var(--vuexy-shadow-md);
+        border: 1px solid var(--vuexy-border-color);
+      }
+
+      .reviews-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--vuexy-border-color);
+      }
+
+      .reviews-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--vuexy-heading-color);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .reviews-title i {
+        color: var(--vuexy-warning);
+      }
+
+      .reviews-summary {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .reviews-score {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--vuexy-heading-color);
+        line-height: 1;
+      }
+
+      .reviews-details {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .reviews-stars {
+        color: var(--vuexy-warning);
+        display: flex;
+        gap: 2px;
+      }
+
+      .reviews-count {
+        font-size: 0.8125rem;
+        color: var(--vuexy-muted-color);
+      }
+
+      .review-bars {
+        flex: 1;
+        max-width: 280px;
+      }
+
+      .review-bar-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.375rem;
+        font-size: 0.75rem;
+      }
+
+      .review-bar-label {
+        width: 48px;
+        color: var(--vuexy-muted-color);
+      }
+
+      .review-bar-track {
+        flex: 1;
+        height: 6px;
+        background: var(--vuexy-primary-lighter);
+        border-radius: 3px;
+        overflow: hidden;
+      }
+
+      .review-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--vuexy-warning), #f8c957);
+        border-radius: 3px;
+      }
+
+      .review-bar-percent {
+        width: 32px;
+        text-align: right;
+        color: var(--vuexy-body-color);
+        font-weight: 500;
+      }
+
+      /* ========== REVIEW CARDS ========== */
+      .review-cards {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .review-card {
+        padding: 1.25rem;
+        background: var(--vuexy-primary-lighter);
+        border-radius: var(--vuexy-radius-md);
+        border: 1px solid var(--vuexy-border-color);
+        transition: all 0.2s;
+      }
+
+      .review-card:hover {
+        border-color: var(--vuexy-primary);
+      }
+
+      .review-card-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .review-avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: var(--vuexy-radius-md);
+        background: linear-gradient(135deg, var(--vuexy-primary), var(--vuexy-primary-dark));
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 0.875rem;
+      }
+
+      .review-author {
+        font-weight: 600;
+        color: var(--vuexy-heading-color);
+        font-size: 0.9375rem;
+      }
+
+      .review-date {
+        font-size: 0.75rem;
+        color: var(--vuexy-muted-color);
+      }
+
+      .review-text {
+        color: var(--vuexy-body-color);
+        font-size: 0.875rem;
+        line-height: 1.6;
+      }
+
+      /* ========== RELATED PRODUCTS ========== */
+      .related-section {
+        margin-top: 2rem;
+        padding-bottom: 2rem;
+      }
+
+      .section-title {
+        font-size: 1.375rem;
+        font-weight: 600;
+        color: var(--vuexy-heading-color);
+        margin-bottom: 1.25rem;
+      }
+
+      /* ══════════════════════════════════════════════════════════════
+         VUEXY PRODUCT CARDS
+         ══════════════════════════════════════════════════════════════ */
+      
+      .product-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 1.25rem;
+      }
+
+      .product-card {
+        background: var(--vuexy-card-bg);
+        border-radius: var(--vuexy-radius-lg);
+        overflow: hidden;
+        box-shadow: var(--vuexy-shadow-sm);
+        border: none;
+        transition: var(--vuexy-transition-base);
+        text-decoration: none;
+      }
+
+      .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--vuexy-shadow-lg);
+      }
+
+      .product-card-image {
+        aspect-ratio: 1;
+        background: var(--vuexy-body-bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      }
+
+      .product-card-image img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        transition: var(--vuexy-transition-slow);
+      }
+
+      .product-card:hover .product-card-image img {
+        transform: scale(1.08);
+      }
+
+      .product-card-body {
+        padding: 1rem;
+        border-top: 1px solid var(--vuexy-border-color);
+      }
+
+      .product-card-title {
+        font-family: var(--vuexy-font-family);
+        font-weight: var(--vuexy-font-weight-semibold);
+        color: var(--vuexy-heading-color);
+        font-size: var(--vuexy-font-size-base);
+        margin-bottom: 0.375rem;
+      }
+
+      .product-card-rating {
+        display: flex;
+        align-items: center;
+        gap: 0.375rem;
+        font-family: var(--vuexy-font-family);
+        font-size: var(--vuexy-font-size-sm);
+        color: var(--vuexy-muted-color);
+      }
+
+      .product-card-rating i {
+        color: var(--vuexy-warning);
+      }
+
+      /* ══════════════════════════════════════════════════════════════
+         VUEXY BUTTON STYLES
+         ══════════════════════════════════════════════════════════════ */
+      
+      /* Base Button */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.786rem 1.5rem;
+        font-family: var(--vuexy-font-family);
+        font-size: var(--vuexy-font-size-base);
+        font-weight: var(--vuexy-font-weight-medium);
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        cursor: pointer;
+        user-select: none;
+        border: 1px solid transparent;
+        border-radius: var(--vuexy-radius-md);
+        transition: var(--vuexy-transition-base);
+      }
+
+      /* Primary Button - Add to Cart */
+      .add-cart-btn, .btn-primary {
+        width: 100%;
+        background: var(--vuexy-primary-gradient);
+        color: #fff;
+        border: none;
+        padding: 0.9rem 1.75rem;
+        border-radius: var(--vuexy-radius-md);
+        font-family: var(--vuexy-font-family);
+        font-weight: var(--vuexy-font-weight-medium);
+        font-size: 1rem;
+        letter-spacing: 0.3px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.625rem;
+        transition: var(--vuexy-transition-base);
+        box-shadow: var(--vuexy-shadow-primary-lg);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .add-cart-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+        transition: left 0.5s ease;
+      }
+
+      .add-cart-btn:hover {
+        box-shadow: 0 0 20px 0 rgba(var(--vuexy-primary-rgb), 0.5);
+        transform: translateY(-3px);
+      }
+
+      .add-cart-btn:hover::before {
+        left: 100%;
+      }
+
+      .add-cart-btn:active {
+        transform: translateY(-1px);
+        box-shadow: var(--vuexy-shadow-primary);
+      }
+
+      /* Outline Button */
+      .btn-outline-primary {
+        color: var(--vuexy-primary);
+        border-color: var(--vuexy-primary);
+        background: transparent;
+      }
+
+      .btn-outline-primary:hover {
+        background: var(--vuexy-primary);
+        color: #fff;
+        box-shadow: var(--vuexy-shadow-primary);
+      }
+
+      /* Flat Button */
+      .btn-flat-primary {
+        background: rgba(var(--vuexy-primary-rgb), 0.12);
+        color: var(--vuexy-primary);
+        border: none;
+      }
+
+      .btn-flat-primary:hover {
+        background: rgba(var(--vuexy-primary-rgb), 0.2);
+      }
+
+      /* Relief Button */
+      .btn-relief-primary {
+        background: var(--vuexy-primary);
+        color: #fff;
+        box-shadow: inset 0 -3px 0 0 rgba(0, 0, 0, 0.2);
+      }
+
+      .btn-relief-primary:active {
+        box-shadow: none;
+        transform: translateY(3px);
+      }
+
+      .desktop-cart-btn {
+        display: block;
+        width: 100%;
+        margin-top: 1.5rem;
+      }
+
+      /* ══════════════════════════════════════════════════════════════
+         VUEXY STICKY ADD TO CART
+         ══════════════════════════════════════════════════════════════ */
+      
+      .add-to-cart-section {
+        position: sticky;
+        bottom: 0;
+        background: var(--vuexy-card-bg);
+        padding: 1rem;
+        border-top: 1px solid var(--vuexy-border-color);
+        box-shadow: var(--vuexy-shadow-lg);
+        z-index: 100;
+        display: none;
+      }
+
+      @media (max-width: 991px) {
+        .add-to-cart-section {
+          display: block;
+        }
+        .desktop-cart-btn {
+          display: none;
+        }
+      }
+
+      /* ══════════════════════════════════════════════════════════════
+         VUEXY FOOTER
+         ══════════════════════════════════════════════════════════════ */
+      
+      .site-footer {
+        background: var(--vuexy-dark-bg);
+        color: rgba(255, 255, 255, 0.87);
+        padding: 3rem 0 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .footer-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--vuexy-font-family);
+        font-size: 1.5rem;
+        font-weight: var(--vuexy-font-weight-bold);
+        margin-bottom: 1rem;
+      }
+
+      .footer-logo .logo-icon {
+        color: var(--vuexy-primary-light);
+      }
+
+      .footer-title {
+        font-family: var(--vuexy-font-family);
+        font-weight: var(--vuexy-font-weight-semibold);
+        margin-bottom: 1rem;
+        font-size: 1rem;
+        color: white;
+      }
+
+      .footer-text {
+        color: rgba(255,255,255,0.6);
+        font-family: var(--vuexy-font-family);
+        font-size: var(--vuexy-font-size-sm);
+        line-height: 1.6;
+      }
+
+      .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .footer-links li {
+        margin-bottom: 0.625rem;
+      }
+
+      .footer-links a {
+        color: rgba(255,255,255,0.6);
+        text-decoration: none;
+        font-family: var(--vuexy-font-family);
+        font-size: var(--vuexy-font-size-sm);
+        transition: var(--vuexy-transition-fast);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .footer-links a:hover {
+        color: var(--vuexy-primary-light);
+        padding-left: 0.25rem;
+      }
+
+      .footer-bottom {
+        border-top: 1px solid rgba(255,255,255,0.1);
+        padding-top: 1.5rem;
+        text-align: center;
+        color: rgba(255,255,255,0.5);
+        font-size: 0.8125rem;
+      }
+
+      /* ========== RESPONSIVE ========== */
+      @media (max-width: 991px) {
+        .product-info {
+          margin-top: 1.5rem;
+        }
+
+        .size-inputs {
+          grid-template-columns: 1fr auto 1fr;
+        }
+      }
+
+      @media (max-width: 767px) {
+        .promo-banner .container {
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+
+        .promo-banner .promo-item {
+          border-right: none;
+          border-bottom: 1px solid rgba(255,255,255,0.1);
+          padding: 0.375rem 0;
+        }
+
+        .nav-category {
+          display: none;
+        }
+
+        .product-title {
+          font-size: 1.5rem;
+        }
+
+        .size-inputs {
+          grid-template-columns: 1fr;
+          gap: 0.75rem;
+        }
+
+        .size-multiply {
+          display: none;
+        }
+
+        .instruction-steps {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .reviews-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+
+      @media (max-width: 575px) {
+        .instruction-steps {
+          grid-template-columns: 1fr;
+        }
+
+        .product-cards {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      /* ========== T-SHIRT MOCKUP ========== */
+      .tshirt-mockup {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0;
+        margin-bottom: 0;
+      }
+
+      .tshirt-visual {
+        opacity: 0.2;
+        transition: opacity 0.3s;
+        width: 28px;
+        height: 32px;
+      }
+
+      .tshirt-visual.center {
+        opacity: 0.6;
+        width: 36px;
+        height: 42px;
+      }
+
+      /* ========== BUTTON STYLES ========== */
+      .btn-cloudy-primary {
+        background: linear-gradient(135deg, var(--vuexy-primary), var(--vuexy-primary-dark));
+        border: none;
+        color: white;
+        box-shadow: 0 2px 8px rgba(122, 143, 166, 0.35);
+      }
+
+      .btn-cloudy-primary:hover {
+        box-shadow: 0 4px 16px rgba(122, 143, 166, 0.45);
+        transform: translateY(-1px);
+        color: white;
+      }
+
+      .btn-cloudy-outline {
+        border: 1px solid var(--vuexy-primary);
+        color: var(--vuexy-primary);
+        background: transparent;
+      }
+
+      .btn-cloudy-outline:hover {
+        background: var(--vuexy-primary);
+        color: white;
+      }
+
+      /* Loading Animation */
+      .loading-spinner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid var(--vuexy-primary-light);
+        border-top-color: var(--vuexy-primary);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      .loading-text {
+        color: var(--vuexy-muted-color);
+        font-size: 0.875rem;
+      }
+
+      /* ══════════════════════════════════════════════════════════════
+         VUEXY POSITION SELECTOR
+         ══════════════════════════════════════════════════════════════ */
+      
+      .position-selector {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .position-box {
+        position: relative;
+        aspect-ratio: 1;
+        background: var(--vuexy-card-bg);
+        border: 2px solid var(--vuexy-border-color);
+        border-radius: var(--vuexy-radius-lg);
+        cursor: pointer;
+        overflow: hidden;
+        transition: var(--vuexy-transition-base);
+      }
+
+      .position-box:hover {
+        border-color: var(--vuexy-primary);
+        box-shadow: var(--vuexy-shadow-md);
+        transform: translateY(-4px);
+      }
+
+      .position-box.active {
+        border-color: var(--vuexy-primary);
+        border-width: 2px;
+        box-shadow: 0 0 0 4px rgba(var(--vuexy-primary-rgb), 0.12), var(--vuexy-shadow-md);
+      }
+
+      .position-box.active::after {
+        content: '✓';
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 24px;
+        height: 24px;
+        background: var(--vuexy-primary-gradient);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: var(--vuexy-font-weight-bold);
+        z-index: 10;
+        box-shadow: var(--vuexy-shadow-primary);
+        animation: scaleIn 0.2s ease;
+      }
+
+      @keyframes scaleIn {
+        from { transform: scale(0); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+      }
+
+      .position-canvas-container {
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+
+      .position-canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .position-label {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(40, 48, 70, 0.9));
+        color: white;
+        font-size: 0.75rem;
+        font-weight: var(--vuexy-font-weight-medium);
+        text-align: center;
+        padding: 18px 6px 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        font-family: var(--vuexy-font-family);
+      }
+
+      .position-coords {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        background: var(--vuexy-primary);
+        color: white;
+        font-size: 0.625rem;
+        padding: 4px 8px;
+        border-radius: var(--vuexy-radius-sm);
+        font-family: 'JetBrains Mono', monospace;
+        font-weight: var(--vuexy-font-weight-medium);
+        box-shadow: var(--vuexy-shadow-xs);
+      }
+
+      @media (max-width: 575px) {
+        .position-selector {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .position-label {
+          font-size: 0.7rem;
+        }
+      }
+
+      /* ══════════════════════════════════════════════════════════════
+         VUEXY FORM INPUTS
+         ══════════════════════════════════════════════════════════════ */
+      
+      .form-control, input[type="number"], input[type="text"] {
+        display: block;
+        width: 100%;
+        padding: 0.571rem 1rem;
+        font-family: var(--vuexy-font-family);
+        font-size: var(--vuexy-font-size-base);
+        font-weight: var(--vuexy-font-weight-normal);
+        line-height: 1.45;
+        color: var(--vuexy-body-color);
+        background-color: var(--vuexy-input-bg);
+        background-clip: padding-box;
+        border: 1px solid var(--vuexy-input-border);
+        border-radius: var(--vuexy-radius-md);
+        transition: var(--vuexy-transition-base);
+      }
+
+      .form-control:focus, input[type="number"]:focus, input[type="text"]:focus {
+        color: var(--vuexy-body-color);
+        background-color: var(--vuexy-input-bg);
+        border-color: var(--vuexy-primary);
+        outline: 0;
+        box-shadow: 0 3px 10px 0 rgba(var(--vuexy-primary-rgb), 0.1);
+      }
+
+      .form-control::placeholder {
+        color: var(--vuexy-placeholder-color);
+        opacity: 1;
+      }
+
+      label {
+        font-family: var(--vuexy-font-family);
+        font-size: var(--vuexy-font-size-sm);
+        font-weight: var(--vuexy-font-weight-normal);
+        color: var(--vuexy-label-color);
+        margin-bottom: 0.357rem;
+        display: inline-block;
+      }
+    </style>
+
+    <!-- Helpers -->
+    <script src="./assets/vendor/js/helpers.js"></script>
+  </head>
+
+  <body>
+    <!-- Promo Banner -->
+    <div class="promo-banner">
+      <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div class="promo-item">
+          <i class="ti ti-discount-2"></i>
+          <span>Bulk Discounts</span>
+        </div>
+        <div class="promo-item">
+          <i class="ti ti-truck-delivery"></i>
+          <span>Free Shipping at $59</span>
+        </div>
+        <div class="promo-item">
+          <i class="ti ti-headset"></i>
+          <span>Award Winning Support</span>
+        </div>
+        <div class="promo-item">
+          <i class="ti ti-bolt"></i>
+          <span>Fast Delivery</span>
+        </div>
+        <div class="promo-item">
+          <i class="ti ti-star-filled"></i>
+          <span class="fw-semibold">30K RATINGS • 4.8</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Navbar -->
+    <nav class="main-navbar">
+      <div class="container py-3">
+        <div class="d-flex justify-content-between align-items-center">
+          <a href="#" class="navbar-brand-logo">
+            <svg class="logo-icon" viewBox="0 0 32 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M0.00172773 0V6.85398C0.00172773 6.85398 -0.133178 9.01207 1.98092 10.8388L13.6912 21.9964L19.7809 21.9181L18.8042 9.88248L16.4951 7.17289L9.23799 0H0.00172773Z" fill="currentColor"/>
+              <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd" d="M7.69824 16.4364L12.5199 3.23696L16.5541 7.25596L7.69824 16.4364Z" fill="#161616"/>
+              <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd" d="M8.07751 15.9175L13.9419 4.63989L16.5849 7.28475L8.07751 15.9175Z" fill="#161616"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z" fill="currentColor"/>
+            </svg>
+            <span>Cloudy</span>Prints
+          </a>
+          <ul class="nav-category d-none d-lg-flex">
+            <li><a href="#">Blank T-Shirts</a></li>
+            <li><a href="#">Transfers</a></li>
+            <li><a href="#">Custom Shirts</a></li>
+            <li><a href="#">Stickers</a></li>
+            <li><a href="#">Brands</a></li>
+          </ul>
+          <div class="d-flex align-items-center gap-3">
+            <div class="nav-search d-none d-md-block">
+              <i class="ti ti-search"></i>
+              <input type="text" placeholder="Search products...">
+            </div>
+            <button class="btn btn-icon d-lg-none" style="border: 1px solid var(--vuexy-border-color); border-radius: var(--vuexy-radius-md);">
+              <i class="ti ti-menu-2"></i>
+            </button>
+            <a href="#" class="btn btn-cloudy-outline" style="padding: 0.5rem 1rem; font-size: 0.875rem; border-radius: var(--vuexy-radius-md);">
+              <i class="ti ti-user me-1"></i> Login
+            </a>
+            <a href="#" class="btn position-relative" style="border: 1px solid var(--vuexy-border-color); border-radius: var(--vuexy-radius-md); padding: 0.5rem;">
+              <i class="ti ti-shopping-cart" style="font-size: 1.25rem; color: var(--vuexy-heading-color);"></i>
+              <span class="position-absolute translate-middle badge rounded-pill" style="background: var(--vuexy-primary); font-size: 0.625rem; top: 0; right: -5px;">
+                0
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-section">
+      <div class="container">
+        <div class="breadcrumb-custom">
+          <a href="#"><i class="ti ti-home me-1"></i>Home</a>
+          <span>/</span>
+          <a href="#">Jiffy Transfers</a>
+          <span>/</span>
+          <span class="cloudy-badge badge-primary">DTF001</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Instagram Story Style Category Selector -->
+    <div class="category-story-section">
+      <div class="container">
+        <div class="story-scroll-container">
+          <!-- DTF Transfer - Active -->
+          <div class="story-item active" onclick="selectCategory(this, 'dtf-transfer')">
+            <div class="story-ring">
+              <div class="story-avatar">
+                <i class="ti ti-shirt"></i>
+              </div>
+            </div>
+            <span class="story-label">DTF Transfer</span>
+          </div>
+          
+          <!-- Gang Sheet -->
+          <div class="story-item" onclick="selectCategory(this, 'gang-sheet')">
+            <div class="story-ring">
+              <div class="story-avatar">
+                <i class="ti ti-layout-grid"></i>
+              </div>
+            </div>
+            <span class="story-label">Gang Sheet</span>
+          </div>
+          
+          <!-- Blank T-Shirt -->
+          <div class="story-item" onclick="selectCategory(this, 'blank-tshirt')">
+            <div class="story-ring">
+              <div class="story-avatar">
+                <i class="ti ti-hanger"></i>
+              </div>
+            </div>
+            <span class="story-label">Blank T-Shirt</span>
+          </div>
+          
+          <!-- DTF Supply -->
+          <div class="story-item" onclick="selectCategory(this, 'dtf-supply')">
+            <div class="story-ring">
+              <div class="story-avatar">
+                <i class="ti ti-box"></i>
+              </div>
+            </div>
+            <span class="story-label">DTF Supply</span>
+          </div>
+          
+          <!-- UV DTF Sheet -->
+          <div class="story-item" onclick="selectCategory(this, 'uv-dtf-sheet')">
+            <div class="story-ring">
+              <div class="story-avatar">
+                <i class="ti ti-sun"></i>
+              </div>
+            </div>
+            <span class="story-label">UV DTF Sheet</span>
+          </div>
+          
+          <!-- UV Gang Sheet -->
+          <div class="story-item" onclick="selectCategory(this, 'uv-gang-sheet')">
+            <div class="story-ring">
+              <div class="story-avatar">
+                <i class="ti ti-solar-panel"></i>
+              </div>
+            </div>
+            <span class="story-label">UV Gang Sheet</span>
+          </div>
+          
+          <!-- UV Supply -->
+          <div class="story-item" onclick="selectCategory(this, 'uv-supply')">
+            <div class="story-ring">
+              <div class="story-avatar">
+                <i class="ti ti-packages"></i>
+              </div>
+            </div>
+            <span class="story-label">UV Supply</span>
+          </div>
+          
+          <!-- Rhinestone -->
+          <div class="story-item" onclick="selectCategory(this, 'rhinestone')">
+            <div class="story-ring">
+              <div class="story-avatar">
+                <i class="ti ti-diamond"></i>
+              </div>
+            </div>
+            <span class="story-label">Rhinestone</span>
+          </div>
+          
+          <!-- Screen Print -->
+          <div class="story-item" onclick="selectCategory(this, 'screen-print')">
+            <div class="story-ring">
+              <div class="story-avatar">
+                <i class="ti ti-printer"></i>
+              </div>
+            </div>
+            <span class="story-label">Screen Print</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Section -->
+    <section class="product-section">
+      <div class="container">
+        <div class="row">
+          <!-- Left Column - 3D Gallery -->
+          <div class="col-lg-5">
+            <div class="product-gallery">
+              <div class="threejs-container">
+                <canvas id="tshirt-canvas"></canvas>
+                <button class="wishlist-btn" title="Add to wishlist">
+                  <i class="ti ti-heart" style="font-size: 1.125rem;"></i>
+                </button>
+                <span class="position-absolute cloudy-badge badge-success" style="top: 1rem; left: 1rem; z-index: 10;">
+                  <i class="ti ti-check me-1"></i>In Stock
+                </span>
+                <div class="loading-spinner" id="loadingSpinner">
+                  <div class="spinner"></div>
+                  <span class="loading-text">Loading 3D Model...</span>
+                </div>
+                <div class="canvas-controls">
+                  <button onclick="resetCamera()" title="Reset View">
+                    <i class="ti ti-refresh"></i>
+                  </button>
+                  <button onclick="rotateLeft()" title="Rotate Left">
+                    <i class="ti ti-rotate-clockwise"></i>
+                  </button>
+                  <button onclick="rotateRight()" title="Rotate Right">
+                    <i class="ti ti-rotate-2"></i>
+                  </button>
+                  <button onclick="zoomIn()" title="Zoom In">
+                    <i class="ti ti-zoom-in"></i>
+                  </button>
+                  <button onclick="zoomOut()" title="Zoom Out">
+                    <i class="ti ti-zoom-out"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Color Picker -->
+              <div class="color-picker-section">
+                <div class="color-picker-title">T-Shirt Color</div>
+                <div class="color-options">
+                  <div class="color-option" style="background: #ffffff;" onclick="changeTshirtColor('#ffffff', this)" title="White"></div>
+                  <div class="color-option" style="background: #1a1a1a;" onclick="changeTshirtColor('#1a1a1a', this)" title="Black"></div>
+                  <div class="color-option" style="background: #2d3748;" onclick="changeTshirtColor('#2d3748', this)" title="Dark Gray"></div>
+                  <div class="color-option" style="background: #e53e3e;" onclick="changeTshirtColor('#e53e3e', this)" title="Red"></div>
+                  <div class="color-option active" style="background: #3b82f6;" onclick="changeTshirtColor('#3b82f6', this)" title="Blue"></div>
+                  <div class="color-option" style="background: #38a169;" onclick="changeTshirtColor('#38a169', this)" title="Green"></div>
+                  <div class="color-option" style="background: #d69e2e;" onclick="changeTshirtColor('#d69e2e', this)" title="Gold"></div>
+                  <div class="color-option" style="background: #805ad5;" onclick="changeTshirtColor('#805ad5', this)" title="Purple"></div>
+                  <div class="color-option" style="background: #ed64a6;" onclick="changeTshirtColor('#ed64a6', this)" title="Pink"></div>
+                  <div class="color-option" style="background: #dd6b20;" onclick="changeTshirtColor('#dd6b20', this)" title="Orange"></div>
+                </div>
+              </div>
+
+              <!-- Vuexy Product Tabs -->
+              <div class="product-tabs-section">
+                <div class="product-tabs-nav">
+                  <button class="product-tab-btn active" onclick="switchTab('specs', this)">
+                    <i class="ti ti-list-details"></i>
+                    <span>Technical Specs</span>
+                  </button>
+                  <button class="product-tab-btn" onclick="switchTab('description', this)">
+                    <i class="ti ti-file-description"></i>
+                    <span>Description</span>
+                  </button>
+                  <button class="product-tab-btn" onclick="switchTab('shipping', this)">
+                    <i class="ti ti-truck-delivery"></i>
+                    <span>Shipping</span>
+                  </button>
+                  <button class="product-tab-btn" onclick="switchTab('care', this)">
+                    <i class="ti ti-wash-machine"></i>
+                    <span>Care</span>
+                  </button>
+                </div>
+                
+                <div class="product-tabs-content">
+                  <!-- Technical Specs Tab -->
+                  <div class="product-tab-pane active" id="tab-specs">
+                    <div class="tab-content-title">
+                      <i class="ti ti-clipboard-list"></i>
+                      Product Specifications
+                    </div>
+                    <ul class="tab-spec-list">
+                      <li>
+                        <span class="spec-label">Transfer Type</span>
+                        <span class="spec-value">DTF (Direct to Film)</span>
+                      </li>
+                      <li>
+                        <span class="spec-label">Material</span>
+                        <span class="spec-value">Premium PET Film</span>
+                      </li>
+                      <li>
+                        <span class="spec-label">Resolution</span>
+                        <span class="spec-value">1440 DPI</span>
+                      </li>
+                      <li>
+                        <span class="spec-label">Wash Durability</span>
+                        <span class="spec-value">50+ Washes</span>
+                      </li>
+                      <li>
+                        <span class="spec-label">Compatible Fabrics</span>
+                        <span class="spec-value">Cotton, Polyester, Blends</span>
+                      </li>
+                      <li>
+                        <span class="spec-label">Application Method</span>
+                        <span class="spec-value">Heat Press</span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <!-- Description Tab -->
+                  <div class="product-tab-pane" id="tab-description">
+                    <div class="tab-content-title">
+                      <i class="ti ti-info-circle"></i>
+                      Product Description
+                    </div>
+                    <div class="tab-description">
+                      <p>Our premium DTF transfers deliver stunning, photo-quality prints that last. Using cutting-edge Direct to Film technology, we ensure vibrant colors and exceptional detail in every design.</p>
+                      <p>Perfect for custom apparel, these transfers work on virtually any fabric type and color, giving you unlimited creative possibilities.</p>
+                      <div class="tab-features-grid">
+                        <div class="tab-feature-item">
+                          <i class="ti ti-check"></i>
+                          <span>Vibrant Colors</span>
+                        </div>
+                        <div class="tab-feature-item">
+                          <i class="ti ti-check"></i>
+                          <span>Soft Hand Feel</span>
+                        </div>
+                        <div class="tab-feature-item">
+                          <i class="ti ti-check"></i>
+                          <span>No Weeding Required</span>
+                        </div>
+                        <div class="tab-feature-item">
+                          <i class="ti ti-check"></i>
+                          <span>Works on Dark Fabrics</span>
+                        </div>
+                        <div class="tab-feature-item">
+                          <i class="ti ti-check"></i>
+                          <span>Eco-Friendly Inks</span>
+                        </div>
+                        <div class="tab-feature-item">
+                          <i class="ti ti-check"></i>
+                          <span>Fast Production</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Shipping Tab -->
+                  <div class="product-tab-pane" id="tab-shipping">
+                    <div class="tab-content-title">
+                      <i class="ti ti-package"></i>
+                      Shipping Information
+                    </div>
+                    <ul class="tab-spec-list">
+                      <li>
+                        <span class="spec-label">Processing Time</span>
+                        <span class="spec-value">1-2 Business Days</span>
+                      </li>
+                      <li>
+                        <span class="spec-label">Standard Shipping</span>
+                        <span class="spec-value">3-5 Business Days</span>
+                      </li>
+                      <li>
+                        <span class="spec-label">Express Shipping</span>
+                        <span class="spec-value">1-2 Business Days</span>
+                      </li>
+                      <li>
+                        <span class="spec-label">Free Shipping</span>
+                        <span class="spec-value">Orders $59+</span>
+                      </li>
+                      <li>
+                        <span class="spec-label">Local Pickup</span>
+                        <span class="spec-value">Dallas, TX (Same Day)</span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <!-- Care Tab -->
+                  <div class="product-tab-pane" id="tab-care">
+                    <div class="tab-content-title">
+                      <i class="ti ti-shirt"></i>
+                      Care Instructions
+                    </div>
+                    <div class="tab-description">
+                      <p>To ensure your DTF transfer lasts as long as possible, follow these simple care instructions:</p>
+                      <div class="tab-features-grid">
+                        <div class="tab-feature-item">
+                          <i class="ti ti-check"></i>
+                          <span>Wait 24hrs before washing</span>
+                        </div>
+                        <div class="tab-feature-item">
+                          <i class="ti ti-check"></i>
+                          <span>Wash inside out</span>
+                        </div>
+                        <div class="tab-feature-item">
+                          <i class="ti ti-check"></i>
+                          <span>Cold water only</span>
+                        </div>
+                        <div class="tab-feature-item">
+                          <i class="ti ti-check"></i>
+                          <span>Tumble dry low</span>
+                        </div>
+                        <div class="tab-feature-item">
+                          <i class="ti ti-check"></i>
+                          <span>Do not iron on design</span>
+                        </div>
+                        <div class="tab-feature-item">
+                          <i class="ti ti-check"></i>
+                          <span>No bleach</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Right Column - Product Info -->
+          <div class="col-lg-7">
+            <div class="product-info">
+              <!-- Rating -->
+              <div class="rating-section">
+                <div class="rating-stars">
+                  <i class="ti ti-star-filled"></i>
+                  <i class="ti ti-star-filled"></i>
+                  <i class="ti ti-star-filled"></i>
+                  <i class="ti ti-star-filled"></i>
+                  <i class="ti ti-star-filled"></i>
+                </div>
+                <span class="rating-count"><a href="#reviews">18,624 reviews</a></span>
+                
+                <!-- Mini Video Reviews - Inline -->
+                <div class="mini-video-reviews-inline">
+                  <div class="mini-story" onclick="playReviewStory(1)">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop" alt="">
+                  </div>
+                  <div class="mini-story" onclick="playReviewStory(2)">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop" alt="">
+                  </div>
+                  <div class="mini-story" onclick="playReviewStory(3)">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop" alt="">
+                  </div>
+                  <div class="mini-story" onclick="playReviewStory(4)">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=60&h=60&fit=crop" alt="">
+                  </div>
+                  <div class="mini-story" onclick="playReviewStory(5)">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop" alt="">
+                  </div>
+                  <span class="mini-video-label"><i class="ti ti-video"></i> 985+</span>
+                </div>
+                
+                <span class="cloudy-badge badge-success ms-2">
+                  <i class="ti ti-thumb-up me-1"></i>99% Recommended
+                </span>
+              </div>
+
+              <!-- Product Title -->
+              <p class="product-category">DTF Transfers by Size</p>
+              <h1 class="product-title">Standard DTF Transfer</h1>
+
+              <!-- Delivery Card -->
+              <div class="delivery-card">
+                <div class="delivery-title">
+                  <i class="ti ti-truck-delivery"></i>
+                  Get it <span class="delivery-time">Tomorrow 5PM – 9PM</span>
+                </div>
+                <div style="font-size: 0.8125rem; color: var(--vuexy-body-color); margin-top: 0.25rem;">Order by 3PM</div>
+                <div class="delivery-location">
+                  <i class="ti ti-map-pin"></i>
+                  Deliver To Dallas 75201
+                  <a href="#" style="color: var(--vuexy-primary); margin-left: 0.5rem; font-size: 0.8125rem;">Change</a>
+                </div>
+              </div>
+
+              <!-- Quick Quantity & Price Alert Box -->
+              <div class="price-alert-box">
+                <div class="price-alert-header">
+                  <i class="ti ti-flame"></i>
+                  <span>Limited Time Offer</span>
+                </div>
+                <div class="price-alert-content">
+                  <div class="quick-qty-label">
+                    <i class="ti ti-stack-2"></i> Quantity
+                  </div>
+                  <div class="quick-qty-controls">
+                    <button class="quick-qty-btn" onclick="changeQuantity(-1)">−</button>
+                    <input type="number" id="quickQuantity" value="1" min="1" max="999" class="quick-qty-input" onchange="syncQuantity(this.value)">
+                    <button class="quick-qty-btn" onclick="changeQuantity(1)">+</button>
+                  </div>
+                  <div class="quick-price-wrapper">
+                    <span class="quick-price" id="quickPrice">$4.99</span>
+                    <span class="old-price">$6.24</span>
+                    <span class="discount-badge">-25%</span>
+                  </div>
+                  <button class="view-campaigns-btn" onclick="viewCampaigns()">
+                    <i class="ti ti-discount-2"></i> View Campaigns
+                  </button>
+                </div>
+              </div>
+
+              <!-- Step 1: Upload Design -->
+              <div class="step-card">
+                <div class="step-header">
+                  <span class="step-number">1</span>
+                  Upload Your Design(s)
+                </div>
+                <div class="upload-area" id="uploadArea">
+                  <div class="upload-row" style="display: flex; align-items: center; gap: 1rem; width: 100%;">
+                    <div class="upload-icon" style="flex-shrink: 0;">
+                      <i class="ti ti-cloud-upload"></i>
+                    </div>
+                    <div style="flex: 1; text-align: left;">
+                      <p class="upload-text">Drag your design here</p>
+                      <p class="upload-subtext">PNG, JPG, SVG up to 50MB</p>
+                    </div>
+                    <button class="upload-btn" style="flex-shrink: 0;">
+                      <i class="ti ti-device-desktop me-1"></i> My Device
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step 2: Select Position -->
+              <div class="step-card">
+                <div class="step-header">
+                  <span class="step-number">2</span>
+                  Select Print Position
+                </div>
+                <div class="position-selector">
+                  <!-- Front Body -->
+                  <div class="position-box active" onclick="selectPosition('front', this)" data-position="front">
+                    <div class="position-canvas-container">
+                      <canvas id="pos-front-canvas" class="position-canvas"></canvas>
+                    </div>
+                    <div class="position-coords" id="coords-front">0, 0, 0.15</div>
+                    <div class="position-label">Front Body</div>
+                  </div>
+                  <!-- Back Body -->
+                  <div class="position-box" onclick="selectPosition('back', this)" data-position="back">
+                    <div class="position-canvas-container">
+                      <canvas id="pos-back-canvas" class="position-canvas"></canvas>
+                    </div>
+                    <div class="position-coords" id="coords-back">0, 0, -0.15</div>
+                    <div class="position-label">Back Body</div>
+                  </div>
+                  <!-- Left Sleeve -->
+                  <div class="position-box" onclick="selectPosition('left-sleeve', this)" data-position="left-sleeve">
+                    <div class="position-canvas-container">
+                      <canvas id="pos-left-canvas" class="position-canvas"></canvas>
+                    </div>
+                    <div class="position-coords" id="coords-left">-0.18, 0.08, 0</div>
+                    <div class="position-label">Left Sleeve</div>
+                  </div>
+                  <!-- Right Sleeve -->
+                  <div class="position-box" onclick="selectPosition('right-sleeve', this)" data-position="right-sleeve">
+                    <div class="position-canvas-container">
+                      <canvas id="pos-right-canvas" class="position-canvas"></canvas>
+                    </div>
+                    <div class="position-coords" id="coords-right">0.18, 0.08, 0</div>
+                    <div class="position-label">Right Sleeve</div>
+                  </div>
+                </div>
+                <p style="font-size: 0.75rem; color: var(--vuexy-muted-color); margin-top: 0.75rem; text-align: center;">
+                  <i class="ti ti-info-circle me-1"></i>Click to select where your design will be placed
+                </p>
+                
+                <!-- Position Adjustment Sliders -->
+                <div class="position-sliders" style="margin-top: 1rem; padding: 0.75rem; background: var(--vuexy-primary-lighter); border-radius: 8px;">
+                  <!-- Reassurance Alert -->
+                  <div style="background: linear-gradient(135deg, rgba(40, 199, 111, 0.1), rgba(0, 207, 232, 0.1)); border: 1px solid var(--vuexy-success); border-radius: 6px; padding: 0.5rem 0.75rem; margin-bottom: 0.75rem;">
+                    <p style="font-size: 0.7rem; color: var(--vuexy-success); margin: 0; line-height: 1.4;">
+                      <i class="ti ti-info-circle me-1"></i>
+                      <strong>Don't worry!</strong> If you can't position the image correctly, our technicians will configure it optimally and call you for approval.
+                    </p>
+                  </div>
+                  <!-- Live Coordinate Display -->
+                  <div id="coordinateDisplay" style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 0.75rem; padding: 0.5rem; background: var(--vuexy-dark-bg); border-radius: 6px;">
+                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #28c76f;">X: <span id="liveX">0.00</span></span>
+                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #ff9f43;">Y: <span id="liveY">0.00</span></span>
+                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #00cfe8;">Z: <span id="liveZ">0.00</span></span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                    <label style="font-size: 0.75rem; font-weight: 600; color: var(--vuexy-primary); min-width: 70px;">
+                      <i class="ti ti-arrows-horizontal me-1"></i>X Pos
+                    </label>
+                    <input type="range" id="positionXSlider" min="-100" max="100" value="0" step="1"
+                           style="flex: 1; height: 6px; accent-color: var(--vuexy-primary);">
+                    <span id="positionXValue" style="font-size: 0.7rem; color: var(--vuexy-body-color); min-width: 30px; text-align: right;">0</span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <label style="font-size: 0.75rem; font-weight: 600; color: var(--vuexy-primary); min-width: 70px;">
+                      <i class="ti ti-arrows-vertical me-1"></i>Y Pos
+                    </label>
+                    <input type="range" id="positionYSlider" min="-100" max="100" value="0" step="1"
+                           style="flex: 1; height: 6px; accent-color: var(--vuexy-primary);">
+                    <span id="positionYValue" style="font-size: 0.7rem; color: var(--vuexy-body-color); min-width: 30px; text-align: right;">0</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step 3: Set Design Size -->
+              <div class="step-card">
+                <div class="step-header">
+                  <span class="step-number">3</span>
+                  Set Design Size
+                </div>
+                <div class="size-inputs">
+                  <div class="size-input-group">
+                    <label>Width (Inch)</label>
+                    <input type="number" value="9" min="1" max="14" id="widthInput">
+                  </div>
+                  <div class="size-multiply">×</div>
+                  <div class="size-input-group">
+                    <label>Height (Inch)</label>
+                    <input type="number" value="9" min="1" max="12" id="heightInput">
+                  </div>
+                  <div class="size-input-group">
+                    <label>Quantity</label>
+                    <div class="quantity-control">
+                      <button onclick="changeQuantity(-1)">−</button>
+                      <input type="number" value="1" min="1" id="quantityInput">
+                      <button onclick="changeQuantity(1)">+</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-3 pt-3" style="border-top: 1px solid var(--vuexy-border-color);">
+                  <span style="color: var(--vuexy-muted-color); font-size: 0.875rem;">Total Price:</span>
+                  <span class="price-display" id="priceDisplay">$2.85</span>
+                </div>
+              </div>
+
+              <!-- Pricing Section -->
+              <div class="pricing-section">
+                <div class="pricing-header">
+                  <div class="pricing-title">
+                    <i class="ti ti-tag"></i>
+                    Volume Discounts Available
+                  </div>
+                </div>
+                <table class="pricing-table">
+                  <thead>
+                    <tr>
+                      <th>Quantity</th>
+                      <th>1 Sq In</th>
+                      <th>25 Sq In</th>
+                      <th>50 Sq In</th>
+                      <th>100 Sq In</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td><span class="price-original">$4.50</span><span class="price-sale">$2.85</span></td>
+                      <td><span class="price-original">$4.70</span><span class="price-sale">$3.05</span></td>
+                      <td><span class="price-original">$5.15</span><span class="price-sale">$3.50</span></td>
+                      <td><span class="price-original">$5.80</span><span class="price-sale">$4.15</span></td>
+                    </tr>
+                    <tr>
+                      <td>2-5</td>
+                      <td><span class="price-sale">$2.71</span><span class="discount-badge">-5%</span></td>
+                      <td><span class="price-sale">$2.90</span></td>
+                      <td><span class="price-sale">$3.33</span></td>
+                      <td><span class="price-sale">$3.95</span></td>
+                    </tr>
+                    <tr>
+                      <td>6-11</td>
+                      <td><span class="price-sale">$2.57</span><span class="discount-badge">-10%</span></td>
+                      <td><span class="price-sale">$2.75</span></td>
+                      <td><span class="price-sale">$3.15</span></td>
+                      <td><span class="price-sale">$3.74</span></td>
+                    </tr>
+                    <tr>
+                      <td>12-24</td>
+                      <td><span class="price-sale">$2.43</span><span class="discount-badge">-15%</span></td>
+                      <td><span class="price-sale">$2.59</span></td>
+                      <td><span class="price-sale">$2.98</span></td>
+                      <td><span class="price-sale">$3.53</span></td>
+                    </tr>
+                    <tr>
+                      <td>25-99</td>
+                      <td><span class="price-sale">$2.28</span><span class="discount-badge">-20%</span></td>
+                      <td><span class="price-sale">$2.44</span></td>
+                      <td><span class="price-sale">$2.80</span></td>
+                      <td><span class="price-sale">$3.32</span></td>
+                    </tr>
+                    <tr>
+                      <td>100+</td>
+                      <td><span class="price-sale">$2.00</span><span class="discount-badge">-30%</span></td>
+                      <td><span class="price-sale">$2.14</span></td>
+                      <td><span class="price-sale">$2.45</span></td>
+                      <td><span class="price-sale">$2.91</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Bulk Discount Info -->
+              <div class="bulk-section">
+                <div class="bulk-title">
+                  <i class="ti ti-discount"></i>
+                  Bulk Order Discounts
+                </div>
+                <table class="bulk-table">
+                  <tr>
+                    <th>Order Total</th>
+                    <th>Discount</th>
+                    <th>Code</th>
+                  </tr>
+                  <tr>
+                    <td>$500+</td>
+                    <td><span class="cloudy-badge badge-success">5% Off</span></td>
+                    <td><code style="background: rgba(93, 173, 226, 0.15); padding: 0.25em 0.5em; border-radius: 4px;">BULK5</code></td>
+                  </tr>
+                  <tr>
+                    <td>$1,000+</td>
+                    <td><span class="cloudy-badge badge-success">10% Off</span></td>
+                    <td><code style="background: rgba(93, 173, 226, 0.15); padding: 0.25em 0.5em; border-radius: 4px;">BULK10</code></td>
+                  </tr>
+                  <tr>
+                    <td>$2,000+</td>
+                    <td><span class="cloudy-badge badge-success">15% Off</span></td>
+                    <td><code style="background: rgba(93, 173, 226, 0.15); padding: 0.25em 0.5em; border-radius: 4px;">BULK15</code></td>
+                  </tr>
+                </table>
+              </div>
+
+              <!-- Add to Cart Button (Desktop) -->
+              <button class="add-cart-btn desktop-cart-btn">
+                <i class="ti ti-shopping-cart"></i>
+                Add to Cart
+              </button>
+            </div>
+
+            <!-- Press Instructions -->
+            <div class="instructions-section">
+              <h3 class="instructions-title">
+                <i class="ti ti-manual-gearbox"></i>
+                Heat Press Instructions
+              </h3>
+              <div class="instruction-steps">
+                <div class="instruction-step">
+                  <div class="instruction-number">1</div>
+                  <div class="instruction-title">Pre-Heat</div>
+                  <div class="instruction-desc">Heat your press to 300°F</div>
+                  <span class="instruction-time">3-5 sec</span>
+                </div>
+                <div class="instruction-step">
+                  <div class="instruction-number">2</div>
+                  <div class="instruction-title">Position</div>
+                  <div class="instruction-desc">Place transfer on garment</div>
+                </div>
+                <div class="instruction-step">
+                  <div class="instruction-number">3</div>
+                  <div class="instruction-title">Press</div>
+                  <div class="instruction-desc">Apply firm, even pressure</div>
+                  <span class="instruction-time">10-15 sec</span>
+                </div>
+                <div class="instruction-step">
+                  <div class="instruction-number">4</div>
+                  <div class="instruction-title">Peel</div>
+                  <div class="instruction-desc">Remove film while hot</div>
+                </div>
+              </div>
+              <div class="settings-grid">
+                <div class="setting-item">
+                  <div class="setting-label">Temperature</div>
+                  <div class="setting-value">300°F</div>
+                  <div class="setting-note">149°C</div>
+                </div>
+                <div class="setting-item">
+                  <div class="setting-label">Time</div>
+                  <div class="setting-value">10-15s</div>
+                  <div class="setting-note">Firm Pressure</div>
+                </div>
+                <div class="setting-item">
+                  <div class="setting-label">Pressure</div>
+                  <div class="setting-value">Medium</div>
+                  <div class="setting-note">40-50 PSI</div>
+                </div>
+                <div class="setting-item">
+                  <div class="setting-label">Peel</div>
+                  <div class="setting-value">Hot</div>
+                  <div class="setting-note">Immediate</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Reviews Section -->
+            <div class="reviews-section" id="reviews">
+              <div class="reviews-header">
+                <div class="reviews-summary">
+                  <span class="reviews-score">4.9</span>
+                  <div class="reviews-details">
+                    <div class="reviews-stars">
+                      <i class="ti ti-star-filled"></i>
+                      <i class="ti ti-star-filled"></i>
+                      <i class="ti ti-star-filled"></i>
+                      <i class="ti ti-star-filled"></i>
+                      <i class="ti ti-star-filled"></i>
+                    </div>
+                    <span class="reviews-count">Based on 18,624 reviews</span>
+                  </div>
+                </div>
+                <div class="review-bars">
+                  <div class="review-bar-item">
+                    <span class="review-bar-label">5 stars</span>
+                    <div class="review-bar-track"><div class="review-bar-fill" style="width: 92%"></div></div>
+                    <span class="review-bar-percent">92%</span>
+                  </div>
+                  <div class="review-bar-item">
+                    <span class="review-bar-label">4 stars</span>
+                    <div class="review-bar-track"><div class="review-bar-fill" style="width: 5%"></div></div>
+                    <span class="review-bar-percent">5%</span>
+                  </div>
+                  <div class="review-bar-item">
+                    <span class="review-bar-label">3 stars</span>
+                    <div class="review-bar-track"><div class="review-bar-fill" style="width: 2%"></div></div>
+                    <span class="review-bar-percent">2%</span>
+                  </div>
+                  <div class="review-bar-item">
+                    <span class="review-bar-label">2 stars</span>
+                    <div class="review-bar-track"><div class="review-bar-fill" style="width: 1%"></div></div>
+                    <span class="review-bar-percent">1%</span>
+                  </div>
+                  <div class="review-bar-item">
+                    <span class="review-bar-label">1 star</span>
+                    <div class="review-bar-track"><div class="review-bar-fill" style="width: 0%"></div></div>
+                    <span class="review-bar-percent">0%</span>
+                  </div>
+                </div>
+              </div>
+              <h4 class="reviews-title mb-3">
+                <i class="ti ti-message-star"></i>
+                Customer Reviews
+              </h4>
+              <div class="review-cards">
+                <div class="review-card">
+                  <div class="review-card-header">
+                    <div class="review-avatar">JM</div>
+                    <div>
+                      <div class="review-author">Jessica Martinez</div>
+                      <div class="review-date">2 days ago • Verified Purchase</div>
+                    </div>
+                    <div class="ms-auto reviews-stars">
+                      <i class="ti ti-star-filled"></i>
+                      <i class="ti ti-star-filled"></i>
+                      <i class="ti ti-star-filled"></i>
+                      <i class="ti ti-star-filled"></i>
+                      <i class="ti ti-star-filled"></i>
+                    </div>
+                  </div>
+                  <p class="review-text mb-0">These transfers are incredible! The colors are so vibrant and the detail is amazing. I've washed my shirts multiple times and they still look brand new. Highly recommend for anyone starting a t-shirt business.</p>
+                </div>
+                <div class="review-card">
+                  <div class="review-card-header">
+                    <div class="review-avatar">RJ</div>
+                    <div>
+                      <div class="review-author">Robert Johnson</div>
+                      <div class="review-date">5 days ago • Verified Purchase</div>
+                    </div>
+                    <div class="ms-auto reviews-stars">
+                      <i class="ti ti-star-filled"></i>
+                      <i class="ti ti-star-filled"></i>
+                      <i class="ti ti-star-filled"></i>
+                      <i class="ti ti-star-filled"></i>
+                      <i class="ti ti-star-filled"></i>
+                    </div>
+                  </div>
+                  <p class="review-text mb-0">Fast shipping and excellent quality. The transfers applied easily and the finish is professional. I've tried other brands but these are by far the best. Customer service is also top notch!</p>
+                </div>
+                <div class="review-card">
+                  <div class="review-card-header">
+                    <div class="review-avatar">SK</div>
+                    <div>
+                      <div class="review-author">Sarah Kim</div>
+                      <div class="review-date">1 week ago • Verified Purchase</div>
+                    </div>
+                    <div class="ms-auto reviews-stars">
+                      <i class="ti ti-star-filled"></i>
+                      <i class="ti ti-star-filled"></i>
+                      <i class="ti ti-star-filled"></i>
+                      <i class="ti ti-star-filled"></i>
+                      <i class="ti ti-star-half-filled"></i>
+                    </div>
+                  </div>
+                  <p class="review-text mb-0">Great product overall. The soft hand feel is impressive and my customers love the quality. Only reason for 4.5 stars is shipping took a bit longer than expected, but the end result was worth it!</p>
+                </div>
+              </div>
+              <div class="text-center mt-4">
+                <button class="btn btn-cloudy-outline" style="padding: 0.5rem 1.5rem; border-radius: var(--vuexy-radius-md);">
+                  View All Reviews
+                </button>
+              </div>
+              
+              <!-- Video Review Stories -->
+              <div class="review-stories-section">
+                <div class="review-stories-header">
+                  <i class="ti ti-video"></i>
+                  <span><span class="count">985+</span> Video Reviews</span>
+                </div>
+                <div class="review-stories-scroll">
+                  <!-- Story 1 -->
+                  <div class="review-story-item" onclick="playReviewStory(1)">
+                    <div class="review-story-ring">
+                      <div class="review-story-avatar">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" alt="Sarah">
+                      </div>
+                    </div>
+                    <span class="review-story-name">Sarah K.</span>
+                  </div>
+                  <!-- Story 2 -->
+                  <div class="review-story-item" onclick="playReviewStory(2)">
+                    <div class="review-story-ring">
+                      <div class="review-story-avatar">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" alt="Mike">
+                      </div>
+                    </div>
+                    <span class="review-story-name">Mike R.</span>
+                  </div>
+                  <!-- Story 3 -->
+                  <div class="review-story-item" onclick="playReviewStory(3)">
+                    <div class="review-story-ring">
+                      <div class="review-story-avatar">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop" alt="Emma">
+                      </div>
+                    </div>
+                    <span class="review-story-name">Emma L.</span>
+                  </div>
+                  <!-- Story 4 -->
+                  <div class="review-story-item" onclick="playReviewStory(4)">
+                    <div class="review-story-ring">
+                      <div class="review-story-avatar">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop" alt="James">
+                      </div>
+                    </div>
+                    <span class="review-story-name">James T.</span>
+                  </div>
+                  <!-- Story 5 -->
+                  <div class="review-story-item" onclick="playReviewStory(5)">
+                    <div class="review-story-ring">
+                      <div class="review-story-avatar">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop" alt="Olivia">
+                      </div>
+                    </div>
+                    <span class="review-story-name">Olivia M.</span>
+                  </div>
+                  <!-- Story 6 -->
+                  <div class="review-story-item" onclick="playReviewStory(6)">
+                    <div class="review-story-ring">
+                      <div class="review-story-avatar">
+                        <img src="https://images.unsplash.com/photo-1552058544-f2b08422138a?w=100&h=100&fit=crop" alt="David">
+                      </div>
+                    </div>
+                    <span class="review-story-name">David P.</span>
+                  </div>
+                  <!-- Story 7 -->
+                  <div class="review-story-item" onclick="playReviewStory(7)">
+                    <div class="review-story-ring">
+                      <div class="review-story-avatar">
+                        <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=100&h=100&fit=crop" alt="Sophia">
+                      </div>
+                    </div>
+                    <span class="review-story-name">Sophia W.</span>
+                  </div>
+                  <!-- Story 8 -->
+                  <div class="review-story-item" onclick="playReviewStory(8)">
+                    <div class="review-story-ring">
+                      <div class="review-story-avatar">
+                        <img src="https://images.unsplash.com/photo-1463453091185-61582044d556?w=100&h=100&fit=crop" alt="Chris">
+                      </div>
+                    </div>
+                    <span class="review-story-name">Chris B.</span>
+                  </div>
+                  <!-- Story 9 -->
+                  <div class="review-story-item" onclick="playReviewStory(9)">
+                    <div class="review-story-ring">
+                      <div class="review-story-avatar">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" alt="Ava">
+                      </div>
+                    </div>
+                    <span class="review-story-name">Ava H.</span>
+                  </div>
+                  <!-- Story 10 -->
+                  <div class="review-story-item" onclick="playReviewStory(10)">
+                    <div class="review-story-ring">
+                      <div class="review-story-avatar">
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop" alt="Ryan">
+                      </div>
+                    </div>
+                    <span class="review-story-name">Ryan G.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Related Products -->
+        <div class="related-section">
+          <h3 class="section-title">Related Products</h3>
+          <div class="product-cards">
+            <a href="#" class="product-card">
+              <div class="product-card-image">
+                <img src="./assets/img/ecommerce-images/product-1.png" alt="UV DTF Transfers" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'ti ti-shirt\' style=\'font-size: 4rem; color: var(--vuexy-primary);\'></i>';">
+              </div>
+              <div class="product-card-body">
+                <div class="product-card-title">UV DTF Transfers</div>
+                <div class="product-card-rating">
+                  <i class="ti ti-star-filled"></i>
+                  <span>4.9 (2,845)</span>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="product-card">
+              <div class="product-card-image">
+                <img src="./assets/img/ecommerce-images/product-2.png" alt="Rhinestone Transfers" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'ti ti-diamond\' style=\'font-size: 4rem; color: var(--vuexy-primary);\'></i>';">
+              </div>
+              <div class="product-card-body">
+                <div class="product-card-title">Rhinestone Transfers</div>
+                <div class="product-card-rating">
+                  <i class="ti ti-star-filled"></i>
+                  <span>4.8 (1,290)</span>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="product-card">
+              <div class="product-card-image">
+                <img src="./assets/img/ecommerce-images/product-3.png" alt="Sublimation Transfer" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'ti ti-palette\' style=\'font-size: 4rem; color: var(--vuexy-primary);\'></i>';">
+              </div>
+              <div class="product-card-body">
+                <div class="product-card-title">Sublimation Transfer</div>
+                <div class="product-card-rating">
+                  <i class="ti ti-star-filled"></i>
+                  <span>4.7 (986)</span>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="product-card">
+              <div class="product-card-image">
+                <img src="./assets/img/ecommerce-images/product-4.png" alt="Screen Print Transfer" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'ti ti-grid-dots\' style=\'font-size: 4rem; color: var(--vuexy-primary);\'></i>';">
+              </div>
+              <div class="product-card-body">
+                <div class="product-card-title">Screen Print Transfer</div>
+                <div class="product-card-rating">
+                  <i class="ti ti-star-filled"></i>
+                  <span>4.9 (3,421)</span>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="product-card">
+              <div class="product-card-image">
+                <img src="./assets/img/ecommerce-images/product-5.png" alt="Vinyl HTV" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'ti ti-layers-difference\' style=\'font-size: 4rem; color: var(--vuexy-primary);\'></i>';">
+              </div>
+              <div class="product-card-body">
+                <div class="product-card-title">Vinyl HTV</div>
+                <div class="product-card-rating">
+                  <i class="ti ti-star-filled"></i>
+                  <span>4.6 (758)</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mobile Add to Cart -->
+    <div class="add-to-cart-section">
+      <div class="container">
+        <div class="d-flex align-items-center justify-content-between gap-3">
+          <div>
+            <div style="font-size: 0.75rem; color: var(--vuexy-muted-color);">Total Price</div>
+            <div style="font-size: 1.25rem; font-weight: 600; color: var(--vuexy-primary);">$2.85</div>
+          </div>
+          <button class="add-cart-btn" style="flex: 1; max-width: 200px;">
+            <i class="ti ti-shopping-cart"></i>
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <!-- Floating Sticky Add to Cart Button -->
+    <div class="floating-cart-container" id="floatingCart">
+      <button class="floating-cart-btn" onclick="addToCart()">
+        <span class="floating-cart-icon">
+          <i class="ti ti-truck-delivery"></i>
+        </span>
+        <span class="floating-cart-text">Add to Cart</span>
+        <span class="floating-cart-price" id="floatingPrice">$4.99</span>
+      </button>
+    </div>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-logo">
+              <svg class="logo-icon" width="28" height="20" viewBox="0 0 32 22" fill="currentColor">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M0.00172773 0V6.85398C0.00172773 6.85398 -0.133178 9.01207 1.98092 10.8388L13.6912 21.9964L19.7809 21.9181L18.8042 9.88248L16.4951 7.17289L9.23799 0H0.00172773Z"/>
+                <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd" d="M7.69824 16.4364L12.5199 3.23696L16.5541 7.25596L7.69824 16.4364Z" fill="#161616"/>
+                <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd" d="M8.07751 15.9175L13.9419 4.63989L16.5849 7.28475L8.07751 15.9175Z" fill="#161616"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z"/>
+              </svg>
+              CloudyPrints
+            </div>
+            <p class="footer-text">Premium DTF transfers and custom printing solutions for your business. Quality you can trust.</p>
+          </div>
+          <div>
+            <h5 class="footer-title">Products</h5>
+            <ul class="footer-links">
+              <li><a href="#"><i class="ti ti-chevron-right" style="font-size: 0.75rem;"></i> DTF Transfers</a></li>
+              <li><a href="#"><i class="ti ti-chevron-right" style="font-size: 0.75rem;"></i> UV DTF</a></li>
+              <li><a href="#"><i class="ti ti-chevron-right" style="font-size: 0.75rem;"></i> Rhinestone</a></li>
+              <li><a href="#"><i class="ti ti-chevron-right" style="font-size: 0.75rem;"></i> Screen Print</a></li>
+            </ul>
+          </div>
+          <div>
+            <h5 class="footer-title">Support</h5>
+            <ul class="footer-links">
+              <li><a href="#"><i class="ti ti-chevron-right" style="font-size: 0.75rem;"></i> Help Center</a></li>
+              <li><a href="#"><i class="ti ti-chevron-right" style="font-size: 0.75rem;"></i> Shipping Info</a></li>
+              <li><a href="#"><i class="ti ti-chevron-right" style="font-size: 0.75rem;"></i> Returns</a></li>
+              <li><a href="#"><i class="ti ti-chevron-right" style="font-size: 0.75rem;"></i> Contact Us</a></li>
+            </ul>
+          </div>
+          <div>
+            <h5 class="footer-title">Contact</h5>
+            <ul class="footer-links">
+              <li><a href="#"><i class="ti ti-mail"></i> support@cloudyprints.com</a></li>
+              <li><a href="#"><i class="ti ti-phone"></i> 1-800-555-0199</a></li>
+              <li><a href="#"><i class="ti ti-map-pin"></i> Dallas, TX 75201</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p class="mb-0">© 2024 CloudyPrints. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Core JS -->
+    <script src="./assets/vendor/libs/popper/popper.js"></script>
+    <script src="./assets/vendor/js/bootstrap.js"></script>
+    <script src="./assets/vendor/libs/node-waves/node-waves.js"></script>
+
+    <!-- Three.js T-Shirt 3D Model - Using shirt_baked.glb from GitHub repo -->
+    <script>
+      // Three.js Variables
+      let scene, camera, renderer, tshirt, controls;
+      let currentColor = '#3b82f6';  // Standard blue
+      let isAutoRotate = true;
+      let tshirtMaterial = null;
+
+      // Initialize Three.js Scene
+      function initThreeJS() {
+        const container = document.getElementById('tshirt-canvas');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+
+        // Scene - White background
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xffffff);
+
+        // Camera - positioned for the GLB model (fov: 25 as per original)
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+        camera = new THREE.PerspectiveCamera(25, width / height, 0.1, 1000);
+        camera.position.set(0, 0, 2.5);
+
+        // Renderer with high quality settings
+        renderer = new THREE.WebGLRenderer({ 
+          canvas: container,
+          antialias: true,
+          alpha: true,
+          preserveDrawingBuffer: true
+        });
+        renderer.setSize(width, height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.outputEncoding = THREE.sRGBEncoding;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.0;
+
+        // Orbit Controls - FULL 360° ROTATION for main scene
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.08;
+        controls.minDistance = 1.8;
+        controls.maxDistance = 4;
+        controls.enablePan = false;
+        controls.autoRotate = true;  // Enable auto-rotate
+        controls.autoRotateSpeed = 1.0;
+        // Allow full vertical rotation with slight limits
+        controls.minPolarAngle = Math.PI / 6;  // 30 degrees from top
+        controls.maxPolarAngle = Math.PI - Math.PI / 6;  // 30 degrees from bottom
+        // NO horizontal limits - full 360° rotation
+        controls.minAzimuthAngle = -Infinity;
+        controls.maxAzimuthAngle = Infinity;
+
+        // Professional Lighting Setup
+        setupLighting();
+
+        // Load the GLB T-Shirt Model
+        loadTshirtModel(loadingSpinner);
+
+        // Animation loop
+        animate();
+
+        // Handle resize
+        window.addEventListener('resize', onWindowResize);
+      }
+
+      // Setup Professional Lighting
+      function setupLighting() {
+        // Soft ambient light for overall illumination
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+        scene.add(ambientLight);
+
+        // Main key light - front right
+        const keyLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        keyLight.position.set(3, 5, 5);
+        keyLight.castShadow = true;
+        keyLight.shadow.mapSize.width = 1024;
+        keyLight.shadow.mapSize.height = 1024;
+        scene.add(keyLight);
+
+        // Fill light - front left
+        const fillLight = new THREE.DirectionalLight(0xffffff, 0.4);
+        fillLight.position.set(-3, 3, 3);
+        scene.add(fillLight);
+
+        // Rim/Back light for depth
+        const rimLight = new THREE.DirectionalLight(0xffffff, 0.3);
+        rimLight.position.set(0, 3, -5);
+        scene.add(rimLight);
+
+        // Top light for highlights
+        const topLight = new THREE.DirectionalLight(0xffffff, 0.3);
+        topLight.position.set(0, 8, 0);
+        scene.add(topLight);
+
+        // Hemisphere light for natural feel
+        const hemiLight = new THREE.HemisphereLight(0xffffff, 0xf5f5f5, 0.3);
+        scene.add(hemiLight);
+      }
+
+      // Load T-Shirt GLB Model
+      function loadTshirtModel(loadingSpinner) {
+        const loader = new THREE.GLTFLoader();
+        
+        loader.load(
+          './assets/models/shirt_baked.glb',
+          function(gltf) {
+            // Model loaded successfully
+            tshirt = gltf.scene;
+            
+            // Find and store the material for color changing
+            tshirt.traverse((child) => {
+              if (child.isMesh) {
+                // Clone the material so we can modify it
+                child.material = child.material.clone();
+                child.material.color = new THREE.Color(currentColor);
+                child.material.roughness = 0.9;
+                child.material.metalness = 0.0;
+                child.material.needsUpdate = true;
+                child.castShadow = true;
+                child.receiveShadow = true;
+                
+                // Store reference to material
+                if (!tshirtMaterial) {
+                  tshirtMaterial = child.material;
+                }
+              }
+            });
+
+            // Center and scale the model appropriately
+            const box = new THREE.Box3().setFromObject(tshirt);
+            const center = box.getCenter(new THREE.Vector3());
+            const size = box.getSize(new THREE.Vector3());
+            
+            // Center the model
+            tshirt.position.x = -center.x;
+            tshirt.position.y = -center.y;
+            tshirt.position.z = -center.z;
+
+            // Scale to fit nicely in view
+            const maxDim = Math.max(size.x, size.y, size.z);
+            const scale = 1.0 / maxDim;
+            tshirt.scale.setScalar(scale);
+
+            scene.add(tshirt);
+
+            // Hide loading spinner with fade
+            loadingSpinner.style.transition = 'opacity 0.5s';
+            loadingSpinner.style.opacity = '0';
+            setTimeout(() => {
+              loadingSpinner.style.display = 'none';
+            }, 500);
+
+            console.log('T-Shirt model loaded successfully!');
+            
+            // Calculate and display mesh coordinates
+            calculateMeshCoordinates();
+            
+            // Add t-shirt to mini position previews
+            setTimeout(() => {
+              addTshirtToMiniScenes();
+            }, 200);
+          },
+          function(xhr) {
+            // Loading progress
+            const percent = (xhr.loaded / xhr.total * 100).toFixed(0);
+            const loadingText = loadingSpinner.querySelector('.loading-text');
+            if (loadingText) {
+              loadingText.textContent = `Loading 3D Model... ${percent}%`;
+            }
+          },
+          function(error) {
+            console.error('Error loading T-Shirt model:', error);
+            // Fallback to basic geometry if model fails to load
+            createFallbackTshirt();
+            loadingSpinner.style.display = 'none';
+          }
+        );
+      }
+
+      // Fallback T-Shirt if GLB fails to load
+      function createFallbackTshirt() {
+        const geometry = new THREE.BoxGeometry(0.5, 0.6, 0.15);
+        const material = new THREE.MeshStandardMaterial({
+          color: currentColor,
+          roughness: 0.9,
+          metalness: 0.0
+        });
+        tshirt = new THREE.Mesh(geometry, material);
+        tshirtMaterial = material;
+        scene.add(tshirt);
+      }
+
+      // Calculate Mesh Coordinates for each position
+      function calculateMeshCoordinates() {
+        if (!tshirt) return;
+
+        const box = new THREE.Box3().setFromObject(tshirt);
+        const size = box.getSize(new THREE.Vector3());
+        const center = box.getCenter(new THREE.Vector3());
+
+        // Calculate precise coordinates based on mesh geometry
+        const frontZ = center.z + (size.z / 2) * 0.85;  // 85% to front surface
+        const backZ = center.z - (size.z / 2) * 0.85;   // 85% to back surface
+        const sleeveY = center.y + (size.y / 4);        // Upper quarter for sleeves
+        const sleeveX = size.x / 2 * 0.75;              // 75% out for sleeve center
+
+        // Update coordinate objects
+        positionCoordinates['front'] = { 
+          x: center.x, 
+          y: center.y, 
+          z: frontZ, 
+          rotationY: 0, 
+          label: 'Front Body Center' 
+        };
+        positionCoordinates['back'] = { 
+          x: center.x, 
+          y: center.y, 
+          z: backZ, 
+          rotationY: Math.PI, 
+          label: 'Back Body Center' 
+        };
+        positionCoordinates['left-sleeve'] = { 
+          x: center.x - sleeveX, 
+          y: sleeveY, 
+          z: center.z, 
+          rotationY: Math.PI / 2, 
+          label: 'Left Sleeve Upper' 
+        };
+        positionCoordinates['right-sleeve'] = { 
+          x: center.x + sleeveX, 
+          y: sleeveY, 
+          z: center.z, 
+          rotationY: -Math.PI / 2, 
+          label: 'Right Sleeve Upper' 
+        };
+
+        // Update UI with coordinates
+        updateCoordinateDisplay();
+
+        console.log('Mesh Coordinates Calculated:', {
+          meshSize: size,
+          meshCenter: center,
+          positions: positionCoordinates
+        });
+      }
+
+      // Update coordinate display in UI
+      function updateCoordinateDisplay() {
+        const formatCoord = (c) => c.toFixed(2);
+        
+        Object.keys(positionCoordinates).forEach(key => {
+          const pos = positionCoordinates[key];
+          const displayKey = key.replace('-sleeve', '');
+          const elem = document.getElementById(`coords-${displayKey}`);
+          if (elem) {
+            elem.textContent = `${formatCoord(pos.x)}, ${formatCoord(pos.y)}, ${formatCoord(pos.z)}`;
+          }
+        });
+      }
+
+      // Switch Product Tabs
+      function switchTab(tabId, button) {
+        // Remove active class from all buttons
+        document.querySelectorAll('.product-tab-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        
+        // Add active class to clicked button
+        button.classList.add('active');
+        
+        // Hide all tab panes
+        document.querySelectorAll('.product-tab-pane').forEach(pane => {
+          pane.classList.remove('active');
+        });
+        
+        // Show selected tab pane
+        const selectedPane = document.getElementById('tab-' + tabId);
+        if (selectedPane) {
+          selectedPane.classList.add('active');
+        }
+      }
+
+      // Change T-Shirt Color - Using smooth easing
+      function changeTshirtColor(color, element) {
+        currentColor = color;
+        
+        // Update material color with smooth transition
+        if (tshirt) {
+          tshirt.traverse((child) => {
+            if (child.isMesh && child.material) {
+              // Animate color change
+              const startColor = child.material.color.clone();
+              const endColor = new THREE.Color(color);
+              let progress = 0;
+              
+              function animateColor() {
+                progress += 0.1;
+                if (progress <= 1) {
+                  child.material.color.lerpColors(startColor, endColor, progress);
+                  requestAnimationFrame(animateColor);
+                } else {
+                  child.material.color.set(color);
+                }
+              }
+              animateColor();
+            }
+          });
+        }
+
+        // Update active state
+        document.querySelectorAll('.color-option').forEach(el => el.classList.remove('active'));
+        if (element) element.classList.add('active');
+
+        // Update mini scenes with new color
+        updateMiniScenesColor(color);
+      }
+
+      // Camera Controls
+      function resetCamera() {
+        // Reset to current selected position view
+        const coords = positionCoordinates[selectedPosition];
+        if (coords) {
+          animateToPosition(coords.rotationY);
+        }
+        
+        // Reset camera position
+        const targetPosition = { x: 0, y: 0, z: 2.5 };
+        const startPosition = { x: camera.position.x, y: camera.position.y, z: camera.position.z };
+        let progress = 0;
+        
+        function animateReset() {
+          progress += 0.05;
+          if (progress <= 1) {
+            const ease = 1 - Math.pow(1 - progress, 3);
+            camera.position.x = startPosition.x + (targetPosition.x - startPosition.x) * ease;
+            camera.position.y = startPosition.y + (targetPosition.y - startPosition.y) * ease;
+            camera.position.z = startPosition.z + (targetPosition.z - startPosition.z) * ease;
+            controls.target.set(0, 0, 0);
+            controls.update();
+            requestAnimationFrame(animateReset);
+          }
+        }
+        animateReset();
+      }
+
+      function rotateLeft() {
+        // Manual rotation - rotate camera left
+        if (tshirt) {
+          const currentAngle = Math.atan2(camera.position.x, camera.position.z);
+          const newAngle = currentAngle + Math.PI / 4;  // 45 degrees
+          const distance = camera.position.length();
+          
+          camera.position.x = Math.sin(newAngle) * distance;
+          camera.position.z = Math.cos(newAngle) * distance;
+          camera.lookAt(0, 0, 0);
+          controls.update();
+        }
+      }
+
+      function rotateRight() {
+        // Manual rotation - rotate camera right
+        if (tshirt) {
+          const currentAngle = Math.atan2(camera.position.x, camera.position.z);
+          const newAngle = currentAngle - Math.PI / 4;  // 45 degrees
+          const distance = camera.position.length();
+          
+          camera.position.x = Math.sin(newAngle) * distance;
+          camera.position.z = Math.cos(newAngle) * distance;
+          camera.lookAt(0, 0, 0);
+          controls.update();
+        }
+      }
+
+      function animateRotation(target) {
+        if (!tshirt) return;
+        const start = tshirt.rotation.y;
+        let progress = 0;
+        
+        function animate() {
+          progress += 0.1;
+          if (progress <= 1) {
+            const ease = 1 - Math.pow(1 - progress, 2);
+            tshirt.rotation.y = start + (target - start) * ease;
+            requestAnimationFrame(animate);
+          } else {
+            tshirt.rotation.y = target;
+          }
+        }
+        animate();
+      }
+
+      function zoomIn() {
+        const targetZ = Math.max(camera.position.z - 0.3, 1.5);
+        animateZoom(targetZ);
+      }
+
+      function zoomOut() {
+        const targetZ = Math.min(camera.position.z + 0.3, 4);
+        animateZoom(targetZ);
+      }
+
+      function animateZoom(targetZ) {
+        const startZ = camera.position.z;
+        let progress = 0;
+        
+        function animate() {
+          progress += 0.1;
+          if (progress <= 1) {
+            const ease = 1 - Math.pow(1 - progress, 2);
+            camera.position.z = startZ + (targetZ - startZ) * ease;
+            requestAnimationFrame(animate);
+          } else {
+            camera.position.z = targetZ;
+          }
+        }
+        animate();
+      }
+
+      function toggleAutoRotate() {
+        isAutoRotate = !isAutoRotate;
+        controls.autoRotate = isAutoRotate;
+      }
+
+      // Window Resize Handler
+      function onWindowResize() {
+        const container = document.getElementById('tshirt-canvas');
+        if (!container) return;
+        
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+      }
+
+      // Animation Loop with smooth rendering
+      function animate() {
+        requestAnimationFrame(animate);
+        
+        // Update controls
+        controls.update();
+        
+        // Render
+        renderer.render(scene, camera);
+      }
+
+      // ==================== UNIFIED POSITION COORDINATES ====================
+      // Kamera geçişleri için koordinatlar
+      const positionCoordinates = {
+        'front': { 
+          x: 0, y: 0.02, z: 0.052,
+          cameraAngle: 0,
+          label: 'Ön Gövde'
+        },
+        'back': { 
+          x: 0, y: 0.02, z: -0.052,
+          cameraAngle: Math.PI,
+          label: 'Arka Gövde'
+        },
+        'left-sleeve': { 
+          x: -0.08, y: 0.08, z: 0.015,
+          cameraAngle: Math.PI / 2,
+          label: 'Sol Kol'
+        },
+        'right-sleeve': { 
+          x: 0.08, y: 0.08, z: 0.015,
+          cameraAngle: -Math.PI / 2,
+          label: 'Sağ Kol'
+        }
+      };
+
+      let selectedPosition = 'front';
+      let miniScenes = {};
+      let miniRenderers = {};
+      let miniCameras = {};
+      let miniControls = {};  // Orbit controls for mini scenes
+      let miniTshirts = {};   // Store mini t-shirt models for each position
+      let uploadedDesignTexture = null;
+      let designMeshes = {};  // Store design meshes for each position
+      
+      // Position offset sliders - kullanıcı tarafından ayarlanabilir
+      let positionOffsetX = 0;  // X ekseni offset (-100 to 100)
+      let positionOffsetY = 0;  // Y ekseni offset (-100 to 100)
+      let lastSuccessfulParams = null;  // Son başarılı decal parametreleri
+
+      // Select Position Function
+      function selectPosition(position, element) {
+        selectedPosition = position;
+        
+        // Update active state
+        document.querySelectorAll('.position-box').forEach(box => box.classList.remove('active'));
+        element.classList.add('active');
+
+        // Stop auto-rotate permanently when position selected
+        controls.autoRotate = false;
+        
+        // Auto-size: Kollar için 6x6, gövde için 9x9
+        const widthInput = document.getElementById('widthInput');
+        const heightInput = document.getElementById('heightInput');
+        if (position.includes('sleeve')) {
+          widthInput.value = 6;
+          heightInput.value = 6;
+        } else {
+          widthInput.value = 9;
+          heightInput.value = 9;
+        }
+        calculatePrice();
+        
+        // Reset sliders when position changes
+        const xSlider = document.getElementById('positionXSlider');
+        const ySlider = document.getElementById('positionYSlider');
+        if (xSlider) { xSlider.value = 0; positionOffsetX = 0; document.getElementById('positionXValue').textContent = '0'; }
+        if (ySlider) { ySlider.value = 0; positionOffsetY = 0; document.getElementById('positionYValue').textContent = '0'; }
+        
+        // Update coordinate display
+        updateCoordinateDisplay();
+
+        // Rotate main model to show selected position
+        const coords = positionCoordinates[position];
+        if (tshirt && coords) {
+          // Animate camera to look at the position
+          animateCameraToPosition(coords.cameraAngle || 0);
+        }
+
+        console.log('Selected position:', position, 'Coordinates:', coords);
+        
+        // Tasarım varsa yeniden uygula (seçili pozisyona göre)
+        if (uploadedDesignTexture) {
+          const widthInput = document.getElementById('widthInput');
+          const heightInput = document.getElementById('heightInput');
+          const w = parseFloat(widthInput?.value) || 5;
+          const h = parseFloat(heightInput?.value) || 5;
+          applyDesignToMainScene(uploadedDesignTexture, w, h);
+        }
+        
+        // Auto-rotate stays OFF - user can manually rotate with mouse
+      }
+
+      // Animate camera to look at specific position
+      function animateCameraToPosition(targetAngle) {
+        if (!camera || !controls) return;
+        
+        // Calculate target camera position
+        const distance = 2.5;
+        const targetX = Math.sin(targetAngle) * distance;
+        const targetZ = Math.cos(targetAngle) * distance;
+        
+        const startX = camera.position.x;
+        const startZ = camera.position.z;
+        let progress = 0;
+        
+        function animate() {
+          progress += 0.03;
+          if (progress <= 1) {
+            const ease = 1 - Math.pow(1 - progress, 3);
+            camera.position.x = startX + (targetX - startX) * ease;
+            camera.position.z = startZ + (targetZ - startZ) * ease;
+            camera.lookAt(0, 0, 0);
+            controls.update();
+            requestAnimationFrame(animate);
+          }
+        }
+        animate();
+      }
+
+      // Animate main model to show position
+      function animateToPosition(targetRotationY) {
+        if (!tshirt) return;
+        
+        const startRotation = tshirt.rotation.y;
+        let progress = 0;
+        
+        function animate() {
+          progress += 0.05;
+          if (progress <= 1) {
+            const ease = 1 - Math.pow(1 - progress, 3);
+            // Find shortest rotation path
+            let diff = targetRotationY - startRotation;
+            while (diff > Math.PI) diff -= Math.PI * 2;
+            while (diff < -Math.PI) diff += Math.PI * 2;
+            tshirt.rotation.y = startRotation + diff * ease;
+            requestAnimationFrame(animate);
+          }
+        }
+        animate();
+      }
+
+      // Initialize Mini Position Previews with 15% movement controls
+      function initPositionPreviews() {
+        const positions = ['front', 'back', 'left', 'right'];
+        
+        // Create Vuexy-style soft gradient background for mini panels
+        // Single horizontal gradient that will be split across all panels
+        const gradientCanvas = document.createElement('canvas');
+        gradientCanvas.width = 1024;
+        gradientCanvas.height = 256;
+        const ctx = gradientCanvas.getContext('2d');
+        
+        // Vuexy soft gradient: light purple tints transitioning horizontally
+        const gradient = ctx.createLinearGradient(0, 0, gradientCanvas.width, 0);
+        gradient.addColorStop(0, '#f3f2ff');      // Very light purple
+        gradient.addColorStop(0.25, '#ebe9fe');   // Light lavender
+        gradient.addColorStop(0.5, '#e5e3fb');    // Vuexy primary lighter
+        gradient.addColorStop(0.75, '#ebe9fe');   // Light lavender
+        gradient.addColorStop(1, '#f3f2ff');      // Very light purple
+        
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, gradientCanvas.width, gradientCanvas.height);
+        
+        // Add subtle vertical gradient overlay for depth
+        const vertGradient = ctx.createLinearGradient(0, 0, 0, gradientCanvas.height);
+        vertGradient.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
+        vertGradient.addColorStop(0.5, 'rgba(255, 255, 255, 0)');
+        vertGradient.addColorStop(1, 'rgba(115, 103, 240, 0.08)');  // Vuexy primary tint at bottom
+        
+        ctx.fillStyle = vertGradient;
+        ctx.fillRect(0, 0, gradientCanvas.width, gradientCanvas.height)
+        
+        // Create texture from canvas
+        const gradientTexture = new THREE.CanvasTexture(gradientCanvas);
+        gradientTexture.wrapS = THREE.ClampToEdgeWrapping;
+        gradientTexture.wrapT = THREE.ClampToEdgeWrapping;
+        
+        // Define UV offset for each panel (split horizontally into 4 parts)
+        const panelOffsets = {
+          'front': 0,      // 0-25% of image
+          'back': 0.25,    // 25-50% of image
+          'left': 0.5,     // 50-75% of image
+          'right': 0.75    // 75-100% of image
+        };
+        
+        positions.forEach(pos => {
+          const canvasId = `pos-${pos}-canvas`;
+          const canvas = document.getElementById(canvasId);
+          if (!canvas) return;
+
+          // Clone texture and set UV offset for this panel
+          const panelTexture = gradientTexture.clone();
+          panelTexture.needsUpdate = true;
+          panelTexture.offset.x = panelOffsets[pos];
+          panelTexture.repeat.x = 0.25;  // Show only 1/4 of the image
+          
+          // Create mini scene with split gradient background
+          const miniScene = new THREE.Scene();
+          miniScene.background = panelTexture;
+
+          // Create mini camera - positioned further back for smaller t-shirt
+          const miniCamera = new THREE.PerspectiveCamera(25, 1, 0.1, 100);
+          
+          // Position camera based on view - further back for smaller appearance
+          const cameraDistance = 2.0;  // Increased for smaller t-shirt (25% smaller)
+          
+          if (pos === 'front') {
+            miniCamera.position.set(0, 0, cameraDistance);
+            miniCamera.lookAt(0, 0, 0);
+          } else if (pos === 'back') {
+            miniCamera.position.set(0, 0, -cameraDistance);
+            miniCamera.lookAt(0, 0, 0);
+          } else if (pos === 'left') {
+            miniCamera.position.set(-cameraDistance, 0.1, 0);
+            miniCamera.lookAt(0, 0.1, 0);
+          } else if (pos === 'right') {
+            miniCamera.position.set(cameraDistance, 0.1, 0);
+            miniCamera.lookAt(0, 0.1, 0);
+          }
+
+          // Create mini renderer
+          const rect = canvas.getBoundingClientRect();
+          const size = Math.max(rect.width || 80, rect.height || 80);
+          const miniRenderer = new THREE.WebGLRenderer({
+            canvas: canvas,
+            antialias: true,
+            alpha: true
+          });
+          miniRenderer.setSize(size, size);
+          miniRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+          miniRenderer.outputEncoding = THREE.sRGBEncoding;
+
+          // Add orbit controls with 15% movement limit
+          const miniControl = new THREE.OrbitControls(miniCamera, canvas);
+          miniControl.enableDamping = true;
+          miniControl.dampingFactor = 0.1;
+          miniControl.enableZoom = false;  // Disable zoom
+          miniControl.enablePan = false;
+          miniControl.rotateSpeed = 0.3;
+          
+          // 15% movement limit (~27 degrees)
+          const range = 0.27;
+          if (pos === 'front') {
+            miniControl.minAzimuthAngle = -range;
+            miniControl.maxAzimuthAngle = range;
+          } else if (pos === 'back') {
+            miniControl.minAzimuthAngle = Math.PI - range;
+            miniControl.maxAzimuthAngle = Math.PI + range;
+          } else if (pos === 'left') {
+            miniControl.minAzimuthAngle = -Math.PI/2 - range;
+            miniControl.maxAzimuthAngle = -Math.PI/2 + range;
+          } else if (pos === 'right') {
+            miniControl.minAzimuthAngle = Math.PI/2 - range;
+            miniControl.maxAzimuthAngle = Math.PI/2 + range;
+          }
+          miniControl.minPolarAngle = Math.PI/2 - range;
+          miniControl.maxPolarAngle = Math.PI/2 + range;
+
+          // Add lighting
+          const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+          miniScene.add(ambientLight);
+
+          const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
+          dirLight.position.set(2, 3, 2);
+          miniScene.add(dirLight);
+
+          const dirLight2 = new THREE.DirectionalLight(0xffffff, 0.3);
+          dirLight2.position.set(-2, 2, -2);
+          miniScene.add(dirLight2);
+
+          // Store references
+          miniScenes[pos] = miniScene;
+          miniRenderers[pos] = miniRenderer;
+          miniCameras[pos] = miniCamera;
+          miniControls[pos] = miniControl;
+        });
+      }
+
+      // Add T-shirt to mini scenes after main model loads - 25% smaller
+      function addTshirtToMiniScenes() {
+        if (!tshirt) return;
+
+        const positions = ['front', 'back', 'left', 'right'];
+        
+        positions.forEach(pos => {
+          const miniScene = miniScenes[pos];
+          if (!miniScene) return;
+
+          // Clone the t-shirt model for mini scene
+          const miniTshirt = tshirt.clone();
+          
+          // Make 25% smaller
+          miniTshirt.scale.multiplyScalar(0.75);
+          
+          // Apply current color
+          miniTshirt.traverse((child) => {
+            if (child.isMesh && child.material) {
+              child.material = child.material.clone();
+              child.material.color = new THREE.Color(currentColor);
+            }
+          });
+
+          // Rotate based on position for correct view
+          // Kamera zaten doğru açıdan bakıyor, t-shirt rotasyonu buna göre
+          if (pos === 'back') {
+            miniTshirt.rotation.y = Math.PI;  // Arkayı göster
+          } else if (pos === 'left') {
+            // Kamera soldan bakıyor (-X), t-shirt dönmeden sol kol görünür
+            miniTshirt.rotation.y = 0;
+          } else if (pos === 'right') {
+            // Kamera sağdan bakıyor (+X), t-shirt dönmeden sağ kol görünür
+            miniTshirt.rotation.y = 0;
+          }
+          // Front için rotation yok (default 0)
+
+          // Store references
+          miniScene.userData.tshirt = miniTshirt;
+          miniTshirts[pos] = miniTshirt;  // Store in global object for design attachment
+          miniScene.add(miniTshirt);
+        });
+
+        // Start continuous rendering of mini scenes
+        animateMiniScenes();
+      }
+
+      // Continuous animation loop for mini scenes
+      function animateMiniScenes() {
+        requestAnimationFrame(animateMiniScenes);
+        
+        const positions = ['front', 'back', 'left', 'right'];
+        positions.forEach(pos => {
+          const scene = miniScenes[pos];
+          const renderer = miniRenderers[pos];
+          const camera = miniCameras[pos];
+          const control = miniControls[pos];
+          
+          if (scene && renderer && camera) {
+            if (control) control.update();
+            renderer.render(scene, camera);
+          }
+        });
+      }
+
+      // Render all mini scenes
+      function renderMiniScenes() {
+        const positions = ['front', 'back', 'left', 'right'];
+        
+        positions.forEach(pos => {
+          const scene = miniScenes[pos];
+          const renderer = miniRenderers[pos];
+          const camera = miniCameras[pos];
+          
+          if (scene && renderer && camera) {
+            renderer.render(scene, camera);
+          }
+        });
+      }
+
+      // Update mini scenes when color changes
+      function updateMiniScenesColor(color) {
+        const positions = ['front', 'back', 'left', 'right'];
+        
+        positions.forEach(pos => {
+          const scene = miniScenes[pos];
+          if (!scene) return;
+
+          scene.traverse((child) => {
+            if (child.isMesh && child.material && !child.userData.isDesign) {
+              child.material.color = new THREE.Color(color);
+            }
+          });
+        });
+      }
+
+      // ==================== DESIGN UPLOAD SYSTEM ====================
+      
+      // Load design texture and apply to t-shirt
+      function loadDesignTexture(imageData, fileName) {
+        const textureLoader = new THREE.TextureLoader();
+        
+        textureLoader.load(imageData, function(texture) {
+          uploadedDesignTexture = texture;
+          texture.encoding = THREE.sRGBEncoding;
+          
+          // Get design size from inputs
+          const width = parseFloat(document.getElementById('widthInput').value) || 1;
+          const height = parseFloat(document.getElementById('heightInput').value) || 1;
+          
+          // Apply to main scene
+          applyDesignToMainScene(texture, width, height);
+          
+          // Apply to all mini scenes
+          applyDesignToMiniScenes(texture, width, height);
+          
+          console.log('Design loaded:', fileName);
+        });
+      }
+
+      // ==================== HIGH-PRECISION DECAL SYSTEM ====================
+      // Mesh'in gerçek boyutlarına göre dinamik DecalGeometry
+      
+      let targetMeshRef = null;
+      let meshBBox = null;
+      let meshSize = null;
+      let meshCenter = null;
+      
+      function applyDesignToMainScene(texture, widthInch, heightInch) {
+        if (!tshirt || !texture) return;
+        
+        // NOT: Mevcut tasarımı sadece yeni decal başarılı olursa kaldırıyoruz
+        
+        // T-shirt mesh'ini bul ve boyutları cache'le
+        if (!targetMeshRef) {
+          tshirt.traverse((child) => {
+            if (child.isMesh && !child.userData.isDesign) {
+              targetMeshRef = child;
+            }
+          });
+          
+          if (targetMeshRef) {
+            meshBBox = new THREE.Box3().setFromObject(targetMeshRef);
+            meshSize = meshBBox.getSize(new THREE.Vector3());
+            meshCenter = meshBBox.getCenter(new THREE.Vector3());
+            console.log('Mesh dimensions:', meshSize, 'Center:', meshCenter);
+          }
+        }
+        
+        if (!targetMeshRef) {
+          console.error('T-shirt mesh not found');
+          return;
+        }
+        
+        // Pozisyona göre decal parametreleri hesapla
+        const decalParams = calculateDecalParams(selectedPosition, widthInch, heightInch);
+        
+        try {
+          // DecalGeometry dene
+          const decalGeometry = new THREE.DecalGeometry(
+            targetMeshRef,
+            decalParams.position,
+            decalParams.orientation,
+            decalParams.size
+          );
+          
+          // Decal boş mu kontrol et (mesh dışına çıkmış olabilir)
+          if (decalGeometry.attributes.position.count < 3) {
+            console.warn('Decal out of bounds, keeping last position');
+            return; // Son başarılı pozisyonu koru
+          }
+          
+          // Mevcut tasarımı kaldır (sadece başarılı olduğunda)
+          if (designMeshes['main']) {
+            scene.remove(designMeshes['main']);
+            if (tshirt) tshirt.remove(designMeshes['main']);
+            if (designMeshes['main'].geometry) designMeshes['main'].geometry.dispose();
+            if (designMeshes['main'].material) designMeshes['main'].material.dispose();
+          }
+          
+          const decalMaterial = new THREE.MeshBasicMaterial({
+            map: texture,
+            transparent: true,
+            depthTest: true,
+            depthWrite: false,
+            polygonOffset: true,
+            polygonOffsetFactor: -10,
+            polygonOffsetUnits: -10
+          });
+          
+          const decalMesh = new THREE.Mesh(decalGeometry, decalMaterial);
+          decalMesh.userData.isDesign = true;
+          decalMesh.renderOrder = 100;
+          
+          scene.add(decalMesh);
+          designMeshes['main'] = decalMesh;
+          
+          // Başarılı pozisyonu kaydet
+          lastSuccessfulParams = { ...decalParams };
+          
+          console.log(`Decal applied to ${selectedPosition}`, decalParams);
+          
+        } catch (error) {
+          console.warn('DecalGeometry error, keeping last position:', error.message);
+          // Hata olursa son başarılı pozisyonu koru - tasarımı silme
+        }
+      }
+      
+      // Mesh boyutlarına göre hassas decal parametreleri
+      function calculateDecalParams(position, widthInch, heightInch) {
+        // Mesh'in gerçek boyutlarını kullan
+        const mW = meshSize.x;  // Genişlik
+        const mH = meshSize.y;  // Yükseklik
+        const mD = meshSize.z;  // Derinlik
+        const cX = meshCenter.x;
+        const cY = meshCenter.y;
+        const cZ = meshCenter.z;
+        
+        // T-shirt gerçek boyutu (inch) - tipik bir t-shirt ~20 inch genişlik
+        const TSHIRT_WIDTH_INCH = 20;
+        const TSHIRT_HEIGHT_INCH = 28;
+        
+        // Mesh birimini inch'e çevir
+        const meshToInchX = TSHIRT_WIDTH_INCH / mW;
+        const meshToInchY = TSHIRT_HEIGHT_INCH / mH;
+        
+        // Kullanıcının girdiği inch değerini mesh birimine çevir
+        const w = widthInch / meshToInchX;
+        const h = heightInch / meshToInchY;
+        
+        // ULTRA DEEP - mesh derinliğinin %60'ı (tam yüzeye yapışma için)
+        const depth = mD * 0.6;
+        
+        let pos, rot;
+        
+        switch (position) {
+          case 'front':
+            pos = new THREE.Vector3(
+              cX,
+              cY + mH * 0.05,      // Biraz yukarı (göğüs merkezi)
+              cZ + mD * 0.5        // Mesh'in ön yüzeyi
+            );
+            rot = new THREE.Euler(0, 0, 0);
+            break;
+            
+          case 'back':
+            pos = new THREE.Vector3(
+              cX,
+              cY + mH * 0.05,
+              cZ - mD * 0.5        // Mesh'in arka yüzeyi
+            );
+            rot = new THREE.Euler(0, Math.PI, 0);
+            break;
+            
+          case 'left-sleeve':
+            // Sol kol: Kullanıcı koordinatları - X:-0.404 Y:0.242 Z:0.028
+            pos = new THREE.Vector3(
+              cX - mW * 0.505,     // X: -0.404 için ayarlandı
+              cY + mH * 0.14,      // Y: 0.242 için ayarlandı
+              cZ + mD * 0.056      // Z: 0.028 için ayarlandı
+            );
+            rot = new THREE.Euler(0, Math.PI * 0.55, 0);
+            break;
+            
+          case 'right-sleeve':
+            // Sağ kol: Simetrik koordinatlar
+            pos = new THREE.Vector3(
+              cX + mW * 0.505,     // X: +0.404 için ayarlandı
+              cY + mH * 0.14,      // Y: 0.242 için ayarlandı
+              cZ + mD * 0.056      // Z: 0.028 için ayarlandı
+            );
+            rot = new THREE.Euler(0, -Math.PI * 0.55, 0);
+            break;
+            
+          default:
+            pos = new THREE.Vector3(cX, cY, cZ);
+            rot = new THREE.Euler(0, 0, 0);
+        }
+        
+        // Slider offset'lerini uygula - ULTRA HASSAS (0.002 çarpanı)
+        const offsetScale = mW * 0.002;  // Ultra hassas offset ölçeği
+        
+        // Pozisyona göre offset yönünü ayarla - SINIRSIZ HAREKET
+        let xMultiplier = 1;
+        let yMultiplier = 1;
+        
+        // Sol kol için X offset'i ters yönde
+        if (position === 'left-sleeve') {
+          xMultiplier = -1;
+        }
+        
+        // PlaneGeometry ile sınırsız hareket - kaybolma yok!
+        pos.x += positionOffsetX * offsetScale * xMultiplier;
+        pos.y += positionOffsetY * offsetScale * yMultiplier;
+        
+        // Update live coordinate display
+        updateCoordinateDisplay();
+        
+        // Kol için daha küçük boyut
+        const sizeMultiplier = (position.includes('sleeve')) ? 0.5 : 1.0;
+        
+        return {
+          position: pos,
+          orientation: rot,
+          size: new THREE.Vector3(w * sizeMultiplier, h * sizeMultiplier, depth)
+        };
+      }
+      
+      // Fallback
+      function applyFallbackDesign(texture, params) {
+        const geometry = new THREE.PlaneGeometry(params.size.x, params.size.y, 24, 24);
+        
+        // Curve uygula
+        const positions = geometry.attributes.position;
+        const curveIntensity = 0.015;
+        for (let i = 0; i < positions.count; i++) {
+          const x = positions.getX(i);
+          const y = positions.getY(i);
+          const nx = x / (params.size.x / 2);
+          const ny = y / (params.size.y / 2);
+          positions.setZ(i, curveIntensity * (1 - nx * nx) + curveIntensity * 0.3 * (1 - ny * ny));
+        }
+        geometry.computeVertexNormals();
+        
+        const material = new THREE.MeshBasicMaterial({
+          map: texture,
+          transparent: true,
+          side: THREE.DoubleSide,
+          depthWrite: false,
+          polygonOffset: true,
+          polygonOffsetFactor: -4
+        });
+        
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.position.copy(params.position);
+        mesh.rotation.copy(params.orientation);
+        mesh.userData.isDesign = true;
+        mesh.renderOrder = 100;
+        
+        scene.add(mesh);
+        designMeshes['main'] = mesh;
+      }
+      
+      // Update coordinate display with current decal position
+      function updateCoordinateDisplay() {
+        if (!meshSize || !meshCenter) return;
+        
+        const mW = meshSize.x;
+        const offsetScale = mW * 0.005;  // Ultra hassas ölçek
+        
+        // Calculate actual position based on selected position and offsets
+        let baseX = 0, baseY = 0, baseZ = 0;
+        
+        switch (selectedPosition) {
+          case 'front':
+            baseX = meshCenter.x;
+            baseY = meshCenter.y + meshSize.y * 0.05;
+            baseZ = meshCenter.z + meshSize.z * 0.5;
+            break;
+          case 'back':
+            baseX = meshCenter.x;
+            baseY = meshCenter.y + meshSize.y * 0.05;
+            baseZ = meshCenter.z - meshSize.z * 0.5;
+            break;
+          case 'left-sleeve':
+            baseX = meshCenter.x - meshSize.x * 0.505;
+            baseY = meshCenter.y + meshSize.y * 0.14;
+            baseZ = meshCenter.z + meshSize.z * 0.056;
+            break;
+          case 'right-sleeve':
+            baseX = meshCenter.x + meshSize.x * 0.505;
+            baseY = meshCenter.y + meshSize.y * 0.14;
+            baseZ = meshCenter.z + meshSize.z * 0.056;
+            break;
+        }
+        
+        // Apply offsets
+        const finalX = baseX + (positionOffsetX * offsetScale);
+        const finalY = baseY + (positionOffsetY * offsetScale);
+        const finalZ = baseZ;
+        
+        // Update display
+        const liveX = document.getElementById('liveX');
+        const liveY = document.getElementById('liveY');
+        const liveZ = document.getElementById('liveZ');
+        
+        if (liveX) liveX.textContent = finalX.toFixed(3);
+        if (liveY) liveY.textContent = finalY.toFixed(3);
+        if (liveZ) liveZ.textContent = finalZ.toFixed(3);
+      }
+      
+      // Tasarımı kaldır
+      function removeExistingDesign() {
+        if (designMeshes['main']) {
+          // Scene'den veya tshirt'den kaldır (kollar için tshirt'e ekleniyor)
+          scene.remove(designMeshes['main']);
+          if (tshirt) tshirt.remove(designMeshes['main']);
+          if (designMeshes['main'].geometry) designMeshes['main'].geometry.dispose();
+          if (designMeshes['main'].material) designMeshes['main'].material.dispose();
+          designMeshes['main'] = null;
+        }
+      }
+
+      // ==================== MINI SCENE ULTRA-PRECISE DESIGN PLACEMENT ====================
+      // Mini sahneler için yüksek hassasiyetli DecalGeometry
+      function applyDesignToMiniScenes(texture, widthInch, heightInch) {
+        const MINI_MAP = {
+          'front': 'front',
+          'back': 'back', 
+          'left': 'left-sleeve',
+          'right': 'right-sleeve'
+        };
+        
+        const SCALE = 0.75;
+        
+        Object.entries(MINI_MAP).forEach(([miniKey, posKey]) => {
+          const miniScene = miniScenes[miniKey];
+          const miniTshirt = miniTshirts[miniKey];
+          if (!miniScene || !miniTshirt) return;
+          
+          // Mevcut tasarımı kaldır
+          if (designMeshes[miniKey]) {
+            miniScene.remove(designMeshes[miniKey]);
+            designMeshes[miniKey] = null;
+          }
+          
+          // Mini mesh'i bul
+          let miniMesh = null;
+          miniTshirt.traverse((child) => {
+            if (child.isMesh && !child.userData.isDesign) {
+              miniMesh = child;
+            }
+          });
+          if (!miniMesh) return;
+          
+          // Mini mesh'in boyutlarını al
+          const miniBBox = new THREE.Box3().setFromObject(miniMesh);
+          const miniSize = miniBBox.getSize(new THREE.Vector3());
+          const miniCenter = miniBBox.getCenter(new THREE.Vector3());
+          
+          // T-shirt gerçek boyutu (inch)
+          const TSHIRT_WIDTH_INCH = 20;
+          const TSHIRT_HEIGHT_INCH = 28;
+          
+          // Mesh birimini inch'e çevir
+          const meshToInchX = TSHIRT_WIDTH_INCH / miniSize.x;
+          const meshToInchY = TSHIRT_HEIGHT_INCH / miniSize.y;
+          
+          // Kullanıcının girdiği inch değerini mesh birimine çevir
+          const w = widthInch / meshToInchX;
+          const h = heightInch / meshToInchY;
+          const depth = miniSize.z * 0.3;
+          
+          let pos, rot;
+          const sizeMultiplier = posKey.includes('sleeve') ? 0.5 : 1.0;
+          
+          switch (posKey) {
+            case 'front':
+              pos = new THREE.Vector3(miniCenter.x, miniCenter.y + miniSize.y * 0.05, miniCenter.z + miniSize.z * 0.5);
+              rot = new THREE.Euler(0, 0, 0);
+              break;
+            case 'back':
+              pos = new THREE.Vector3(miniCenter.x, miniCenter.y + miniSize.y * 0.05, miniCenter.z - miniSize.z * 0.5);
+              rot = new THREE.Euler(0, Math.PI, 0);
+              break;
+            case 'left-sleeve':
+              // Mini sahne: T-shirt dönmedi, kamera soldan (-X) bakıyor
+              // Decal sol kola (X- tarafına) yerleşmeli
+              pos = new THREE.Vector3(miniCenter.x - miniSize.x * 0.48, miniCenter.y + miniSize.y * 0.28, miniCenter.z);
+              rot = new THREE.Euler(0, Math.PI / 2, 0);  // Sola dönük
+              break;
+            case 'right-sleeve':
+              // Mini sahne: T-shirt dönmedi, kamera sağdan (+X) bakıyor
+              // Decal sağ kola (X+ tarafına) yerleşmeli
+              pos = new THREE.Vector3(miniCenter.x + miniSize.x * 0.48, miniCenter.y + miniSize.y * 0.28, miniCenter.z);
+              rot = new THREE.Euler(0, -Math.PI / 2, 0);  // Sağa dönük
+              break;
+          }
+          
+          try {
+            const decalGeometry = new THREE.DecalGeometry(
+              miniMesh, 
+              pos, 
+              rot, 
+              new THREE.Vector3(w * sizeMultiplier, h * sizeMultiplier, depth)
+            );
+            
+            const material = new THREE.MeshBasicMaterial({
+              map: texture,
+              transparent: true,
+              depthWrite: false,
+              polygonOffset: true,
+              polygonOffsetFactor: -4
+            });
+            
+            const mesh = new THREE.Mesh(decalGeometry, material);
+            mesh.userData.isDesign = true;
+            mesh.renderOrder = 100;
+            
+            miniScene.add(mesh);
+            designMeshes[miniKey] = mesh;
+          } catch (error) {
+            console.error('Mini DecalGeometry error:', error);
+          }
+        });
+      }
+
+      // Remove design from all scenes
+      function removeDesign() {
+        // Remove from main scene
+        if (designMeshes['main']) {
+          scene.remove(designMeshes['main']);
+          designMeshes['main'] = null;
+        }
+        
+        // Remove from mini scenes
+        const positions = ['front', 'back', 'left', 'right'];
+        positions.forEach(pos => {
+          if (designMeshes[pos] && miniScenes[pos]) {
+            miniScenes[pos].remove(designMeshes[pos]);
+            designMeshes[pos] = null;
+          }
+        });
+        
+        uploadedDesignTexture = null;
+        
+        // Reset upload area
+        const uploadArea = document.getElementById('uploadArea');
+        uploadArea.innerHTML = `
+          <div class="upload-row" style="display: flex; align-items: center; gap: 1rem; width: 100%;">
+            <div class="upload-icon" style="flex-shrink: 0;">
+              <i class="ti ti-cloud-upload"></i>
+            </div>
+            <div style="flex: 1; text-align: left;">
+              <p class="upload-text">Drag your design here</p>
+              <p class="upload-subtext">PNG, JPG, SVG up to 50MB</p>
+            </div>
+            <button class="upload-btn" style="flex-shrink: 0;">
+              <i class="ti ti-device-desktop me-1"></i> My Device
+            </button>
+          </div>
+        `;
+        
+        // Re-attach event listeners
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*,.svg,.png,.jpg,.jpeg';
+        fileInput.style.display = 'none';
+        uploadArea.appendChild(fileInput);
+        uploadArea.onclick = () => fileInput.click();
+        fileInput.onchange = (e) => {
+          if (e.target.files.length > 0) {
+            handleFileUpload(e.target.files[0]);
+          }
+        };
+      }
+
+      // Update design size when inputs change
+      function updateDesignSize() {
+        if (!uploadedDesignTexture) return;
+        
+        const width = parseFloat(document.getElementById('widthInput').value) || 1;
+        const height = parseFloat(document.getElementById('heightInput').value) || 1;
+        
+        applyDesignToMainScene(uploadedDesignTexture, width, height);
+        applyDesignToMiniScenes(uploadedDesignTexture, width, height);
+      }
+
+      // Initialize on load
+      document.addEventListener('DOMContentLoaded', () => {
+        initThreeJS();
+        
+        // Initialize mini previews after a short delay
+        setTimeout(() => {
+          initPositionPreviews();
+        }, 100);
+      });
+
+      // ==================== OTHER FUNCTIONS ====================
+
+      // Category Story Selector
+      function selectCategory(element, categoryId) {
+        // Remove active from all
+        document.querySelectorAll('.story-item').forEach(item => item.classList.remove('active'));
+        // Add active to clicked
+        element.classList.add('active');
+        
+        // Navigate to category page (placeholder - implement actual navigation)
+        console.log('Selected category:', categoryId);
+        
+        // You can add navigation logic here
+        // window.location.href = `/category/${categoryId}`;
+      }
+      
+      // Play Review Story Video
+      function playReviewStory(storyId) {
+        console.log('Playing review story:', storyId);
+        // Here you would open a modal with the video review
+        // For now, just show an alert
+        alert(`Playing video review #${storyId}\n\nThis would open a fullscreen story viewer like Instagram!`);
+      }
+      
+      // View Campaigns
+      function viewCampaigns() {
+        alert('🎉 Current Campaigns:\n\n• 25% OFF on all DTF Transfers\n• Buy 5 Get 1 FREE\n• Free Shipping over $59\n• Bulk Discount: 10+ items = Extra 10% OFF');
+      }
+      
+      // Sync quantity between inputs
+      function syncQuantity(value) {
+        const qty = Math.max(1, Math.min(999, parseInt(value) || 1));
+        document.getElementById('quickQuantity').value = qty;
+        const mainQty = document.getElementById('quantityInput');
+        if (mainQty) mainQty.value = qty;
+        calculatePrice();
+        updateFloatingPrice();
+      }
+      
+      // Update floating price
+      function updateFloatingPrice() {
+        const priceEl = document.getElementById('quickPrice');
+        const floatingPriceEl = document.getElementById('floatingPrice');
+        if (priceEl && floatingPriceEl) {
+          floatingPriceEl.textContent = priceEl.textContent;
+        }
+      }
+      
+      // Floating cart visibility
+      document.addEventListener('DOMContentLoaded', function() {
+        const floatingCart = document.getElementById('floatingCart');
+        
+        // Always visible - no scroll hiding
+        if (floatingCart) {
+          floatingCart.classList.remove('hidden');
+        }
+        
+        // Sync quick quantity with main quantity on load
+        const mainQty = document.getElementById('quantityInput');
+        const quickQty = document.getElementById('quickQuantity');
+        if (mainQty && quickQty) {
+          mainQty.addEventListener('change', function() {
+            quickQty.value = this.value;
+            updateFloatingPrice();
+          });
+        }
+      });
+
+      // Change Quantity
+      function changeQuantity(delta) {
+        const input = document.getElementById('quantityInput');
+        let val = parseInt(input.value) + delta;
+        if (val < 1) val = 1;
+        input.value = val;
+        calculatePrice();
+      }
+
+      // Calculate Price
+      function calculatePrice() {
+        const width = parseInt(document.getElementById('widthInput').value) || 1;
+        const height = parseInt(document.getElementById('heightInput').value) || 1;
+        const quantity = parseInt(document.getElementById('quantityInput').value) || 1;
+        const sqIn = width * height;
+        let pricePerUnit = 2.85;
+
+        if (sqIn > 100) pricePerUnit = 4.15;
+        else if (sqIn > 50) pricePerUnit = 3.50;
+        else if (sqIn > 25) pricePerUnit = 3.05;
+
+        // Volume discount
+        if (quantity >= 100) pricePerUnit *= 0.70;
+        else if (quantity >= 25) pricePerUnit *= 0.80;
+        else if (quantity >= 12) pricePerUnit *= 0.85;
+        else if (quantity >= 6) pricePerUnit *= 0.90;
+        else if (quantity >= 2) pricePerUnit *= 0.95;
+
+        const total = (pricePerUnit * quantity).toFixed(2);
+        document.getElementById('priceDisplay').textContent = '$' + total;
+      }
+
+      // Global File Upload Handler
+      function handleFileUpload(file) {
+        console.log('File uploaded:', file.name);
+        const uploadArea = document.getElementById('uploadArea');
+        
+        // Read and process the image
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const imageData = e.target.result;
+          
+          // Load texture and apply to t-shirt
+          loadDesignTexture(imageData, file.name);
+          
+          // Show preview in upload area
+          uploadArea.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 1rem; padding: 0.5rem;">
+              <img src="${imageData}" style="max-width: 80px; max-height: 80px; border-radius: 8px; border: 2px solid var(--vuexy-primary);">
+              <div style="flex: 1; text-align: left;">
+                <p class="upload-text" style="color: var(--vuexy-success); margin-bottom: 0.25rem; font-size: 0.9rem;">
+                  <i class="ti ti-circle-check me-1"></i>Design Uploaded!
+                </p>
+                <p class="upload-subtext" style="margin-bottom: 0.5rem; font-size: 0.75rem;">${file.name}</p>
+                <button class="upload-btn" onclick="removeDesign()" style="background: var(--vuexy-danger); padding: 0.4rem 0.8rem; font-size: 0.75rem;">
+                  <i class="ti ti-trash me-1"></i> Remove
+                </button>
+              </div>
+            </div>
+          `;
+        };
+        reader.readAsDataURL(file);
+      }
+
+      // Upload Area Events
+      document.addEventListener('DOMContentLoaded', function() {
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*,.svg,.png,.jpg,.jpeg';
+        fileInput.style.display = 'none';
+        uploadArea.appendChild(fileInput);
+
+        uploadArea.addEventListener('click', (e) => {
+          if (e.target.tagName !== 'BUTTON') {
+            fileInput.click();
+          }
+        });
+
+        uploadArea.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          uploadArea.style.borderColor = 'var(--vuexy-primary)';
+          uploadArea.style.background = 'var(--vuexy-primary-light)';
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+          uploadArea.style.borderColor = '';
+          uploadArea.style.background = '';
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+          e.preventDefault();
+          uploadArea.style.borderColor = '';
+          uploadArea.style.background = '';
+          const files = e.dataTransfer.files;
+          if (files.length > 0) {
+            handleFileUpload(files[0]);
+          }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+          if (e.target.files.length > 0) {
+            handleFileUpload(e.target.files[0]);
+          }
+        });
+
+        // Add event listeners for price calculation and design size update
+        document.getElementById('widthInput').addEventListener('input', () => {
+          calculatePrice();
+          updateDesignSize();
+        });
+        document.getElementById('heightInput').addEventListener('input', () => {
+          calculatePrice();
+          updateDesignSize();
+        });
+        document.getElementById('quantityInput').addEventListener('input', calculatePrice);
+        
+        // Position Offset Slider Event Listeners - ULTRA PRECISE
+        const xSlider = document.getElementById('positionXSlider');
+        const ySlider = document.getElementById('positionYSlider');
+        const xValue = document.getElementById('positionXValue');
+        const yValue = document.getElementById('positionYValue');
+        
+        if (xSlider && ySlider) {
+          xSlider.addEventListener('input', (e) => {
+            positionOffsetX = parseInt(e.target.value);
+            xValue.textContent = positionOffsetX;
+            updateCoordinateDisplay();
+            // Tasarımı yeniden uygula
+            if (uploadedDesignTexture) {
+              const w = parseInt(document.getElementById('widthInput').value) || 9;
+              const h = parseInt(document.getElementById('heightInput').value) || 9;
+              applyDesignToMainScene(uploadedDesignTexture, w, h);
+            }
+          });
+          
+          ySlider.addEventListener('input', (e) => {
+            positionOffsetY = parseInt(e.target.value);
+            yValue.textContent = positionOffsetY;
+            updateCoordinateDisplay();
+            // Tasarımı yeniden uygula
+            if (uploadedDesignTexture) {
+              const w = parseInt(document.getElementById('widthInput').value) || 9;
+              const h = parseInt(document.getElementById('heightInput').value) || 9;
+              applyDesignToMainScene(uploadedDesignTexture, w, h);
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

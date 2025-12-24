@@ -1,0 +1,686 @@
+{% comment %}
+  Spin Wheel Discount Roulette - Collection Page Feature
+  Displays on EVERY page refresh to gamify discounts
+  Discount is applied via session storage for cart calculations
+{% endcomment %}
+
+<style>
+  /* ========================================
+     SPIN WHEEL OVERLAY & MODAL
+  ======================================== */
+  .spin-wheel-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s ease;
+  }
+
+  .spin-wheel-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .spin-wheel-modal {
+    background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+    border-radius: 24px;
+    padding: 40px;
+    max-width: 600px;
+    width: 95%;
+    position: relative;
+    border: 3px solid #D4AF37;
+    box-shadow: 
+      0 0 50px rgba(212, 175, 55, 0.3),
+      0 0 100px rgba(212, 175, 55, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: scale(0.8);
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .spin-wheel-overlay.active .spin-wheel-modal {
+    transform: scale(1);
+  }
+
+  .spin-wheel-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    z-index: 10;
+  }
+
+  .spin-wheel-close:hover {
+    color: #fff;
+  }
+
+  /* ========================================
+     HEADER
+  ======================================== */
+  .spin-wheel-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .spin-wheel-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #D4AF37 0%, #F5E7A3 50%, #D4AF37 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+  }
+
+  .spin-wheel-subtitle {
+    color: #999;
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  /* ========================================
+     WHEEL CONTAINER
+  ======================================== */
+  .wheel-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+  }
+
+  .wheel-wrapper {
+    position: relative;
+    width: 320px;
+    height: 320px;
+  }
+
+  /* ========================================
+     THE WHEEL
+  ======================================== */
+  .wheel {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    border: 6px solid #D4AF37;
+    box-shadow: 
+      0 0 30px rgba(212, 175, 55, 0.4),
+      inset 0 0 50px rgba(0, 0, 0, 0.3);
+    transition: transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+    background: conic-gradient(
+      from 0deg,
+      #1a1a1a 0deg 60deg,
+      #D4AF37 60deg 120deg,
+      #1a1a1a 120deg 180deg,
+      #D4AF37 180deg 240deg,
+      #1a1a1a 240deg 300deg,
+      #D4AF37 300deg 360deg
+    );
+  }
+
+  .wheel.spinning {
+    transition: transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+  }
+
+  /* Wheel segments text */
+  .wheel-segment {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    top: 0;
+    right: 0;
+    transform-origin: 0% 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 20px;
+  }
+
+  .wheel-segment span {
+    position: absolute;
+    font-size: 1.1rem;
+    font-weight: 800;
+    transform: rotate(30deg) translateX(50px);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .wheel-segment:nth-child(odd) span {
+    color: #D4AF37;
+  }
+
+  .wheel-segment:nth-child(even) span {
+    color: #0a0a0a;
+  }
+
+  .wheel-segment:nth-child(1) { transform: rotate(0deg) skewY(-30deg); }
+  .wheel-segment:nth-child(2) { transform: rotate(60deg) skewY(-30deg); }
+  .wheel-segment:nth-child(3) { transform: rotate(120deg) skewY(-30deg); }
+  .wheel-segment:nth-child(4) { transform: rotate(180deg) skewY(-30deg); }
+  .wheel-segment:nth-child(5) { transform: rotate(240deg) skewY(-30deg); }
+  .wheel-segment:nth-child(6) { transform: rotate(300deg) skewY(-30deg); }
+
+  /* Center circle */
+  .wheel-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #D4AF37, #F5E7A3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.8rem;
+    color: #0a0a0a;
+    text-transform: uppercase;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+  }
+
+  .wheel-center:hover {
+    transform: translate(-50%, -50%) scale(1.05);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.7);
+  }
+
+  /* Pointer/Arrow */
+  .wheel-pointer {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 40px solid #D4AF37;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+    z-index: 20;
+  }
+
+  /* ========================================
+     4D VIBRATING BADGE
+  ======================================== */
+  .wheel-badge-4d {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    animation: badge-vibrate-4d 0.5s ease-in-out infinite;
+    box-shadow: 
+      0 4px 15px rgba(220, 38, 38, 0.4),
+      0 0 30px rgba(220, 38, 38, 0.2);
+    z-index: 30;
+  }
+
+  @keyframes badge-vibrate-4d {
+    0%, 100% { 
+      transform: translate(0, 0) rotate(-5deg) scale(1); 
+    }
+    10% { 
+      transform: translate(-1px, -1px) rotate(-4deg) scale(1.02); 
+    }
+    20% { 
+      transform: translate(1px, -1px) rotate(-6deg) scale(0.98); 
+    }
+    30% { 
+      transform: translate(-1px, 1px) rotate(-5deg) scale(1.01); 
+    }
+    40% { 
+      transform: translate(1px, 1px) rotate(-4deg) scale(0.99); 
+    }
+    50% { 
+      transform: translate(-1px, 0) rotate(-6deg) scale(1.03); 
+    }
+    60% { 
+      transform: translate(1px, 0) rotate(-5deg) scale(0.98); 
+    }
+    70% { 
+      transform: translate(0, -1px) rotate(-4deg) scale(1.02); 
+    }
+    80% { 
+      transform: translate(0, 1px) rotate(-6deg) scale(0.99); 
+    }
+    90% { 
+      transform: translate(-1px, 0) rotate(-5deg) scale(1.01); 
+    }
+  }
+
+  /* ========================================
+     SPIN BUTTON
+  ======================================== */
+  .spin-wheel-btn {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto 0;
+    padding: 18px 40px;
+    background: linear-gradient(135deg, #D4AF37 0%, #F5E7A3 50%, #D4AF37 100%);
+    border: none;
+    border-radius: 50px;
+    color: #0a0a0a;
+    font-size: 1.2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 
+      0 5px 25px rgba(212, 175, 55, 0.4),
+      0 0 50px rgba(212, 175, 55, 0.2);
+  }
+
+  .spin-wheel-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 
+      0 8px 35px rgba(212, 175, 55, 0.5),
+      0 0 70px rgba(212, 175, 55, 0.3);
+  }
+
+  .spin-wheel-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* ========================================
+     RESULT DISPLAY
+  ======================================== */
+  .spin-result {
+    display: none;
+    text-align: center;
+    margin-top: 30px;
+    padding: 25px;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+    border-radius: 16px;
+    border: 2px solid #D4AF37;
+  }
+
+  .spin-result.show {
+    display: block;
+    animation: result-reveal 0.5s ease-out;
+  }
+
+  @keyframes result-reveal {
+    0% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .spin-result-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+
+  .spin-result-discount {
+    font-size: 3rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #D4AF37 0%, #F5E7A3 50%, #D4AF37 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: result-pulse 1s ease-in-out infinite;
+  }
+
+  @keyframes result-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  .spin-result-message {
+    color: #888;
+    font-size: 0.9rem;
+    margin-top: 10px;
+  }
+
+  .spin-result-code {
+    display: inline-block;
+    background: #D4AF37;
+    color: #0a0a0a;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-top: 15px;
+    letter-spacing: 2px;
+  }
+
+  /* ========================================
+     CONFETTI ANIMATION
+  ======================================== */
+  .confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    opacity: 0;
+  }
+
+  .confetti.active {
+    animation: confetti-fall 3s ease-out forwards;
+  }
+
+  @keyframes confetti-fall {
+    0% {
+      opacity: 1;
+      transform: translateY(0) rotate(0deg);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(400px) rotate(720deg);
+    }
+  }
+
+  /* ========================================
+     FLOATING PARTICLES
+  ======================================== */
+  .wheel-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .wheel-particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #D4AF37;
+    border-radius: 50%;
+    animation: wheel-particle-float 3s ease-in-out infinite;
+    opacity: 0.6;
+  }
+
+  @keyframes wheel-particle-float {
+    0%, 100% { 
+      transform: translateY(0) translateX(0); 
+      opacity: 0.3;
+    }
+    50% { 
+      transform: translateY(-20px) translateX(10px); 
+      opacity: 0.8;
+    }
+  }
+
+  /* ========================================
+     RESPONSIVE
+  ======================================== */
+  @media (max-width: 640px) {
+    .spin-wheel-modal {
+      padding: 25px;
+      margin: 15px;
+    }
+
+    .spin-wheel-title {
+      font-size: 1.8rem;
+    }
+
+    .wheel-wrapper {
+      width: 260px;
+      height: 260px;
+    }
+
+    .wheel-center {
+      width: 60px;
+      height: 60px;
+      font-size: 0.7rem;
+    }
+
+    .spin-wheel-btn {
+      padding: 15px 30px;
+      font-size: 1rem;
+    }
+
+    .spin-result-discount {
+      font-size: 2.5rem;
+    }
+  }
+</style>
+
+<!-- Spin Wheel Overlay -->
+<div class="spin-wheel-overlay" id="spinWheelOverlay">
+  <div class="spin-wheel-modal">
+    <span class="spin-wheel-close" id="spinWheelClose">&times;</span>
+    
+    <!-- 4D Vibrating Badge -->
+    <div class="wheel-badge-4d">🔥 Şansını Dene!</div>
+    
+    <!-- Header -->
+    <div class="spin-wheel-header">
+      <h2 class="spin-wheel-title">🎰 İndirim Çarkı</h2>
+      <p class="spin-wheel-subtitle">Çarkı çevir ve özel indirimini kazan!</p>
+    </div>
+    
+    <!-- Wheel Container -->
+    <div class="wheel-container">
+      <div class="wheel-wrapper">
+        <!-- Pointer -->
+        <div class="wheel-pointer"></div>
+        
+        <!-- The Wheel -->
+        <div class="wheel" id="spinWheel">
+          <div class="wheel-segment"><span>5%</span></div>
+          <div class="wheel-segment"><span>10%</span></div>
+          <div class="wheel-segment"><span>15%</span></div>
+          <div class="wheel-segment"><span>20%</span></div>
+          <div class="wheel-segment"><span>25%</span></div>
+          <div class="wheel-segment"><span>30%</span></div>
+        </div>
+        
+        <!-- Center Button -->
+        <div class="wheel-center" id="wheelCenter">ÇEVİR</div>
+        
+        <!-- Floating Particles -->
+        <div class="wheel-particles">
+          <div class="wheel-particle" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+          <div class="wheel-particle" style="top: 40%; left: 85%; animation-delay: 0.5s;"></div>
+          <div class="wheel-particle" style="top: 70%; left: 15%; animation-delay: 1s;"></div>
+          <div class="wheel-particle" style="top: 30%; left: 90%; animation-delay: 1.5s;"></div>
+          <div class="wheel-particle" style="top: 80%; left: 80%; animation-delay: 2s;"></div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Spin Button -->
+    <button class="spin-wheel-btn" id="spinWheelBtn">
+      🎲 Çarkı Çevir
+    </button>
+    
+    <!-- Result Display -->
+    <div class="spin-result" id="spinResult">
+      <div class="spin-result-title">🎉 Tebrikler!</div>
+      <div class="spin-result-discount" id="resultDiscount">%20</div>
+      <div class="spin-result-message">İndiriminiz otomatik olarak uygulandı!</div>
+      <div class="spin-result-code" id="resultCode">SPIN20</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  // Segments and probabilities (weighted towards lower discounts)
+  const segments = [
+    { discount: 5, weight: 30, code: 'SPIN5' },
+    { discount: 10, weight: 25, code: 'SPIN10' },
+    { discount: 15, weight: 20, code: 'SPIN15' },
+    { discount: 20, weight: 15, code: 'SPIN20' },
+    { discount: 25, weight: 7, code: 'SPIN25' },
+    { discount: 30, weight: 3, code: 'SPIN30' }
+  ];
+
+  // DOM Elements
+  const overlay = document.getElementById('spinWheelOverlay');
+  const closeBtn = document.getElementById('spinWheelClose');
+  const wheel = document.getElementById('spinWheel');
+  const spinBtn = document.getElementById('spinWheelBtn');
+  const wheelCenter = document.getElementById('wheelCenter');
+  const resultDiv = document.getElementById('spinResult');
+  const resultDiscount = document.getElementById('resultDiscount');
+  const resultCode = document.getElementById('resultCode');
+
+  let isSpinning = false;
+  let currentRotation = 0;
+
+  // Show wheel on page load - ALWAYS (her sayfa yenilemede göster)
+  setTimeout(() => {
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }, 500);
+
+  // Close wheel
+  function closeWheel() {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  closeBtn.addEventListener('click', closeWheel);
+
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) {
+      closeWheel();
+    }
+  });
+
+  // Weighted random selection
+  function getWeightedRandom() {
+    const totalWeight = segments.reduce((sum, s) => sum + s.weight, 0);
+    let random = Math.random() * totalWeight;
+    
+    for (let i = 0; i < segments.length; i++) {
+      random -= segments[i].weight;
+      if (random <= 0) {
+        return { index: i, segment: segments[i] };
+      }
+    }
+    return { index: 0, segment: segments[0] };
+  }
+
+  // Spin the wheel
+  function spinWheel() {
+    if (isSpinning) return;
+    
+    isSpinning = true;
+    spinBtn.disabled = true;
+    spinBtn.textContent = '🎰 Çevriliyor...';
+    wheelCenter.textContent = '...';
+
+    // Get result
+    const result = getWeightedRandom();
+    
+    // Calculate rotation
+    // Each segment is 60 degrees (360 / 6)
+    // We need to land on the correct segment
+    const segmentAngle = 360 / segments.length;
+    const targetAngle = (360 - (result.index * segmentAngle)) - (segmentAngle / 2);
+    
+    // Add multiple full rotations + target angle
+    const spins = 5 + Math.random() * 3; // 5-8 full rotations
+    const finalRotation = currentRotation + (360 * spins) + targetAngle;
+    
+    wheel.classList.add('spinning');
+    wheel.style.transform = `rotate(${finalRotation}deg)`;
+    currentRotation = finalRotation;
+
+    // Show result after spin
+    setTimeout(() => {
+      isSpinning = false;
+      wheel.classList.remove('spinning');
+      
+      // Display result
+      resultDiscount.textContent = `%${result.segment.discount}`;
+      resultCode.textContent = result.segment.code;
+      resultDiv.classList.add('show');
+      
+      // Save discount to session storage
+      sessionStorage.setItem('spinWheelDiscount', result.segment.discount);
+      sessionStorage.setItem('spinWheelCode', result.segment.code);
+      
+      // Update button
+      spinBtn.textContent = '✓ İndirim Kazanıldı!';
+      wheelCenter.textContent = `%${result.segment.discount}`;
+      
+      // Create confetti
+      createConfetti();
+      
+      // Auto close after 4 seconds
+      setTimeout(() => {
+        closeWheel();
+      }, 4000);
+      
+    }, 5500);
+  }
+
+  // Event listeners
+  spinBtn.addEventListener('click', spinWheel);
+  wheelCenter.addEventListener('click', spinWheel);
+
+  // Confetti effect
+  function createConfetti() {
+    const colors = ['#D4AF37', '#F5E7A3', '#fff', '#dc2626', '#22c55e'];
+    const modal = document.querySelector('.spin-wheel-modal');
+    
+    for (let i = 0; i < 50; i++) {
+      const confetti = document.createElement('div');
+      confetti.className = 'confetti';
+      confetti.style.left = Math.random() * 100 + '%';
+      confetti.style.top = '0';
+      confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.animationDelay = Math.random() * 0.5 + 's';
+      confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+      
+      modal.appendChild(confetti);
+      
+      setTimeout(() => {
+        confetti.classList.add('active');
+      }, 10);
+      
+      setTimeout(() => {
+        confetti.remove();
+      }, 3500);
+    }
+  }
+
+  // Keyboard close
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('active')) {
+      closeWheel();
+    }
+  });
+})();
+</script>
