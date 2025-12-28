@@ -17,8 +17,9 @@
     
     {% if search.performed %}
       {% if search.results_count > 0 %}
+        {% paginate search.results by 12 %}
         <p class="cp-search-count">
-          {{ 'general.search.results_count' | t: count: search.results_count | default: search.results_count }} {{ 'general.search.results_for' | t | default: 'results for' }} "{{ search.terms }}"
+          {{ search.results_count }} {{ 'general.search.results_for' | t | default: 'results for' }} "{{ search.terms }}"
         </p>
         
         <div class="cp-search-results">
@@ -27,7 +28,7 @@
               <a href="{{ item.url }}" class="cp-result-card">
                 <div class="cp-result-image">
                   {% if item.featured_image %}
-                    <img src="{{ item.featured_image | image_url: width: 300 }}" alt="{{ item.title }}">
+                    <img src="{{ item.featured_image | image_url: width: 300 }}" alt="{{ item.title }}" width="300" height="300" loading="lazy">
                   {% else %}
                     {{ 'product-1' | placeholder_svg_tag }}
                   {% endif %}
@@ -61,6 +62,7 @@
             {{ paginate | default_pagination }}
           </div>
         {% endif %}
+        {% endpaginate %}
       {% else %}
         <div class="cp-no-results">
           <div class="cp-no-results-icon">

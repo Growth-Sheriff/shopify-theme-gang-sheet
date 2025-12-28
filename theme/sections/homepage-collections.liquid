@@ -3,23 +3,58 @@
   Premium E-commerce Collection Showcase with Deep Customization
 {% endcomment %}
 
-<section class="cp-collections-section" style="background: {{ section.settings.section_bg }}; padding: {{ section.settings.section_padding }};">
+<section class="cp-collections-section" style="background: {{ section.settings.section_bg }}; padding: {{ section.settings.section_padding | default: '2rem 0' }};">
   <div class="container">
     <!-- Section Header -->
     {% if section.settings.show_header %}
-    <div class="cp-header-wrapper" style="text-align: {{ section.settings.header_align }}; margin-bottom: {{ section.settings.header_margin }};">
-      {% if section.settings.badge_text != blank %}
-        <span class="cp-header-badge" style="background: {{ section.settings.badge_bg }}; color: {{ section.settings.badge_color }};">
-          <i class="{{ section.settings.badge_icon }}"></i>
-          {{ section.settings.badge_text }}
-        </span>
-      {% endif %}
-      <h2 class="cp-header-title" style="background: {{ section.settings.title_gradient }}; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-        {{ section.settings.title }}
-      </h2>
-      {% if section.settings.subtitle != blank %}
-        <p class="cp-header-subtitle" style="color: {{ section.settings.subtitle_color }};">{{ section.settings.subtitle }}</p>
-      {% endif %}
+    {%- comment -%} Desktop Elegant Header - Teal Theme {%- endcomment -%}
+    <div class="cp-elegant-header cp-header-teal cp-desktop-header">
+      <div class="cp-header-deco left">
+        <span class="deco-diamond"></span>
+        <span class="deco-line"></span>
+        <span class="deco-dot"></span>
+      </div>
+      <div class="cp-header-container">
+        <span class="cp-header-corner tl"></span>
+        <span class="cp-header-corner tr"></span>
+        <span class="cp-header-corner bl"></span>
+        <span class="cp-header-corner br"></span>
+        {% if section.settings.badge_text != blank %}
+          <span class="cp-header-badge">{{ section.settings.badge_text }}</span>
+        {% endif %}
+        <h2 class="cp-header-title">{{ section.settings.title }}</h2>
+      </div>
+      <div class="cp-header-deco right">
+        <span class="deco-dot"></span>
+        <span class="deco-line"></span>
+        <span class="deco-diamond"></span>
+      </div>
+    </div>
+    
+    {%- comment -%} Mobile Glassmorphism Header - Slate (Güven & Profesyonellik) {%- endcomment -%}
+    <div class="cp-glass-header-wrap cp-glass-slate cp-mobile-header">
+      <div class="cp-glass-side left">
+        <span class="dot"></span>
+        <span class="line"></span>
+        <span class="end"></span>
+      </div>
+      <div class="cp-glass-container">
+        <span class="cp-glass-corner tl"></span>
+        <span class="cp-glass-corner tr"></span>
+        <span class="cp-glass-corner bl"></span>
+        <span class="cp-glass-corner br"></span>
+        <div class="cp-glass-inner">
+          {% if section.settings.badge_text != blank %}
+          <span class="cp-glass-badge">{{ section.settings.badge_text }}</span>
+          {% endif %}
+          <h2 class="cp-glass-title">{{ section.settings.title | default: 'COLLECTIONS' }}</h2>
+        </div>
+      </div>
+      <div class="cp-glass-side right">
+        <span class="end"></span>
+        <span class="line"></span>
+        <span class="dot"></span>
+      </div>
     </div>
     {% endif %}
     
@@ -104,31 +139,42 @@
     padding: 0 1rem;
   }
   
+  .cp-header-wrapper {
+    margin-bottom: 1.5rem !important;
+    text-align: left !important;
+  }
+  
   .cp-header-badge {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1.25rem;
-    border-radius: 50px;
-    font-size: 0.8125rem;
+    gap: 6px;
+    padding: 0;
+    border-radius: 0;
+    font-size: 0.65rem;
     font-weight: 600;
-    margin-bottom: 1rem;
+    margin-bottom: 0.3rem;
+    background: transparent !important;
+    color: #2d9d78 !important;
+    letter-spacing: 0.12em;
   }
   
   .cp-header-title {
-    font-size: 2.25rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 0;
     font-family: 'Public Sans', sans-serif;
+    color: #2d2d2d !important;
+    -webkit-text-fill-color: #2d2d2d !important;
+    background: none !important;
+    letter-spacing: 0.01em;
   }
   
   .cp-header-subtitle {
-    font-size: 1.0625rem;
-    margin: 0;
-    max-width: 550px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.6;
+    font-size: 0.85rem;
+    margin: 0.4rem 0 0 0;
+    max-width: 500px;
+    line-height: 1.5;
+    color: #777 !important;
   }
   
   .cp-collection-card {

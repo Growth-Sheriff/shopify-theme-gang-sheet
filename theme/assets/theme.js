@@ -73,3 +73,77 @@ window.addEventListener('scroll', function() {
     }
   }
 });
+
+// =====================================================
+// SHIMMER BUTTON (SB) - UNIQUE ANIMATED ADD TO CART
+// Prefix: sb- to avoid conflicts
+// =====================================================
+(function() {
+  'use strict';
+  
+  function initShimmerButtons() {
+    document.querySelectorAll(".sb-btn:not(.sb-initialized)").forEach(function(button) {
+      button.classList.add('sb-initialized');
+      
+      // Add shimmer div if not exists
+      if (!button.querySelector('.sb-shimmer')) {
+        var shimmer = document.createElement("div");
+        shimmer.className = "sb-shimmer";
+        button.appendChild(shimmer);
+      }
+      
+      // Wrap text content in .sb-text span for animation (if not already wrapped)
+      var childNodes = Array.prototype.slice.call(button.childNodes);
+      childNodes.forEach(function(node) {
+        if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+          var textSpan = document.createElement("span");
+          textSpan.className = "sb-text";
+          textSpan.textContent = node.textContent;
+          node.parentNode.replaceChild(textSpan, node);
+        }
+      });
+      
+      // Wrap existing spans that don't have sb- prefix
+      var spans = button.querySelectorAll('span:not([class*="sb-"])');
+      spans.forEach(function(span) {
+        if (!span.classList.contains('sb-text') && !span.classList.contains('sb-shimmer')) {
+          span.classList.add('sb-text');
+        }
+      });
+    });
+  }
+  
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initShimmerButtons);
+  } else {
+    initShimmerButtons();
+  }
+  
+  // Re-init on dynamic content (for AJAX loaded content)
+  if (typeof MutationObserver !== 'undefined') {
+    var sbObserver = new MutationObserver(function(mutations) {
+      var shouldInit = false;
+      mutations.forEach(function(mutation) {
+        if (mutation.addedNodes.length) {
+          shouldInit = true;
+        }
+      });
+      if (shouldInit) {
+        setTimeout(initShimmerButtons, 100);
+      }
+    });
+    
+    // Start observing when DOM is ready
+    if (document.body) {
+      sbObserver.observe(document.body, { childList: true, subtree: true });
+    } else {
+      document.addEventListener('DOMContentLoaded', function() {
+        sbObserver.observe(document.body, { childList: true, subtree: true });
+      });
+    }
+  }
+  
+  // Expose globally if needed
+  window.initShimmerButtons = initShimmerButtons;
+})();

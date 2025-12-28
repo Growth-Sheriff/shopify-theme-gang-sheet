@@ -10,24 +10,46 @@
 
 {{ 'homepage-product-showcase.css' | asset_url | stylesheet_tag }}
 
-<section class="product-showcase-section py-5" id="showcase-{{ section.id }}">
+<section class="product-showcase-section py-3" id="showcase-{{ section.id }}">
   <div class="container">
     
     {%- comment -%} ===== 4D GOLD FOIL HEADER ===== {%- endcomment -%}
-    <div class="showcase-4d-header mb-5">
-      <div class="gold-foil-container">
-        <div class="gold-particles">
-          {%- for i in (1..15) -%}
-            <span class="particle particle-{{ i }}"></span>
-          {%- endfor -%}
+    <div class="showcase-4d-header mb-3">
+      {%- comment -%} Decorative Side Lines {%- endcomment -%}
+      <div class="header-deco-wrapper">
+        <div class="header-side-line line-left">
+          <span class="line-dot"></span>
+          <span class="line-bar"></span>
+          <span class="line-end"></span>
         </div>
-        <div class="gold-foil-text">
-          <span class="foil-layer layer-1">{{ section.settings.header_text | default: 'SPECIAL OFFERS' }}</span>
-          <span class="foil-layer layer-2">{{ section.settings.header_text | default: 'SPECIAL OFFERS' }}</span>
-          <span class="foil-layer layer-3">{{ section.settings.header_text | default: 'SPECIAL OFFERS' }}</span>
+        
+        <div class="gold-foil-container">
+          {%- comment -%} Corner Accents {%- endcomment -%}
+          <span class="corner-accent top-left"></span>
+          <span class="corner-accent top-right"></span>
+          <span class="corner-accent bottom-left"></span>
+          <span class="corner-accent bottom-right"></span>
+          
+          <div class="gold-particles">
+            {%- for i in (1..15) -%}
+              <span class="particle particle-{{ i }}"></span>
+            {%- endfor -%}
+          </div>
+          <div class="gold-foil-text">
+            <span class="foil-layer layer-1">{{ section.settings.header_text | default: 'SPECIAL OFFERS' }}</span>
+            <span class="foil-layer layer-2">{{ section.settings.header_text | default: 'SPECIAL OFFERS' }}</span>
+            <span class="foil-layer layer-3">{{ section.settings.header_text | default: 'SPECIAL OFFERS' }}</span>
+          </div>
+          <div class="gold-shine"></div>
         </div>
-        <div class="gold-shine"></div>
+        
+        <div class="header-side-line line-right">
+          <span class="line-end"></span>
+          <span class="line-bar"></span>
+          <span class="line-dot"></span>
+        </div>
       </div>
+      
       {%- if section.settings.subtitle != blank -%}
         <p class="showcase-subtitle text-center mt-3">{{ section.settings.subtitle }}</p>
       {%- endif -%}
@@ -35,11 +57,11 @@
 
     {%- comment -%} ===== SHOWCASE LAYOUT (4 LEFT + 1 RIGHT) ===== {%- endcomment -%}
     <div class="showcase-wrapper">
-      <div class="row g-4">
+      <div class="row g-2">
         
         {%- comment -%} LEFT SIDE - 4 PRODUCTS GRID {%- endcomment -%}
         <div class="col-lg-7">
-          <div class="row g-3">
+          <div class="row g-2">
             {%- assign left_count = 0 -%}
             {%- for block in section.blocks -%}
               {%- if block.type == 'left_product' and left_count < 4 -%}
@@ -67,10 +89,10 @@
                             <img src="{{ product.featured_image | image_url: width: 400 }}" 
                                  alt="{{ product.title | escape }}"
                                  loading="lazy"
-                                 class="img-fluid">
+                                 style="width:100%;height:100%;object-fit:cover;display:block;">
                           {%- else -%}
-                            <div class="placeholder-image">
-                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <div class="placeholder-image" style="width:100%;height:140px;display:flex;align-items:center;justify-content:center;background:#f0f0f0;">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#bbb" style="width:48px;height:48px;">
                                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                                 <circle cx="8.5" cy="8.5" r="1.5"></circle>
                                 <polyline points="21 15 16 10 5 21"></polyline>
@@ -111,11 +133,11 @@
                         </div>
 
                         <div class="showcase-card-actions">
-                          <a href="{{ product.url }}?upload=true" class="btn-my-device">
-                            <i class="ti ti-upload"></i>
-                            <span>My Device</span>
+                          <a href="{{ product.url }}" class="btn-view-product">
+                            <i class="ti ti-eye"></i>
+                            <span>View</span>
                           </a>
-                          <form method="post" action="/cart/add" class="quick-add-form">
+                          <form method="post" action="{{ routes.cart_add_url }}" class="quick-add-form">
                             <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
                             <input type="hidden" name="quantity" value="1">
                             <button type="submit" class="btn-quick-add" {% unless product.available %}disabled{% endunless %}>
@@ -169,6 +191,8 @@
                       {%- if product.featured_image != blank -%}
                         <img src="{{ product.featured_image | image_url: width: 800 }}" 
                              alt="{{ product.title | escape }}"
+                             width="800"
+                             height="800"
                              loading="lazy"
                              class="img-fluid">
                       {%- else -%}
@@ -226,14 +250,14 @@
                     {%- endif -%}
 
                     <div class="main-card-actions">
-                      <a href="{{ product.url }}?upload=true" class="btn-my-device-large">
-                        <i class="ti ti-upload"></i>
-                        <span>Upload My Design</span>
+                      <a href="{{ product.url }}" class="btn-view-details">
+                        <i class="ti ti-eye"></i>
+                        <span>View Details</span>
                       </a>
-                      <form method="post" action="/cart/add" class="quick-add-form-main">
+                      <form method="post" action="{{ routes.cart_add_url }}" class="quick-add-form-main">
                         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
                         <input type="hidden" name="quantity" value="1">
-                        <button type="submit" class="btn-add-to-cart" {% unless product.available %}disabled{% endunless %}>
+                        <button type="submit" class="sb-btn{% unless product.available %} sb-sold-out{% endunless %}" {% unless product.available %}disabled{% endunless %}>
                           <i class="ti ti-shopping-cart-plus"></i>
                           <span>{% if product.available %}Add to Cart{% else %}Sold Out{% endif %}</span>
                         </button>

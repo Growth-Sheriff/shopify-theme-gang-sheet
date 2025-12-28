@@ -7,7 +7,7 @@
   data-bs-theme="light">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <title>{{ page_title }} - {{ shop.name }}</title>
     <meta name="description" content="{{ page_description | default: shop.description }}" />
@@ -25,8 +25,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin />
     
-    <!-- Google Fonts - Montserrat -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Google Fonts - All Available Heading Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
     
     <!-- Tabler Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
@@ -60,6 +60,24 @@
         --cp-body-color: {{ settings.color_body_text | default: '#6e6b7b' }};
         --cp-muted-color: {{ settings.color_muted | default: '#b9b9c3' }};
         --cp-border-color: {{ settings.color_border | default: '#ebe9f1' }};
+        --cp-heading-font: '{{ settings.heading_font | default: 'Montserrat' }}', sans-serif;
+        --cp-heading-weight: {{ settings.heading_weight | default: '500' }};
+      }
+      
+      /* Dynamic Heading Styles */
+      .cp-glass-title,
+      .cp-glass-badge,
+      .header-title-4d,
+      .gold-foil-text,
+      .gold-foil-text .foil-layer,
+      .cp-section-title,
+      .cp-header-title,
+      .cp-featured-title {
+        font-family: var(--cp-heading-font) !important;
+        font-weight: var(--cp-heading-weight) !important;
+        {% if settings.heading_uppercase %}
+        text-transform: uppercase !important;
+        {% endif %}
       }
       
       body {
@@ -68,10 +86,49 @@
         color: var(--cp-body-color);
         margin: 0;
         padding: 0;
+        overflow-x: hidden;
+      }
+      
+      html {
+        overflow-x: hidden;
       }
       
       .main-content {
         min-height: 60vh;
+      }
+      
+      /* Skip to content - Accessibility */
+      .skip-to-content-link {
+        position: absolute;
+        top: -100px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--cp-primary);
+        color: #fff;
+        padding: 12px 24px;
+        border-radius: 0 0 8px 8px;
+        text-decoration: none;
+        font-weight: 600;
+        z-index: 9999;
+        transition: top 0.3s ease;
+      }
+      
+      .skip-to-content-link:focus {
+        top: 0;
+        outline: 2px solid #fff;
+        outline-offset: 2px;
+      }
+      
+      .visually-hidden-focusable:not(:focus):not(:focus-within) {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
       }
     </style>
   </head>
@@ -93,6 +150,12 @@
     
     <!-- Footer Section -->
     {% section 'footer' %}
+    
+    <!-- Drawer Cart (Ajax Mini Cart) -->
+    {% render 'drawer-cart' %}
+    
+    <!-- Bottom Navigation (Mobile) -->
+    {% render 'bottom-nav' %}
     
     <!-- Theme JavaScript -->
     <script src="{{ 'theme.js' | asset_url }}" defer></script>

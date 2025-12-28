@@ -3,22 +3,14 @@
   All elements customizable via Theme Editor
 {% endcomment %}
 
-<section class="cp-cta" style="background: {{ section.settings.background | default: 'linear-gradient(135deg, #7367F0 0%, #9e95f5 100%)' }}; padding: {{ section.settings.section_padding | default: '4rem 0' }};">
+<section class="cp-cta" style="background: {{ section.settings.background | default: 'linear-gradient(135deg, #7367F0 0%, #9e95f5 100%)' }};">
   <div class="container" style="text-align: center;">
-    <h2 style="color: {{ section.settings.title_color | default: '#ffffff' }}; font-size: {{ section.settings.title_size | default: '2rem' }}; margin-bottom: 1rem;">{{ section.settings.title }}</h2>
-    <p style="color: {{ section.settings.desc_color | default: 'rgba(255,255,255,0.9)' }}; max-width: 600px; margin: 0 auto 2rem; font-size: {{ section.settings.desc_size | default: '1rem' }};">{{ section.settings.description }}</p>
+    <h2 class="cp-cta-title" style="color: {{ section.settings.title_color | default: '#ffffff' }};">{{ section.settings.title }}</h2>
+    <p class="cp-cta-desc" style="color: {{ section.settings.desc_color | default: 'rgba(255,255,255,0.9)' }};">{{ section.settings.description }}</p>
     {% if section.settings.button_text != blank %}
-      <a href="{{ section.settings.button_link }}" class="cp-btn" style="
+      <a href="{{ section.settings.button_link }}" class="cp-cta-btn" style="
         background: {{ section.settings.button_bg | default: '#ffffff' }};
         color: {{ section.settings.button_color | default: '#7367F0' }};
-        padding: {{ section.settings.button_padding | default: '0.875rem 2rem' }};
-        border-radius: {{ section.settings.button_radius | default: '8px' }};
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        text-decoration: none;
-        transition: all 0.2s ease;
       ">
         {% if section.settings.button_icon != blank %}
           <i class="{{ section.settings.button_icon }}"></i>
@@ -28,6 +20,64 @@
     {% endif %}
   </div>
 </section>
+
+<style>
+  .cp-cta {
+    padding: 3.5rem 0;
+  }
+  
+  .cp-cta-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  
+  .cp-cta-desc {
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  .cp-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .cp-cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+  
+  @media (max-width: 767px) {
+    .cp-cta {
+      padding: 2rem 1rem;
+    }
+    
+    .cp-cta-title {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+    
+    .cp-cta-desc {
+      font-size: 0.85rem;
+      margin-bottom: 1.25rem;
+      padding: 0 0.5rem;
+    }
+    
+    .cp-cta-btn {
+      padding: 0.75rem 1.5rem;
+      font-size: 0.9rem;
+    }
+  }
+</style>
 
 {% schema %}
 {

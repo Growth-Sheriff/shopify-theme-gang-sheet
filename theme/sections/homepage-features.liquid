@@ -3,22 +3,58 @@
   All elements customizable via Theme Editor
 {% endcomment %}
 
-<section class="cp-features" id="features" style="background: {{ section.settings.section_bg | default: '#ffffff' }}; padding: {{ section.settings.section_padding | default: '4rem 0' }};">
+<section class="cp-features" id="features" style="background: {{ section.settings.section_bg | default: '#ffffff' }};">
   <div class="container">
-    <div class="cp-section-header" style="text-align: center; margin-bottom: 2.5rem;">
-      <span class="cp-section-badge" style="background: {{ section.settings.badge_bg | default: '#e5e3fb' }}; color: {{ section.settings.badge_color | default: '#7367F0' }};">{{ section.settings.badge }}</span>
-      <h2 class="cp-section-title" style="color: {{ section.settings.title_color | default: '#5d596c' }};">{{ section.settings.title }}</h2>
-      <p class="cp-section-subtitle" style="color: {{ section.settings.subtitle_color | default: '#6e6b7b' }};">{{ section.settings.subtitle }}</p>
+    {%- comment -%} Desktop Elegant Header - Coral Theme {%- endcomment -%}
+    <div class="cp-elegant-header cp-header-coral cp-desktop-header">
+      <div class="cp-header-deco left">
+        <span class="deco-diamond"></span>
+        <span class="deco-line"></span>
+        <span class="deco-dot"></span>
+      </div>
+      <div class="cp-header-container">
+        <span class="cp-header-corner tl"></span>
+        <span class="cp-header-corner tr"></span>
+        <span class="cp-header-corner bl"></span>
+        <span class="cp-header-corner br"></span>
+        <span class="cp-header-badge">{{ section.settings.badge }}</span>
+        <h2 class="cp-header-title">{{ section.settings.title }}</h2>
+      </div>
+      <div class="cp-header-deco right">
+        <span class="deco-dot"></span>
+        <span class="deco-line"></span>
+        <span class="deco-diamond"></span>
+      </div>
+    </div>
+    
+    {%- comment -%} Mobile Glassmorphism Header - Sage (Doğal & Huzur) {%- endcomment -%}
+    <div class="cp-glass-header-wrap cp-glass-sage cp-mobile-header">
+      <div class="cp-glass-side left">
+        <span class="dot"></span>
+        <span class="line"></span>
+        <span class="end"></span>
+      </div>
+      <div class="cp-glass-container">
+        <span class="cp-glass-corner tl"></span>
+        <span class="cp-glass-corner tr"></span>
+        <span class="cp-glass-corner bl"></span>
+        <span class="cp-glass-corner br"></span>
+        <div class="cp-glass-inner">
+          <span class="cp-glass-badge">⭐ {{ section.settings.badge | default: 'FEATURES' }}</span>
+          <h2 class="cp-glass-title">{{ section.settings.title | default: 'WHY CHOOSE US' }}</h2>
+        </div>
+      </div>
+      <div class="cp-glass-side right">
+        <span class="end"></span>
+        <span class="line"></span>
+        <span class="dot"></span>
+      </div>
     </div>
 
-    <div class="cp-features-grid" style="
-      display: grid;
-      grid-template-columns: repeat({{ section.settings.columns | default: 3 }}, 1fr);
-      gap: {{ section.settings.grid_gap | default: '1.5rem' }};
-    ">
+    <div class="cp-features-grid">
       {% for block in section.blocks %}
         {% if block.type == 'feature' %}
-          <div class="cp-feature-card" {{ block.shopify_attributes }} style="background: {{ section.settings.card_bg | default: '#ffffff' }}; border-radius: {{ section.settings.card_radius | default: '12px' }};">
+          <div class="cp-feature-card" {{ block.shopify_attributes }} style="background: {{ section.settings.card_bg | default: '#ffffff' }};">
             <div class="cp-feature-icon" style="background: {{ block.settings.icon_bg | default: '#e5e3fb' }}; color: {{ block.settings.icon_color | default: '#7367F0' }};">
               <i class="{{ block.settings.icon }}"></i>
             </div>
@@ -30,6 +66,148 @@
     </div>
   </div>
 </section>
+
+<style>
+  .cp-features {
+    padding: 3rem 0;
+  }
+  
+  /* Features unique header style */
+  .cp-features-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .cp-features-header-icon {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, #ff9f43 0%, #ffb976 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  
+  .cp-features-header-text {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .cp-features-badge {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #ff9f43;
+    margin-bottom: 0.15rem;
+  }
+  
+  .cp-features-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #2d2d2d;
+    margin: 0;
+    letter-spacing: 0.01em;
+  }
+  
+  .cp-features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .cp-feature-card {
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    text-align: center;
+  }
+  
+  .cp-feature-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.5rem;
+  }
+  
+  .cp-feature-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .cp-feature-desc {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+  
+  @media (max-width: 991px) {
+    .cp-features-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .cp-features {
+      padding: 2rem 0;
+    }
+    
+    .cp-features .cp-section-header {
+      margin-bottom: 1.5rem !important;
+    }
+    
+    .cp-features .cp-section-badge {
+      font-size: 0.7rem;
+    }
+    
+    .cp-features .cp-section-title {
+      font-size: 1.25rem;
+    }
+    
+    .cp-features .cp-section-subtitle {
+      font-size: 0.85rem;
+      display: none;
+    }
+    
+    .cp-features-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      padding: 0 0.25rem;
+    }
+    
+    .cp-feature-card {
+      padding: 1rem;
+      border-radius: 10px;
+    }
+    
+    .cp-feature-icon {
+      width: 44px;
+      height: 44px;
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+    }
+    
+    .cp-feature-title {
+      font-size: 0.85rem;
+      margin-bottom: 0.3rem;
+    }
+    
+    .cp-feature-desc {
+      font-size: 0.75rem;
+      line-height: 1.4;
+    }
+  }
+</style>
 
 {% schema %}
 {

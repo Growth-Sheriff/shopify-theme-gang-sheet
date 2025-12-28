@@ -8,6 +8,48 @@
     "theme_support_url": "https://cloudyprints.com/support"
   },
   {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Section Headers"
+      },
+      {
+        "type": "select",
+        "id": "heading_font",
+        "label": "Heading Font",
+        "options": [
+          { "value": "Montserrat", "label": "Montserrat" },
+          { "value": "Inter", "label": "Inter" },
+          { "value": "Poppins", "label": "Poppins" },
+          { "value": "Roboto", "label": "Roboto" },
+          { "value": "Open Sans", "label": "Open Sans" },
+          { "value": "Playfair Display", "label": "Playfair Display" }
+        ],
+        "default": "Montserrat"
+      },
+      {
+        "type": "select",
+        "id": "heading_weight",
+        "label": "Heading Weight",
+        "options": [
+          { "value": "300", "label": "Light (300)" },
+          { "value": "400", "label": "Regular (400)" },
+          { "value": "500", "label": "Medium (500)" },
+          { "value": "600", "label": "Semi-Bold (600)" },
+          { "value": "700", "label": "Bold (700)" }
+        ],
+        "default": "500"
+      },
+      {
+        "type": "checkbox",
+        "id": "heading_uppercase",
+        "label": "Uppercase Headings",
+        "default": true
+      }
+    ]
+  },
+  {
     "name": "Colors",
     "settings": [
       {
@@ -224,6 +266,78 @@
         "id": "enable_ajax_cart",
         "label": "Enable AJAX Add to Cart",
         "default": true
+      }
+    ]
+  },
+  {
+    "name": "Shipping Settings",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Shipping Information"
+      },
+      {
+        "type": "text",
+        "id": "shipping_processing_time",
+        "label": "Processing Time",
+        "default": "1-2 Business Days"
+      },
+      {
+        "type": "text",
+        "id": "shipping_standard",
+        "label": "Standard Shipping",
+        "default": "3-5 Business Days"
+      },
+      {
+        "type": "text",
+        "id": "shipping_express",
+        "label": "Express Shipping",
+        "default": "1-2 Business Days"
+      },
+      {
+        "type": "text",
+        "id": "shipping_free_threshold",
+        "label": "Free Shipping Threshold",
+        "default": "Orders $59+"
+      },
+      {
+        "type": "header",
+        "content": "Default Press Instructions"
+      },
+      {
+        "type": "text",
+        "id": "press_temperature",
+        "label": "Temperature",
+        "default": "285°F - 300°F"
+      },
+      {
+        "type": "text",
+        "id": "press_time",
+        "label": "Press Time",
+        "default": "10-15 seconds"
+      },
+      {
+        "type": "text",
+        "id": "press_pressure",
+        "label": "Pressure",
+        "default": "Medium"
+      },
+      {
+        "type": "text",
+        "id": "press_peel",
+        "label": "Peel Type",
+        "default": "Cold Peel"
+      },
+      {
+        "type": "header",
+        "content": "Default Care Instructions"
+      },
+      {
+        "type": "textarea",
+        "id": "care_instructions_default",
+        "label": "Default Care Instructions",
+        "default": "Wait 24hrs before washing\nWash inside out, cold water\nTumble dry low\nDo not iron on design\nNo bleach\nNo dry cleaning",
+        "info": "One instruction per line"
       }
     ]
   },

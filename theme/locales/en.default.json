@@ -9,6 +9,20 @@
     },
     "password_page": {
       "login_form_heading": "Enter store using password"
+    },
+    "search": {
+      "title": "Search Results",
+      "placeholder": "Search products...",
+      "results_for": "results for",
+      "no_results": "No results found",
+      "no_results_text": "Try adjusting your search terms or browse our products.",
+      "browse_products": "Browse Products"
+    },
+    "404": {
+      "title": "Page not found",
+      "subtext": "The page you're looking for doesn't exist or has been moved.",
+      "back_home": "Go to Homepage",
+      "browse_products": "Browse Products"
     }
   },
   "products": {
@@ -68,6 +82,12 @@
       "order_by": "Order by 3PM"
     }
   },
+  "collection": {
+    "products_label": "Products",
+    "free_shipping": "Free Shipping",
+    "guaranteed": "Guaranteed",
+    "rating": "Rating"
+  },
   "cart": {
     "general": {
       "title": "Your cart",
@@ -80,6 +100,17 @@
   "accessibility": {
     "skip_to_content": "Skip to content",
     "close": "Close"
+  },
+  "gift_cards": {
+    "issued": {
+      "title": "Gift Card",
+      "subtext": "Your gift card",
+      "remaining_html": "Remaining balance: {{ balance }}",
+      "initial_value_html": "Initial value: {{ value }}",
+      "expiration_date_html": "Expires on {{ expires_on }}",
+      "disabled": "This gift card is disabled",
+      "shop_link": "Start Shopping"
+    }
   },
   "sections": {
     "header": {

@@ -22,108 +22,6 @@
         "express_shipping": "1-2 Business Days"
       }
     },
-    "product-options": {
-      "type": "product-options",
-      "settings": {
-        "show_colors": true,
-        "color_title": "T-Shirt Color",
-        "show_upload": true,
-        "upload_title": "Upload Your Design(s)",
-        "upload_text": "Drag your design here",
-        "upload_subtext": "PNG, JPG, SVG up to 50MB",
-        "upload_button": "My Device",
-        "show_positions": true,
-        "position_title": "Select Print Position",
-        "show_sizes": true,
-        "size_title": "Select Size"
-      },
-      "blocks": {
-        "color-1": {
-          "type": "color",
-          "settings": {
-            "color_hex": "#ffffff",
-            "color_name": "White"
-          }
-        },
-        "color-2": {
-          "type": "color",
-          "settings": {
-            "color_hex": "#1a1a1a",
-            "color_name": "Black"
-          }
-        },
-        "color-3": {
-          "type": "color",
-          "settings": {
-            "color_hex": "#e53e3e",
-            "color_name": "Red"
-          }
-        },
-        "color-4": {
-          "type": "color",
-          "settings": {
-            "color_hex": "#3b82f6",
-            "color_name": "Blue"
-          }
-        },
-        "color-5": {
-          "type": "color",
-          "settings": {
-            "color_hex": "#38a169",
-            "color_name": "Green"
-          }
-        },
-        "pos-1": {
-          "type": "position",
-          "settings": {
-            "position_id": "front-center",
-            "position_label": "Front Center",
-            "position_icon": "shirt"
-          }
-        },
-        "pos-2": {
-          "type": "position",
-          "settings": {
-            "position_id": "back-center",
-            "position_label": "Back Center",
-            "position_icon": "shirt"
-          }
-        },
-        "size-1": {
-          "type": "size",
-          "settings": {
-            "size_label": "2\" x 2\"",
-            "size_price": 89
-          }
-        },
-        "size-2": {
-          "type": "size",
-          "settings": {
-            "size_label": "4\" x 4\"",
-            "size_price": 189
-          }
-        },
-        "size-3": {
-          "type": "size",
-          "settings": {
-            "size_label": "8\" x 8\"",
-            "size_price": 449
-          }
-        },
-        "size-4": {
-          "type": "size",
-          "settings": {
-            "size_label": "12\" x 12\"",
-            "size_price": 899
-          }
-        }
-      },
-      "block_order": [
-        "color-1", "color-2", "color-3", "color-4", "color-5",
-        "pos-1", "pos-2",
-        "size-1", "size-2", "size-3", "size-4"
-      ]
-    },
     "product-instructions": {
       "type": "product-instructions",
       "settings": {
@@ -197,12 +95,26 @@
         "heading": "You may also like",
         "products_count": 4
       }
+    },
+    "product-info-card": {
+      "type": "product-info-card",
+      "settings": {
+        "rating_score": "4.8",
+        "review_count": "2,847",
+        "recommend_percent": "99%",
+        "price_badge": "LIMITED TIME OFFER",
+        "delivery_time": "Tomorrow 5PM – 9PM",
+        "order_by": "Order by 3PM",
+        "badge_1": "Secure Checkout",
+        "badge_2": "Fast Shipping",
+        "badge_3": "Easy Returns"
+      }
     }
   },
   "order": [
     "product-gallery",
+    "product-info-card",
     "product-tabs",
-    "product-options",
     "product-instructions",
     "recommendations"
   ]

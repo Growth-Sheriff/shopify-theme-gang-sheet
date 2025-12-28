@@ -5,13 +5,54 @@
 
 {% assign selected_product = section.settings.product %}
 
-<section class="cp-featured-section" style="background: {{ section.settings.section_bg | default: '#ffffff' }}; padding: {{ section.settings.section_padding | default: '4rem 0' }};">
+<section class="cp-featured-section" style="background: {{ section.settings.section_bg | default: '#ffffff' }}; padding: {{ section.settings.section_padding | default: '2rem 0' }};">
   <div class="container">
     <!-- Section Header -->
     {% if section.settings.show_header %}
-    <div class="cp-featured-header">
-      <h2 class="cp-featured-title">{{ section.settings.title }}</h2>
-      <p class="cp-featured-subtitle">{{ section.settings.subtitle }}</p>
+    {%- comment -%} Desktop Header - Gold Elegant Style {%- endcomment -%}
+    <div class="cp-elegant-header cp-header-gold cp-desktop-header">
+      <div class="cp-header-deco left">
+        <span class="deco-diamond"></span>
+        <span class="deco-line"></span>
+        <span class="deco-dot"></span>
+      </div>
+      <div class="cp-header-container">
+        <span class="cp-header-corner tl"></span>
+        <span class="cp-header-corner tr"></span>
+        <span class="cp-header-corner bl"></span>
+        <span class="cp-header-corner br"></span>
+        <span class="cp-header-badge">FEATURED</span>
+        <h2 class="cp-header-title">{{ section.settings.title | default: 'FEATURED DTF TRANSFER' }}</h2>
+      </div>
+      <div class="cp-header-deco right">
+        <span class="deco-dot"></span>
+        <span class="deco-line"></span>
+        <span class="deco-diamond"></span>
+      </div>
+    </div>
+    
+    {%- comment -%} Mobile Glassmorphism Header - Noir Gold (Lüks & Premium) {%- endcomment -%}
+    <div class="cp-glass-header-wrap cp-glass-noir-gold cp-mobile-header">
+      <div class="cp-glass-side left">
+        <span class="dot"></span>
+        <span class="line"></span>
+        <span class="end"></span>
+      </div>
+      <div class="cp-glass-container">
+        <span class="cp-glass-corner tl"></span>
+        <span class="cp-glass-corner tr"></span>
+        <span class="cp-glass-corner bl"></span>
+        <span class="cp-glass-corner br"></span>
+        <div class="cp-glass-inner">
+          <span class="cp-glass-badge">✨ FEATURED</span>
+          <h2 class="cp-glass-title">{{ section.settings.title | default: 'FEATURED PRODUCT' }}</h2>
+        </div>
+      </div>
+      <div class="cp-glass-side right">
+        <span class="end"></span>
+        <span class="line"></span>
+        <span class="dot"></span>
+      </div>
     </div>
     {% endif %}
     
@@ -22,14 +63,14 @@
         <div class="cp-gallery-thumbs">
           {% for image in selected_product.images limit: 5 %}
             <div class="cp-thumb {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}">
-              <img src="{{ image | image_url: width: 100 }}" alt="{{ selected_product.title }}">
+              <img src="{{ image | image_url: width: 100 }}" alt="{{ selected_product.title }}" width="100" height="100" loading="lazy">
             </div>
           {% endfor %}
         </div>
         <div class="cp-gallery-main">
           {% for image in selected_product.images limit: 5 %}
             <div class="cp-main-image {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}">
-              <img src="{{ image | image_url: width: 600 }}" alt="{{ selected_product.title }}">
+              <img src="{{ image | image_url: width: 600 }}" alt="{{ selected_product.title }}" width="600" height="600" loading="lazy">
             </div>
           {% endfor %}
         </div>
@@ -73,10 +114,41 @@
         </div>
         {% endif %}
         
-        <!-- Variant Options - Otomatik -->
+        <!-- Size + Quantity Row -->
+        <div class="cp-size-qty-row">
+          {% if selected_product.has_only_default_variant == false %}
+            {% for option in selected_product.options_with_values %}
+              {% if option.name == 'Size' or option.values.size > 8 %}
+              <div class="cp-size-col">
+                <div class="cp-option-label">{{ option.name }}: <strong class="selected-option-{{ forloop.index }}">{{ option.values.first }}</strong></div>
+                <div class="cp-option-dropdown-wrapper">
+                  <select class="cp-option-dropdown" data-option="{{ option.name }}">
+                    {% for value in option.values %}
+                      <option value="{{ value }}" {% if forloop.first %}selected{% endif %}>{{ value }}</option>
+                    {% endfor %}
+                  </select>
+                  <i class="fa-solid fa-chevron-down cp-dropdown-icon"></i>
+                </div>
+              </div>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          
+          <div class="cp-qty-col">
+            <div class="cp-quantity-label">{{ section.settings.quantity_label | default: 'Quantity' }}</div>
+            <div class="cp-quantity-controls">
+              <button class="cp-qty-btn" type="button" onclick="this.parentNode.querySelector('input').stepDown(); updatePrice();">−</button>
+              <input type="number" value="1" min="1" max="{{ selected_product.selected_or_first_available_variant.inventory_quantity | default: 99 }}" class="cp-qty-input" id="featured-qty">
+              <button class="cp-qty-btn" type="button" onclick="this.parentNode.querySelector('input').stepUp(); updatePrice();">+</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Other Variants (Color etc) -->
         {% if selected_product.has_only_default_variant == false %}
           {% for option in selected_product.options_with_values %}
-            <div class="cp-option-section">
+            {% unless option.name == 'Size' or option.values.size > 8 %}
+            <div class="cp-option-section cp-option-section-compact">
               <div class="cp-option-label">{{ option.name }}: <strong class="selected-option-{{ forloop.index }}">{{ option.values.first }}</strong></div>
               <div class="cp-option-values">
                 {% for value in option.values %}
@@ -88,25 +160,16 @@
                 {% endfor %}
               </div>
             </div>
+            {% endunless %}
           {% endfor %}
         {% endif %}
-        
-        <!-- Quantity -->
-        <div class="cp-quantity-section">
-          <div class="cp-quantity-label">{{ section.settings.quantity_label | default: 'Quantity' }}</div>
-          <div class="cp-quantity-controls">
-            <button class="cp-qty-btn" type="button" onclick="this.parentNode.querySelector('input').stepDown(); updatePrice();">−</button>
-            <input type="number" value="1" min="1" max="{{ selected_product.selected_or_first_available_variant.inventory_quantity | default: 99 }}" class="cp-qty-input" id="featured-qty">
-            <button class="cp-qty-btn" type="button" onclick="this.parentNode.querySelector('input').stepUp(); updatePrice();">+</button>
-          </div>
-        </div>
         
         <!-- Add to Cart -->
         <div class="cp-cart-row">
           <form action="{{ routes.cart_add_url }}" method="post" class="cp-add-form">
             <input type="hidden" name="id" value="{{ selected_product.selected_or_first_available_variant.id }}">
             <input type="hidden" name="quantity" value="1" id="featured-form-qty">
-            <button type="submit" class="cp-add-to-cart-btn" {% unless selected_product.available %}disabled{% endunless %}>
+            <button type="submit" class="sb-btn cp-add-to-cart-btn" {% unless selected_product.available %}disabled{% endunless %}>
               {% if selected_product.available %}
                 {{ section.settings.add_to_cart_text | default: 'Add to cart' }} – {{ selected_product.price | money }}
               {% else %}
@@ -114,29 +177,31 @@
               {% endif %}
             </button>
           </form>
-          <button class="cp-wishlist-btn" title="{{ section.settings.wishlist_text | default: 'Add to wishlist' }}">
-            <i class="fa-regular fa-heart"></i>
-          </button>
-          <button class="cp-compare-btn" title="{{ section.settings.compare_text | default: 'Compare' }}">
-            <i class="fa-solid fa-arrows-left-right"></i>
-          </button>
         </div>
         
-        <!-- Stock Status -->
-        {% if selected_product.available %}
-          <div class="cp-stock-status in-stock">
-            <i class="fa-solid fa-check-circle"></i>
-            {{ section.settings.in_stock_text | default: 'In Stock' }}
-            {% if selected_product.selected_or_first_available_variant.inventory_quantity > 0 and selected_product.selected_or_first_available_variant.inventory_quantity < 10 %}
-              - Only {{ selected_product.selected_or_first_available_variant.inventory_quantity }} left!
-            {% endif %}
-          </div>
-        {% else %}
-          <div class="cp-stock-status out-of-stock">
-            <i class="fa-solid fa-times-circle"></i>
-            {{ section.settings.out_of_stock_text | default: 'Out of Stock' }}
-          </div>
-        {% endif %}
+        <!-- Wishlist + Compare + Stock - Compact Row -->
+        <div class="cp-actions-compact-row">
+          <button class="cp-action-compact-btn cp-wishlist-compact" title="{{ section.settings.wishlist_text | default: 'Wishlist' }}">
+            <i class="fa-regular fa-heart"></i>
+          </button>
+          <button class="cp-action-compact-btn cp-compare-compact" title="{{ section.settings.compare_text | default: 'Compare' }}">
+            <i class="fa-solid fa-arrows-left-right"></i>
+          </button>
+          {% if selected_product.available %}
+            <span class="cp-stock-compact in-stock">
+              <i class="fa-solid fa-check-circle"></i>
+              {{ section.settings.in_stock_text | default: 'In Stock' }}
+              {% if selected_product.selected_or_first_available_variant.inventory_quantity > 0 and selected_product.selected_or_first_available_variant.inventory_quantity < 10 %}
+                <span class="cp-stock-qty">· {{ selected_product.selected_or_first_available_variant.inventory_quantity }} left</span>
+              {% endif %}
+            </span>
+          {% else %}
+            <span class="cp-stock-compact out-of-stock">
+              <i class="fa-solid fa-times-circle"></i>
+              {{ section.settings.out_of_stock_text | default: 'Sold Out' }}
+            </span>
+          {% endif %}
+        </div>
         
         <!-- Action Links -->
         <div class="cp-action-links">
@@ -148,7 +213,7 @@
             <i class="fa-solid fa-truck"></i>
             {{ section.settings.delivery_text | default: 'Delivery & Return' }}
           </a>
-          <a href="#" class="cp-action-link" onclick="navigator.share({title: '{{ selected_product.title }}', url: '{{ selected_product.url }}'})">
+          <a href="#" class="cp-action-link" onclick="event.preventDefault(); if(navigator.share){navigator.share({title:'{{ selected_product.title | escape }}',url:window.location.origin+'{{ selected_product.url }}'}).catch(()=>{})}else{navigator.clipboard.writeText(window.location.origin+'{{ selected_product.url }}');alert('Link copied!')}">
             <i class="fa-solid fa-share-nodes"></i>
             {{ section.settings.share_text | default: 'Share' }}
           </a>
@@ -224,41 +289,56 @@
   
   .cp-featured-header {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+  
+  .cp-featured-header::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201, 169, 98, 0.3), transparent);
+    z-index: 0;
   }
   
   .cp-featured-title {
-    font-size: 2.25rem;
+    font-size: 1.35rem;
     font-weight: 600;
-    color: var(--cp-heading);
-    margin-bottom: 0.75rem;
+    color: #3d3d3d;
+    margin-bottom: 0;
     position: relative;
     display: inline-block;
+    letter-spacing: 0.03em;
+    background: #fff;
+    padding: 0 1.5rem;
+    z-index: 1;
+  }
+  
+  .cp-featured-title::before {
+    content: '✧';
+    color: #c9a962;
+    margin-right: 10px;
+    font-size: 0.9rem;
   }
   
   .cp-featured-title::after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 3px;
-    background: var(--cp-primary-gradient);
-    border-radius: 2px;
+    display: none;
   }
   
   .cp-featured-subtitle {
-    color: var(--cp-body);
-    font-size: 1rem;
-    max-width: 600px;
-    margin: 1rem auto 0;
+    color: #888;
+    font-size: 0.85rem;
+    max-width: 500px;
+    margin: 0.5rem auto 0;
   }
   
   .cp-featured-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 3rem;
+    gap: 2rem;
     align-items: start;
     background: var(--cp-card-bg);
     border-radius: var(--cp-radius);
@@ -464,6 +544,47 @@
     font-weight: 500;
   }
   
+  /* Dropdown Styles */
+  .cp-option-dropdown-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .cp-option-dropdown {
+    width: 100%;
+    padding: 0.875rem 2.5rem 0.875rem 1rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--cp-heading);
+    background: var(--cp-card-bg);
+    border: 2px solid var(--cp-border);
+    border-radius: 50px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: all 0.25s ease;
+  }
+  
+  .cp-option-dropdown:hover,
+  .cp-option-dropdown:focus {
+    border-color: var(--cp-primary);
+    outline: none;
+    box-shadow: 0 0 0 3px var(--cp-primary-light);
+  }
+  
+  .cp-dropdown-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--cp-primary);
+    pointer-events: none;
+    font-size: 0.75rem;
+  }
+  
   .cp-option-values {
     display: flex;
     gap: 0.625rem;
@@ -494,6 +615,124 @@
     color: #fff;
     border-color: var(--cp-primary);
     box-shadow: 0 4px 12px rgba(115, 103, 240, 0.35);
+  }
+  
+  /* === SIZE + QUANTITY ROW === */
+  .cp-size-qty-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: flex-end;
+  }
+  
+  .cp-size-col {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .cp-size-col .cp-option-dropdown-wrapper {
+    max-width: 100%;
+  }
+  
+  .cp-size-col .cp-option-dropdown {
+    padding: 0.65rem 2rem 0.65rem 0.875rem;
+    font-size: 0.875rem;
+  }
+  
+  .cp-qty-col {
+    flex-shrink: 0;
+  }
+  
+  .cp-qty-col .cp-quantity-controls {
+    border-radius: 8px;
+  }
+  
+  .cp-qty-col .cp-qty-btn {
+    width: 36px;
+    height: 40px;
+    font-size: 1rem;
+  }
+  
+  .cp-qty-col .cp-qty-input {
+    width: 40px;
+    height: 40px;
+    font-size: 0.9rem;
+  }
+  
+  .cp-option-section-compact {
+    margin-bottom: 0.75rem;
+  }
+  
+  .cp-option-section-compact .cp-option-btn {
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+  }
+  
+  /* === COMPACT ACTIONS ROW (Wishlist + Compare + Stock) === */
+  .cp-actions-compact-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
+  }
+  
+  .cp-action-compact-btn {
+    width: 36px;
+    height: 36px;
+    border: 1.5px solid var(--cp-border);
+    border-radius: 50%;
+    background: var(--cp-card-bg);
+    cursor: pointer;
+    font-size: 0.875rem;
+    color: var(--cp-body);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  
+  .cp-wishlist-compact:hover {
+    border-color: var(--cp-danger);
+    color: var(--cp-danger);
+    background: rgba(234, 84, 85, 0.08);
+  }
+  
+  .cp-compare-compact:hover {
+    border-color: var(--cp-primary);
+    color: var(--cp-primary);
+    background: var(--cp-primary-light);
+  }
+  
+  .cp-stock-compact {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    margin-left: 0.5rem;
+  }
+  
+  .cp-stock-compact.in-stock {
+    color: var(--cp-success);
+    background: rgba(40, 199, 111, 0.1);
+  }
+  
+  .cp-stock-compact.out-of-stock {
+    color: var(--cp-danger);
+    background: rgba(234, 84, 85, 0.1);
+  }
+  
+  .cp-stock-compact i {
+    font-size: 0.75rem;
+  }
+  
+  .cp-stock-qty {
+    opacity: 0.8;
+    font-size: 0.7rem;
   }
   
   .cp-quantity-section {
@@ -587,53 +826,6 @@
     background: var(--cp-muted);
     cursor: not-allowed;
     box-shadow: none;
-  }
-  
-  .cp-wishlist-btn,
-  .cp-compare-btn {
-    width: 52px;
-    height: 52px;
-    border: 2px solid var(--cp-border);
-    border-radius: 50%;
-    background: var(--cp-card-bg);
-    cursor: pointer;
-    font-size: 1.25rem;
-    color: var(--cp-body);
-    transition: all 0.25s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .cp-wishlist-btn:hover {
-    border-color: var(--cp-danger);
-    color: var(--cp-danger);
-    background: rgba(234, 84, 85, 0.1);
-    transform: scale(1.05);
-  }
-  
-  .cp-compare-btn:hover {
-    border-color: var(--cp-primary);
-    color: var(--cp-primary);
-    background: var(--cp-primary-light);
-    transform: scale(1.05);
-  }
-  
-  .cp-stock-status {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    margin-bottom: 1rem;
-    font-weight: 500;
-  }
-  
-  .cp-stock-status.in-stock {
-    color: var(--cp-success);
-  }
-  
-  .cp-stock-status.out-of-stock {
-    color: var(--cp-danger);
   }
   
   .cp-action-links {
@@ -754,10 +946,26 @@
   }
   
   @media (max-width: 768px) {
+    .cp-featured-section {
+      padding: 2rem 0 !important;
+    }
+    
     .cp-featured-grid {
       grid-template-columns: 1fr;
-      padding: 1.5rem;
-      gap: 2rem;
+      padding: 1rem;
+      gap: 1.5rem;
+    }
+    
+    .cp-featured-header {
+      margin-bottom: 1.5rem;
+    }
+    
+    .cp-featured-title {
+      font-size: 1.5rem;
+    }
+    
+    .cp-featured-subtitle {
+      font-size: 0.875rem;
     }
     
     .cp-featured-gallery {
@@ -767,19 +975,114 @@
     .cp-gallery-thumbs {
       flex-direction: row;
       justify-content: center;
+      gap: 0.5rem;
     }
     
     .cp-thumb {
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
     }
     
     .cp-product-name {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
+    }
+    
+    .cp-price-row {
+      padding: 0.75rem;
     }
     
     .cp-current-price {
-      font-size: 1.75rem;
+      font-size: 1.5rem;
+    }
+    
+    .cp-compare-price {
+      font-size: 0.9rem;
+    }
+    
+    /* Dropdown Mobile */
+    .cp-option-dropdown-wrapper {
+      max-width: 100%;
+    }
+    
+    .cp-option-dropdown {
+      padding: 0.75rem 2rem 0.75rem 0.875rem;
+      font-size: 0.875rem;
+    }
+    
+    .cp-option-section {
+      margin-bottom: 1rem;
+    }
+    
+    .cp-option-label {
+      font-size: 0.8125rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .cp-option-btn {
+      padding: 0.5rem 1rem;
+      font-size: 0.75rem;
+    }
+    
+    /* Quantity Controls Mobile - Inline Fix */
+    .cp-quantity-section {
+      margin-bottom: 1rem;
+    }
+    
+    .cp-quantity-controls {
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+    }
+    
+    .cp-qty-btn {
+      width: 40px;
+      height: 40px;
+      font-size: 1.125rem;
+    }
+    
+    .cp-qty-input {
+      width: 50px;
+      height: 40px;
+      font-size: 0.9375rem;
+    }
+    
+    /* Cart Row Mobile */
+    .cp-cart-row {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    
+    .cp-add-form {
+      width: 100%;
+    }
+    
+    .cp-add-to-cart-btn {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      font-size: 0.875rem;
+    }
+    
+    .cp-wishlist-btn,
+    .cp-compare-btn {
+      width: 44px;
+      height: 44px;
+    }
+    
+    .cp-action-links {
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    
+    .cp-action-link {
+      font-size: 0.75rem;
+    }
+    
+    .cp-payment-section {
+      padding: 0.75rem;
+    }
+    
+    .cp-payment-label {
+      font-size: 0.75rem;
     }
   }
 </style>
@@ -800,15 +1103,26 @@
       });
     });
     
-    // Option selection
+    // Button Option selection
     const optionBtns = document.querySelectorAll('.cp-option-btn');
     optionBtns.forEach(btn => {
       btn.addEventListener('click', function() {
-        const option = this.dataset.option;
         const value = this.dataset.value;
         const siblings = this.parentNode.querySelectorAll('.cp-option-btn');
         siblings.forEach(s => s.classList.remove('active'));
         this.classList.add('active');
+        
+        // Update label
+        const labelStrong = this.closest('.cp-option-section').querySelector('.cp-option-label strong');
+        if (labelStrong) labelStrong.textContent = value;
+      });
+    });
+    
+    // Dropdown Option selection
+    const optionDropdowns = document.querySelectorAll('.cp-option-dropdown');
+    optionDropdowns.forEach(dropdown => {
+      dropdown.addEventListener('change', function() {
+        const value = this.value;
         
         // Update label
         const labelStrong = this.closest('.cp-option-section').querySelector('.cp-option-label strong');

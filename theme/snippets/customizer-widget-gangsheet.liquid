@@ -18,23 +18,23 @@
     <!-- Sol: Sheet Editor -->
     <div class="gs-editor-section">
       <div class="gs-toolbar">
-        <button type="button" class="gs-tool active" data-tool="select" title="Seç">
+        <button type="button" class="gs-tool active" data-tool="select" title="Select">
           <i class="ti ti-pointer"></i>
         </button>
-        <button type="button" class="gs-tool" data-tool="move" title="Taşı">
+        <button type="button" class="gs-tool" data-tool="move" title="Move">
           <i class="ti ti-arrows-move"></i>
         </button>
-        <button type="button" class="gs-tool" data-tool="rotate" title="Döndür">
+        <button type="button" class="gs-tool" data-tool="rotate" title="Rotate">
           <i class="ti ti-rotate"></i>
         </button>
-        <button type="button" class="gs-tool" data-tool="delete" title="Sil">
+        <button type="button" class="gs-tool" data-tool="delete" title="Delete">
           <i class="ti ti-trash"></i>
         </button>
         <span class="gs-tool-divider"></span>
         <button type="button" class="gs-tool" data-action="grid" title="Grid">
           <i class="ti ti-grid-dots"></i>
         </button>
-        <button type="button" class="gs-tool" data-action="auto-nest" title="Otomatik Yerleştir">
+        <button type="button" class="gs-tool" data-action="auto-nest" title="Auto Arrange">
           <i class="ti ti-layout-distribute-vertical"></i>
         </button>
       </div>
@@ -53,13 +53,13 @@
       </div>
     </div>
 
-    <!-- Sağ: Seçenekler -->
+    <!-- Right: Options -->
     <div class="gs-options-section">
       <h3 class="gs-title">Gang Sheet Builder</h3>
 
-      <!-- Boyut Seçimi -->
+      <!-- Size Selection -->
       <div class="gs-option-group">
-        <p class="gs-label">Sheet Boyutu:</p>
+        <p class="gs-label">Sheet Size:</p>
         <div class="gs-size-options">
           <button type="button" class="gs-size-btn active" data-width="22" data-height="12" data-price="12.99">
             <span class="gs-size-name">Small</span>
@@ -81,20 +81,20 @@
 
       <!-- Upload -->
       <div class="gs-option-group">
-        <p class="gs-label">Görsellerinizi Ekleyin:</p>
+        <p class="gs-label">Add Your Images:</p>
         <div class="gs-upload-area" id="gs-upload-{{ product.id }}">
           <input type="file" multiple accept="image/*" class="gs-file-input">
           <div class="gs-upload-content">
             <i class="ti ti-cloud-upload" style="font-size: 2rem; color: #9ca3af;"></i>
-            <p>Görselleri sürükleyin veya <span>seçin</span></p>
-            <small>Çoklu dosya yüklenebilir</small>
+            <p>Drag & drop images or <span>browse</span></p>
+            <small>Multiple files supported</small>
           </div>
         </div>
       </div>
 
-      <!-- Görsel Listesi -->
+      <!-- Image List -->
       <div class="gs-option-group">
-        <p class="gs-label">Eklenen Görseller: <span id="gs-img-count-{{ product.id }}">0</span></p>
+        <p class="gs-label">Added Images: <span id="gs-img-count-{{ product.id }}">0</span></p>
         <div class="gs-image-list" id="gs-images-{{ product.id }}"></div>
       </div>
 
@@ -103,7 +103,7 @@
         <label class="gs-checkbox">
           <input type="checkbox" id="gs-precut-{{ product.id }}">
           <span class="gs-checkmark"></span>
-          <span>Precut İstiyorum (+$0.30/adet)</span>
+          <span>I want Precut (+$0.30/piece)</span>
         </label>
       </div>
 
@@ -124,7 +124,7 @@
       </div>
 
       <!-- Sepete Ekle -->
-      <button type="button" id="gs-add-cart-{{ product.id }}" class="gs-add-to-cart-btn">
+      <button type="button" id="gs-add-cart-{{ product.id }}" class="sb-btn gs-add-to-cart-btn">
         <i class="ti ti-shopping-cart"></i>
         <span>Sepete Ekle</span>
       </button>

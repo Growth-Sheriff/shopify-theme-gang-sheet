@@ -10,7 +10,7 @@
         <a href="{{ recommendation.url }}" class="cp-product-card">
           <div class="cp-product-image">
             {% if recommendation.featured_image %}
-              <img src="{{ recommendation.featured_image | image_url: width: 400 }}" alt="{{ recommendation.title }}">
+              <img src="{{ recommendation.featured_image | image_url: width: 400 }}" alt="{{ recommendation.title }}" width="400" height="400" loading="lazy">
             {% endif %}
           </div>
           <div class="cp-product-info">

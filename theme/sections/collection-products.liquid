@@ -158,7 +158,7 @@
           <div class="product-actions">
             {% if product.available %}
               {% if product.variants.size == 1 %}
-                <button class="add-to-cart-btn" data-variant-id="{{ product.first_available_variant.id }}">
+                <button class="sb-btn add-to-cart-btn" data-variant-id="{{ product.first_available_variant.id }}">
                   <i class="fa-solid fa-cart-plus"></i>
                   <span>Add to Cart</span>
                 </button>
@@ -169,7 +169,7 @@
                 </a>
               {% endif %}
             {% else %}
-              <button class="sold-out-btn" disabled>
+              <button class="sb-btn sb-sold-out" disabled>
                 <i class="fa-solid fa-ban"></i>
                 <span>Sold Out</span>
               </button>

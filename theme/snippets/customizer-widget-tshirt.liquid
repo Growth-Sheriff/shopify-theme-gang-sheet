@@ -25,13 +25,13 @@
 
         <!-- Kontroller -->
         <div class="cw-viewer-controls">
-          <button type="button" class="cw-ctrl-btn" data-action="rotate-left" title="Sola Döndür">
+          <button type="button" class="cw-ctrl-btn" data-action="rotate-left" title="Rotate Left">
             <i class="ti ti-rotate-clockwise-2"></i>
           </button>
-          <button type="button" class="cw-ctrl-btn" data-action="reset" title="Sıfırla">
+          <button type="button" class="cw-ctrl-btn" data-action="reset" title="Reset">
             <i class="ti ti-refresh"></i>
           </button>
-          <button type="button" class="cw-ctrl-btn" data-action="rotate-right" title="Sağa Döndür">
+          <button type="button" class="cw-ctrl-btn" data-action="rotate-right" title="Rotate Right">
             <i class="ti ti-rotate-2"></i>
           </button>
         </div>
@@ -39,13 +39,13 @@
         <!-- Loading -->
         <div class="cw-loading" id="cw-loading-{{ product.id }}">
           <div class="cw-spinner"></div>
-          <span>3D Model Yükleniyor...</span>
+          <span>Loading 3D Model...</span>
         </div>
       </div>
 
       <!-- Renk Seçimi -->
       <div class="cw-color-picker">
-        <p class="cw-label">T-Shirt Rengi:</p>
+        <p class="cw-label">T-Shirt Color:</p>
         <div class="cw-colors">
           {% for color in colors %}
             <button
@@ -60,25 +60,25 @@
       </div>
     </div>
 
-    <!-- Sağ: Seçenekler -->
+    <!-- Right: Options -->
     <div class="cw-options-section">
       <!-- T-Shirt Toggle -->
       <div class="cw-option-group">
         <label class="cw-toggle">
           <input type="checkbox" id="cw-tshirt-toggle-{{ product.id }}" checked>
           <span class="cw-toggle-switch"></span>
-          <span class="cw-toggle-text">T-Shirt Baskı Olsun mu?</span>
+          <span class="cw-toggle-text">Include T-Shirt Print?</span>
         </label>
       </div>
 
       <!-- Upload -->
       <div class="cw-option-group">
-        <p class="cw-label">Tasarımınızı Yükleyin:</p>
+        <p class="cw-label">Upload Your Design:</p>
         <div class="cw-upload-area" id="cw-upload-{{ product.id }}">
           <input type="file" id="cw-file-{{ product.id }}" accept="image/*" class="cw-file-input">
           <div class="cw-upload-content">
             <i class="ti ti-cloud-upload" style="font-size: 2rem; color: #9ca3af;"></i>
-            <p>Sürükleyin veya <span style="color: #7367f0; font-weight: 600;">seçin</span></p>
+            <p>Drag & drop or <span style="color: #7367f0; font-weight: 600;">browse</span></p>
             <small>PNG, JPG, SVG - Max 10MB</small>
           </div>
         </div>
@@ -88,50 +88,50 @@
         </div>
       </div>
 
-      <!-- Baskı Bölgeleri -->
+      <!-- Print Areas -->
       <div class="cw-option-group">
-        <p class="cw-label">Baskı Bölgesi:</p>
+        <p class="cw-label">Print Area:</p>
         <div class="cw-print-areas">
           <button type="button" class="cw-area-btn active" data-area="front">
             <i class="ti ti-shirt"></i>
-            <span>Ön</span>
+            <span>Front</span>
           </button>
           <button type="button" class="cw-area-btn" data-area="back">
             <i class="ti ti-shirt"></i>
-            <span>Arka</span>
+            <span>Back</span>
           </button>
           <button type="button" class="cw-area-btn" data-area="left-sleeve">
             <i class="ti ti-sleeve"></i>
-            <span>Sol Kol</span>
+            <span>Left Sleeve</span>
           </button>
           <button type="button" class="cw-area-btn" data-area="right-sleeve">
             <i class="ti ti-sleeve"></i>
-            <span>Sağ Kol</span>
+            <span>Right Sleeve</span>
           </button>
         </div>
       </div>
 
-      <!-- Koordinat Ayarları -->
+      <!-- Position Controls -->
       <div class="cw-option-group cw-position-controls" id="cw-position-{{ product.id }}" style="display: none;">
-        <p class="cw-label">Konum Ayarları:</p>
+        <p class="cw-label">Position Settings:</p>
         <div class="cw-slider-row">
-          <label>Boyut:</label>
+          <label>Size:</label>
           <input type="range" id="cw-size-{{ product.id }}" min="10" max="100" value="50">
           <span id="cw-size-val-{{ product.id }}">50%</span>
         </div>
         <div class="cw-slider-row">
-          <label>Yatay:</label>
+          <label>Horizontal:</label>
           <input type="range" id="cw-posx-{{ product.id }}" min="-50" max="50" value="0">
         </div>
         <div class="cw-slider-row">
-          <label>Dikey:</label>
+          <label>Vertical:</label>
           <input type="range" id="cw-posy-{{ product.id }}" min="-50" max="50" value="0">
         </div>
       </div>
 
       <!-- Sepete Ekle -->
       <div class="cw-actions">
-        <button type="button" id="cw-add-cart-{{ product.id }}" class="cw-add-to-cart-btn">
+        <button type="button" id="cw-add-cart-{{ product.id }}" class="sb-btn cw-add-to-cart-btn">
           <i class="ti ti-shopping-cart"></i>
           <span>Sepete Ekle</span>
           <span class="cw-btn-price">{{ product.price | money }}</span>

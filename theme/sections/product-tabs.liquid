@@ -8,7 +8,7 @@
   background: var(--cp-card-bg, #fff);
   border-radius: 12px;
   padding: 1rem;
-  margin-top: 1rem;
+  margin-top: 0;
   border: 1px solid var(--cp-border-color, #ebe9f1);
 }
 
@@ -131,26 +131,26 @@
 </style>
 
 <div class="product-tabs-section">
-  <div class="product-tab-buttons">
-    <button class="product-tab-btn active" onclick="switchProductTab('details', this)">
-      <i class="ti ti-file-description"></i> Details
+  <div class="product-tab-buttons" role="tablist" aria-label="Product information tabs">
+    <button class="product-tab-btn active" onclick="switchProductTab('details', this)" role="tab" aria-selected="true" aria-controls="tab-details" id="tab-btn-details">
+      <i class="ti ti-file-description" aria-hidden="true"></i> {{ 'products.product.tab_description' | t | default: 'Details' }}
     </button>
-    <button class="product-tab-btn" onclick="switchProductTab('shipping', this)">
-      <i class="ti ti-truck"></i> Shipping
+    <button class="product-tab-btn" onclick="switchProductTab('shipping', this)" role="tab" aria-selected="false" aria-controls="tab-shipping" id="tab-btn-shipping">
+      <i class="ti ti-truck" aria-hidden="true"></i> {{ 'products.product.tab_shipping' | t | default: 'Shipping' }}
     </button>
-    <button class="product-tab-btn" onclick="switchProductTab('care', this)">
-      <i class="ti ti-shirt"></i> Care
+    <button class="product-tab-btn" onclick="switchProductTab('care', this)" role="tab" aria-selected="false" aria-controls="tab-care" id="tab-btn-care">
+      <i class="ti ti-shirt" aria-hidden="true"></i> {{ 'products.product.tab_care' | t | default: 'Care' }}
     </button>
   </div>
   
   <div class="product-tab-content">
-    <div class="product-tab-pane active" id="tab-details">
+    <div class="product-tab-pane active" id="tab-details" role="tabpanel" aria-labelledby="tab-btn-details">
       <div class="tab-description">
         {{ product.description | default: section.settings.default_description }}
       </div>
     </div>
     
-    <div class="product-tab-pane" id="tab-shipping">
+    <div class="product-tab-pane" id="tab-shipping" role="tabpanel" aria-labelledby="tab-btn-shipping">
       <ul class="tab-spec-list">
         <li>
           <span class="spec-label">Processing</span>
@@ -171,7 +171,7 @@
       </ul>
     </div>
     
-    <div class="product-tab-pane" id="tab-care">
+    <div class="product-tab-pane" id="tab-care" role="tabpanel" aria-labelledby="tab-btn-care">
       <div class="tab-features-grid">
         {% for block in section.blocks %}
           {% if block.type == 'care_item' %}
@@ -196,9 +196,10 @@
 
 <script>
 function switchProductTab(tabId, btn) {
-  // Remove active from all buttons
+  // Remove active from all buttons and update aria-selected
   document.querySelectorAll('.product-tabs-section .product-tab-btn').forEach(function(b) {
     b.classList.remove('active');
+    b.setAttribute('aria-selected', 'false');
   });
   // Remove active from all panes
   document.querySelectorAll('.product-tabs-section .product-tab-pane').forEach(function(p) {
@@ -206,6 +207,7 @@ function switchProductTab(tabId, btn) {
   });
   // Add active to clicked button
   btn.classList.add('active');
+  btn.setAttribute('aria-selected', 'true');
   // Add active to corresponding pane
   var pane = document.getElementById('tab-' + tabId);
   if (pane) pane.classList.add('active');

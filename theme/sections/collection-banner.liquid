@@ -9,6 +9,8 @@
       <img src="{{ collection.image | image_url: width: 1920 }}" 
            alt="{{ collection.title }}"
            class="banner-bg-image"
+           width="1920"
+           height="600"
            loading="eager">
     {% endif %}
     <div class="banner-overlay"></div>
@@ -57,40 +59,46 @@
           </div>
           <div class="stat-info">
             <span class="stat-value">{{ collection.products_count }}</span>
-            <span class="stat-label">Products</span>
+            <span class="stat-label">{{ 'collection.products_label' | t }}</span>
           </div>
         </div>
         {% endif %}
         
+        {% if section.settings.show_shipping_stat %}
         <div class="stat-item">
           <div class="stat-icon">
             <i class="fa-solid fa-truck-fast"></i>
           </div>
           <div class="stat-info">
-            <span class="stat-value">Free</span>
-            <span class="stat-label">Shipping $50+</span>
+            <span class="stat-value">{{ section.settings.shipping_stat_value }}</span>
+            <span class="stat-label">{{ section.settings.shipping_stat_label }}</span>
           </div>
         </div>
+        {% endif %}
         
+        {% if section.settings.show_guarantee_stat %}
         <div class="stat-item">
           <div class="stat-icon">
             <i class="fa-solid fa-shield"></i>
           </div>
           <div class="stat-info">
-            <span class="stat-value">100%</span>
-            <span class="stat-label">Guaranteed</span>
+            <span class="stat-value">{{ section.settings.guarantee_stat_value }}</span>
+            <span class="stat-label">{{ section.settings.guarantee_stat_label }}</span>
           </div>
         </div>
+        {% endif %}
         
+        {% if section.settings.show_rating_stat %}
         <div class="stat-item">
           <div class="stat-icon">
             <i class="fa-solid fa-star"></i>
           </div>
           <div class="stat-info">
-            <span class="stat-value">4.9</span>
-            <span class="stat-label">Rating</span>
+            <span class="stat-value">{{ section.settings.rating_stat_value }}</span>
+            <span class="stat-label">{{ section.settings.rating_stat_label }}</span>
           </div>
         </div>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -428,6 +436,72 @@ document.addEventListener('DOMContentLoaded', function() {
       "id": "show_breadcrumb",
       "label": "Show Breadcrumb",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Shipping Stat"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shipping_stat",
+      "label": "Show Shipping Stat",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "shipping_stat_value",
+      "label": "Shipping Stat Value",
+      "default": "Free"
+    },
+    {
+      "type": "text",
+      "id": "shipping_stat_label",
+      "label": "Shipping Stat Label",
+      "default": "Shipping $50+"
+    },
+    {
+      "type": "header",
+      "content": "Guarantee Stat"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_guarantee_stat",
+      "label": "Show Guarantee Stat",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "guarantee_stat_value",
+      "label": "Guarantee Stat Value",
+      "default": "100%"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_stat_label",
+      "label": "Guarantee Stat Label",
+      "default": "Guaranteed"
+    },
+    {
+      "type": "header",
+      "content": "Rating Stat"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating_stat",
+      "label": "Show Rating Stat",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "rating_stat_value",
+      "label": "Rating Stat Value",
+      "default": "4.9"
+    },
+    {
+      "type": "text",
+      "id": "rating_stat_label",
+      "label": "Rating Stat Label",
+      "default": "Rating"
     }
   ],
   "presets": [
