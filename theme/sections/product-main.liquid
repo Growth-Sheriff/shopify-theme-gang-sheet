@@ -1767,13 +1767,10 @@
   
   /* ═══ MOBILE COMPACT ═══ */
   @media (max-width: 768px) {
-    /* Reset all external shadows and borders */
-    .product-info-card,
-    .product-info-card *,
-    .rating-section,
-    .product-price-box {
-      box-shadow: none !important;
-      outline: none !important;
+    /* Reset external gradient borders */
+    .rating-section::before,
+    .product-price-box::before {
+      display: none !important;
     }
     
     .product-info-card {
@@ -1788,17 +1785,15 @@
       margin-bottom: 0.5rem !important;
     }
     
-    /* ═══ MOBILE RATING - Completely Flat ═══ */
+    /* ═══ MOBILE RATING - Clean & Minimal ═══ */
     .rating-section {
       background: transparent !important;
       border: none !important;
       box-shadow: none !important;
-      outline: none !important;
       padding: 0 !important;
       margin-bottom: 0.75rem !important;
       justify-content: flex-start !important;
       gap: 0.5rem !important;
-      border-radius: 0 !important;
     }
     
     .rating-section .rating-stars i {
@@ -1817,19 +1812,24 @@
       display: none !important;
     }
     
-    /* ═══ MOBILE PRICE BOX - Completely Flat ═══ */
+    /* ═══ MOBILE PRICE BOX - Clean ═══ */
     .product-price-box {
       background: transparent !important;
       border: none !important;
       box-shadow: none !important;
-      outline: none !important;
       padding: 0 !important;
       margin: 0 0 1rem 0 !important;
-      border-radius: 0 !important;
     }
     
+    /* LIMITED OFFER Badge - Kırmızı */
     .product-price-box .price-badge {
-      display: none !important;
+      display: inline-block !important;
+      background: #FF3B30 !important;
+      color: #fff !important;
+      font-size: 0.625rem !important;
+      padding: 0.2rem 0.5rem !important;
+      margin-bottom: 0.5rem !important;
+      border-radius: 6px !important;
     }
     
     .product-price-box .price-row {
@@ -1862,13 +1862,26 @@
       margin-top: 0.375rem !important;
     }
     
+    /* ═══ DELIVERY CARD - Yeşil Arka Plan ═══ */
     .delivery-card {
-      padding: 0.75rem !important;
-      margin-bottom: 0.75rem !important;
+      padding: 0.875rem 1rem !important;
+      margin-bottom: 1rem !important;
       gap: 0.75rem !important;
-      background: transparent !important;
+      background: rgba(52, 199, 89, 0.08) !important;
       border: none !important;
-      box-shadow: none !important;
+      border-radius: 12px !important;
+    }
+    
+    .delivery-card .delivery-title {
+      color: #34C759 !important;
+    }
+    
+    .delivery-card .delivery-title i {
+      color: #34C759 !important;
+    }
+    
+    .delivery-card .delivery-time {
+      color: #34C759 !important;
     }
     
     .trust-badges {
