@@ -1777,34 +1777,72 @@
       margin-bottom: 0.5rem !important;
     }
     
-    .product-price-box {
-      margin: 0.75rem 0 !important;
-      padding: 0.75rem !important;
-    }
-    
-    .current-price {
-      font-size: 1.5rem !important;
-    }
-    
+    /* ═══ MOBILE RATING - Clean & Minimal ═══ */
     .rating-section {
-      flex-wrap: wrap !important;
-      justify-content: center !important;
-      gap: 0.35rem !important;
-      padding: 0.5rem 0.75rem !important;
+      background: transparent !important;
+      border: none !important;
+      padding: 0 !important;
+      margin-bottom: 0.5rem !important;
+      justify-content: flex-start !important;
+      gap: 0.5rem !important;
     }
     
     .rating-section .rating-stars i {
-      font-size: 0.875rem !important;
+      font-size: 0.8125rem !important;
+      color: var(--pm-text-tertiary) !important;
     }
     
     .rating-section .rating-count {
-      font-size: 0.8rem !important;
-      width: 100%;
-      text-align: center;
+      font-size: 0.75rem !important;
+      width: auto !important;
+      text-align: left !important;
+      color: var(--pm-text-secondary) !important;
     }
     
     .rating-section .cloudy-badge.badge-success {
       display: none !important;
+    }
+    
+    /* ═══ MOBILE PRICE BOX - Clean & Prominent ═══ */
+    .product-price-box {
+      background: transparent !important;
+      border: none !important;
+      padding: 0.5rem 0 !important;
+      margin: 0.5rem 0 0.75rem 0 !important;
+    }
+    
+    .product-price-box .price-badge {
+      font-size: 0.5625rem !important;
+      padding: 0.15rem 0.4rem !important;
+      margin-bottom: 0.375rem !important;
+      background: var(--pm-text-tertiary) !important;
+    }
+    
+    .product-price-box .price-row {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 0.25rem !important;
+    }
+    
+    .product-price-box .compare-price {
+      order: 1 !important;
+      font-size: 0.875rem !important;
+      color: var(--pm-danger) !important;
+      text-decoration: line-through !important;
+    }
+    
+    .product-price-box .current-price {
+      order: 2 !important;
+      font-size: 1.75rem !important;
+      font-weight: 700 !important;
+      color: var(--pm-text-primary) !important;
+    }
+    
+    .product-price-box .save-badge {
+      order: 3 !important;
+      font-size: 0.625rem !important;
+      padding: 0.15rem 0.375rem !important;
+      background: rgba(52, 199, 89, 0.08) !important;
     }
     
     .delivery-card {
@@ -1866,7 +1904,7 @@
     }
     
     .current-price {
-      font-size: 1.35rem !important;
+      font-size: 1.5rem !important;
     }
     
     .variant-btn {
