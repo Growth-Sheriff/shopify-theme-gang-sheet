@@ -623,16 +623,17 @@
     /* ═══ GALLERY - Title'dan sonra ═══ */
     .product-gallery {
       order: -90 !important;
-      margin-bottom: 0 !important;
+      margin-bottom: 0.5rem !important;
     }
     
     /* ═══ INFO CARD - Gallery'den sonra ═══ */
     .product-info-card {
       order: -80 !important;
-      margin-top: -2rem !important;
+      margin-top: 0 !important;
       position: relative;
       z-index: 10;
-      border-radius: 20px 20px 12px 12px !important;
+      border-radius: 16px !important;
+      padding: 1.25rem !important;
     }
     
     /* Title mobilde info-card dışına çıktığı için gizle */
@@ -641,34 +642,63 @@
       display: none !important;
     }
     
-    /* ═══ MOBILE TITLE OVERLAY ═══ */
-    /* Title'ı gallery'nin üstünde göster */
+    /* ═══ MOBILE TITLE ═══ */
     .pm-mobile-title {
       display: block !important;
       order: -95 !important;
-      padding: 0 1rem;
-      margin-bottom: -1rem;
-      position: relative;
-      z-index: 5;
+      padding: 0 0.5rem;
+      margin-bottom: 0.5rem;
     }
     
     .pm-mobile-title .product-vendor {
       display: inline-block !important;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 600;
       color: #7367f0;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.125rem;
     }
     
     .pm-mobile-title .product-title {
       display: block !important;
-      font-size: 1.25rem;
+      font-size: 1.125rem;
       font-weight: 700;
       color: #5d596c;
-      margin-bottom: 0.5rem;
+      margin: 0;
       line-height: 1.3;
+    }
+    
+    /* ═══ GALLERY MOBILE FIXES ═══ */
+    .gallery-layout {
+      flex-direction: column !important;
+    }
+    
+    .gallery-thumbnails-vertical {
+      display: flex !important;
+      flex-direction: row !important;
+      width: 100% !important;
+      max-height: none !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      gap: 0.5rem !important;
+      padding: 0.5rem 0 !important;
+      order: 2 !important;
+    }
+    
+    .gallery-thumbnails-vertical::-webkit-scrollbar {
+      height: 4px;
+    }
+    
+    .gallery-thumbnails-vertical .thumbnail {
+      flex-shrink: 0 !important;
+      width: 56px !important;
+      height: 56px !important;
+      min-width: 56px !important;
+    }
+    
+    .main-image-container {
+      order: 1 !important;
     }
     
     /* ═══ TABS/ACCORDION - En altta ═══ */
@@ -1640,6 +1670,8 @@
     }
     
     .rating-section {
+      flex-wrap: wrap !important;
+      justify-content: center !important;
       gap: 0.35rem !important;
       padding: 0.5rem 0.75rem !important;
     }
@@ -1649,7 +1681,9 @@
     }
     
     .rating-section .rating-count {
-      font-size: 0.75rem !important;
+      font-size: 0.8rem !important;
+      width: 100%;
+      text-align: center;
     }
     
     .rating-section .cloudy-badge.badge-success {
