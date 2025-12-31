@@ -472,46 +472,55 @@
    STYLES - Mevcut section'lardan alınan tüm stiller
 ═══════════════════════════════════════════════════════════════ {% endcomment %}
 <style>
-  /* ═══ SECTION RESET - Override product-page.css grid ═══ */
+  /* ═══ BREADCRUMB - Full width, before grid ═══ */
+  .breadcrumb-section {
+    grid-column: 1 / -1 !important;
+    grid-row: 1 !important;
+    margin-bottom: 1rem;
+  }
+  
+  /* ═══ DISPLAY CONTENTS - Make wrappers invisible to grid ═══ */
+  /* theme.liquid'deki main.main-content GRID CONTAINER
+     Bu wrapper'ları görünmez yaparak pm-left/pm-right doğrudan grid item oluyor */
+  
+  .shopify-section:has(.product-section) {
+    display: contents !important;
+  }
+  
   .product-section {
-    display: block !important;
-    width: 100% !important;
-    grid-column: 1 / -1 !important; /* Span all columns if parent is grid */
+    display: contents !important;
   }
   
-  /* ═══ GRID LAYOUT ═══ */
   .pm-container {
-    max-width: 1400px !important;
-    margin: 0 auto !important;
-    padding: 0 1rem !important;
-    display: block;
+    display: contents !important;
   }
   
-  @media (min-width: 992px) {
-    .pm-container {
-      display: grid !important;
-      grid-template-columns: 41.66% 58.33% !important;
-      gap: 1.5rem 2rem !important;
-      align-items: start !important;
-    }
-  }
+  /* ═══ GRID ITEMS - Sol ve Sağ Kolonlar ═══ */
+  /* Artık bunlar doğrudan .main-content grid'in children'ı */
   
-  .pm-left, .pm-right {
+  .pm-left {
     display: flex !important;
     flex-direction: column !important;
     gap: 1rem !important;
-    min-width: 0; /* Prevent overflow */
+    min-width: 0;
+  }
+  
+  .pm-right {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+    min-width: 0;
   }
   
   @media (min-width: 992px) {
     .pm-left {
       grid-column: 1 !important;
-      grid-row: 1 !important;
+      grid-row: 2 / 4 !important;  /* Row 2'den başla (breadcrumb row 1) */
     }
     
     .pm-right {
       grid-column: 2 !important;
-      grid-row: 1 !important;
+      grid-row: 2 / 5 !important;  /* Row 2'den başla */
       position: sticky;
       top: 1rem;
     }
