@@ -458,15 +458,15 @@
         {% for block in section.blocks %}
           {% case block.type %}
             {% when 'customizer_gangsheet' %}
-              <div class="step-card" {{ block.shopify_attributes }}>
+              <div class="step-card pm-app-block" {{ block.shopify_attributes }}>
                 {% render 'customizer-widget-gangsheet', product: product %}
               </div>
             {% when 'right_custom_liquid' %}
-              <div class="step-card" {{ block.shopify_attributes }}>
+              <div class="step-card pm-app-block" {{ block.shopify_attributes }}>
                 {{ block.settings.custom_liquid }}
               </div>
             {% when '@app' %}
-              <div class="step-card" {{ block.shopify_attributes }}>
+              <div class="step-card pm-app-block" {{ block.shopify_attributes }}>
                 {% render block %}
               </div>
             {% when 'right_text_block' %}
@@ -701,7 +701,12 @@
       order: 1 !important;
     }
     
-    /* ═══ TABS/ACCORDION - Info card'dan sonra ═══ */
+    /* ═══ APP BLOCKS - Info card'dan hemen sonra ═══ */
+    .pm-app-block {
+      order: 5 !important;
+    }
+    
+    /* ═══ TABS/ACCORDION - App blocks'dan sonra ═══ */
     .pm-mobile-accordion { 
       display: block !important;
       order: 10 !important;
@@ -710,9 +715,9 @@
       display: none !important;
     }
     
-    /* Instructions & other blocks - Tabs'dan sonra */
-    .step-card {
-      order: 20 !important;
+    /* Instructions (Press Instructions) - Tabs'dan sonra */
+    .pm-left .step-card {
+      order: 15 !important;
     }
     
     /* Breadcrumb en üstte kalsın */
