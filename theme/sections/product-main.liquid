@@ -472,30 +472,46 @@
    STYLES - Mevcut section'lardan alınan tüm stiller
 ═══════════════════════════════════════════════════════════════ {% endcomment %}
 <style>
+  /* ═══ SECTION RESET - Override product-page.css grid ═══ */
+  .product-section {
+    display: block !important;
+    width: 100% !important;
+    grid-column: 1 / -1 !important; /* Span all columns if parent is grid */
+  }
+  
   /* ═══ GRID LAYOUT ═══ */
   .pm-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 1rem;
+    max-width: 1400px !important;
+    margin: 0 auto !important;
+    padding: 0 1rem !important;
+    display: block;
   }
   
   @media (min-width: 992px) {
     .pm-container {
-      display: grid;
-      grid-template-columns: 41.66% 58.33%;
-      gap: 1.5rem 2rem;
-      align-items: start;
+      display: grid !important;
+      grid-template-columns: 41.66% 58.33% !important;
+      gap: 1.5rem 2rem !important;
+      align-items: start !important;
     }
   }
   
   .pm-left, .pm-right {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+    min-width: 0; /* Prevent overflow */
   }
   
   @media (min-width: 992px) {
+    .pm-left {
+      grid-column: 1 !important;
+      grid-row: 1 !important;
+    }
+    
     .pm-right {
+      grid-column: 2 !important;
+      grid-row: 1 !important;
       position: sticky;
       top: 1rem;
     }
