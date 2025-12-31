@@ -28,6 +28,15 @@
 {% comment %} ═══════════════════════════════════════════════════════════════
    MAIN PRODUCT GRID
 ═══════════════════════════════════════════════════════════════ {% endcomment %}
+
+{% comment %} ═══ MOBILE TITLE (Only visible on mobile, above gallery) ═══ {% endcomment %}
+<div class="pm-mobile-title">
+  {% if product.vendor %}
+    <span class="product-vendor">{{ product.vendor }}</span>
+  {% endif %}
+  <h1 class="product-title">{{ product.title }}</h1>
+</div>
+
 <section class="product-section" {{ section.shopify_attributes }}>
   <div class="pm-container">
       
@@ -583,18 +592,108 @@
   .pm-desktop-tabs { display: block; }
   
   @media (max-width: 991px) {
-    .pm-mobile-accordion { display: block; }
-    .pm-desktop-tabs { display: none; }
+    /* ═══ MOBILE LAYOUT REORDER ═══ */
+    /* Sıralama: Title → Gallery → Info Card → Tabs */
+    
+    /* Main content flex container yapıyoruz */
+    .template-product .main-content {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+    
+    /* pm-left ve pm-right'ı da flex container yap */
+    .pm-left {
+      display: contents !important; /* İçindekileri parent'a taşı */
+    }
     
     .pm-right {
-      margin-top: -1.5rem;
-      position: relative;
-      z-index: 10;
+      display: contents !important; /* İçindekileri parent'a taşı */
     }
     
-    .pm-right .product-info-card {
-      border-radius: 16px 16px 12px 12px;
+    /* ═══ MOBILE TITLE - En üste ═══ */
+    .product-info-card .product-vendor,
+    .product-info-card .product-title {
+      order: -100 !important;
     }
+    
+    .product-info-card .product-vendor {
+      order: -101 !important;
+    }
+    
+    /* ═══ GALLERY - Title'dan sonra ═══ */
+    .product-gallery {
+      order: -90 !important;
+      margin-bottom: 0 !important;
+    }
+    
+    /* ═══ INFO CARD - Gallery'den sonra ═══ */
+    .product-info-card {
+      order: -80 !important;
+      margin-top: -2rem !important;
+      position: relative;
+      z-index: 10;
+      border-radius: 20px 20px 12px 12px !important;
+    }
+    
+    /* Title mobilde info-card dışına çıktığı için gizle */
+    .product-info-card .product-vendor,
+    .product-info-card .product-title {
+      display: none !important;
+    }
+    
+    /* ═══ MOBILE TITLE OVERLAY ═══ */
+    /* Title'ı gallery'nin üstünde göster */
+    .pm-mobile-title {
+      display: block !important;
+      order: -95 !important;
+      padding: 0 1rem;
+      margin-bottom: -1rem;
+      position: relative;
+      z-index: 5;
+    }
+    
+    .pm-mobile-title .product-vendor {
+      display: inline-block !important;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #7367f0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.25rem;
+    }
+    
+    .pm-mobile-title .product-title {
+      display: block !important;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #5d596c;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+    
+    /* ═══ TABS/ACCORDION - En altta ═══ */
+    .pm-mobile-accordion { 
+      display: block !important;
+      order: 100 !important;
+    }
+    .pm-desktop-tabs { 
+      display: none !important;
+    }
+    
+    /* Instructions & other blocks */
+    .step-card {
+      order: 50 !important;
+    }
+    
+    /* Breadcrumb en üstte kalsın */
+    .breadcrumb-section {
+      order: -200 !important;
+    }
+  }
+  
+  /* Desktop'ta mobile-title gizle */
+  .pm-mobile-title {
+    display: none;
   }
   
   /* Description scroll */
