@@ -1,0 +1,1092 @@
+{% comment %}
+  Product Main Section - CloudyPrints
+  Dawn theme yaklaşımı: Tek section içinde tüm product sayfası
+  Mevcut product-page.css class'larını kullanır
+{% endcomment %}
+
+{{ 'product-page.css' | asset_url | stylesheet_tag }}
+
+{% comment %} ═══════════════════════════════════════════════════════════════
+   BREADCRUMB
+═══════════════════════════════════════════════════════════════ {% endcomment %}
+{% if section.settings.show_breadcrumb %}
+<div class="breadcrumb-section">
+  <div class="container">
+    <div class="breadcrumb-custom">
+      <a href="{{ routes.root_url }}"><i class="ti ti-home"></i></a>
+      <span>/</span>
+      {% if product.collections.first %}
+        <a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a>
+        <span>/</span>
+      {% endif %}
+      <span class="cloudy-badge badge-primary">{{ product.title | truncate: 30 }}</span>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% comment %} ═══════════════════════════════════════════════════════════════
+   MAIN PRODUCT GRID
+═══════════════════════════════════════════════════════════════ {% endcomment %}
+<section class="product-section" {{ section.shopify_attributes }}>
+  <div class="container">
+    <div class="pm-grid">
+      
+      {% comment %} ══════════════════════════════════════════════════════════
+         LEFT COLUMN - Gallery + Tabs + Instructions
+      ══════════════════════════════════════════════════════════ {% endcomment %}
+      <div class="pm-left">
+        
+        {% comment %} ═══ GALLERY ═══ {% endcomment %}
+        <div class="product-gallery">
+          <div class="gallery-layout">
+            {% if product.images.size > 1 %}
+            <div class="gallery-thumbnails-vertical">
+              {% for image in product.images %}
+                <div class="thumbnail {% if forloop.first %}active{% endif %}" 
+                     onclick="pmGallery.change('{{ image | image_url: width: 800 }}', this)">
+                  <img src="{{ image | image_url: width: 100 }}" alt="{{ product.title }}" loading="lazy">
+                </div>
+              {% endfor %}
+            </div>
+            {% endif %}
+            
+            <div class="main-image-container">
+              {% if product.featured_image %}
+                <img src="{{ product.featured_image | image_url: width: 800 }}" 
+                     alt="{{ product.title }}" 
+                     class="main-product-image"
+                     id="pm-main-image">
+              {% else %}
+                <div class="no-image-placeholder">
+                  <i class="ti ti-photo-off"></i>
+                  <span>No image</span>
+                </div>
+              {% endif %}
+              
+              {% if product.available %}
+                <span class="cloudy-badge badge-success" style="position:absolute;top:1rem;left:1rem;">
+                  <i class="ti ti-check me-1"></i>In Stock
+                </span>
+              {% else %}
+                <span class="cloudy-badge badge-danger" style="position:absolute;top:1rem;left:1rem;">
+                  <i class="ti ti-x me-1"></i>Sold Out
+                </span>
+              {% endif %}
+              
+              {% if product.compare_at_price > product.price %}
+                {% assign discount = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price %}
+                <span class="discount-badge">-{{ discount }}%</span>
+              {% endif %}
+              
+              <button class="wishlist-btn" type="button"><i class="ti ti-heart"></i></button>
+            </div>
+          </div>
+        </div>
+        
+        {% comment %} ═══ TABS (Desktop) ═══ {% endcomment %}
+        {% if section.settings.show_tabs %}
+        <div class="pm-desktop-tabs">
+          <div class="product-tabs-section">
+            <div class="product-tabs-nav">
+              <button class="product-tab-btn active" data-tab="desc">
+                <i class="ti ti-file-description"></i> Description
+              </button>
+              <button class="product-tab-btn" data-tab="ship">
+                <i class="ti ti-truck"></i> Shipping
+              </button>
+              <button class="product-tab-btn" data-tab="care">
+                <i class="ti ti-heart-handshake"></i> Care
+              </button>
+            </div>
+            
+            <div class="product-tabs-content">
+              <div class="product-tab-pane active pm-desc-scroll" id="pm-tab-desc">
+                <div class="tab-description">
+                  {{ product.description }}
+                </div>
+              </div>
+              
+              <div class="product-tab-pane" id="pm-tab-ship">
+                <ul class="tab-spec-list">
+                  <li><span class="spec-label">Processing</span><span class="spec-value">{{ section.settings.processing_time }}</span></li>
+                  <li><span class="spec-label">Standard Shipping</span><span class="spec-value">{{ section.settings.standard_shipping }}</span></li>
+                  <li><span class="spec-label">Express Shipping</span><span class="spec-value">{{ section.settings.express_shipping }}</span></li>
+                  <li><span class="spec-label">Free Shipping</span><span class="spec-value">{{ section.settings.free_shipping }}</span></li>
+                </ul>
+              </div>
+              
+              <div class="product-tab-pane" id="pm-tab-care">
+                <div class="tab-features-grid">
+                  <div class="tab-feature-item"><i class="ti ti-check"></i> Wait 24hrs before washing</div>
+                  <div class="tab-feature-item"><i class="ti ti-check"></i> Wash inside out, cold water</div>
+                  <div class="tab-feature-item"><i class="ti ti-check"></i> Tumble dry low</div>
+                  <div class="tab-feature-item"><i class="ti ti-check"></i> Do not iron on design</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {% comment %} ═══ ACCORDION (Mobile) ═══ {% endcomment %}
+        <div class="pm-mobile-accordion">
+          <div class="pm-accordion-item">
+            <div class="pm-accordion-header" onclick="pmAccordion.toggle(this)">
+              <span><i class="ti ti-file-description me-2"></i>Description</span>
+              <i class="ti ti-chevron-down pm-chevron"></i>
+            </div>
+            <div class="pm-accordion-content">
+              <div class="pm-accordion-inner pm-desc-scroll">
+                {{ product.description }}
+              </div>
+            </div>
+          </div>
+          
+          <div class="pm-accordion-item">
+            <div class="pm-accordion-header" onclick="pmAccordion.toggle(this)">
+              <span><i class="ti ti-truck me-2"></i>Shipping</span>
+              <i class="ti ti-chevron-down pm-chevron"></i>
+            </div>
+            <div class="pm-accordion-content">
+              <div class="pm-accordion-inner">
+                <ul class="tab-spec-list">
+                  <li><span class="spec-label">Processing</span><span class="spec-value">{{ section.settings.processing_time }}</span></li>
+                  <li><span class="spec-label">Standard</span><span class="spec-value">{{ section.settings.standard_shipping }}</span></li>
+                  <li><span class="spec-label">Express</span><span class="spec-value">{{ section.settings.express_shipping }}</span></li>
+                  <li><span class="spec-label">Free Shipping</span><span class="spec-value">{{ section.settings.free_shipping }}</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div class="pm-accordion-item">
+            <div class="pm-accordion-header" onclick="pmAccordion.toggle(this)">
+              <span><i class="ti ti-heart-handshake me-2"></i>Care</span>
+              <i class="ti ti-chevron-down pm-chevron"></i>
+            </div>
+            <div class="pm-accordion-content">
+              <div class="pm-accordion-inner">
+                <div class="tab-features-grid">
+                  <div class="tab-feature-item"><i class="ti ti-check"></i> Wait 24hrs</div>
+                  <div class="tab-feature-item"><i class="ti ti-check"></i> Cold water</div>
+                  <div class="tab-feature-item"><i class="ti ti-check"></i> Tumble dry low</div>
+                  <div class="tab-feature-item"><i class="ti ti-check"></i> No iron on design</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        
+        {% comment %} ═══ PRESS INSTRUCTIONS ═══ {% endcomment %}
+        {% if section.settings.show_instructions %}
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-icon"><i class="ti ti-flame"></i></span>
+            {{ section.settings.press_title }}
+          </div>
+          <div class="instruction-steps">
+            <div class="instruction-step">
+              <i class="ti ti-thermometer"></i>
+              <span class="instruction-label">TEMP</span>
+              <span class="instruction-value">{{ section.settings.press_temp }}</span>
+            </div>
+            <div class="instruction-step">
+              <i class="ti ti-clock"></i>
+              <span class="instruction-label">TIME</span>
+              <span class="instruction-value">{{ section.settings.press_time }}</span>
+            </div>
+            <div class="instruction-step">
+              <i class="ti ti-arrows-vertical"></i>
+              <span class="instruction-label">PRESSURE</span>
+              <span class="instruction-value">{{ section.settings.press_pressure }}</span>
+            </div>
+            <div class="instruction-step">
+              <i class="ti ti-snowflake"></i>
+              <span class="instruction-label">PEEL</span>
+              <span class="instruction-value">{{ section.settings.press_peel }}</span>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        
+        {% comment %} ═══ LEFT CUSTOM BLOCKS ═══ {% endcomment %}
+        {% for block in section.blocks %}
+          {% if block.type == 'left_custom_liquid' %}
+            <div class="step-card" {{ block.shopify_attributes }}>
+              {{ block.settings.custom_liquid }}
+            </div>
+          {% endif %}
+        {% endfor %}
+        
+      </div>
+      
+      {% comment %} ══════════════════════════════════════════════════════════
+         RIGHT COLUMN - Product Info Card
+      ══════════════════════════════════════════════════════════ {% endcomment %}
+      <div class="pm-right">
+        
+        <div class="product-info-card">
+          
+          {% comment %} Vendor {% endcomment %}
+          {% if product.vendor %}
+            <span class="product-vendor">{{ product.vendor }}</span>
+          {% endif %}
+          
+          {% comment %} Title {% endcomment %}
+          <h1 class="product-title">{{ product.title }}</h1>
+          
+          {% comment %} Rating {% endcomment %}
+          {% if section.settings.show_rating %}
+          <div class="rating-section">
+            <div class="rating-stars">
+              <i class="ti ti-star-filled"></i>
+              <i class="ti ti-star-filled"></i>
+              <i class="ti ti-star-filled"></i>
+              <i class="ti ti-star-filled"></i>
+              <i class="ti ti-star-half-filled"></i>
+            </div>
+            <span class="rating-count">{{ section.settings.rating_score }} ({{ section.settings.review_count }} reviews)</span>
+            <span class="cloudy-badge badge-success"><i class="ti ti-thumb-up me-1"></i>{{ section.settings.recommend_percent }}</span>
+          </div>
+          {% endif %}
+          
+          {% comment %} Price {% endcomment %}
+          <div class="product-price-box">
+            {% if section.settings.price_badge != blank %}
+              <span class="price-badge">{{ section.settings.price_badge }}</span>
+            {% endif %}
+            <div class="price-row">
+              <span class="current-price" id="pm-current-price">{{ product.price | money }}</span>
+              {% if product.compare_at_price > product.price %}
+                <span class="compare-price">{{ product.compare_at_price | money }}</span>
+                <span class="save-badge">Save {{ product.compare_at_price | minus: product.price | money }}</span>
+              {% endif %}
+            </div>
+          </div>
+          
+          {% comment %} Delivery {% endcomment %}
+          {% if section.settings.show_delivery %}
+          <div class="delivery-card">
+            <div class="delivery-title">
+              <i class="ti ti-truck-delivery"></i>
+              Free Delivery
+            </div>
+            <div class="delivery-time">{{ section.settings.delivery_time }}</div>
+            <div class="delivery-location"><i class="ti ti-clock"></i> {{ section.settings.order_by }}</div>
+          </div>
+          {% endif %}
+          
+          {% comment %} ═══ VARIANTS ═══ {% endcomment %}
+          {% if product.has_only_default_variant == false and section.settings.show_variants %}
+            {% for option in product.options_with_values %}
+              {%- assign option_index = forloop.index0 -%}
+              {%- assign option_name_lower = option.name | downcase -%}
+              {%- assign is_color = false -%}
+              {%- assign is_size = false -%}
+              
+              {%- if option_name_lower == 'color' or option_name_lower == 'colour' or option_name_lower == 'renk' -%}
+                {%- assign is_color = true -%}
+              {%- endif -%}
+              
+              {%- if option_name_lower == 'size' or option_name_lower == 'beden' -%}
+                {%- assign is_size = true -%}
+              {%- endif -%}
+              
+              <div class="variant-option-section" data-option-index="{{ option_index }}">
+                <label class="variant-label">
+                  {{ option.name }}: <span class="pm-selected-value" data-option="{{ option_index }}">{{ option.selected_value }}</span>
+                </label>
+                
+                {%- if is_color -%}
+                  {%- case section.settings.color_display_mode -%}
+                    {%- when 'swatches' -%}
+                      <div class="color-options">
+                        {% for value in option.values %}
+                          {%- assign color_code = value | downcase | replace: ' ', '' -%}
+                          <div class="color-option {% if option.selected_value == value %}active{% endif %}"
+                               style="background-color: {{ color_code }};"
+                               data-option="{{ option_index }}"
+                               data-value="{{ value }}"
+                               onclick="pmVariant.select(this)"
+                               title="{{ value }}"></div>
+                        {% endfor %}
+                      </div>
+                    {%- when 'images' -%}
+                      <div class="color-options">
+                        {% for value in option.values %}
+                          {%- assign variant_image = product.variants | where: "option1", value | map: "featured_image" | first -%}
+                          <div class="color-option {% if option.selected_value == value %}active{% endif %}"
+                               style="{% if variant_image %}background-image:url('{{ variant_image | image_url: width: 60 }}');background-size:cover;{% else %}background-color:{{ value | downcase | replace: ' ', '' }};{% endif %}"
+                               data-option="{{ option_index }}"
+                               data-value="{{ value }}"
+                               onclick="pmVariant.select(this)"
+                               title="{{ value }}"></div>
+                        {% endfor %}
+                      </div>
+                    {%- when 'dropdown' -%}
+                      <div class="variant-dropdown-wrapper">
+                        <select class="variant-select" data-option="{{ option_index }}" onchange="pmVariant.selectDropdown(this)">
+                          {% for value in option.values %}
+                            <option value="{{ value }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
+                          {% endfor %}
+                        </select>
+                        <i class="ti ti-chevron-down variant-select-icon"></i>
+                      </div>
+                    {%- else -%}
+                      <div class="variant-options">
+                        {% for value in option.values %}
+                          <button type="button" 
+                                  class="variant-btn {% if option.selected_value == value %}active{% endif %}"
+                                  data-option="{{ option_index }}"
+                                  data-value="{{ value }}"
+                                  onclick="pmVariant.select(this)">
+                            {{ value }}
+                          </button>
+                        {% endfor %}
+                      </div>
+                  {%- endcase -%}
+                  
+                {%- elsif is_size -%}
+                  {%- if section.settings.size_display_mode == 'dropdown' -%}
+                    <div class="variant-dropdown-wrapper">
+                      <select class="variant-select" data-option="{{ option_index }}" onchange="pmVariant.selectDropdown(this)">
+                        {% for value in option.values %}
+                          <option value="{{ value }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                      </select>
+                      <i class="ti ti-chevron-down variant-select-icon"></i>
+                    </div>
+                  {%- else -%}
+                    <div class="variant-options">
+                      {% for value in option.values %}
+                        <button type="button" 
+                                class="variant-btn {% if option.selected_value == value %}active{% endif %}"
+                                data-option="{{ option_index }}"
+                                data-value="{{ value }}"
+                                onclick="pmVariant.select(this)">
+                          {{ value }}
+                        </button>
+                      {% endfor %}
+                    </div>
+                  {%- endif -%}
+                  
+                {%- else -%}
+                  <div class="variant-options">
+                    {% for value in option.values %}
+                      <button type="button" 
+                              class="variant-btn {% if option.selected_value == value %}active{% endif %}"
+                              data-option="{{ option_index }}"
+                              data-value="{{ value }}"
+                              onclick="pmVariant.select(this)">
+                        {{ value }}
+                      </button>
+                    {% endfor %}
+                  </div>
+                {%- endif -%}
+              </div>
+            {% endfor %}
+          {% endif %}
+          
+          {% comment %} ═══ QUANTITY ═══ {% endcomment %}
+          {% if section.settings.show_quantity %}
+          <div class="quantity-section">
+            <label class="quantity-label">Quantity</label>
+            <div class="quantity-control">
+              <button type="button" class="qty-btn" onclick="pmQty.update(-1)">
+                <i class="ti ti-minus"></i>
+              </button>
+              <input type="number" id="pm-quantity" class="qty-input" value="1" min="1" max="99">
+              <button type="button" class="qty-btn" onclick="pmQty.update(1)">
+                <i class="ti ti-plus"></i>
+              </button>
+            </div>
+          </div>
+          {% endif %}
+          
+          {% comment %} ═══ ADD TO CART & BUY NOW ═══ {% endcomment %}
+          <input type="hidden" id="pm-variant-id" value="{{ product.selected_or_first_available_variant.id }}">
+          
+          <div class="pm-action-buttons">
+            {% if section.settings.show_add_to_cart %}
+            <button type="button" 
+                    class="add-to-cart-btn" 
+                    id="pm-add-btn"
+                    {% unless product.available %}disabled{% endunless %}>
+              <i class="ti ti-shopping-cart me-2"></i>
+              <span>{% if product.available %}Add to Cart{% else %}Sold Out{% endif %}</span>
+            </button>
+            {% endif %}
+            
+            {% if section.settings.show_buy_now and product.available %}
+            <button type="button" class="buy-now-btn" id="pm-buy-btn">
+              <i class="ti ti-bolt me-2"></i>
+              <span>Buy Now</span>
+            </button>
+            {% endif %}
+          </div>
+          
+          {% comment %} ═══ TRUST BADGES ═══ {% endcomment %}
+          {% if section.settings.show_trust_badges %}
+          <div class="trust-badges">
+            <div class="trust-badge">
+              <i class="ti ti-shield-check"></i>
+              <span>{{ section.settings.badge_1 }}</span>
+            </div>
+            <div class="trust-badge">
+              <i class="ti ti-truck"></i>
+              <span>{{ section.settings.badge_2 }}</span>
+            </div>
+            <div class="trust-badge">
+              <i class="ti ti-refresh"></i>
+              <span>{{ section.settings.badge_3 }}</span>
+            </div>
+          </div>
+          {% endif %}
+          
+        </div>
+        
+        {% comment %} ═══ RIGHT BLOCKS (Widgets, Apps) ═══ {% endcomment %}
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'customizer_gangsheet' %}
+              <div class="step-card" {{ block.shopify_attributes }}>
+                {% render 'customizer-widget-gangsheet', product: product %}
+              </div>
+            {% when 'right_custom_liquid' %}
+              <div class="step-card" {{ block.shopify_attributes }}>
+                {{ block.settings.custom_liquid }}
+              </div>
+            {% when '@app' %}
+              <div class="step-card" {{ block.shopify_attributes }}>
+                {% render block %}
+              </div>
+          {% endcase %}
+        {% endfor %}
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+{% comment %} ═══════════════════════════════════════════════════════════════
+   STYLES - Sadece layout için, diğer her şey product-page.css'den
+═══════════════════════════════════════════════════════════════ {% endcomment %}
+<style>
+  /* Grid Layout */
+  .pm-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  @media (min-width: 992px) {
+    .pm-grid {
+      display: grid;
+      grid-template-columns: 41.66% 58.33%;
+      gap: 1.5rem 2rem;
+      align-items: start;
+    }
+  }
+  
+  .pm-left, .pm-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  @media (min-width: 992px) {
+    .pm-right {
+      position: sticky;
+      top: 1rem;
+    }
+  }
+  
+  /* Mobile/Desktop Toggle */
+  .pm-mobile-accordion { display: none; }
+  .pm-desktop-tabs { display: block; }
+  
+  @media (max-width: 991px) {
+    .pm-mobile-accordion { display: block; }
+    .pm-desktop-tabs { display: none; }
+    
+    /* Mobile: Info card overlap on image */
+    .pm-right {
+      margin-top: -1.5rem;
+      position: relative;
+      z-index: 10;
+    }
+    
+    .pm-right .product-info-card {
+      border-radius: 16px 16px 12px 12px;
+    }
+  }
+  
+  /* Description scroll */
+  .pm-desc-scroll {
+    max-height: 500px;
+    overflow-y: auto;
+  }
+  
+  /* Accordion Styles */
+  .pm-accordion-item {
+    background: var(--cp-card-bg, #fff);
+    border: 1px solid var(--cp-border-color, #ebe9f1);
+    border-radius: var(--cp-radius-md, 0.428rem);
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+  }
+  
+  .pm-accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.875rem 1rem;
+    background: var(--cp-body-bg, #f8f8f8);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--cp-heading-color, #5e5873);
+    transition: all 0.2s;
+  }
+  
+  .pm-accordion-header:hover {
+    background: rgba(115, 103, 240, 0.05);
+  }
+  
+  .pm-accordion-header .pm-chevron {
+    transition: transform 0.3s;
+    color: var(--cp-muted-color, #b9b9c3);
+  }
+  
+  .pm-accordion-item.open .pm-accordion-header {
+    background: rgba(115, 103, 240, 0.08);
+    color: var(--cp-primary, #7367F0);
+  }
+  
+  .pm-accordion-item.open .pm-accordion-header .pm-chevron {
+    transform: rotate(180deg);
+    color: var(--cp-primary, #7367F0);
+  }
+  
+  .pm-accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  
+  .pm-accordion-item.open .pm-accordion-content {
+    max-height: 600px;
+    overflow-y: auto;
+  }
+  
+  .pm-accordion-inner {
+    padding: 1rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: var(--cp-body-color, #6e6b7b);
+  }
+  
+  /* Action Buttons */
+  .pm-action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Variant dropdown wrapper */
+  .variant-dropdown-wrapper {
+    position: relative;
+  }
+  
+  .variant-dropdown-wrapper .variant-select {
+    width: 100%;
+    padding: 0.75rem 2.5rem 0.75rem 1rem;
+    border: 1px solid var(--cp-border-color, #ebe9f1);
+    border-radius: var(--cp-radius-md, 0.428rem);
+    background: var(--cp-card-bg, #fff);
+    font-size: 0.875rem;
+    color: var(--cp-heading-color, #5e5873);
+    appearance: none;
+    cursor: pointer;
+  }
+  
+  .variant-dropdown-wrapper .variant-select-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--cp-muted-color, #b9b9c3);
+  }
+  
+  /* Variant options container */
+  .variant-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+</style>
+
+{% comment %} ═══════════════════════════════════════════════════════════════
+   JAVASCRIPT
+═══════════════════════════════════════════════════════════════ {% endcomment %}
+<script>
+(function() {
+  // Gallery
+  window.pmGallery = {
+    change: function(src, el) {
+      document.getElementById('pm-main-image').src = src;
+      document.querySelectorAll('.gallery-thumbnails-vertical .thumbnail').forEach(function(t) {
+        t.classList.remove('active');
+      });
+      el.classList.add('active');
+    }
+  };
+  
+  // Accordion (varsayılan kapalı)
+  window.pmAccordion = {
+    toggle: function(header) {
+      var item = header.closest('.pm-accordion-item');
+      var isOpen = item.classList.contains('open');
+      
+      // Tüm accordion'ları kapat
+      document.querySelectorAll('.pm-accordion-item').forEach(function(i) {
+        i.classList.remove('open');
+      });
+      
+      // Tıklanan kapalıysa aç
+      if (!isOpen) {
+        item.classList.add('open');
+      }
+    }
+  };
+  
+  // Tabs
+  document.querySelectorAll('.product-tabs-nav .product-tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var tabId = 'pm-tab-' + this.dataset.tab;
+      
+      document.querySelectorAll('.product-tabs-nav .product-tab-btn').forEach(function(b) {
+        b.classList.remove('active');
+      });
+      document.querySelectorAll('.product-tabs-content .product-tab-pane').forEach(function(p) {
+        p.classList.remove('active');
+      });
+      
+      this.classList.add('active');
+      var pane = document.getElementById(tabId);
+      if (pane) pane.classList.add('active');
+    });
+  });
+  
+  // Quantity
+  window.pmQty = {
+    update: function(delta) {
+      var input = document.getElementById('pm-quantity');
+      if (!input) return;
+      var val = parseInt(input.value) || 1;
+      val = Math.max(1, Math.min(99, val + delta));
+      input.value = val;
+    }
+  };
+  
+  // Variants
+  var variants = {{ product.variants | json }};
+  var selectedOptions = [{% for option in product.options_with_values %}'{{ option.selected_value | escape }}'{% unless forloop.last %},{% endunless %}{% endfor %}];
+  
+  window.pmVariant = {
+    select: function(el) {
+      var idx = parseInt(el.dataset.option);
+      var value = el.dataset.value;
+      selectedOptions[idx] = value;
+      
+      // UI güncelle
+      var section = el.closest('.variant-option-section');
+      section.querySelectorAll('[data-value]').forEach(function(b) {
+        b.classList.remove('active');
+      });
+      el.classList.add('active');
+      
+      // Label güncelle
+      var label = section.querySelector('.pm-selected-value');
+      if (label) label.textContent = value;
+      
+      this.updateVariant();
+    },
+    
+    selectDropdown: function(select) {
+      var idx = parseInt(select.dataset.option);
+      selectedOptions[idx] = select.value;
+      
+      // Label güncelle
+      var section = select.closest('.variant-option-section');
+      var label = section.querySelector('.pm-selected-value');
+      if (label) label.textContent = select.value;
+      
+      this.updateVariant();
+    },
+    
+    updateVariant: function() {
+      var variant = variants.find(function(v) {
+        return v.options.every(function(opt, i) {
+          return opt === selectedOptions[i];
+        });
+      });
+      
+      if (variant) {
+        document.getElementById('pm-variant-id').value = variant.id;
+        
+        // Fiyat güncelle
+        var priceEl = document.getElementById('pm-current-price');
+        if (priceEl) {
+          priceEl.textContent = Shopify.formatMoney ? Shopify.formatMoney(variant.price) : ('$' + (variant.price / 100).toFixed(2));
+        }
+        
+        // Buton durumu
+        var addBtn = document.getElementById('pm-add-btn');
+        if (addBtn) {
+          addBtn.disabled = !variant.available;
+          addBtn.querySelector('span').textContent = variant.available ? 'Add to Cart' : 'Sold Out';
+        }
+        
+        // URL güncelle
+        var url = new URL(window.location);
+        url.searchParams.set('variant', variant.id);
+        window.history.replaceState({}, '', url);
+        
+        // Görsel güncelle
+        if (variant.featured_image) {
+          var mainImg = document.getElementById('pm-main-image');
+          if (mainImg) mainImg.src = variant.featured_image.src;
+        }
+      }
+    }
+  };
+  
+  // Add to Cart
+  var addBtn = document.getElementById('pm-add-btn');
+  if (addBtn) {
+    addBtn.addEventListener('click', function() {
+      var variantId = document.getElementById('pm-variant-id').value;
+      var qtyInput = document.getElementById('pm-quantity');
+      var quantity = qtyInput ? parseInt(qtyInput.value) : 1;
+      
+      if (window.CartManager) {
+        CartManager.add(variantId, quantity);
+      } else {
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: parseInt(variantId), quantity: quantity })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function() { 
+          window.location.href = '/cart'; 
+        })
+        .catch(function(e) { console.error('Cart error:', e); });
+      }
+    });
+  }
+  
+  // Buy Now
+  var buyBtn = document.getElementById('pm-buy-btn');
+  if (buyBtn) {
+    buyBtn.addEventListener('click', function() {
+      var variantId = document.getElementById('pm-variant-id').value;
+      var qtyInput = document.getElementById('pm-quantity');
+      var quantity = qtyInput ? parseInt(qtyInput.value) : 1;
+      
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: parseInt(variantId), quantity: quantity })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function() { 
+        window.location.href = '/checkout'; 
+      })
+      .catch(function(e) { console.error('Checkout error:', e); });
+    });
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Product Main",
+  "tag": "section",
+  "class": "product-main-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "🍞 Breadcrumb"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb",
+      "label": "Show Breadcrumb",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "⭐ Rating"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "rating_score",
+      "label": "Rating Score",
+      "default": "4.8"
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Review Count",
+      "default": "2,847"
+    },
+    {
+      "type": "text",
+      "id": "recommend_percent",
+      "label": "Recommend %",
+      "default": "99% recommend"
+    },
+    {
+      "type": "header",
+      "content": "💰 Price"
+    },
+    {
+      "type": "text",
+      "id": "price_badge",
+      "label": "Price Badge",
+      "default": "LIMITED TIME OFFER"
+    },
+    {
+      "type": "header",
+      "content": "🚚 Delivery"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_delivery",
+      "label": "Show Delivery Box",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "delivery_time",
+      "label": "Delivery Time",
+      "default": "Tomorrow 5PM – 9PM"
+    },
+    {
+      "type": "text",
+      "id": "order_by",
+      "label": "Order By Text",
+      "default": "Order by 3PM"
+    },
+    {
+      "type": "header",
+      "content": "📋 Tabs & Accordion"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tabs",
+      "label": "Show Tabs/Accordion",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "processing_time",
+      "label": "Processing Time",
+      "default": "1-2 Business Days"
+    },
+    {
+      "type": "text",
+      "id": "standard_shipping",
+      "label": "Standard Shipping",
+      "default": "3-5 Business Days"
+    },
+    {
+      "type": "text",
+      "id": "express_shipping",
+      "label": "Express Shipping",
+      "default": "1-2 Business Days"
+    },
+    {
+      "type": "text",
+      "id": "free_shipping",
+      "label": "Free Shipping",
+      "default": "Orders $59+"
+    },
+    {
+      "type": "header",
+      "content": "🔥 Press Instructions"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_instructions",
+      "label": "Show Instructions",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "press_title",
+      "label": "Title",
+      "default": "Press Instructions"
+    },
+    {
+      "type": "text",
+      "id": "press_temp",
+      "label": "Temperature",
+      "default": "285°F - 300°F"
+    },
+    {
+      "type": "text",
+      "id": "press_time",
+      "label": "Time",
+      "default": "10-15 seconds"
+    },
+    {
+      "type": "text",
+      "id": "press_pressure",
+      "label": "Pressure",
+      "default": "Medium"
+    },
+    {
+      "type": "text",
+      "id": "press_peel",
+      "label": "Peel",
+      "default": "Cold Peel"
+    },
+    {
+      "type": "header",
+      "content": "🛡️ Trust Badges"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust_badges",
+      "label": "Show Trust Badges",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "badge_1",
+      "label": "Badge 1",
+      "default": "Secure Checkout"
+    },
+    {
+      "type": "text",
+      "id": "badge_2",
+      "label": "Badge 2",
+      "default": "Fast Shipping"
+    },
+    {
+      "type": "text",
+      "id": "badge_3",
+      "label": "Badge 3",
+      "default": "Easy Returns"
+    },
+    {
+      "type": "header",
+      "content": "🎨 Variant Display"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_variants",
+      "label": "Show Variants",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "color_display_mode",
+      "label": "Color Option Display",
+      "options": [
+        { "value": "swatches", "label": "Color Swatches" },
+        { "value": "images", "label": "Variant Images" },
+        { "value": "buttons", "label": "Text Buttons" },
+        { "value": "dropdown", "label": "Dropdown" }
+      ],
+      "default": "swatches"
+    },
+    {
+      "type": "select",
+      "id": "size_display_mode",
+      "label": "Size Option Display",
+      "options": [
+        { "value": "buttons", "label": "Text Buttons" },
+        { "value": "dropdown", "label": "Dropdown" }
+      ],
+      "default": "buttons"
+    },
+    {
+      "type": "header",
+      "content": "🔢 Quantity"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quantity",
+      "label": "Show Quantity Selector",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "🛒 Buttons"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_add_to_cart",
+      "label": "Show Add to Cart",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_buy_now",
+      "label": "Show Buy Now",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "customizer_gangsheet",
+      "name": "🎨 Gang Sheet Customizer",
+      "limit": 1
+    },
+    {
+      "type": "right_custom_liquid",
+      "name": "📝 Right: Custom Liquid",
+      "settings": [
+        {
+          "type": "liquid",
+          "id": "custom_liquid",
+          "label": "Custom Liquid Code"
+        }
+      ]
+    },
+    {
+      "type": "left_custom_liquid",
+      "name": "📝 Left: Custom Liquid",
+      "settings": [
+        {
+          "type": "liquid",
+          "id": "custom_liquid",
+          "label": "Custom Liquid Code"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Main"
+    }
+  ]
+}
+{% endschema %}

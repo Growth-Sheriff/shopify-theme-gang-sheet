@@ -1,93 +1,39 @@
 {
   "sections": {
-    "product-gallery": {
-      "type": "product-gallery",
+    "product-main": {
+      "type": "product-main",
       "settings": {
         "show_breadcrumb": true,
-        "show_tabs": true,
         "show_rating": true,
+        "rating_score": "4.8",
         "review_count": "2,847",
-        "recommend_percent": "99%",
+        "recommend_percent": "99% recommend",
+        "price_badge": "LIMITED TIME OFFER",
         "show_delivery": true,
         "delivery_time": "Tomorrow 5PM – 9PM",
         "order_by": "Order by 3PM",
-        "show_price_box": true,
-        "price_badge": "Limited Time Offer",
-        "show_trust_badges": true,
-        "badge_1": "Secure Checkout",
-        "badge_2": "Fast Shipping",
-        "badge_3": "Easy Returns",
+        "show_tabs": true,
         "processing_time": "1-2 Business Days",
         "standard_shipping": "3-5 Business Days",
-        "express_shipping": "1-2 Business Days"
-      }
-    },
-    "product-instructions": {
-      "type": "product-instructions",
-      "settings": {
-        "show_press_info": true,
+        "express_shipping": "1-2 Business Days",
+        "free_shipping": "Orders $59+",
+        "show_instructions": true,
         "press_title": "Press Instructions",
         "press_temp": "285°F - 300°F",
         "press_time": "10-15 seconds",
         "press_pressure": "Medium",
         "press_peel": "Cold Peel",
-        "show_care_info": true,
-        "care_title": "Care Instructions",
-        "care_intro": "To ensure your DTF transfer lasts as long as possible:",
-        "show_shipping_info": true,
-        "shipping_title": "Shipping Information",
-        "processing_time": "1-2 Business Days",
-        "standard_shipping": "3-5 Business Days",
-        "express_shipping": "1-2 Business Days",
-        "free_shipping_threshold": "Orders $59+"
-      },
-      "blocks": {
-        "care-1": {
-          "type": "care_item",
-          "settings": {
-            "icon": "check",
-            "text": "Wait 24hrs before washing"
-          }
-        },
-        "care-2": {
-          "type": "care_item",
-          "settings": {
-            "icon": "check",
-            "text": "Wash inside out"
-          }
-        },
-        "care-3": {
-          "type": "care_item",
-          "settings": {
-            "icon": "check",
-            "text": "Cold water only"
-          }
-        },
-        "care-4": {
-          "type": "care_item",
-          "settings": {
-            "icon": "check",
-            "text": "Tumble dry low"
-          }
-        }
-      },
-      "block_order": ["care-1", "care-2", "care-3", "care-4"]
-    },
-    "product-tabs": {
-      "type": "product-tabs",
-      "settings": {
-        "processing_time": "1-2 Business Days",
-        "standard_shipping": "3-5 Business Days",
-        "express_shipping": "1-2 Business Days",
-        "free_shipping": "Orders $59+"
-      },
-      "blocks": {
-        "care-1": { "type": "care_item", "settings": { "icon": "check", "text": "Wait 24hrs before washing" } },
-        "care-2": { "type": "care_item", "settings": { "icon": "check", "text": "Wash inside out, cold water" } },
-        "care-3": { "type": "care_item", "settings": { "icon": "check", "text": "Tumble dry low" } },
-        "care-4": { "type": "care_item", "settings": { "icon": "check", "text": "Do not iron on design" } }
-      },
-      "block_order": ["care-1", "care-2", "care-3", "care-4"]
+        "show_trust_badges": true,
+        "badge_1": "Secure Checkout",
+        "badge_2": "Fast Shipping",
+        "badge_3": "Easy Returns",
+        "show_variants": true,
+        "color_display_mode": "swatches",
+        "size_display_mode": "buttons",
+        "show_quantity": true,
+        "show_add_to_cart": true,
+        "show_buy_now": true
+      }
     },
     "recommendations": {
       "type": "product-recommendations",
@@ -95,27 +41,10 @@
         "heading": "You may also like",
         "products_count": 4
       }
-    },
-    "product-info-card": {
-      "type": "product-info-card",
-      "settings": {
-        "rating_score": "4.8",
-        "review_count": "2,847",
-        "recommend_percent": "99%",
-        "price_badge": "LIMITED TIME OFFER",
-        "delivery_time": "Tomorrow 5PM – 9PM",
-        "order_by": "Order by 3PM",
-        "badge_1": "Secure Checkout",
-        "badge_2": "Fast Shipping",
-        "badge_3": "Easy Returns"
-      }
     }
   },
   "order": [
-    "product-gallery",
-    "product-info-card",
-    "product-tabs",
-    "product-instructions",
+    "product-main",
     "recommendations"
   ]
 }
