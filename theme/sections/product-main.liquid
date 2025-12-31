@@ -533,11 +533,41 @@
    STYLES - Mevcut section'lardan alınan tüm stiller
 ═══════════════════════════════════════════════════════════════ {% endcomment %}
 <style>
-  /* ═══ BREADCRUMB - Full width, before grid ═══ */
+  /* ═══ BREADCRUMB - Compact, full width ═══ */
   .breadcrumb-section {
     grid-column: 1 / -1 !important;
     grid-row: 1 !important;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 0;
+  }
+  
+  .breadcrumb-section .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .breadcrumb-custom {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #6e6b7b;
+  }
+  
+  .breadcrumb-custom a {
+    color: #6e6b7b;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  
+  .breadcrumb-custom a:hover {
+    color: #7367f0;
+  }
+  
+  .breadcrumb-custom .cloudy-badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
   }
   
   /* ═══ DISPLAY CONTENTS - Make wrappers invisible to grid ═══ */
