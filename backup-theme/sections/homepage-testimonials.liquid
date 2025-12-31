@@ -1,0 +1,227 @@
+{% comment %}
+  Testimonials Section - Fully Dynamic
+  All elements customizable via Theme Editor
+{% endcomment %}
+
+<section class="cp-testimonials" id="reviews" style="background: {{ section.settings.section_bg | default: '#f8f7fa' }}; padding: {{ section.settings.section_padding | default: '4rem 0' }};">
+  <div class="container">
+    <div class="cp-section-header" style="text-align: center; margin-bottom: 2.5rem;">
+      <span class="cp-section-badge" style="background: {{ section.settings.badge_bg | default: '#e5e3fb' }}; color: {{ section.settings.badge_color | default: '#7367F0' }};">{{ section.settings.badge }}</span>
+      <h2 class="cp-section-title" style="color: {{ section.settings.title_color | default: '#5d596c' }};">{{ section.settings.title }}</h2>
+      <p class="cp-section-subtitle" style="color: {{ section.settings.subtitle_color | default: '#6e6b7b' }};">{{ section.settings.subtitle }}</p>
+    </div>
+
+    <div class="cp-testimonials-grid">
+      {% for block in section.blocks %}
+        {% if block.type == 'testimonial' %}
+          <div class="cp-testimonial-card" {{ block.shopify_attributes }} style="background: {{ section.settings.card_bg | default: '#ffffff' }};">
+            <div class="cp-testimonial-stars">
+              {% for i in (1..5) %}
+                {% if i <= block.settings.rating %}
+                  <i class="fa-solid fa-star" style="color: {{ section.settings.star_color | default: '#FFB400' }};"></i>
+                {% else %}
+                  <i class="fa-regular fa-star" style="color: {{ section.settings.star_color | default: '#FFB400' }};"></i>
+                {% endif %}
+              {% endfor %}
+            </div>
+            <p class="cp-testimonial-text">"{{ block.settings.text }}"</p>
+            <div class="cp-testimonial-author">
+              {% if block.settings.avatar %}
+                <div class="cp-testimonial-avatar-img">
+                  <img src="{{ block.settings.avatar | image_url: width: 80 }}" alt="{{ block.settings.name }}">
+                </div>
+              {% elsif block.settings.avatar_url != blank %}
+                <div class="cp-testimonial-avatar-img">
+                  <img src="{{ block.settings.avatar_url }}" alt="{{ block.settings.name }}">
+                </div>
+              {% else %}
+                <div class="cp-testimonial-avatar" style="background: {{ section.settings.avatar_bg | default: '#7367F0' }}; color: #fff;">
+                  {{ block.settings.name | slice: 0, 2 | upcase }}
+                </div>
+              {% endif %}
+              <div>
+                <div class="cp-testimonial-name" style="color: {{ section.settings.name_color | default: '#5d596c' }};">{{ block.settings.name }}</div>
+                <div class="cp-testimonial-role" style="color: {{ section.settings.role_color | default: '#6e6b7b' }};">{{ block.settings.role }}</div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cp-testimonial-avatar-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  
+  .cp-testimonial-avatar-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "section",
+  "class": "homepage-testimonials",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Layout"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Background Color",
+      "default": "#f8f7fa"
+    },
+    {
+      "type": "text",
+      "id": "section_padding",
+      "label": "Padding",
+      "default": "4rem 0"
+    },
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Badge Text",
+      "default": "Customer Reviews"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg",
+      "label": "Badge Background",
+      "default": "#e5e3fb"
+    },
+    {
+      "type": "color",
+      "id": "badge_color",
+      "label": "Badge Text Color",
+      "default": "#7367F0"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "What Our Customers Say"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#5d596c"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Section Subtitle",
+      "default": "Join thousands of satisfied customers who trust CloudyPrints for their printing needs."
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#6e6b7b"
+    },
+    {
+      "type": "header",
+      "content": "Card Styling"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star Color",
+      "default": "#FFB400"
+    },
+    {
+      "type": "color",
+      "id": "avatar_bg",
+      "label": "Avatar Background (initials)",
+      "default": "#7367F0"
+    },
+    {
+      "type": "color",
+      "id": "name_color",
+      "label": "Name Color",
+      "default": "#5d596c"
+    },
+    {
+      "type": "color",
+      "id": "role_color",
+      "label": "Role Color",
+      "default": "#6e6b7b"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Rating",
+          "min": 1,
+          "max": 5,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Testimonial Text",
+          "default": "The quality of these DTF transfers is incredible! Colors are vibrant and they last through so many washes."
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Avatar Image"
+        },
+        {
+          "type": "url",
+          "id": "avatar_url",
+          "label": "Avatar URL (fallback)"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Customer Name",
+          "default": "Jessica Davis"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Customer Role",
+          "default": "Small Business Owner"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        { "type": "testimonial", "settings": { "rating": 5, "text": "The quality of these DTF transfers is incredible! Colors are vibrant and they last through so many washes. My customers love them!", "name": "Jessica Davis", "role": "Small Business Owner", "avatar_url": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" } },
+        { "type": "testimonial", "settings": { "rating": 5, "text": "Fast shipping and excellent customer service. I've been using CloudyPrints for all my transfer needs. Highly recommend!", "name": "Michael Rodriguez", "role": "Print Shop Owner", "avatar_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" } },
+        { "type": "testimonial", "settings": { "rating": 5, "text": "Best DTF transfers I've ever used. The soft feel is amazing and the application is super easy. Will definitely order again!", "name": "Sarah Kim", "role": "Custom Apparel Designer", "avatar_url": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

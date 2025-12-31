@@ -1,0 +1,234 @@
+{% comment %}
+  Search Results Template
+{% endcomment %}
+
+<section class="cp-search-section">
+  <div class="container">
+    <div class="cp-search-header">
+      <h1 class="cp-search-title">{{ 'general.search.title' | t | default: 'Search Results' }}</h1>
+      
+      <form action="{{ routes.search_url }}" method="get" class="cp-search-form">
+        <input type="text" name="q" value="{{ search.terms }}" placeholder="{{ 'general.search.placeholder' | t | default: 'Search products...' }}" class="cp-search-input">
+        <button type="submit" class="cp-search-submit">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+    </div>
+    
+    {% if search.performed %}
+      {% if search.results_count > 0 %}
+        <p class="cp-search-count">
+          {{ 'general.search.results_count' | t: count: search.results_count | default: search.results_count }} {{ 'general.search.results_for' | t | default: 'results for' }} "{{ search.terms }}"
+        </p>
+        
+        <div class="cp-search-results">
+          {% for item in search.results %}
+            {% if item.object_type == 'product' %}
+              <a href="{{ item.url }}" class="cp-result-card">
+                <div class="cp-result-image">
+                  {% if item.featured_image %}
+                    <img src="{{ item.featured_image | image_url: width: 300 }}" alt="{{ item.title }}">
+                  {% else %}
+                    {{ 'product-1' | placeholder_svg_tag }}
+                  {% endif %}
+                </div>
+                <div class="cp-result-info">
+                  <h3 class="cp-result-title">{{ item.title }}</h3>
+                  <p class="cp-result-price">{{ item.price | money }}</p>
+                </div>
+              </a>
+            {% elsif item.object_type == 'article' %}
+              <a href="{{ item.url }}" class="cp-result-card cp-result-article">
+                <div class="cp-result-info">
+                  <span class="cp-result-type">Article</span>
+                  <h3 class="cp-result-title">{{ item.title }}</h3>
+                  <p class="cp-result-excerpt">{{ item.content | strip_html | truncate: 100 }}</p>
+                </div>
+              </a>
+            {% elsif item.object_type == 'page' %}
+              <a href="{{ item.url }}" class="cp-result-card cp-result-page">
+                <div class="cp-result-info">
+                  <span class="cp-result-type">Page</span>
+                  <h3 class="cp-result-title">{{ item.title }}</h3>
+                </div>
+              </a>
+            {% endif %}
+          {% endfor %}
+        </div>
+        
+        {% if paginate.pages > 1 %}
+          <div class="cp-pagination">
+            {{ paginate | default_pagination }}
+          </div>
+        {% endif %}
+      {% else %}
+        <div class="cp-no-results">
+          <div class="cp-no-results-icon">
+            <i class="fa-solid fa-search"></i>
+          </div>
+          <h2>{{ 'general.search.no_results' | t | default: 'No results found' }}</h2>
+          <p>{{ 'general.search.no_results_text' | t | default: 'Try adjusting your search terms or browse our products.' }}</p>
+          <a href="{{ routes.all_products_collection_url }}" class="cp-btn cp-btn-primary">
+            {{ 'general.search.browse_products' | t | default: 'Browse Products' }}
+          </a>
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .cp-search-section {
+    padding: 3rem 0 5rem;
+  }
+  
+  .cp-search-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .cp-search-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #5d596c;
+    margin-bottom: 1.5rem;
+  }
+  
+  .cp-search-form {
+    display: flex;
+    max-width: 500px;
+    margin: 0 auto;
+    gap: 0.5rem;
+  }
+  
+  .cp-search-input {
+    flex: 1;
+    padding: 0.875rem 1.25rem;
+    border: 2px solid #ebe9f1;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  
+  .cp-search-input:focus {
+    outline: none;
+    border-color: #7367F0;
+  }
+  
+  .cp-search-submit {
+    padding: 0 1.5rem;
+    background: #7367F0;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .cp-search-count {
+    text-align: center;
+    color: #6e6b7b;
+    margin-bottom: 2rem;
+  }
+  
+  .cp-search-results {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .cp-result-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  
+  .cp-result-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(115, 103, 240, 0.15);
+  }
+  
+  .cp-result-image {
+    aspect-ratio: 1;
+    overflow: hidden;
+  }
+  
+  .cp-result-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .cp-result-info {
+    padding: 1rem;
+  }
+  
+  .cp-result-type {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: #e5e3fb;
+    color: #7367F0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .cp-result-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #5d596c;
+    margin-bottom: 0.5rem;
+  }
+  
+  .cp-result-price {
+    color: #7367F0;
+    font-weight: 700;
+  }
+  
+  .cp-result-excerpt {
+    color: #6e6b7b;
+    font-size: 0.875rem;
+  }
+  
+  .cp-no-results {
+    text-align: center;
+    padding: 5rem 0;
+  }
+  
+  .cp-no-results-icon {
+    font-size: 4rem;
+    color: #ebe9f1;
+    margin-bottom: 1.5rem;
+  }
+  
+  .cp-no-results h2 {
+    font-size: 1.5rem;
+    color: #5d596c;
+    margin-bottom: 0.5rem;
+  }
+  
+  .cp-no-results p {
+    color: #6e6b7b;
+    margin-bottom: 2rem;
+  }
+  
+  @media (max-width: 991px) {
+    .cp-search-results {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .cp-search-results {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
+
+
+
+
+
+

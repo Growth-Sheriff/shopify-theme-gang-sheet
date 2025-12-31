@@ -1,0 +1,1114 @@
+{% comment %}
+  Premium Header - Luxury Soft Design
+{% endcomment %}
+
+<!-- Announcement Bar -->
+{% if section.settings.show_announcement %}
+<div class="announcement-bar">
+  <div class="container">
+    <div class="announcement-content">
+      <div class="announcement-marquee">
+        <span class="announcement-item">
+          {% if section.settings.announcement_icon != blank %}
+            <i class="{{ section.settings.announcement_icon }}"></i>
+          {% endif %}
+          {{ section.settings.announcement_text }}
+          {% if section.settings.announcement_link != blank %}
+            <a href="{{ section.settings.announcement_link }}">{{ section.settings.announcement_link_text }} →</a>
+          {% endif %}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<!-- Main Header -->
+<header class="main-header {% if section.settings.sticky_header %}sticky-header{% endif %}" id="mainHeader">
+  <div class="container">
+    <div class="header-inner">
+      
+      <!-- Logo -->
+      <a href="{{ routes.root_url }}" class="header-logo">
+        {% if section.settings.logo %}
+          <img src="{{ section.settings.logo | image_url: width: 180 }}" 
+               alt="{{ shop.name }}" 
+               width="180" 
+               height="50"
+               class="logo-img">
+        {% else %}
+          <span class="logo-text">{{ shop.name }}</span>
+        {% endif %}
+      </a>
+      
+      <!-- Desktop Navigation -->
+      <nav class="header-nav" id="headerNav">
+        <ul class="nav-menu">
+          {% for link in linklists[section.settings.menu].links %}
+            <li class="nav-item {% if link.links.size > 0 %}has-dropdown{% endif %}">
+              <a href="{{ link.url }}" class="nav-link {% if link.active %}active{% endif %}">
+                <span>{{ link.title }}</span>
+                {% if link.links.size > 0 %}
+                  <i class="fa-solid fa-chevron-down"></i>
+                {% endif %}
+              </a>
+              
+              {% if link.links.size > 0 %}
+              <div class="mega-dropdown">
+                <div class="dropdown-inner">
+                  <div class="dropdown-column">
+                    <span class="dropdown-title">{{ link.title }}</span>
+                    <ul class="dropdown-links">
+                      {% for childlink in link.links %}
+                        <li>
+                          <a href="{{ childlink.url }}" class="dropdown-link">
+                            <i class="fa-solid fa-chevron-right"></i>
+                            <span>{{ childlink.title }}</span>
+                          </a>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                  {% if section.settings.dropdown_image %}
+                  <div class="dropdown-promo">
+                    <img src="{{ section.settings.dropdown_image | image_url: width: 300 }}" alt="Promo" loading="lazy">
+                    <div class="promo-overlay">
+                      <span>New Arrivals</span>
+                    </div>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </nav>
+      
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <!-- Search -->
+        <button class="action-btn search-trigger" id="searchTrigger" aria-label="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+        
+        <!-- Account -->
+        {% if section.settings.show_account %}
+        <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" 
+           class="action-btn account-btn" 
+           aria-label="Account">
+          <i class="fa-regular fa-user"></i>
+        </a>
+        {% endif %}
+        
+        <!-- Wishlist -->
+        {% if section.settings.show_wishlist %}
+        <a href="/pages/wishlist" class="action-btn wishlist-btn" aria-label="Wishlist">
+          <i class="fa-regular fa-heart"></i>
+          <span class="action-badge wishlist-count">0</span>
+        </a>
+        {% endif %}
+        
+        <!-- Cart -->
+        <a href="{{ routes.cart_url }}" class="action-btn cart-btn" aria-label="Cart">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="action-badge cart-count">{{ cart.item_count }}</span>
+        </a>
+        
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+          <span class="toggle-bar"></span>
+          <span class="toggle-bar"></span>
+          <span class="toggle-bar"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Search Modal -->
+  <div class="search-modal" id="searchModal">
+    <div class="search-modal-inner">
+      <form action="{{ routes.search_url }}" method="get" class="search-form">
+        <div class="search-input-wrapper">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" 
+                 name="q" 
+                 placeholder="Search for products..." 
+                 class="search-input"
+                 autocomplete="off"
+                 id="searchInput">
+          <button type="button" class="search-close" id="searchClose">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="search-suggestions">
+          <span class="suggestions-title">Popular Searches</span>
+          <div class="suggestions-tags">
+            <a href="/search?q=dtf" class="suggestion-tag">DTF Transfers</a>
+            <a href="/search?q=gang+sheet" class="suggestion-tag">Gang Sheets</a>
+            <a href="/search?q=uv" class="suggestion-tag">UV DTF</a>
+            <a href="/search?q=custom" class="suggestion-tag">Custom Prints</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-header">
+    <a href="{{ routes.root_url }}" class="mobile-logo">
+      {% if section.settings.logo %}
+        <img src="{{ section.settings.logo | image_url: width: 140 }}" alt="{{ shop.name }}">
+      {% else %}
+        <span>{{ shop.name }}</span>
+      {% endif %}
+    </a>
+    <button class="mobile-close" id="mobileClose">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+  
+  <div class="mobile-menu-body">
+    <ul class="mobile-nav">
+      {% for link in linklists[section.settings.menu].links %}
+        <li class="mobile-nav-item {% if link.links.size > 0 %}has-children{% endif %}">
+          <a href="{{ link.url }}" class="mobile-nav-link">
+            <span>{{ link.title }}</span>
+            {% if link.links.size > 0 %}
+              <i class="fa-solid fa-plus toggle-child"></i>
+            {% endif %}
+          </a>
+          {% if link.links.size > 0 %}
+            <ul class="mobile-subnav">
+              {% for childlink in link.links %}
+                <li><a href="{{ childlink.url }}">{{ childlink.title }}</a></li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+  
+  <div class="mobile-menu-footer">
+    <div class="mobile-actions">
+      <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="mobile-action">
+        <i class="fa-regular fa-user"></i>
+        <span>{% if customer %}Account{% else %}Login{% endif %}</span>
+      </a>
+      <a href="/pages/wishlist" class="mobile-action">
+        <i class="fa-regular fa-heart"></i>
+        <span>Wishlist</span>
+      </a>
+      <a href="{{ routes.cart_url }}" class="mobile-action">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span>Cart ({{ cart.item_count }})</span>
+      </a>
+    </div>
+    
+    {% if section.settings.show_social_mobile %}
+    <div class="mobile-social">
+      {% if section.settings.facebook %}<a href="{{ section.settings.facebook }}"><i class="fa-brands fa-facebook-f"></i></a>{% endif %}
+      {% if section.settings.instagram %}<a href="{{ section.settings.instagram }}"><i class="fa-brands fa-instagram"></i></a>{% endif %}
+      {% if section.settings.twitter %}<a href="{{ section.settings.twitter }}"><i class="fa-brands fa-x-twitter"></i></a>{% endif %}
+      {% if section.settings.tiktok %}<a href="{{ section.settings.tiktok }}"><i class="fa-brands fa-tiktok"></i></a>{% endif %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+<style>
+/* ============================================
+   PREMIUM HEADER - LUXURY SOFT DESIGN
+   ============================================ */
+
+/* Announcement Bar */
+.announcement-bar {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 10px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.announcement-content {
+  text-align: center;
+}
+
+.announcement-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.announcement-item i {
+  font-size: 1rem;
+}
+
+.announcement-item a {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 8px;
+  transition: opacity 0.3s ease;
+}
+
+.announcement-item a:hover {
+  opacity: 0.8;
+}
+
+/* Main Header */
+.main-header {
+  background: #fff;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+  position: relative;
+  z-index: 1000;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.main-header.sticky-header {
+  position: sticky;
+  top: 0;
+}
+
+.main-header.scrolled {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.main-header .container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  gap: 40px;
+}
+
+/* Logo */
+.header-logo {
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.logo-img {
+  height: 45px;
+  width: auto;
+  object-fit: contain;
+}
+
+.logo-text {
+  font-size: 1.75rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+}
+
+/* Navigation */
+.header-nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  color: #1a1a2e;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.nav-link i {
+  font-size: 0.65rem;
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #667eea;
+  background: rgba(102, 126, 234, 0.08);
+}
+
+.nav-item:hover .nav-link i {
+  transform: rotate(180deg);
+}
+
+/* Mega Dropdown */
+.mega-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 100;
+  padding-top: 15px;
+}
+
+.nav-item:hover .mega-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-inner {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  padding: 24px;
+  display: flex;
+  gap: 24px;
+  min-width: 280px;
+}
+
+.dropdown-title {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #667eea;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f0f5;
+}
+
+.dropdown-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-links li {
+  margin-bottom: 4px;
+}
+
+.dropdown-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  color: #1a1a2e;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.dropdown-link i {
+  font-size: 0.6rem;
+  color: #adb5bd;
+  transition: all 0.3s ease;
+}
+
+.dropdown-link:hover {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  color: #667eea;
+  transform: translateX(5px);
+}
+
+.dropdown-link:hover i {
+  color: #667eea;
+}
+
+.dropdown-promo {
+  position: relative;
+  width: 180px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.dropdown-promo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.promo-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+}
+
+.promo-overlay span {
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Header Actions */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.action-btn {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  color: #1a1a2e;
+  font-size: 1.15rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.action-btn:hover {
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+}
+
+.action-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  min-width: 18px;
+  height: 18px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-badge:empty,
+.action-badge:contains("0") {
+  display: none;
+}
+
+/* Mobile Toggle */
+.mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.toggle-bar {
+  width: 22px;
+  height: 2px;
+  background: #1a1a2e;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.mobile-toggle.active .toggle-bar:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.mobile-toggle.active .toggle-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-toggle.active .toggle-bar:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Search Modal */
+.search-modal {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  padding: 30px 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.search-modal.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.search-modal-inner {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #f8f9fa;
+  border-radius: 16px;
+  padding: 16px 20px;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.search-input-wrapper:focus-within {
+  background: #fff;
+  border-color: #667eea;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+}
+
+.search-input-wrapper i {
+  color: #adb5bd;
+  font-size: 1.1rem;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  color: #1a1a2e;
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: #adb5bd;
+}
+
+.search-close {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: #e9ecef;
+  border-radius: 10px;
+  color: #6c757d;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.search-close:hover {
+  background: #dee2e6;
+  color: #1a1a2e;
+}
+
+.search-suggestions {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.suggestions-title {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+}
+
+.suggestions-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.suggestion-tag {
+  padding: 8px 16px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  color: #667eea;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: 25px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.suggestion-tag:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 320px;
+  max-width: 85%;
+  height: 100vh;
+  background: #fff;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: 10px 0 40px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-menu.active {
+  left: 0;
+}
+
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.mobile-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #f0f0f5;
+}
+
+.mobile-logo img {
+  height: 36px;
+  width: auto;
+}
+
+.mobile-logo span {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.mobile-close {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: #f8f9fa;
+  border-radius: 10px;
+  color: #1a1a2e;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.mobile-close:hover {
+  background: #e9ecef;
+}
+
+.mobile-menu-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 0;
+}
+
+.mobile-nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mobile-nav-item {
+  border-bottom: 1px solid #f0f0f5;
+}
+
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  color: #1a1a2e;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.mobile-nav-link:hover {
+  background: rgba(102, 126, 234, 0.05);
+  color: #667eea;
+}
+
+.toggle-child {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: #adb5bd;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.mobile-nav-item.open .toggle-child {
+  transform: rotate(45deg);
+}
+
+.mobile-subnav {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 10px 0;
+  display: none;
+  background: #f8f9fa;
+}
+
+.mobile-nav-item.open .mobile-subnav {
+  display: block;
+}
+
+.mobile-subnav a {
+  display: block;
+  padding: 12px 24px 12px 44px;
+  color: #6c757d;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.mobile-subnav a:hover {
+  color: #667eea;
+  background: rgba(102, 126, 234, 0.05);
+}
+
+.mobile-menu-footer {
+  padding: 20px 24px;
+  border-top: 1px solid #f0f0f5;
+  background: #f8f9fa;
+}
+
+.mobile-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.mobile-action {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 10px;
+  background: #fff;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #1a1a2e;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.mobile-action i {
+  font-size: 1.1rem;
+  color: #667eea;
+}
+
+.mobile-action:hover {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+}
+
+.mobile-social {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.mobile-social a {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 10px;
+  color: #6c757d;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.mobile-social a:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .header-nav {
+    display: none;
+  }
+  
+  .mobile-toggle {
+    display: flex;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-inner {
+    height: 70px;
+    gap: 16px;
+  }
+  
+  .logo-img {
+    height: 38px;
+  }
+  
+  .action-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+  
+  .announcement-item {
+    font-size: 0.8rem;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Mobile Menu
+  const mobileToggle = document.getElementById('mobileToggle');
+  const mobileClose = document.getElementById('mobileClose');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileOverlay = document.getElementById('mobileOverlay');
+  
+  function openMobileMenu() {
+    mobileMenu.classList.add('active');
+    mobileOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    mobileToggle.classList.add('active');
+  }
+  
+  function closeMobileMenu() {
+    mobileMenu.classList.remove('active');
+    mobileOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+    mobileToggle.classList.remove('active');
+  }
+  
+  mobileToggle?.addEventListener('click', openMobileMenu);
+  mobileClose?.addEventListener('click', closeMobileMenu);
+  mobileOverlay?.addEventListener('click', closeMobileMenu);
+  
+  // Mobile Subnav Toggle
+  document.querySelectorAll('.toggle-child').forEach(toggle => {
+    toggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggle.closest('.mobile-nav-item').classList.toggle('open');
+    });
+  });
+  
+  // Search Modal
+  const searchTrigger = document.getElementById('searchTrigger');
+  const searchModal = document.getElementById('searchModal');
+  const searchClose = document.getElementById('searchClose');
+  const searchInput = document.getElementById('searchInput');
+  
+  searchTrigger?.addEventListener('click', () => {
+    searchModal.classList.add('active');
+    setTimeout(() => searchInput?.focus(), 100);
+  });
+  
+  searchClose?.addEventListener('click', () => {
+    searchModal.classList.remove('active');
+  });
+  
+  // Close search on outside click
+  document.addEventListener('click', (e) => {
+    if (searchModal?.classList.contains('active') && 
+        !searchModal.contains(e.target) && 
+        !searchTrigger.contains(e.target)) {
+      searchModal.classList.remove('active');
+    }
+  });
+  
+  // Sticky Header Shadow
+  const header = document.getElementById('mainHeader');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      header?.classList.add('scrolled');
+    } else {
+      header?.classList.remove('scrolled');
+    }
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Image"
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Main Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "image_picker",
+      "id": "dropdown_image",
+      "label": "Dropdown Promo Image"
+    },
+    {
+      "type": "header",
+      "content": "Announcement Bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Show Announcement Bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "announcement_icon",
+      "label": "Icon Class",
+      "default": "fa-solid fa-truck-fast"
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement Text",
+      "default": "Free shipping on orders over $50!"
+    },
+    {
+      "type": "text",
+      "id": "announcement_link_text",
+      "label": "Link Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "announcement_link",
+      "label": "Link URL"
+    },
+    {
+      "type": "header",
+      "content": "Features"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_header",
+      "label": "Sticky Header",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "label": "Show Account Icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wishlist",
+      "label": "Show Wishlist Icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_mobile",
+      "label": "Show Social in Mobile Menu",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Social Links"
+    },
+    {
+      "type": "url",
+      "id": "facebook",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "url",
+      "id": "instagram",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "twitter",
+      "label": "Twitter/X URL"
+    },
+    {
+      "type": "url",
+      "id": "tiktok",
+      "label": "TikTok URL"
+    }
+  ]
+}
+{% endschema %}
+
+
+
+
+
+

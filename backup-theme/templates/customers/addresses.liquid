@@ -1,0 +1,499 @@
+{% comment %}
+  ============================================
+  CUSTOMER ADDRESSES TEMPLATE
+  Shopify 2.0 Compatible
+  ============================================
+{% endcomment %}
+
+<style>
+/* ===== ADDRESSES PAGE STYLES ===== */
+.addresses-page {
+  padding: 40px 0 60px;
+  background: linear-gradient(180deg, #f8f9fc 0%, #fff 100%);
+  min-height: 100vh;
+}
+
+.addresses-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.addresses-header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #2d2d3a;
+  margin: 0;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #7367f0;
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.add-address-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #7367f0, #9e95f5);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.add-address-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(115, 103, 240, 0.3);
+}
+
+/* Addresses Grid */
+.addresses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.address-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+  border: 1px solid rgba(115, 103, 240, 0.08);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.address-card:hover {
+  box-shadow: 0 8px 30px rgba(115, 103, 240, 0.12);
+}
+
+.address-card.default {
+  border-color: rgba(115, 103, 240, 0.3);
+}
+
+.address-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 4px 10px;
+  background: #7367f0;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border-radius: 20px;
+  text-transform: uppercase;
+}
+
+.address-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2d2d3a;
+  margin: 0 0 12px 0;
+}
+
+.address-details {
+  font-size: 0.9rem;
+  color: #5d596c;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.address-actions {
+  display: flex;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.address-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.address-action.edit {
+  background: rgba(115, 103, 240, 0.1);
+  color: #7367f0;
+}
+
+.address-action.edit:hover {
+  background: #7367f0;
+  color: #fff;
+}
+
+.address-action.delete {
+  background: rgba(234, 84, 85, 0.1);
+  color: #ea5455;
+}
+
+.address-action.delete:hover {
+  background: #ea5455;
+  color: #fff;
+}
+
+.address-action.default-btn {
+  background: rgba(40, 199, 111, 0.1);
+  color: #28c76f;
+}
+
+.address-action.default-btn:hover {
+  background: #28c76f;
+  color: #fff;
+}
+
+/* Add/Edit Form Modal */
+.address-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.address-modal.active {
+  display: flex;
+}
+
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  position: relative;
+  background: #fff;
+  border-radius: 20px;
+  padding: 32px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #f8f9fc;
+  border: none;
+  color: #5d596c;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+  background: #ea5455;
+  color: #fff;
+}
+
+.modal-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #2d2d3a;
+  margin: 0 0 24px 0;
+}
+
+.address-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.address-form .form-group {
+  margin-bottom: 16px;
+}
+
+.address-form .form-group.full {
+  grid-column: 1 / -1;
+}
+
+.address-form label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #5d596c;
+  margin-bottom: 6px;
+}
+
+.address-form input,
+.address-form select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid rgba(115, 103, 240, 0.2);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.address-form input:focus,
+.address-form select:focus {
+  outline: none;
+  border-color: #7367f0;
+  box-shadow: 0 0 0 3px rgba(115, 103, 240, 0.1);
+}
+
+.address-form .default-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.address-form .default-checkbox input {
+  width: 18px;
+  height: 18px;
+  accent-color: #7367f0;
+}
+
+.form-submit {
+  width: 100%;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #7367f0, #9e95f5);
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.form-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(115, 103, 240, 0.3);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 767.98px) {
+  .addresses-page {
+    padding: 24px 0 40px;
+  }
+  
+  .addresses-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .addresses-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .address-form .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .modal-content {
+    padding: 24px;
+  }
+}
+</style>
+
+<div class="addresses-page">
+  <div class="container">
+    
+    <a href="{{ routes.account_url }}" class="back-link">
+      <i class="fa-solid fa-arrow-left"></i>
+      Back to Account
+    </a>
+    
+    <div class="addresses-header">
+      <h1>My Addresses</h1>
+      <button type="button" class="add-address-btn" onclick="openAddressModal()">
+        <i class="fa-solid fa-plus"></i>
+        Add New Address
+      </button>
+    </div>
+    
+    <div class="addresses-grid">
+      {%- for address in customer.addresses -%}
+        <div class="address-card {% if address == customer.default_address %}default{% endif %}" data-address-id="{{ address.id }}">
+          {%- if address == customer.default_address -%}
+            <span class="address-badge">Default</span>
+          {%- endif -%}
+          
+          <h3 class="address-name">{{ address.first_name }} {{ address.last_name }}</h3>
+          
+          <div class="address-details">
+            {%- if address.company != blank -%}{{ address.company }}<br>{%- endif -%}
+            {{ address.address1 }}<br>
+            {%- if address.address2 != blank -%}{{ address.address2 }}<br>{%- endif -%}
+            {{ address.city }}, {{ address.province_code }} {{ address.zip }}<br>
+            {{ address.country }}<br>
+            {%- if address.phone != blank -%}{{ address.phone }}{%- endif -%}
+          </div>
+          
+          <div class="address-actions">
+            <button type="button" class="address-action edit" onclick="editAddress('{{ address.id }}')">
+              <i class="fa-solid fa-pen"></i> Edit
+            </button>
+            {%- unless address == customer.default_address -%}
+              <button type="button" class="address-action default-btn" onclick="setDefaultAddress('{{ address.id }}')">
+                <i class="fa-solid fa-check"></i> Set Default
+              </button>
+            {%- endunless -%}
+            <button type="button" class="address-action delete" onclick="deleteAddress('{{ address.id }}')">
+              <i class="fa-solid fa-trash"></i> Delete
+            </button>
+          </div>
+        </div>
+      {%- else -%}
+        <div class="address-card">
+          <div style="text-align: center; padding: 30px; color: #9a97a8;">
+            <i class="fa-solid fa-map-marker-alt" style="font-size: 2.5rem; margin-bottom: 12px; opacity: 0.5;"></i>
+            <p style="margin: 0;">No addresses saved yet</p>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+    
+  </div>
+</div>
+
+<!-- Add/Edit Address Modal -->
+<div class="address-modal" id="addressModal">
+  <div class="modal-overlay" onclick="closeAddressModal()"></div>
+  <div class="modal-content">
+    <button type="button" class="modal-close" onclick="closeAddressModal()">
+      <i class="fa-solid fa-times"></i>
+    </button>
+    <h2 class="modal-title" id="modalTitle">Add New Address</h2>
+    
+    {%- form 'customer_address', customer.new_address, id: 'addressForm', class: 'address-form' -%}
+      <div class="form-row">
+        <div class="form-group">
+          <label for="address-first-name">First Name</label>
+          <input type="text" name="address[first_name]" id="address-first-name" required>
+        </div>
+        <div class="form-group">
+          <label for="address-last-name">Last Name</label>
+          <input type="text" name="address[last_name]" id="address-last-name" required>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="address-company">Company (optional)</label>
+        <input type="text" name="address[company]" id="address-company">
+      </div>
+      
+      <div class="form-group">
+        <label for="address-address1">Address</label>
+        <input type="text" name="address[address1]" id="address-address1" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="address-address2">Apartment, suite, etc. (optional)</label>
+        <input type="text" name="address[address2]" id="address-address2">
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="address-city">City</label>
+          <input type="text" name="address[city]" id="address-city" required>
+        </div>
+        <div class="form-group">
+          <label for="address-zip">Postal Code</label>
+          <input type="text" name="address[zip]" id="address-zip" required>
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="address-country">Country</label>
+          <select name="address[country]" id="address-country" data-default="{{ customer.default_address.country | default: 'United States' }}">
+            {{ all_country_option_tags }}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="address-province">State/Province</label>
+          <select name="address[province]" id="address-province"></select>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="address-phone">Phone (optional)</label>
+        <input type="tel" name="address[phone]" id="address-phone">
+      </div>
+      
+      <label class="default-checkbox">
+        <input type="checkbox" name="address[default]" id="address-default" value="1">
+        <span>Set as default address</span>
+      </label>
+      
+      <button type="submit" class="form-submit">Save Address</button>
+    {%- endform -%}
+  </div>
+</div>
+
+<script>
+function openAddressModal() {
+  document.getElementById('addressModal').classList.add('active');
+  document.getElementById('modalTitle').textContent = 'Add New Address';
+  document.getElementById('addressForm').reset();
+}
+
+function closeAddressModal() {
+  document.getElementById('addressModal').classList.remove('active');
+}
+
+function editAddress(id) {
+  // In a real implementation, this would populate the form with address data
+  document.getElementById('addressModal').classList.add('active');
+  document.getElementById('modalTitle').textContent = 'Edit Address';
+}
+
+function deleteAddress(id) {
+  if (confirm('Are you sure you want to delete this address?')) {
+    Shopify.postLink('/account/addresses/' + id, {parameters: {_method: 'delete'}});
+  }
+}
+
+function setDefaultAddress(id) {
+  Shopify.postLink('/account/addresses/' + id, {parameters: {_method: 'put', 'address[default]': '1'}});
+}
+
+// Initialize country/province selectors
+document.addEventListener('DOMContentLoaded', function() {
+  new Shopify.CountryProvinceSelector('address-country', 'address-province', {
+    hideElement: 'address-province-container'
+  });
+});
+</script>

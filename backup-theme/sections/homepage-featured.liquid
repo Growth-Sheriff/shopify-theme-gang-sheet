@@ -1,0 +1,1052 @@
+{% comment %}
+  cp Featured Product Section
+  Product picker ile otomatik bilgi çekme
+{% endcomment %}
+
+{% assign selected_product = section.settings.product %}
+
+<section class="cp-featured-section" style="background: {{ section.settings.section_bg | default: '#ffffff' }}; padding: {{ section.settings.section_padding | default: '4rem 0' }};">
+  <div class="container">
+    <!-- Section Header -->
+    {% if section.settings.show_header %}
+    <div class="cp-featured-header">
+      <h2 class="cp-featured-title">{{ section.settings.title }}</h2>
+      <p class="cp-featured-subtitle">{{ section.settings.subtitle }}</p>
+    </div>
+    {% endif %}
+    
+    {% if selected_product != blank %}
+    <div class="cp-featured-grid">
+      <!-- Product Gallery -->
+      <div class="cp-featured-gallery">
+        <div class="cp-gallery-thumbs">
+          {% for image in selected_product.images limit: 5 %}
+            <div class="cp-thumb {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}">
+              <img src="{{ image | image_url: width: 100 }}" alt="{{ selected_product.title }}">
+            </div>
+          {% endfor %}
+        </div>
+        <div class="cp-gallery-main">
+          {% for image in selected_product.images limit: 5 %}
+            <div class="cp-main-image {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}">
+              <img src="{{ image | image_url: width: 600 }}" alt="{{ selected_product.title }}">
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      
+      <!-- Product Info -->
+      <div class="cp-featured-info">
+        <!-- Vendor -->
+        {% if section.settings.show_vendor and selected_product.vendor != blank %}
+          <div class="cp-product-vendor">{{ selected_product.vendor }}</div>
+        {% endif %}
+        
+        <!-- Product Title -->
+        <h3 class="cp-product-name">{{ selected_product.title }}</h3>
+        
+        <!-- Badges Row -->
+        <div class="cp-badges-row">
+          {% if selected_product.tags contains 'bestseller' or section.settings.show_badge %}
+            <span class="cp-badge-bestseller">{{ section.settings.badge_text | default: 'BEST SELLER' }}</span>
+          {% endif %}
+          {% if section.settings.urgency_text != blank %}
+            <span class="cp-urgency-text">{{ section.settings.urgency_text }}</span>
+          {% endif %}
+        </div>
+        
+        <!-- Price - Otomatik -->
+        <div class="cp-price-row">
+          <span class="cp-current-price">{{ selected_product.price | money }}</span>
+          {% if selected_product.compare_at_price > selected_product.price %}
+            <span class="cp-compare-price">{{ selected_product.compare_at_price | money }}</span>
+            {% assign discount = selected_product.compare_at_price | minus: selected_product.price | times: 100 | divided_by: selected_product.compare_at_price %}
+            <span class="cp-discount-badge">{{ discount }}% OFF</span>
+          {% endif %}
+        </div>
+        
+        <!-- Viewers -->
+        {% if section.settings.show_viewers %}
+        <div class="cp-viewers">
+          <span class="cp-viewer-count">{{ section.settings.viewer_count | default: 34 }}</span>
+          <span>{{ section.settings.viewer_text | default: 'People are viewing this right now' }}</span>
+        </div>
+        {% endif %}
+        
+        <!-- Variant Options - Otomatik -->
+        {% if selected_product.has_only_default_variant == false %}
+          {% for option in selected_product.options_with_values %}
+            <div class="cp-option-section">
+              <div class="cp-option-label">{{ option.name }}: <strong class="selected-option-{{ forloop.index }}">{{ option.values.first }}</strong></div>
+              <div class="cp-option-values">
+                {% for value in option.values %}
+                  <button class="cp-option-btn {% if forloop.first %}active{% endif %}" 
+                          data-option="{{ option.name }}"
+                          data-value="{{ value }}">
+                    {{ value }}
+                  </button>
+                {% endfor %}
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+        
+        <!-- Quantity -->
+        <div class="cp-quantity-section">
+          <div class="cp-quantity-label">{{ section.settings.quantity_label | default: 'Quantity' }}</div>
+          <div class="cp-quantity-controls">
+            <button class="cp-qty-btn" type="button" onclick="this.parentNode.querySelector('input').stepDown(); updatePrice();">−</button>
+            <input type="number" value="1" min="1" max="{{ selected_product.selected_or_first_available_variant.inventory_quantity | default: 99 }}" class="cp-qty-input" id="featured-qty">
+            <button class="cp-qty-btn" type="button" onclick="this.parentNode.querySelector('input').stepUp(); updatePrice();">+</button>
+          </div>
+        </div>
+        
+        <!-- Add to Cart -->
+        <div class="cp-cart-row">
+          <form action="{{ routes.cart_add_url }}" method="post" class="cp-add-form">
+            <input type="hidden" name="id" value="{{ selected_product.selected_or_first_available_variant.id }}">
+            <input type="hidden" name="quantity" value="1" id="featured-form-qty">
+            <button type="submit" class="cp-add-to-cart-btn" {% unless selected_product.available %}disabled{% endunless %}>
+              {% if selected_product.available %}
+                {{ section.settings.add_to_cart_text | default: 'Add to cart' }} – {{ selected_product.price | money }}
+              {% else %}
+                {{ section.settings.sold_out_text | default: 'Sold Out' }}
+              {% endif %}
+            </button>
+          </form>
+          <button class="cp-wishlist-btn" title="{{ section.settings.wishlist_text | default: 'Add to wishlist' }}">
+            <i class="fa-regular fa-heart"></i>
+          </button>
+          <button class="cp-compare-btn" title="{{ section.settings.compare_text | default: 'Compare' }}">
+            <i class="fa-solid fa-arrows-left-right"></i>
+          </button>
+        </div>
+        
+        <!-- Stock Status -->
+        {% if selected_product.available %}
+          <div class="cp-stock-status in-stock">
+            <i class="fa-solid fa-check-circle"></i>
+            {{ section.settings.in_stock_text | default: 'In Stock' }}
+            {% if selected_product.selected_or_first_available_variant.inventory_quantity > 0 and selected_product.selected_or_first_available_variant.inventory_quantity < 10 %}
+              - Only {{ selected_product.selected_or_first_available_variant.inventory_quantity }} left!
+            {% endif %}
+          </div>
+        {% else %}
+          <div class="cp-stock-status out-of-stock">
+            <i class="fa-solid fa-times-circle"></i>
+            {{ section.settings.out_of_stock_text | default: 'Out of Stock' }}
+          </div>
+        {% endif %}
+        
+        <!-- Action Links -->
+        <div class="cp-action-links">
+          <a href="#" class="cp-action-link">
+            <i class="fa-regular fa-circle-question"></i>
+            {{ section.settings.ask_question_text | default: 'Ask a question' }}
+          </a>
+          <a href="#" class="cp-action-link">
+            <i class="fa-solid fa-truck"></i>
+            {{ section.settings.delivery_text | default: 'Delivery & Return' }}
+          </a>
+          <a href="#" class="cp-action-link" onclick="navigator.share({title: '{{ selected_product.title }}', url: '{{ selected_product.url }}'})">
+            <i class="fa-solid fa-share-nodes"></i>
+            {{ section.settings.share_text | default: 'Share' }}
+          </a>
+        </div>
+        
+        <!-- Payment Icons -->
+        {% if section.settings.show_payment_icons %}
+        <div class="cp-payment-section">
+          <div class="cp-payment-label">
+            <i class="fa-solid fa-shield-check"></i>
+            {{ section.settings.payment_label | default: 'Guaranteed Safe Checkout' }}
+          </div>
+          <div class="cp-payment-icons">
+            {{ shop.enabled_payment_types | payment_type_svg_tag }}
+          </div>
+        </div>
+        {% endif %}
+        
+        <!-- View Details -->
+        {% if section.settings.show_view_details %}
+        <a href="{{ selected_product.url }}" class="cp-view-details">
+          {{ section.settings.view_details_text | default: 'View full details' }}
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a>
+        {% endif %}
+        
+        <!-- Product Description -->
+        {% if section.settings.show_description and selected_product.description != blank %}
+        <div class="cp-product-description">
+          {{ selected_product.description | strip_html | truncate: 200 }}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% else %}
+    <!-- No product selected message -->
+    <div class="cp-no-product">
+      <i class="fa-solid fa-box-open"></i>
+      <p>{{ section.settings.no_product_text | default: 'Select a product to display' }}</p>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  /* ═══════════════════════════════════════════════════════════════
+     FEATURED PRODUCT - CloudyPrints Theme Compatible
+     Uses --cp-* CSS variables for consistency
+     ═══════════════════════════════════════════════════════════════ */
+  
+  .cp-featured-section {
+    --cp-primary: #7367F0;
+    --cp-primary-light: rgba(115, 103, 240, 0.12);
+    --cp-primary-gradient: linear-gradient(118deg, #7367F0, rgba(115, 103, 240, 0.7));
+    --cp-success: #28c76f;
+    --cp-danger: #ea5455;
+    --cp-warning: #ff9f43;
+    --cp-heading: #5e5873;
+    --cp-body: #6e6b7b;
+    --cp-muted: #b9b9c3;
+    --cp-border: #ebe9f1;
+    --cp-card-bg: #ffffff;
+    --cp-body-bg: #f8f8f8;
+    --cp-shadow: 0 4px 24px 0 rgba(34, 41, 47, 0.1);
+    --cp-radius: 0.5rem;
+  }
+  
+  .cp-featured-section .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .cp-featured-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .cp-featured-title {
+    font-size: 2.25rem;
+    font-weight: 600;
+    color: var(--cp-heading);
+    margin-bottom: 0.75rem;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .cp-featured-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--cp-primary-gradient);
+    border-radius: 2px;
+  }
+  
+  .cp-featured-subtitle {
+    color: var(--cp-body);
+    font-size: 1rem;
+    max-width: 600px;
+    margin: 1rem auto 0;
+  }
+  
+  .cp-featured-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+    background: var(--cp-card-bg);
+    border-radius: var(--cp-radius);
+    padding: 2rem;
+    box-shadow: var(--cp-shadow);
+    border: 1px solid var(--cp-border);
+  }
+  
+  .cp-featured-gallery {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .cp-gallery-thumbs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .cp-thumb {
+    width: 80px;
+    height: 80px;
+    border: 2px solid var(--cp-border);
+    border-radius: var(--cp-radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    background: var(--cp-body-bg);
+  }
+  
+  .cp-thumb:hover {
+    border-color: var(--cp-primary);
+    transform: scale(1.05);
+  }
+  
+  .cp-thumb.active {
+    border-color: var(--cp-primary);
+    box-shadow: 0 0 0 3px var(--cp-primary-light);
+  }
+  
+  .cp-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .cp-gallery-main {
+    flex: 1;
+    background: linear-gradient(180deg, #ffffff 0%, #f8f8f8 50%, #f4f4f4 100%);
+    border-radius: var(--cp-radius);
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--cp-border);
+  }
+  
+  .cp-main-image {
+    display: none;
+  }
+  
+  .cp-main-image.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  .cp-main-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .cp-featured-info {
+    padding: 1rem 0;
+  }
+  
+  .cp-product-vendor {
+    color: var(--cp-primary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .cp-product-name {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--cp-heading);
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+  
+  .cp-badges-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .cp-badge-bestseller {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.875rem;
+    background: var(--cp-primary-gradient);
+    color: #fff;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(115, 103, 240, 0.3);
+  }
+  
+  .cp-urgency-text {
+    color: var(--cp-danger);
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  
+  .cp-urgency-text::before {
+    content: '🔥';
+  }
+  
+  .cp-price-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+    padding: 1rem;
+    background: var(--cp-primary-light);
+    border-radius: var(--cp-radius);
+    border: 1px solid rgba(115, 103, 240, 0.2);
+  }
+  
+  .cp-current-price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--cp-primary);
+    line-height: 1;
+  }
+  
+  .cp-compare-price {
+    font-size: 1.125rem;
+    color: var(--cp-muted);
+    text-decoration: line-through;
+  }
+  
+  .cp-discount-badge {
+    background: linear-gradient(135deg, var(--cp-warning), #ff6b35);
+    color: #fff;
+    padding: 0.3rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  
+  .cp-viewers {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+    color: var(--cp-body);
+  }
+  
+  .cp-viewer-count {
+    background: var(--cp-primary-gradient);
+    color: #fff;
+    padding: 0.3rem 0.625rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    box-shadow: 0 2px 6px rgba(115, 103, 240, 0.3);
+  }
+  
+  .cp-option-section {
+    margin-bottom: 1.5rem;
+  }
+  
+  .cp-option-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--cp-heading);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .cp-option-label span {
+    color: var(--cp-primary);
+    font-weight: 500;
+  }
+  
+  .cp-option-values {
+    display: flex;
+    gap: 0.625rem;
+    flex-wrap: wrap;
+  }
+  
+  .cp-option-btn {
+    padding: 0.625rem 1.5rem;
+    border: 2px solid var(--cp-border);
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    background: var(--cp-card-bg);
+    color: var(--cp-body);
+  }
+  
+  .cp-option-btn:hover {
+    border-color: var(--cp-primary);
+    color: var(--cp-primary);
+    background: var(--cp-primary-light);
+    transform: translateY(-2px);
+  }
+  
+  .cp-option-btn.active {
+    background: var(--cp-primary-gradient);
+    color: #fff;
+    border-color: var(--cp-primary);
+    box-shadow: 0 4px 12px rgba(115, 103, 240, 0.35);
+  }
+  
+  .cp-quantity-section {
+    margin-bottom: 1.5rem;
+  }
+  
+  .cp-quantity-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--cp-heading);
+    margin-bottom: 0.75rem;
+  }
+  
+  .cp-quantity-controls {
+    display: inline-flex;
+    align-items: center;
+    border: 2px solid var(--cp-border);
+    border-radius: 50px;
+    overflow: hidden;
+    background: var(--cp-card-bg);
+  }
+  
+  .cp-qty-btn {
+    width: 48px;
+    height: 48px;
+    background: transparent;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--cp-heading);
+  }
+  
+  .cp-qty-btn:hover {
+    background: var(--cp-primary-light);
+    color: var(--cp-primary);
+  }
+  
+  .cp-qty-input {
+    width: 55px;
+    height: 48px;
+    border: none;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    -moz-appearance: textfield;
+    background: transparent;
+    color: var(--cp-heading);
+  }
+  
+  .cp-qty-input::-webkit-outer-spin-button,
+  .cp-qty-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  .cp-cart-row {
+    display: flex;
+    gap: 0.875rem;
+    margin-bottom: 1rem;
+  }
+  
+  .cp-add-form {
+    flex: 1;
+  }
+  
+  .cp-add-to-cart-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: var(--cp-primary-gradient);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(115, 103, 240, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .cp-add-to-cart-btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(115, 103, 240, 0.5);
+  }
+  
+  .cp-add-to-cart-btn:disabled {
+    background: var(--cp-muted);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  
+  .cp-wishlist-btn,
+  .cp-compare-btn {
+    width: 52px;
+    height: 52px;
+    border: 2px solid var(--cp-border);
+    border-radius: 50%;
+    background: var(--cp-card-bg);
+    cursor: pointer;
+    font-size: 1.25rem;
+    color: var(--cp-body);
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .cp-wishlist-btn:hover {
+    border-color: var(--cp-danger);
+    color: var(--cp-danger);
+    background: rgba(234, 84, 85, 0.1);
+    transform: scale(1.05);
+  }
+  
+  .cp-compare-btn:hover {
+    border-color: var(--cp-primary);
+    color: var(--cp-primary);
+    background: var(--cp-primary-light);
+    transform: scale(1.05);
+  }
+  
+  .cp-stock-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+  
+  .cp-stock-status.in-stock {
+    color: var(--cp-success);
+  }
+  
+  .cp-stock-status.out-of-stock {
+    color: var(--cp-danger);
+  }
+  
+  .cp-action-links {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+  
+  .cp-action-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--cp-body);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: all 0.25s ease;
+  }
+  
+  .cp-action-link:hover {
+    color: var(--cp-primary);
+    transform: translateX(3px);
+  }
+  
+  .cp-payment-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: linear-gradient(135deg, #f8f8f8, #fff);
+    border-radius: var(--cp-radius);
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    border: 1px solid var(--cp-border);
+  }
+  
+  .cp-payment-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+    color: var(--cp-body);
+    font-weight: 500;
+  }
+  
+  .cp-payment-icons {
+    display: flex;
+    gap: 0.625rem;
+    flex-wrap: wrap;
+  }
+  
+  .cp-payment-icons svg {
+    height: 28px;
+    width: auto;
+    opacity: 0.85;
+    transition: all 0.2s;
+  }
+  
+  .cp-payment-icons svg:hover {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  
+  .cp-view-details {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--cp-primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
+    transition: all 0.25s ease;
+  }
+  
+  .cp-view-details:hover {
+    gap: 0.75rem;
+  }
+  
+  .cp-view-details::after {
+    content: '→';
+    font-size: 1rem;
+    transition: transform 0.25s;
+  }
+  
+  .cp-view-details:hover::after {
+    transform: translateX(4px);
+  }
+  
+  .cp-product-description {
+    color: var(--cp-body);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--cp-border);
+  }
+  
+  .cp-no-product {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #f8f8f8, #fff);
+    border-radius: var(--cp-radius);
+    border: 2px dashed var(--cp-border);
+  }
+  
+  .cp-no-product i {
+    font-size: 3.5rem;
+    color: var(--cp-muted);
+    margin-bottom: 1.25rem;
+    display: block;
+  }
+  
+  .cp-no-product p {
+    color: var(--cp-body);
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+  
+  @media (max-width: 768px) {
+    .cp-featured-grid {
+      grid-template-columns: 1fr;
+      padding: 1.5rem;
+      gap: 2rem;
+    }
+    
+    .cp-featured-gallery {
+      flex-direction: column-reverse;
+    }
+    
+    .cp-gallery-thumbs {
+      flex-direction: row;
+      justify-content: center;
+    }
+    
+    .cp-thumb {
+      width: 60px;
+      height: 60px;
+    }
+    
+    .cp-product-name {
+      font-size: 1.5rem;
+    }
+    
+    .cp-current-price {
+      font-size: 1.75rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Gallery functionality
+    const thumbs = document.querySelectorAll('.cp-thumb');
+    const mainImages = document.querySelectorAll('.cp-main-image');
+    
+    thumbs.forEach(thumb => {
+      thumb.addEventListener('click', function() {
+        const index = this.dataset.index;
+        thumbs.forEach(t => t.classList.remove('active'));
+        mainImages.forEach(img => img.classList.remove('active'));
+        this.classList.add('active');
+        document.querySelector(`.cp-main-image[data-index="${index}"]`)?.classList.add('active');
+      });
+    });
+    
+    // Option selection
+    const optionBtns = document.querySelectorAll('.cp-option-btn');
+    optionBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const option = this.dataset.option;
+        const value = this.dataset.value;
+        const siblings = this.parentNode.querySelectorAll('.cp-option-btn');
+        siblings.forEach(s => s.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Update label
+        const labelStrong = this.closest('.cp-option-section').querySelector('.cp-option-label strong');
+        if (labelStrong) labelStrong.textContent = value;
+      });
+    });
+    
+    // Quantity sync
+    const qtyInput = document.getElementById('featured-qty');
+    const formQty = document.getElementById('featured-form-qty');
+    if (qtyInput && formQty) {
+      qtyInput.addEventListener('change', function() {
+        formQty.value = this.value;
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Featured Product",
+  "tag": "section",
+  "class": "cp-featured-product",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product Selection"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Select Product"
+    },
+    {
+      "type": "header",
+      "content": "Section Layout"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "section_padding",
+      "label": "Padding",
+      "default": "4rem 0"
+    },
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_header",
+      "label": "Show Header",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Featured add-on"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Enhance and protect your product with our premium accessories"
+    },
+    {
+      "type": "header",
+      "content": "Product Display"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show Vendor",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badge",
+      "label": "Show Badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "BEST SELLER"
+    },
+    {
+      "type": "text",
+      "id": "urgency_text",
+      "label": "Urgency Text",
+      "default": "Selling fast! 23 people have this in their carts."
+    },
+    {
+      "type": "header",
+      "content": "Viewers Counter"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_viewers",
+      "label": "Show Viewers",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "viewer_count",
+      "label": "Viewer Count",
+      "default": "34"
+    },
+    {
+      "type": "text",
+      "id": "viewer_text",
+      "label": "Viewer Text",
+      "default": "People are viewing this right now"
+    },
+    {
+      "type": "header",
+      "content": "Buttons & Labels"
+    },
+    {
+      "type": "text",
+      "id": "quantity_label",
+      "label": "Quantity Label",
+      "default": "Quantity"
+    },
+    {
+      "type": "text",
+      "id": "add_to_cart_text",
+      "label": "Add to Cart Text",
+      "default": "Add to cart"
+    },
+    {
+      "type": "text",
+      "id": "sold_out_text",
+      "label": "Sold Out Text",
+      "default": "Sold Out"
+    },
+    {
+      "type": "text",
+      "id": "wishlist_text",
+      "label": "Wishlist Tooltip",
+      "default": "Add to wishlist"
+    },
+    {
+      "type": "text",
+      "id": "compare_text",
+      "label": "Compare Tooltip",
+      "default": "Compare"
+    },
+    {
+      "type": "header",
+      "content": "Stock Status"
+    },
+    {
+      "type": "text",
+      "id": "in_stock_text",
+      "label": "In Stock Text",
+      "default": "In Stock"
+    },
+    {
+      "type": "text",
+      "id": "out_of_stock_text",
+      "label": "Out of Stock Text",
+      "default": "Out of Stock"
+    },
+    {
+      "type": "header",
+      "content": "Action Links"
+    },
+    {
+      "type": "text",
+      "id": "ask_question_text",
+      "label": "Ask Question Text",
+      "default": "Ask a question"
+    },
+    {
+      "type": "text",
+      "id": "delivery_text",
+      "label": "Delivery Text",
+      "default": "Delivery & Return"
+    },
+    {
+      "type": "text",
+      "id": "share_text",
+      "label": "Share Text",
+      "default": "Share"
+    },
+    {
+      "type": "header",
+      "content": "Payment & Details"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show Payment Icons",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "payment_label",
+      "label": "Payment Label",
+      "default": "Guaranteed Safe Checkout"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_details",
+      "label": "Show View Details Link",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_details_text",
+      "label": "View Details Text",
+      "default": "View full details"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show Description",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "no_product_text",
+      "label": "No Product Selected Text",
+      "default": "Select a product to display"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Product"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,75 @@
+{% comment %}
+  ============================================
+  WISHLIST PAGE TEMPLATE
+  Created with page.wishlist.liquid
+  Create a page with handle 'wishlist' in Shopify Admin
+  ============================================
+{% endcomment %}
+
+{% render 'breadcrumb' %}
+
+<div class="wishlist-page">
+  <div class="container">
+    
+    <div class="wishlist-header">
+      <h1><i class="fa-solid fa-heart" style="color: #ea5455;"></i> My Wishlist</h1>
+      <p>Products you've saved for later</p>
+    </div>
+    
+    <div id="wishlist-items">
+      <!-- Wishlist items will be rendered here by JavaScript -->
+      <div class="wishlist-empty">
+        <div class="wishlist-empty-icon">
+          <i class="fa-regular fa-heart"></i>
+        </div>
+        <h3>Loading your wishlist...</h3>
+        <p>Please wait a moment</p>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Render wishlist items
+  if (typeof WishlistSystem !== 'undefined') {
+    WishlistSystem.renderWishlistPage('wishlist-items');
+  }
+});
+</script>
+
+<style>
+/* Additional wishlist page styles */
+.wishlist-page {
+  padding: 40px 0 80px;
+  min-height: 60vh;
+}
+
+.wishlist-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.wishlist-header h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #2d2d3a;
+  margin: 0 0 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.wishlist-header p {
+  color: #6c757d;
+  margin: 0;
+}
+
+@media (max-width: 767.98px) {
+  .wishlist-header h1 {
+    font-size: 1.6rem;
+  }
+}
+</style>

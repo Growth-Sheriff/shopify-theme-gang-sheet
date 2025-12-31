@@ -1,0 +1,272 @@
+{% comment %}
+  Hero 3D Section - Fully Dynamic
+  All elements customizable via Theme Editor
+{% endcomment %}
+
+<section class="cp-hero" id="hero" style="{% if section.settings.section_bg %}background: {{ section.settings.section_bg }};{% endif %}">
+  <div class="container">
+    <div class="cp-hero-grid">
+      <!-- Left: Content -->
+      <div class="cp-hero-content">
+        <h1>
+          {{ section.settings.title_line1 }}
+          <span>{{ section.settings.title_line2 }}</span>
+        </h1>
+        
+        <p class="cp-hero-subtitle">{{ section.settings.subtitle }}</p>
+
+        <!-- Stats Row -->
+        <div class="cp-hero-stats">
+          {% for block in section.blocks %}
+            {% if block.type == 'stat' %}
+              <div class="cp-hero-stat" {{ block.shopify_attributes }}>
+                <div class="cp-hero-stat-value">{{ block.settings.value }}</div>
+                <div class="cp-hero-stat-label">{{ block.settings.label }}</div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        
+        <div class="cp-hero-buttons">
+          {% if section.settings.button1_text != blank %}
+            <a href="{{ section.settings.button1_link }}" class="cp-btn cp-btn-primary">
+              <i class="{{ section.settings.button1_icon }}"></i>
+              {{ section.settings.button1_text }}
+            </a>
+          {% endif %}
+          {% if section.settings.button2_text != blank %}
+            <a href="{{ section.settings.button2_link }}" class="cp-btn cp-btn-outline">
+              {{ section.settings.button2_text }}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Right: 3D Canvas -->
+      <div class="cp-3d-wrapper">
+        <div class="cp-3d-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 19l-7-7 7-7M19 12H5"/>
+          </svg>
+          {{ section.settings.preview_label }}
+        </div>
+        
+        <!-- Color Picker Panel -->
+        <div class="cp-customizer-panel">
+          {% for block in section.blocks %}
+            {% if block.type == 'color' %}
+              <button class="cp-color-btn {% if forloop.first %}active{% endif %}" 
+                      style="background: {{ block.settings.color }};{% if block.settings.color == '#ffffff' %} border: 1px solid #eee;{% endif %}" 
+                      data-color="{{ block.settings.color }}" 
+                      title="{{ block.settings.name }}"
+                      {{ block.shopify_attributes }}></button>
+            {% endif %}
+          {% endfor %}
+        </div>
+        
+        <div class="cp-3d-container">
+          <canvas id="hero3DCanvas" class="cp-3d-canvas"></canvas>
+          
+          <button class="cp-download-btn" id="downloadBtn" title="{{ section.settings.download_btn_text }}">
+            <i class="fa-solid fa-download"></i>
+          </button>
+
+          <div class="cp-3d-controls">
+            <button class="cp-3d-control-btn" id="rotateLeftBtn" title="{{ section.settings.rotate_left_text }}">
+              <i class="fa-solid fa-rotate-left"></i>
+            </button>
+            <button class="cp-3d-control-btn" id="resetViewBtn" title="{{ section.settings.reset_view_text }}">
+              <i class="fa-solid fa-arrows-rotate"></i>
+            </button>
+            <button class="cp-3d-control-btn" id="rotateRightBtn" title="{{ section.settings.rotate_right_text }}">
+              <i class="fa-solid fa-rotate-right"></i>
+            </button>
+            <button class="cp-upload-btn" id="uploadTrigger" title="{{ section.settings.upload_btn_text }}">
+              <i class="fa-solid fa-image"></i>
+            </button>
+            <input type="file" id="logoInput" accept="image/*" style="display: none;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    window.shirtModelUrl = '{{ "shirt_baked.glb" | asset_url }}';
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "Hero 3D Section",
+  "tag": "section",
+  "class": "homepage-hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Background"
+    },
+    {
+      "type": "color_background",
+      "id": "section_bg",
+      "label": "Background",
+      "default": "transparent"
+    },
+    {
+      "type": "header",
+      "content": "Title"
+    },
+    {
+      "type": "text",
+      "id": "title_line1",
+      "label": "Title Line 1",
+      "default": "Design Custom,"
+    },
+    {
+      "type": "text",
+      "id": "title_line2",
+      "label": "Title Line 2 (Gradient)",
+      "default": "High-Quality DTF Transfers"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Production-ready & easy to use custom printing solution for Reliability and Customizability. See your design in real-time 3D."
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "button1_text",
+      "label": "Button 1 Text",
+      "default": "Start Designing"
+    },
+    {
+      "type": "url",
+      "id": "button1_link",
+      "label": "Button 1 Link"
+    },
+    {
+      "type": "text",
+      "id": "button1_icon",
+      "label": "Button 1 Icon Class",
+      "default": "fa-solid fa-cart-plus"
+    },
+    {
+      "type": "text",
+      "id": "button2_text",
+      "label": "Button 2 Text",
+      "default": "View Products"
+    },
+    {
+      "type": "url",
+      "id": "button2_link",
+      "label": "Button 2 Link"
+    },
+    {
+      "type": "header",
+      "content": "3D Preview"
+    },
+    {
+      "type": "text",
+      "id": "preview_label",
+      "label": "Preview Label",
+      "default": "3D Preview"
+    },
+    {
+      "type": "header",
+      "content": "3D Control Buttons"
+    },
+    {
+      "type": "text",
+      "id": "download_btn_text",
+      "label": "Download Button Tooltip",
+      "default": "Download Design"
+    },
+    {
+      "type": "text",
+      "id": "rotate_left_text",
+      "label": "Rotate Left Tooltip",
+      "default": "Rotate Left"
+    },
+    {
+      "type": "text",
+      "id": "reset_view_text",
+      "label": "Reset View Tooltip",
+      "default": "Reset View"
+    },
+    {
+      "type": "text",
+      "id": "rotate_right_text",
+      "label": "Rotate Right Tooltip",
+      "default": "Rotate Right"
+    },
+    {
+      "type": "text",
+      "id": "upload_btn_text",
+      "label": "Upload Button Tooltip",
+      "default": "Upload Logo"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Statistic",
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "10M+"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "End Users"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "name": "T-Shirt Color",
+      "settings": [
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color",
+          "default": "#7dd3fc"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Color Name",
+          "default": "Light Blue"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero 3D Section",
+      "blocks": [
+        { "type": "stat", "settings": { "value": "10M+", "label": "End Users" } },
+        { "type": "stat", "settings": { "value": "20K+", "label": "Trust CloudyPrints" } },
+        { "type": "stat", "settings": { "value": "5,000+", "label": "Resolved Tickets" } },
+        { "type": "stat", "settings": { "value": "600+", "label": "5 ⭐ Reviews" } },
+        { "type": "color", "settings": { "color": "#7dd3fc", "name": "Light Blue" } },
+        { "type": "color", "settings": { "color": "#3b82f6", "name": "Blue" } },
+        { "type": "color", "settings": { "color": "#ffffff", "name": "White" } },
+        { "type": "color", "settings": { "color": "#1a1a1a", "name": "Black" } },
+        { "type": "color", "settings": { "color": "#ef4444", "name": "Red" } },
+        { "type": "color", "settings": { "color": "#22c55e", "name": "Green" } },
+        { "type": "color", "settings": { "color": "#f59e0b", "name": "Orange" } },
+        { "type": "color", "settings": { "color": "#ec4899", "name": "Pink" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

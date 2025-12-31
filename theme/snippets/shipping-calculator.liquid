@@ -1,0 +1,430 @@
+{% comment %}
+  ============================================
+  SHIPPING CALCULATOR SNIPPET
+  Include in cart page/drawer
+  Usage: {% render 'shipping-calculator' %}
+  ============================================
+{% endcomment %}
+
+<style>
+/* ===== SHIPPING CALCULATOR STYLES ===== */
+.shipping-calculator {
+  background: #f8f9fc;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.shipping-calc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.shipping-calc-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2d2d3a;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.shipping-calc-title i {
+  color: #7367f0;
+}
+
+.shipping-calc-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #7367f0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+}
+
+.shipping-calc-toggle:hover {
+  text-decoration: underline;
+}
+
+.shipping-calc-body {
+  display: none;
+}
+
+.shipping-calc-body.active {
+  display: block;
+}
+
+.shipping-calc-form {
+  display: grid;
+  gap: 12px;
+}
+
+.shipping-calc-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.shipping-calc-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.shipping-calc-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #5d596c;
+}
+
+.shipping-calc-input,
+.shipping-calc-select {
+  padding: 12px 14px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: #2d2d3a;
+  background: #fff;
+  transition: all 0.3s ease;
+}
+
+.shipping-calc-input:focus,
+.shipping-calc-select:focus {
+  outline: none;
+  border-color: #7367f0;
+  box-shadow: 0 0 0 3px rgba(115, 103, 240, 0.1);
+}
+
+.shipping-calc-btn {
+  padding: 14px;
+  background: linear-gradient(135deg, #7367f0, #9e95f5);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.shipping-calc-btn:hover {
+  box-shadow: 0 4px 15px rgba(115, 103, 240, 0.35);
+}
+
+.shipping-calc-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Results */
+.shipping-calc-results {
+  margin-top: 20px;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 20px;
+}
+
+.shipping-calc-message {
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.shipping-calc-message.error {
+  background: rgba(234, 84, 85, 0.1);
+  color: #ea5455;
+}
+
+.shipping-calc-message.info {
+  background: rgba(115, 103, 240, 0.1);
+  color: #7367f0;
+}
+
+.shipping-rate-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.shipping-rate-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.shipping-rate-item:hover,
+.shipping-rate-item.selected {
+  border-color: #7367f0;
+  background: rgba(115, 103, 240, 0.03);
+}
+
+.shipping-rate-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.shipping-rate-radio {
+  width: 18px;
+  height: 18px;
+  accent-color: #7367f0;
+}
+
+.shipping-rate-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #2d2d3a;
+}
+
+.shipping-rate-description {
+  font-size: 0.8rem;
+  color: #6c757d;
+  margin-top: 2px;
+}
+
+.shipping-rate-price {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #7367f0;
+}
+
+.shipping-rate-price.free {
+  color: #28c76f;
+}
+
+/* Loading */
+.shipping-calc-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+  color: #6c757d;
+}
+
+.shipping-calc-loading i {
+  animation: spin 0.8s linear infinite;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 767.98px) {
+  .shipping-calculator {
+    padding: 20px;
+  }
+  
+  .shipping-calc-row {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<div class="shipping-calculator">
+  <div class="shipping-calc-header">
+    <h4 class="shipping-calc-title">
+      <i class="fa-solid fa-truck"></i>
+      Estimate Shipping
+    </h4>
+    <button type="button" class="shipping-calc-toggle" onclick="toggleShippingCalculator()">
+      <span id="shipping-calc-toggle-text">Calculate</span>
+      <i class="fa-solid fa-chevron-down" id="shipping-calc-toggle-icon"></i>
+    </button>
+  </div>
+  
+  <div class="shipping-calc-body" id="shipping-calc-body">
+    <form class="shipping-calc-form" id="shipping-calc-form" onsubmit="calculateShipping(event)">
+      <div class="shipping-calc-group">
+        <label class="shipping-calc-label">Country</label>
+        <select class="shipping-calc-select" id="shipping-country" required>
+          <option value="">Select Country</option>
+          {%- for country in shop.enabled_countries -%}
+            <option value="{{ country.iso_code }}" {% if country.iso_code == 'US' %}selected{% endif %}>
+              {{ country.name }}
+            </option>
+          {%- endfor -%}
+        </select>
+      </div>
+      
+      <div class="shipping-calc-row">
+        <div class="shipping-calc-group">
+          <label class="shipping-calc-label">Province / State</label>
+          <select class="shipping-calc-select" id="shipping-province">
+            <option value="">Select Province</option>
+          </select>
+        </div>
+        
+        <div class="shipping-calc-group">
+          <label class="shipping-calc-label">Zip / Postal Code</label>
+          <input type="text" class="shipping-calc-input" id="shipping-zip" placeholder="Enter zip code" required>
+        </div>
+      </div>
+      
+      <button type="submit" class="shipping-calc-btn" id="shipping-calc-btn">
+        <i class="fa-solid fa-calculator"></i>
+        Calculate Shipping
+      </button>
+    </form>
+    
+    <div class="shipping-calc-results" id="shipping-calc-results" style="display: none;">
+      <!-- Results will be inserted here -->
+    </div>
+  </div>
+</div>
+
+<script>
+// Country provinces data
+const countryProvinces = {{ shop.enabled_countries | json }};
+
+function toggleShippingCalculator() {
+  const body = document.getElementById('shipping-calc-body');
+  const toggleText = document.getElementById('shipping-calc-toggle-text');
+  const toggleIcon = document.getElementById('shipping-calc-toggle-icon');
+  
+  if (body.classList.contains('active')) {
+    body.classList.remove('active');
+    toggleText.textContent = 'Calculate';
+    toggleIcon.style.transform = 'rotate(0deg)';
+  } else {
+    body.classList.add('active');
+    toggleText.textContent = 'Hide';
+    toggleIcon.style.transform = 'rotate(180deg)';
+  }
+}
+
+// Update provinces when country changes
+document.getElementById('shipping-country').addEventListener('change', function() {
+  const countryCode = this.value;
+  const provinceSelect = document.getElementById('shipping-province');
+  
+  provinceSelect.innerHTML = '<option value="">Select Province</option>';
+  
+  const country = countryProvinces.find(c => c.iso_code === countryCode);
+  if (country && country.provinces && country.provinces.length > 0) {
+    country.provinces.forEach(province => {
+      const option = document.createElement('option');
+      option.value = province.code;
+      option.textContent = province.name;
+      provinceSelect.appendChild(option);
+    });
+  }
+});
+
+// Calculate shipping rates
+async function calculateShipping(e) {
+  e.preventDefault();
+  
+  const btn = document.getElementById('shipping-calc-btn');
+  const results = document.getElementById('shipping-calc-results');
+  
+  const country = document.getElementById('shipping-country').value;
+  const province = document.getElementById('shipping-province').value;
+  const zip = document.getElementById('shipping-zip').value;
+  
+  if (!country || !zip) {
+    results.innerHTML = `
+      <div class="shipping-calc-message error">
+        <i class="fa-solid fa-exclamation-circle"></i>
+        Please fill in all required fields
+      </div>
+    `;
+    results.style.display = 'block';
+    return;
+  }
+  
+  // Show loading
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Calculating...';
+  results.innerHTML = `
+    <div class="shipping-calc-loading">
+      <i class="fa-solid fa-spinner"></i>
+      Fetching shipping rates...
+    </div>
+  `;
+  results.style.display = 'block';
+  
+  try {
+    // Prepare address
+    const address = {
+      country: country,
+      province: province,
+      zip: zip
+    };
+    
+    // Get shipping rates
+    const response = await fetch('/cart/shipping_rates.json?' + new URLSearchParams({
+      'shipping_address[country]': country,
+      'shipping_address[province]': province,
+      'shipping_address[zip]': zip
+    }));
+    
+    const data = await response.json();
+    
+    if (data.shipping_rates && data.shipping_rates.length > 0) {
+      let html = '<div class="shipping-rate-list">';
+      data.shipping_rates.forEach((rate, index) => {
+        const isFree = parseFloat(rate.price) === 0;
+        html += `
+          <label class="shipping-rate-item ${index === 0 ? 'selected' : ''}">
+            <div class="shipping-rate-info">
+              <input type="radio" name="shipping_rate" class="shipping-rate-radio" ${index === 0 ? 'checked' : ''}>
+              <div>
+                <div class="shipping-rate-name">${rate.name}</div>
+                ${rate.delivery_days ? `<div class="shipping-rate-description">${rate.delivery_days} business days</div>` : ''}
+              </div>
+            </div>
+            <div class="shipping-rate-price ${isFree ? 'free' : ''}">
+              ${isFree ? 'FREE' : '$' + rate.price}
+            </div>
+          </label>
+        `;
+      });
+      html += '</div>';
+      results.innerHTML = html;
+    } else {
+      results.innerHTML = `
+        <div class="shipping-calc-message info">
+          <i class="fa-solid fa-info-circle"></i>
+          No shipping rates available for this address
+        </div>
+      `;
+    }
+  } catch (error) {
+    console.error('Shipping calculation error:', error);
+    results.innerHTML = `
+      <div class="shipping-calc-message error">
+        <i class="fa-solid fa-exclamation-circle"></i>
+        Unable to calculate shipping rates. Please try again.
+      </div>
+    `;
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-calculator"></i> Calculate Shipping';
+  }
+}
+
+// Initialize country on load
+document.addEventListener('DOMContentLoaded', function() {
+  const countrySelect = document.getElementById('shipping-country');
+  if (countrySelect && countrySelect.value) {
+    countrySelect.dispatchEvent(new Event('change'));
+  }
+});
+</script>

@@ -1,0 +1,521 @@
+{% comment %}
+  ============================================
+  CONTACT FORM SECTION
+  Shopify 2.0 Compatible
+  ============================================
+{% endcomment %}
+
+<style>
+/* ===== CONTACT SECTION STYLES ===== */
+.contact-section {
+  padding: 60px 0 80px;
+  background: linear-gradient(180deg, #f8f9fc 0%, #fff 100%);
+}
+
+.contact-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.contact-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2d2d3a;
+  margin-bottom: 12px;
+}
+
+.contact-subtitle {
+  font-size: 1.1rem;
+  color: #6c757d;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Contact Grid */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: start;
+}
+
+/* Info Column */
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.info-card {
+  display: flex;
+  gap: 20px;
+  padding: 24px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+  border: 1px solid rgba(115, 103, 240, 0.08);
+  transition: all 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateX(6px);
+  box-shadow: 0 8px 30px rgba(115, 103, 240, 0.1);
+}
+
+.info-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.info-icon.email { background: rgba(115, 103, 240, 0.1); color: #7367f0; }
+.info-icon.phone { background: rgba(40, 199, 111, 0.1); color: #28c76f; }
+.info-icon.location { background: rgba(255, 159, 67, 0.1); color: #ff9f43; }
+.info-icon.hours { background: rgba(0, 207, 232, 0.1); color: #00cfe8; }
+
+.info-content h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2d2d3a;
+  margin: 0 0 6px 0;
+}
+
+.info-content p {
+  font-size: 0.95rem;
+  color: #6c757d;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.info-content a {
+  color: #7367f0;
+  text-decoration: none;
+}
+
+.info-content a:hover {
+  text-decoration: underline;
+}
+
+/* Social Links */
+.contact-social {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.social-link {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid rgba(115, 103, 240, 0.15);
+  border-radius: 12px;
+  color: #5d596c;
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  background: #7367f0;
+  color: #fff;
+  border-color: #7367f0;
+  transform: translateY(-3px);
+}
+
+/* Form Column */
+.contact-form-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 10px 50px rgba(115, 103, 240, 0.1);
+  border: 1px solid rgba(115, 103, 240, 0.08);
+}
+
+.contact-form-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #2d2d3a;
+  margin: 0 0 24px 0;
+}
+
+.contact-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.contact-form .form-group {
+  margin-bottom: 20px;
+}
+
+.contact-form .form-group.full {
+  grid-column: 1 / -1;
+}
+
+.contact-form label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #5d596c;
+  margin-bottom: 8px;
+}
+
+.contact-form label span {
+  color: #ea5455;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid rgba(115, 103, 240, 0.2);
+  border-radius: 12px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  background: #fff;
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: #7367f0;
+  box-shadow: 0 0 0 3px rgba(115, 103, 240, 0.1);
+}
+
+.contact-form textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.contact-submit {
+  width: 100%;
+  padding: 16px 32px;
+  background: linear-gradient(135deg, #7367f0, #9e95f5);
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.contact-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(115, 103, 240, 0.35);
+}
+
+.contact-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Success/Error Messages */
+.form-message {
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  display: none;
+}
+
+.form-message.success {
+  background: rgba(40, 199, 111, 0.1);
+  border: 1px solid rgba(40, 199, 111, 0.3);
+  color: #28c76f;
+  display: block;
+}
+
+.form-message.error {
+  background: rgba(234, 84, 85, 0.1);
+  border: 1px solid rgba(234, 84, 85, 0.3);
+  color: #ea5455;
+  display: block;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 991.98px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .contact-info {
+    order: 2;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .contact-section {
+    padding: 40px 0 60px;
+  }
+  
+  .contact-title {
+    font-size: 1.8rem;
+  }
+  
+  .contact-form-card {
+    padding: 24px;
+  }
+  
+  .contact-form .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .info-card {
+    padding: 20px;
+  }
+}
+</style>
+
+<section class="contact-section" id="contact-{{ section.id }}">
+  <div class="container">
+    
+    <!-- Header -->
+    <div class="contact-header">
+      <h2 class="contact-title">{{ section.settings.title | default: 'Get In Touch' }}</h2>
+      <p class="contact-subtitle">{{ section.settings.subtitle | default: 'Have a question? We would love to hear from you.' }}</p>
+    </div>
+    
+    <div class="contact-grid">
+      
+      <!-- Info Column -->
+      <div class="contact-info">
+        
+        {%- if section.settings.email != blank -%}
+          <div class="info-card">
+            <div class="info-icon email">
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+            <div class="info-content">
+              <h3>Email Us</h3>
+              <p><a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a></p>
+            </div>
+          </div>
+        {%- endif -%}
+        
+        {%- if section.settings.phone != blank -%}
+          <div class="info-card">
+            <div class="info-icon phone">
+              <i class="fa-solid fa-phone"></i>
+            </div>
+            <div class="info-content">
+              <h3>Call Us</h3>
+              <p><a href="tel:{{ section.settings.phone | remove: ' ' | remove: '-' }}">{{ section.settings.phone }}</a></p>
+            </div>
+          </div>
+        {%- endif -%}
+        
+        {%- if section.settings.address != blank -%}
+          <div class="info-card">
+            <div class="info-icon location">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <div class="info-content">
+              <h3>Visit Us</h3>
+              <p>{{ section.settings.address }}</p>
+            </div>
+          </div>
+        {%- endif -%}
+        
+        {%- if section.settings.hours != blank -%}
+          <div class="info-card">
+            <div class="info-icon hours">
+              <i class="fa-solid fa-clock"></i>
+            </div>
+            <div class="info-content">
+              <h3>Working Hours</h3>
+              <p>{{ section.settings.hours }}</p>
+            </div>
+          </div>
+        {%- endif -%}
+        
+        <!-- Social Links -->
+        <div class="contact-social">
+          {%- if section.settings.facebook != blank -%}
+            <a href="{{ section.settings.facebook }}" class="social-link" target="_blank" rel="noopener" aria-label="Facebook">
+              <i class="fa-brands fa-facebook-f"></i>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.instagram != blank -%}
+            <a href="{{ section.settings.instagram }}" class="social-link" target="_blank" rel="noopener" aria-label="Instagram">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.twitter != blank -%}
+            <a href="{{ section.settings.twitter }}" class="social-link" target="_blank" rel="noopener" aria-label="Twitter">
+              <i class="fa-brands fa-x-twitter"></i>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.youtube != blank -%}
+            <a href="{{ section.settings.youtube }}" class="social-link" target="_blank" rel="noopener" aria-label="YouTube">
+              <i class="fa-brands fa-youtube"></i>
+            </a>
+          {%- endif -%}
+        </div>
+        
+      </div>
+      
+      <!-- Form Column -->
+      <div class="contact-form-card">
+        <h3 class="contact-form-title">{{ section.settings.form_title | default: 'Send us a Message' }}</h3>
+        
+        {%- form 'contact', id: 'contactForm', class: 'contact-form' -%}
+          {%- if form.posted_successfully? -%}
+            <div class="form-message success">
+              <i class="fa-solid fa-check-circle"></i>
+              Thank you for your message! We'll get back to you soon.
+            </div>
+          {%- endif -%}
+          
+          {%- if form.errors -%}
+            <div class="form-message error">
+              <i class="fa-solid fa-exclamation-circle"></i>
+              {{ form.errors | default_errors }}
+            </div>
+          {%- endif -%}
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="contact-name">Name <span>*</span></label>
+              <input type="text" name="contact[name]" id="contact-name" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label for="contact-email">Email <span>*</span></label>
+              <input type="email" name="contact[email]" id="contact-email" placeholder="you@example.com" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="contact-phone">Phone (optional)</label>
+            <input type="tel" name="contact[phone]" id="contact-phone" placeholder="Your phone number">
+          </div>
+          
+          <div class="form-group">
+            <label for="contact-subject">Subject <span>*</span></label>
+            <select name="contact[subject]" id="contact-subject" required>
+              <option value="">Select a subject</option>
+              <option value="General Inquiry">General Inquiry</option>
+              <option value="Order Support">Order Support</option>
+              <option value="Product Question">Product Question</option>
+              <option value="Wholesale Inquiry">Wholesale Inquiry</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="contact-message">Message <span>*</span></label>
+            <textarea name="contact[body]" id="contact-message" placeholder="How can we help you?" required></textarea>
+          </div>
+          
+          <button type="submit" class="contact-submit">
+            <i class="fa-solid fa-paper-plane"></i>
+            Send Message
+          </button>
+        {%- endform -%}
+      </div>
+      
+    </div>
+    
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact Form",
+  "tag": "section",
+  "class": "section-contact",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Get In Touch"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Have a question? We'd love to hear from you."
+    },
+    {
+      "type": "text",
+      "id": "form_title",
+      "label": "Form Title",
+      "default": "Send us a Message"
+    },
+    {
+      "type": "header",
+      "content": "Contact Information"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email",
+      "default": "hello@yourstore.com"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone",
+      "default": "+1 (555) 123-4567"
+    },
+    {
+      "type": "textarea",
+      "id": "address",
+      "label": "Address",
+      "default": "123 Main Street\nNew York, NY 10001"
+    },
+    {
+      "type": "text",
+      "id": "hours",
+      "label": "Working Hours",
+      "default": "Mon-Fri: 9AM - 6PM EST"
+    },
+    {
+      "type": "header",
+      "content": "Social Links"
+    },
+    {
+      "type": "url",
+      "id": "facebook",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "url",
+      "id": "instagram",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "twitter",
+      "label": "Twitter/X URL"
+    },
+    {
+      "type": "url",
+      "id": "youtube",
+      "label": "YouTube URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Form"
+    }
+  ]
+}
+{% endschema %}

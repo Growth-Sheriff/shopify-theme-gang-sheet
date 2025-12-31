@@ -1,0 +1,655 @@
+{% comment %}
+  Customizer Widget - Gang Sheet Mode (MOD 2)
+  Usage: {% render 'customizer-widget-gangsheet', product: product %}
+
+  Customizer App ile entegre Gang Sheet Builder
+{% endcomment %}
+
+{% assign app_url = 'http://5.78.136.98' %}
+
+<div
+  id="customizer-gangsheet-{{ product.id }}"
+  class="gs-widget-container"
+  data-product-id="{{ product.id }}"
+  data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+  data-app-url="{{ app_url }}"
+>
+  <div class="gs-grid">
+    <!-- Sol: Sheet Editor -->
+    <div class="gs-editor-section">
+      <div class="gs-toolbar">
+        <button type="button" class="gs-tool active" data-tool="select" title="Seç">
+          <i class="ti ti-pointer"></i>
+        </button>
+        <button type="button" class="gs-tool" data-tool="move" title="Taşı">
+          <i class="ti ti-arrows-move"></i>
+        </button>
+        <button type="button" class="gs-tool" data-tool="rotate" title="Döndür">
+          <i class="ti ti-rotate"></i>
+        </button>
+        <button type="button" class="gs-tool" data-tool="delete" title="Sil">
+          <i class="ti ti-trash"></i>
+        </button>
+        <span class="gs-tool-divider"></span>
+        <button type="button" class="gs-tool" data-action="grid" title="Grid">
+          <i class="ti ti-grid-dots"></i>
+        </button>
+        <button type="button" class="gs-tool" data-action="auto-nest" title="Otomatik Yerleştir">
+          <i class="ti ti-layout-distribute-vertical"></i>
+        </button>
+      </div>
+
+      <div class="gs-canvas-wrapper">
+        <canvas id="gs-canvas-{{ product.id }}" class="gs-canvas"></canvas>
+        <div class="gs-size-badge" id="gs-size-badge-{{ product.id }}">22" x 12"</div>
+      </div>
+
+      <div class="gs-usage-bar">
+        <div class="gs-usage-fill" id="gs-usage-fill-{{ product.id }}" style="width: 0%"></div>
+      </div>
+      <div class="gs-usage-info">
+        <span>Kullanım: <strong id="gs-usage-pct-{{ product.id }}">0%</strong></span>
+        <span>Boş Alan: <strong id="gs-usage-free-{{ product.id }}">264 sq in</strong></span>
+      </div>
+    </div>
+
+    <!-- Sağ: Seçenekler -->
+    <div class="gs-options-section">
+      <h3 class="gs-title">Gang Sheet Builder</h3>
+
+      <!-- Boyut Seçimi -->
+      <div class="gs-option-group">
+        <p class="gs-label">Sheet Boyutu:</p>
+        <div class="gs-size-options">
+          <button type="button" class="gs-size-btn active" data-width="22" data-height="12" data-price="12.99">
+            <span class="gs-size-name">Small</span>
+            <span class="gs-size-dim">22" x 12"</span>
+            <span class="gs-size-price">$12.99</span>
+          </button>
+          <button type="button" class="gs-size-btn" data-width="22" data-height="24" data-price="24.99">
+            <span class="gs-size-name">Medium</span>
+            <span class="gs-size-dim">22" x 24"</span>
+            <span class="gs-size-price">$24.99</span>
+          </button>
+          <button type="button" class="gs-size-btn" data-width="22" data-height="40" data-price="39.99">
+            <span class="gs-size-name">Large</span>
+            <span class="gs-size-dim">22" x 40"</span>
+            <span class="gs-size-price">$39.99</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Upload -->
+      <div class="gs-option-group">
+        <p class="gs-label">Görsellerinizi Ekleyin:</p>
+        <div class="gs-upload-area" id="gs-upload-{{ product.id }}">
+          <input type="file" multiple accept="image/*" class="gs-file-input">
+          <div class="gs-upload-content">
+            <i class="ti ti-cloud-upload" style="font-size: 2rem; color: #9ca3af;"></i>
+            <p>Görselleri sürükleyin veya <span>seçin</span></p>
+            <small>Çoklu dosya yüklenebilir</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Görsel Listesi -->
+      <div class="gs-option-group">
+        <p class="gs-label">Eklenen Görseller: <span id="gs-img-count-{{ product.id }}">0</span></p>
+        <div class="gs-image-list" id="gs-images-{{ product.id }}"></div>
+      </div>
+
+      <!-- Precut -->
+      <div class="gs-option-group">
+        <label class="gs-checkbox">
+          <input type="checkbox" id="gs-precut-{{ product.id }}">
+          <span class="gs-checkmark"></span>
+          <span>Precut İstiyorum (+$0.30/adet)</span>
+        </label>
+      </div>
+
+      <!-- Fiyat -->
+      <div class="gs-pricing">
+        <div class="gs-price-row">
+          <span>Sheet:</span>
+          <span id="gs-base-price-{{ product.id }}">$12.99</span>
+        </div>
+        <div class="gs-price-row gs-precut-row" id="gs-precut-row-{{ product.id }}" style="display: none;">
+          <span>Precut:</span>
+          <span id="gs-precut-price-{{ product.id }}">$0.00</span>
+        </div>
+        <div class="gs-price-total">
+          <span>Toplam:</span>
+          <span id="gs-total-price-{{ product.id }}">$12.99</span>
+        </div>
+      </div>
+
+      <!-- Sepete Ekle -->
+      <button type="button" id="gs-add-cart-{{ product.id }}" class="gs-add-to-cart-btn">
+        <i class="ti ti-shopping-cart"></i>
+        <span>Sepete Ekle</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .gs-widget-container {
+    --gs-primary: #7367f0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  .gs-grid {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 24px;
+  }
+
+  @media (max-width: 900px) {
+    .gs-grid { grid-template-columns: 1fr; }
+  }
+
+  .gs-editor-section {
+    background: #f8f9fa;
+    border-radius: 16px;
+    padding: 16px;
+  }
+
+  .gs-toolbar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  .gs-tool {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-size: 18px;
+    transition: all 0.2s;
+  }
+
+  .gs-tool:hover { background: #f0f0f0; color: #333; }
+  .gs-tool.active { background: var(--gs-primary); color: white; }
+
+  .gs-tool-divider {
+    width: 1px;
+    background: #e5e7eb;
+    margin: 0 6px;
+  }
+
+  .gs-canvas-wrapper {
+    position: relative;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+  .gs-canvas {
+    width: 100%;
+    display: block;
+  }
+
+  .gs-size-badge {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 4px 10px;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .gs-usage-bar {
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 12px;
+  }
+
+  .gs-usage-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #22c55e, #84cc16);
+    transition: width 0.3s;
+  }
+
+  .gs-usage-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-size: 13px;
+    color: #666;
+  }
+
+  .gs-options-section {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  .gs-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 20px;
+    color: #1a1a1a;
+  }
+
+  .gs-option-group { margin-bottom: 20px; }
+
+  .gs-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 10px;
+  }
+
+  .gs-size-options { display: flex; flex-direction: column; gap: 8px; }
+
+  .gs-size-btn {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .gs-size-btn:hover { border-color: var(--gs-primary); }
+  .gs-size-btn.active { border-color: var(--gs-primary); background: #f8f7ff; }
+
+  .gs-size-name { flex: 1; font-weight: 600; color: #333; }
+  .gs-size-dim { font-size: 13px; color: #666; margin-right: 12px; }
+  .gs-size-price { font-weight: 700; color: var(--gs-primary); }
+
+  .gs-upload-area {
+    border: 2px dashed #d1d5db;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s;
+  }
+
+  .gs-upload-area:hover {
+    border-color: var(--gs-primary);
+    background: #f8f7ff;
+  }
+
+  .gs-file-input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .gs-upload-content { pointer-events: none; color: #6b7280; }
+  .gs-upload-content span { color: var(--gs-primary); font-weight: 600; }
+
+  .gs-image-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .gs-image-item {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  .gs-image-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .gs-image-item .gs-img-remove {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 16px;
+    height: 16px;
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 10px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .gs-image-item:hover .gs-img-remove { opacity: 1; }
+
+  .gs-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+
+  .gs-checkbox input { display: none; }
+
+  .gs-checkmark {
+    width: 22px;
+    height: 22px;
+    border: 2px solid #d1d5db;
+    border-radius: 6px;
+    position: relative;
+    transition: all 0.2s;
+  }
+
+  .gs-checkbox input:checked + .gs-checkmark {
+    background: var(--gs-primary);
+    border-color: var(--gs-primary);
+  }
+
+  .gs-checkbox input:checked + .gs-checkmark::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 14px;
+  }
+
+  .gs-pricing {
+    margin: 20px 0;
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 12px;
+  }
+
+  .gs-price-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #666;
+  }
+
+  .gs-price-total {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid #e5e7eb;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gs-primary);
+  }
+
+  .gs-add-to-cart-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--gs-primary) 0%, #9c27b0 100%);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(115, 103, 240, 0.4);
+  }
+
+  .gs-add-to-cart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(115, 103, 240, 0.5);
+  }
+</style>
+
+<script>
+(function() {
+  const productId = '{{ product.id }}';
+  const variantId = '{{ product.selected_or_first_available_variant.id }}';
+
+  let images = [];
+  let selectedSize = { width: 22, height: 12, price: 12.99 };
+  let precut = false;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    setupCanvas();
+    setupEvents();
+  });
+
+  function setupCanvas() {
+    const canvas = document.getElementById('gs-canvas-' + productId);
+    const wrapper = canvas.parentElement;
+
+    const ratio = selectedSize.height / selectedSize.width;
+    canvas.width = wrapper.clientWidth;
+    canvas.height = canvas.width * ratio;
+
+    drawSheet();
+  }
+
+  function drawSheet() {
+    const canvas = document.getElementById('gs-canvas-' + productId);
+    const ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Grid
+    ctx.strokeStyle = '#f0f0f0';
+    ctx.lineWidth = 1;
+    const gridSize = canvas.width / selectedSize.width;
+
+    for (let x = 0; x <= canvas.width; x += gridSize) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, canvas.height);
+      ctx.stroke();
+    }
+
+    for (let y = 0; y <= canvas.height; y += gridSize) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(canvas.width, y);
+      ctx.stroke();
+    }
+
+    // Images
+    const scale = canvas.width / selectedSize.width;
+    images.forEach(function(img) {
+      ctx.drawImage(img.element, img.x * scale, img.y * scale, img.width * scale, img.height * scale);
+    });
+
+    updateUsage();
+  }
+
+  function updateUsage() {
+    const totalArea = selectedSize.width * selectedSize.height;
+    const usedArea = images.reduce(function(sum, img) { return sum + (img.width * img.height); }, 0);
+    const percent = Math.round((usedArea / totalArea) * 100);
+
+    document.getElementById('gs-usage-fill-' + productId).style.width = percent + '%';
+    document.getElementById('gs-usage-pct-' + productId).textContent = percent + '%';
+    document.getElementById('gs-usage-free-' + productId).textContent = (totalArea - usedArea).toFixed(0) + ' sq in';
+
+    updatePrice();
+  }
+
+  function updatePrice() {
+    const basePrice = selectedSize.price;
+    const precutPrice = precut ? images.length * 0.30 : 0;
+    const total = basePrice + precutPrice;
+
+    document.getElementById('gs-base-price-' + productId).textContent = '$' + basePrice.toFixed(2);
+    document.getElementById('gs-precut-price-' + productId).textContent = '$' + precutPrice.toFixed(2);
+    document.getElementById('gs-precut-row-' + productId).style.display = precut ? 'flex' : 'none';
+    document.getElementById('gs-total-price-' + productId).textContent = '$' + total.toFixed(2);
+  }
+
+  function setupEvents() {
+    // Size selection
+    document.querySelectorAll('#customizer-gangsheet-' + productId + ' .gs-size-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('#customizer-gangsheet-' + productId + ' .gs-size-btn').forEach(function(b) {
+          b.classList.remove('active');
+        });
+        this.classList.add('active');
+
+        selectedSize = {
+          width: parseFloat(this.dataset.width),
+          height: parseFloat(this.dataset.height),
+          price: parseFloat(this.dataset.price)
+        };
+
+        document.getElementById('gs-size-badge-' + productId).textContent =
+          selectedSize.width + '" x ' + selectedSize.height + '"';
+
+        setupCanvas();
+      });
+    });
+
+    // File upload
+    const fileInput = document.querySelector('#gs-upload-' + productId + ' .gs-file-input');
+    if (fileInput) {
+      fileInput.addEventListener('change', handleFiles);
+    }
+
+    // Precut
+    document.getElementById('gs-precut-' + productId)?.addEventListener('change', function() {
+      precut = this.checked;
+      updatePrice();
+    });
+
+    // Tool buttons
+    document.querySelectorAll('#customizer-gangsheet-' + productId + ' .gs-tool[data-tool]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('#customizer-gangsheet-' + productId + ' .gs-tool[data-tool]').forEach(function(b) {
+          b.classList.remove('active');
+        });
+        this.classList.add('active');
+      });
+    });
+
+    // Add to cart
+    document.getElementById('gs-add-cart-' + productId)?.addEventListener('click', addToCart);
+  }
+
+  function handleFiles(e) {
+    Array.from(e.target.files).forEach(function(file) {
+      if (!file.type.startsWith('image/')) return;
+
+      const reader = new FileReader();
+      reader.onload = function(ev) {
+        const img = new Image();
+        img.onload = function() {
+          const imgData = {
+            element: img,
+            x: Math.random() * (selectedSize.width - 2),
+            y: Math.random() * (selectedSize.height - 2),
+            width: 2,
+            height: 2
+          };
+
+          images.push(imgData);
+          drawSheet();
+          updateImageList();
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function updateImageList() {
+    const listEl = document.getElementById('gs-images-' + productId);
+    document.getElementById('gs-img-count-' + productId).textContent = images.length;
+
+    listEl.innerHTML = images.map(function(img, i) {
+      return '<div class="gs-image-item" data-index="' + i + '">' +
+        '<img src="' + img.element.src + '">' +
+        '<button type="button" class="gs-img-remove" data-index="' + i + '">×</button>' +
+        '</div>';
+    }).join('');
+
+    listEl.querySelectorAll('.gs-img-remove').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        images.splice(parseInt(this.dataset.index), 1);
+        drawSheet();
+        updateImageList();
+      });
+    });
+  }
+
+  async function addToCart() {
+    const btn = document.getElementById('gs-add-cart-' + productId);
+    const originalHtml = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="ti ti-loader"></i> Ekleniyor...';
+
+    try {
+      const designData = {
+        sheetSize: selectedSize,
+        imageCount: images.length,
+        precut: precut
+      };
+
+      const response = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: [{
+            id: variantId,
+            quantity: 1,
+            properties: {
+              '_gangsheet_data': JSON.stringify(designData),
+              '_sheet_size': selectedSize.width + 'x' + selectedSize.height,
+              '_image_count': images.length.toString(),
+              '_precut': precut ? 'Yes' : 'No'
+            }
+          }]
+        })
+      });
+
+      if (response.ok) {
+        btn.innerHTML = '<i class="ti ti-check"></i> Eklendi!';
+        btn.style.background = '#22c55e';
+        setTimeout(function() {
+          btn.innerHTML = originalHtml;
+          btn.style.background = '';
+          btn.disabled = false;
+        }, 2000);
+      }
+    } catch (error) {
+      console.error('Cart error:', error);
+      btn.innerHTML = 'Hata!';
+      setTimeout(function() {
+        btn.innerHTML = originalHtml;
+        btn.disabled = false;
+      }, 2000);
+    }
+  }
+})();
+</script>
+
