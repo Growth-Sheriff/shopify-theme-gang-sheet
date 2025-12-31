@@ -1789,15 +1789,24 @@
       margin-bottom: 0.5rem !important;
     }
     
-    /* ═══ MOBILE RATING - Clean & Minimal ═══ */
+    /* ═══ MOBILE RATING - Glass Morphism Style ═══ */
     .rating-section {
-      background: transparent !important;
-      border: none !important;
-      box-shadow: none !important;
-      padding: 0 !important;
+      background: rgba(255, 255, 255, 0.7) !important;
+      backdrop-filter: blur(10px) !important;
+      -webkit-backdrop-filter: blur(10px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.5) !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+      padding: 0.625rem 0.875rem !important;
       margin-bottom: 0.75rem !important;
-      justify-content: flex-start !important;
+      justify-content: center !important;
       gap: 0.5rem !important;
+      border-radius: 12px !important;
+      flex-wrap: nowrap !important;
+    }
+    
+    .rating-section .rating-stars {
+      display: flex !important;
+      gap: 2px !important;
     }
     
     .rating-section .rating-stars i {
@@ -1813,20 +1822,21 @@
       font-size: 0.8125rem !important;
       width: auto !important;
       text-align: left !important;
-      color: #86868B !important;
+      color: #6e6b7b !important;
     }
     
     .rating-section .cloudy-badge.badge-success {
       display: none !important;
     }
     
-    /* ═══ MOBILE PRICE BOX - Clean ═══ */
+    /* ═══ MOBILE PRICE BOX - Subtle Background ═══ */
     .product-price-box {
-      background: transparent !important;
+      background: #F5F5F7 !important;
       border: none !important;
       box-shadow: none !important;
-      padding: 0 !important;
+      padding: 0.875rem 1rem !important;
       margin: 0 0 1rem 0 !important;
+      border-radius: 12px !important;
     }
     
     /* LIMITED OFFER Badge - Kırmızı */
@@ -1841,21 +1851,22 @@
     }
     
     .product-price-box .price-row {
-      flex-direction: column !important;
-      align-items: flex-start !important;
-      gap: 0.125rem !important;
+      flex-direction: row !important;
+      align-items: baseline !important;
+      gap: 0.5rem !important;
+      flex-wrap: wrap !important;
     }
     
     .product-price-box .compare-price {
-      order: 1 !important;
-      font-size: 0.9375rem !important;
-      color: #FF3B30 !important;
+      order: 2 !important;
+      font-size: 0.875rem !important;
+      color: #AEAEB2 !important;
       text-decoration: line-through !important;
     }
     
     .product-price-box .current-price {
-      order: 2 !important;
-      font-size: 2rem !important;
+      order: 1 !important;
+      font-size: 1.75rem !important;
       font-weight: 700 !important;
       color: #1D1D1F !important;
       line-height: 1.1 !important;
@@ -1867,7 +1878,7 @@
       padding: 0.2rem 0.5rem !important;
       background: rgba(52, 199, 89, 0.1) !important;
       color: #34C759 !important;
-      margin-top: 0.375rem !important;
+      margin-top: 0 !important;
     }
     
     /* ═══ DELIVERY CARD - Yeşil Arka Plan ═══ */
