@@ -357,13 +357,26 @@
                   
                 {%- elsif is_size -%}
                   {%- if section.settings.size_display_mode == 'dropdown' -%}
-                    <div class="variant-dropdown-wrapper">
-                      <select class="variant-select" data-option="{{ option_index }}" onchange="pmVariant.selectDropdown(this)">
-                        {% for value in option.values %}
-                          <option value="{{ value }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
-                        {% endfor %}
-                      </select>
-                      <i class="ti ti-chevron-down variant-select-icon"></i>
+                    <div class="size-quantity-row">
+                      <div class="variant-dropdown-wrapper">
+                        <select class="variant-select" data-option="{{ option_index }}" onchange="pmVariant.selectDropdown(this)">
+                          {% for value in option.values %}
+                            <option value="{{ value }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
+                          {% endfor %}
+                        </select>
+                        <i class="ti ti-chevron-down variant-select-icon"></i>
+                      </div>
+                      {% if section.settings.show_quantity %}
+                      <div class="quantity-control quantity-inline">
+                        <button type="button" class="qty-btn" onclick="pmQty.update(-1)">
+                          <i class="ti ti-minus"></i>
+                        </button>
+                        <input type="number" id="pm-quantity" class="qty-input" value="1" min="1" max="99">
+                        <button type="button" class="qty-btn" onclick="pmQty.update(1)">
+                          <i class="ti ti-plus"></i>
+                        </button>
+                      </div>
+                      {% endif %}
                     </div>
                   {%- else -%}
                     <div class="variant-options">
@@ -396,8 +409,8 @@
             {% endfor %}
           {% endif %}
           
-          {% comment %} ═══ QUANTITY ═══ {% endcomment %}
-          {% if section.settings.show_quantity %}
+          {% comment %} ═══ QUANTITY (sadece size dropdown değilse göster) ═══ {% endcomment %}
+          {% if section.settings.show_quantity and section.settings.size_display_mode != 'dropdown' %}
           <div class="quantity-section">
             <label class="quantity-label">Quantity</label>
             <div class="quantity-control">
@@ -858,7 +871,7 @@
   }
   
   .rating-stars i {
-    color: #FF9500;
+    color: var(--pm-text-tertiary);
     font-size: 0.875rem;
   }
   
@@ -1105,6 +1118,21 @@
     font-size: 1.125rem;
   }
   
+  /* ═══ SIZE + QUANTITY ROW ═══ */
+  .size-quantity-row {
+    display: flex;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  
+  .size-quantity-row .variant-dropdown-wrapper {
+    flex: 1;
+  }
+  
+  .size-quantity-row .quantity-inline {
+    flex-shrink: 0;
+  }
+  
   /* ═══ QUANTITY ═══ */
   .quantity-section {
     margin-bottom: 1rem;
@@ -1170,7 +1198,7 @@
   .add-to-cart-btn {
     width: 100%;
     padding: 0.875rem 1rem;
-    background: var(--pm-text-primary);
+    background: linear-gradient(135deg, #7367f0, #9e95f5);
     color: #fff;
     border: none;
     border-radius: var(--pm-radius-md);
@@ -1183,11 +1211,13 @@
     gap: 0.5rem;
     transition: var(--pm-transition);
     letter-spacing: -0.01em;
+    box-shadow: 0 4px 12px rgba(115, 103, 240, 0.35);
   }
   
   .add-to-cart-btn:hover:not(:disabled) {
-    background: #000;
-    transform: scale(1.01);
+    background: linear-gradient(135deg, #6258d3, #7367f0);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(115, 103, 240, 0.4);
   }
   
   .add-to-cart-btn:disabled {
