@@ -29,13 +29,12 @@
    MAIN PRODUCT GRID
 ═══════════════════════════════════════════════════════════════ {% endcomment %}
 <section class="product-section" {{ section.shopify_attributes }}>
-  <div class="container">
-    <div class="pm-grid">
+  <div class="main-content">
       
       {% comment %} ══════════════════════════════════════════════════════════
          LEFT COLUMN - Gallery + Tabs + Instructions
       ══════════════════════════════════════════════════════════ {% endcomment %}
-      <div class="pm-left">
+      <div class="pm-left cp-product-main-section">
         
         {% comment %} ═══ GALLERY ═══ {% endcomment %}
         <div class="product-gallery">
@@ -224,7 +223,7 @@
       {% comment %} ══════════════════════════════════════════════════════════
          RIGHT COLUMN - Product Info Card
       ══════════════════════════════════════════════════════════ {% endcomment %}
-      <div class="pm-right">
+      <div class="pm-right product-options-section">
         
         <div class="product-info-card">
           
@@ -466,7 +465,6 @@
         
       </div>
       
-    </div>
   </div>
 </section>
 
@@ -474,21 +472,8 @@
    STYLES - Mevcut section'lardan alınan tüm stiller
 ═══════════════════════════════════════════════════════════════ {% endcomment %}
 <style>
-  /* ═══ GRID LAYOUT ═══ */
-  .pm-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  @media (min-width: 992px) {
-    .pm-grid {
-      display: grid;
-      grid-template-columns: 41.66% 58.33%;
-      gap: 1.5rem 2rem;
-      align-items: start;
-    }
-  }
+  /* ═══ LAYOUT - product-page.css'deki grid'i kullanıyoruz ═══ */
+  /* main-content grid'i product-page.css'de tanımlı */
   
   .pm-left, .pm-right {
     display: flex;
@@ -496,8 +481,16 @@
     gap: 1rem;
   }
   
+  /* Left column grid placement */
   @media (min-width: 992px) {
-    .pm-right {
+    .pm-left.cp-product-main-section {
+      grid-column: 1;
+      grid-row: 1 / 4;
+    }
+    
+    .pm-right.product-options-section {
+      grid-column: 2;
+      grid-row: 1 / 4;
       position: sticky;
       top: 1rem;
     }
