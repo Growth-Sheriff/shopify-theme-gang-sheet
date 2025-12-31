@@ -29,12 +29,12 @@
    MAIN PRODUCT GRID
 ═══════════════════════════════════════════════════════════════ {% endcomment %}
 <section class="product-section" {{ section.shopify_attributes }}>
-  <div class="main-content">
+  <div class="pm-container">
       
       {% comment %} ══════════════════════════════════════════════════════════
          LEFT COLUMN - Gallery + Tabs + Instructions
       ══════════════════════════════════════════════════════════ {% endcomment %}
-      <div class="pm-left cp-product-main-section">
+      <div class="pm-left">
         
         {% comment %} ═══ GALLERY ═══ {% endcomment %}
         <div class="product-gallery">
@@ -223,7 +223,7 @@
       {% comment %} ══════════════════════════════════════════════════════════
          RIGHT COLUMN - Product Info Card
       ══════════════════════════════════════════════════════════ {% endcomment %}
-      <div class="pm-right product-options-section">
+      <div class="pm-right">
         
         <div class="product-info-card">
           
@@ -472,8 +472,21 @@
    STYLES - Mevcut section'lardan alınan tüm stiller
 ═══════════════════════════════════════════════════════════════ {% endcomment %}
 <style>
-  /* ═══ LAYOUT - product-page.css'deki grid'i kullanıyoruz ═══ */
-  /* main-content grid'i product-page.css'de tanımlı */
+  /* ═══ GRID LAYOUT ═══ */
+  .pm-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  @media (min-width: 992px) {
+    .pm-container {
+      display: grid;
+      grid-template-columns: 41.66% 58.33%;
+      gap: 1.5rem 2rem;
+      align-items: start;
+    }
+  }
   
   .pm-left, .pm-right {
     display: flex;
@@ -481,16 +494,8 @@
     gap: 1rem;
   }
   
-  /* Left column grid placement */
   @media (min-width: 992px) {
-    .pm-left.cp-product-main-section {
-      grid-column: 1;
-      grid-row: 1 / 4;
-    }
-    
-    .pm-right.product-options-section {
-      grid-column: 2;
-      grid-row: 1 / 4;
+    .pm-right {
       position: sticky;
       top: 1rem;
     }
