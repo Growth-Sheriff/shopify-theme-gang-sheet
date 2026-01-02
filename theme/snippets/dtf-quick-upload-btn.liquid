@@ -1,0 +1,761 @@
+{% liquid
+  assign btn_text = button_text | default: 'Upload Design'
+  assign modal_id = 'ul-modal-' | append: section.id | append: '-' | append: product.id
+  assign first_variant = product.selected_or_first_available_variant
+  assign api_base = '/apps/customizer'
+  assign shop_domain = shop.permanent_domain
+%}
+
+<!-- Upload Button -->
+<button type="button" onclick="openUploadModal('{{ modal_id }}')" style="
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  width: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  line-height: 1.4;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  font-family: inherit;
+">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+    <polyline points="17 8 12 3 7 8"></polyline>
+    <line x1="12" y1="3" x2="12" y2="15"></line>
+  </svg>
+  <span>{{ btn_text }}</span>
+</button>
+
+<!-- Upload Modal -->
+<div id="{{ modal_id }}" class="ul-quick-modal" style="display:none;" data-api-base="{{ api_base }}" data-shop="{{ shop_domain }}" data-product-id="{{ product.id }}">
+  <div class="ul-quick-modal-overlay" onclick="closeUploadModal('{{ modal_id }}')"></div>
+  <div class="ul-quick-modal-content">
+    <button class="ul-quick-modal-close" onclick="closeUploadModal('{{ modal_id }}')">&times;</button>
+    
+    <!-- Step 1: Upload & Options -->
+    <div id="{{ modal_id }}-step1" class="ul-modal-step">
+      <div class="ul-quick-modal-header">
+        <img src="{{ product.featured_image | image_url: width: 80 }}" alt="{{ product.title }}" width="60" height="60" class="ul-quick-modal-thumb">
+        <div>
+          <h3>{{ product.title }}</h3>
+          <p class="ul-price">{{ first_variant.price | money }}</p>
+        </div>
+      </div>
+      
+      <div class="ul-quick-modal-body">
+        <!-- Upload Area -->
+        <div class="ul-quick-dropzone" id="ul-dropzone-{{ product.id }}" onclick="document.getElementById('ul-file-{{ product.id }}').click()">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          <p><strong>Click to upload</strong></p>
+          <span>PNG, JPG, PDF (Max 25MB)</span>
+          <input type="file" id="ul-file-{{ product.id }}" accept=".png,.jpg,.jpeg,.pdf,.ai,.psd,.eps,.svg" style="display:none" onchange="handleQuickUpload(this, '{{ product.id }}', '{{ modal_id }}')">
+        </div>
+        
+        <!-- Upload Progress -->
+        <div id="ul-progress-{{ product.id }}" class="ul-upload-progress" style="display:none;">
+          <div class="ul-progress-bar">
+            <div class="ul-progress-fill" id="ul-progress-fill-{{ product.id }}"></div>
+          </div>
+          <p id="ul-progress-text-{{ product.id }}">Uploading...</p>
+        </div>
+        
+        <!-- Preview (after upload) -->
+        <div id="ul-preview-{{ product.id }}" class="ul-quick-preview" style="display:none;">
+          <img id="ul-preview-img-{{ product.id }}" src="" alt="Preview" width="48" height="48">
+          <div class="ul-preview-info">
+            <span id="ul-preview-name-{{ product.id }}"></span>
+            <span id="ul-preview-status-{{ product.id }}" class="ul-status-badge"></span>
+          </div>
+          <button type="button" onclick="clearQuickUpload('{{ product.id }}', '{{ modal_id }}')">&times;</button>
+        </div>
+        
+        <!-- DPI Warning -->
+        <div id="ul-dpi-warning-{{ product.id }}" class="ul-dpi-warning" style="display:none;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+          <span id="ul-dpi-text-{{ product.id }}"></span>
+        </div>
+
+        <!-- Variants -->
+        {% if product.has_only_default_variant == false %}
+          <div class="ul-variants-section">
+            {% for option in product.options_with_values %}
+              <div class="ul-variant-group">
+                <label>{{ option.name }}</label>
+                <select id="ul-option-{{ product.id }}-{{ forloop.index0 }}" class="ul-variant-select" onchange="updateVariant('{{ product.id }}')">
+                  {% for value in option.values %}
+                    <option value="{{ value }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <!-- Quantity -->
+        <div class="ul-quantity-section">
+          <label>Quantity</label>
+          <div class="ul-quantity-wrapper">
+            <button type="button" onclick="changeQty('{{ product.id }}', -1)">−</button>
+            <input type="number" id="ul-qty-{{ product.id }}" value="1" min="1" max="99">
+            <button type="button" onclick="changeQty('{{ product.id }}', 1)">+</button>
+          </div>
+        </div>
+
+        <!-- Hidden fields -->
+        <input type="hidden" id="ul-variant-{{ product.id }}" value="{{ first_variant.id }}">
+        <input type="hidden" id="ul-upload-id-{{ product.id }}" value="">
+      </div>
+      
+      <div class="ul-quick-modal-footer">
+        <button type="button" class="ul-quick-btn-primary" id="ul-addcart-{{ product.id }}" onclick="addToCartQuick('{{ product.id }}', '{{ modal_id }}')" disabled>
+          <span class="ul-btn-text">Add to Cart</span>
+          <span class="ul-btn-loading" style="display:none;">Adding...</span>
+        </button>
+        <p class="ul-upload-hint" id="ul-hint-{{ product.id }}">Please upload your design first</p>
+      </div>
+    </div>
+
+    <!-- Step 2: Success -->
+    <div id="{{ modal_id }}-step2" class="ul-modal-step" style="display:none;">
+      <div class="ul-success-content">
+        <div class="ul-success-icon">✓</div>
+        <h3>Added to Cart!</h3>
+        <p>Your custom design has been uploaded and added to cart.</p>
+      </div>
+      
+      <div class="ul-quick-modal-footer ul-success-buttons">
+        <button type="button" class="ul-btn-secondary" onclick="closeUploadModal('{{ modal_id }}')">
+          Continue Shopping
+        </button>
+        <a href="/checkout" class="ul-quick-btn-primary">
+          Checkout
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Variant data for JS -->
+<script type="application/json" id="ul-variants-{{ product.id }}">
+  {{ product.variants | json }}
+</script>
+
+<!-- Styles -->
+<style>
+.ul-quick-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ul-quick-modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+}
+.ul-quick-modal-content {
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 420px;
+  max-height: 90vh;
+  overflow: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  animation: modalSlideIn 0.3s ease;
+}
+@keyframes modalSlideIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.ul-quick-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: #f3f4f6;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  z-index: 10;
+}
+.ul-quick-modal-close:hover { background: #e5e7eb; }
+.ul-quick-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+.ul-quick-modal-thumb {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.ul-quick-modal-header h3 {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  color: #1f2937;
+}
+.ul-price {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #667eea;
+}
+.ul-quick-modal-body {
+  padding: 20px;
+}
+.ul-quick-dropzone {
+  border: 2px dashed #d1d5db;
+  border-radius: 12px;
+  padding: 24px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #f9fafb;
+}
+.ul-quick-dropzone:hover {
+  border-color: #667eea;
+  background: rgba(102,126,234,0.05);
+}
+.ul-quick-dropzone svg {
+  color: #9ca3af;
+  margin-bottom: 8px;
+}
+.ul-quick-dropzone p {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  color: #374151;
+}
+.ul-quick-dropzone span {
+  font-size: 12px;
+  color: #9ca3af;
+}
+.ul-upload-progress {
+  padding: 20px;
+  text-align: center;
+  background: #f9fafb;
+  border-radius: 12px;
+}
+.ul-progress-bar {
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.ul-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+.ul-upload-progress p {
+  margin: 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+.ul-quick-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  border-radius: 8px;
+}
+.ul-quick-preview img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+.ul-preview-info {
+  flex: 1;
+  overflow: hidden;
+}
+.ul-preview-info span:first-child {
+  display: block;
+  font-size: 13px;
+  color: #166534;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ul-status-badge {
+  display: inline-block;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-top: 4px;
+}
+.ul-status-badge.processing { background: #fef3c7; color: #92400e; }
+.ul-status-badge.ready { background: #d1fae5; color: #065f46; }
+.ul-status-badge.warning { background: #fef3c7; color: #92400e; }
+.ul-status-badge.error { background: #fee2e2; color: #991b1b; }
+.ul-quick-preview > button {
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: #dc2626;
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.ul-dpi-warning {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: #fef3c7;
+  border-radius: 8px;
+  margin-top: 12px;
+  color: #92400e;
+  font-size: 12px;
+}
+.ul-dpi-warning svg { flex-shrink: 0; }
+.ul-variants-section {
+  margin-top: 16px;
+}
+.ul-variant-group {
+  margin-bottom: 12px;
+}
+.ul-variant-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+}
+.ul-variant-select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  background: white;
+  cursor: pointer;
+}
+.ul-variant-select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+}
+.ul-quantity-section {
+  margin-top: 16px;
+}
+.ul-quantity-section label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+}
+.ul-quantity-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: fit-content;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.ul-quantity-wrapper button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: #f3f4f6;
+  font-size: 18px;
+  cursor: pointer;
+  color: #374151;
+}
+.ul-quantity-wrapper button:hover { background: #e5e7eb; }
+.ul-quantity-wrapper input {
+  width: 50px;
+  height: 40px;
+  border: none;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  -moz-appearance: textfield;
+}
+.ul-quantity-wrapper input::-webkit-outer-spin-button,
+.ul-quantity-wrapper input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+.ul-quick-modal-footer {
+  padding: 16px 20px;
+  border-top: 1px solid #e5e7eb;
+}
+.ul-quick-btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white !important;
+  text-align: center;
+  text-decoration: none !important;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.ul-quick-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.ul-quick-btn-primary:not(:disabled):hover {
+  box-shadow: 0 4px 15px rgba(102,126,234,0.4);
+}
+.ul-btn-secondary {
+  display: block;
+  width: 100%;
+  padding: 14px 20px;
+  background: #f3f4f6;
+  color: #374151;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  font-family: inherit;
+}
+.ul-btn-secondary:hover { background: #e5e7eb; }
+.ul-upload-hint {
+  text-align: center;
+  font-size: 12px;
+  color: #9ca3af;
+  margin: 10px 0 0 0;
+}
+.ul-success-content {
+  padding: 40px 20px;
+  text-align: center;
+}
+.ul-success-icon {
+  width: 60px;
+  height: 60px;
+  background: #10b981;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin: 0 auto 16px;
+}
+.ul-success-content h3 {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  color: #1f2937;
+}
+.ul-success-content p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+.ul-success-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ul-success-buttons .ul-btn-secondary { margin: 0; }
+</style>
+
+<!-- JavaScript - Full API Integration -->
+<script>
+(function() {
+  // Prevent multiple initializations
+  if (window.ULQuickUploadInit) return;
+  window.ULQuickUploadInit = true;
+  
+  window.openUploadModal = function(id) {
+    document.getElementById(id).style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    document.getElementById(id + '-step1').style.display = 'block';
+    document.getElementById(id + '-step2').style.display = 'none';
+  };
+  
+  window.closeUploadModal = function(id) {
+    document.getElementById(id).style.display = 'none';
+    document.body.style.overflow = '';
+  };
+  
+  window.handleQuickUpload = async function(input, productId, modalId) {
+    const file = input.files[0];
+    if (!file) return;
+    
+    const modal = document.getElementById(modalId);
+    const apiBase = modal.dataset.apiBase;
+    const shopDomain = modal.dataset.shop;
+    
+    const dropzone = document.getElementById('ul-dropzone-' + productId);
+    const progress = document.getElementById('ul-progress-' + productId);
+    const progressFill = document.getElementById('ul-progress-fill-' + productId);
+    const progressText = document.getElementById('ul-progress-text-' + productId);
+    const preview = document.getElementById('ul-preview-' + productId);
+    const previewImg = document.getElementById('ul-preview-img-' + productId);
+    const previewName = document.getElementById('ul-preview-name-' + productId);
+    const previewStatus = document.getElementById('ul-preview-status-' + productId);
+    const addBtn = document.getElementById('ul-addcart-' + productId);
+    const hint = document.getElementById('ul-hint-' + productId);
+    const uploadIdInput = document.getElementById('ul-upload-id-' + productId);
+    const dpiWarning = document.getElementById('ul-dpi-warning-' + productId);
+    const dpiText = document.getElementById('ul-dpi-text-' + productId);
+    
+    // Show progress
+    dropzone.style.display = 'none';
+    progress.style.display = 'block';
+    progressFill.style.width = '10%';
+    progressText.textContent = 'Getting upload URL...';
+    
+    try {
+      // Step 1: Get upload intent
+      const intentResponse = await fetch(`${apiBase}/api/upload/intent`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fileName: file.name,
+          fileSize: file.size,
+          mimeType: file.type,
+          shopDomain: shopDomain,
+          productId: productId
+        })
+      });
+      
+      if (!intentResponse.ok) throw new Error('Failed to get upload URL');
+      const intentData = await intentResponse.json();
+      
+      progressFill.style.width = '30%';
+      progressText.textContent = 'Uploading file...';
+      
+      // Step 2: Upload file
+      const uploadResponse = await fetch(intentData.uploadUrl, {
+        method: 'PUT',
+        headers: { 'Content-Type': file.type },
+        body: file
+      });
+      
+      if (!uploadResponse.ok) throw new Error('Upload failed');
+      
+      progressFill.style.width = '60%';
+      progressText.textContent = 'Processing...';
+      
+      // Step 3: Complete upload
+      const completeResponse = await fetch(`${apiBase}/api/upload/complete`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          uploadId: intentData.uploadId,
+          shopDomain: shopDomain
+        })
+      });
+      
+      if (!completeResponse.ok) throw new Error('Failed to complete upload');
+      
+      progressFill.style.width = '80%';
+      progressText.textContent = 'Analyzing...';
+      
+      // Step 4: Poll for preflight status
+      const uploadId = intentData.uploadId;
+      uploadIdInput.value = uploadId;
+      
+      let status = 'processing';
+      let attempts = 0;
+      const maxAttempts = 30;
+      
+      while (status === 'processing' && attempts < maxAttempts) {
+        await new Promise(r => setTimeout(r, 1000));
+        
+        const statusResponse = await fetch(`${apiBase}/api/upload/status/${uploadId}?shopDomain=${shopDomain}`);
+        if (statusResponse.ok) {
+          const statusData = await statusResponse.json();
+          status = statusData.status;
+          
+          if (statusData.preflight) {
+            // Show DPI warning if needed
+            if (statusData.preflight.dpi && statusData.preflight.dpi < 150) {
+              dpiWarning.style.display = 'flex';
+              dpiText.textContent = `Low resolution: ${statusData.preflight.dpi} DPI (recommended: 150+)`;
+            }
+          }
+        }
+        attempts++;
+      }
+      
+      // Show preview
+      progress.style.display = 'none';
+      preview.style.display = 'flex';
+      previewName.textContent = file.name;
+      
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (e) => { previewImg.src = e.target.result; };
+        reader.readAsDataURL(file);
+      } else {
+        previewImg.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="%236b7280"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>';
+      }
+      
+      // Update status badge
+      if (status === 'ready' || status === 'completed') {
+        previewStatus.textContent = 'Ready';
+        previewStatus.className = 'ul-status-badge ready';
+        addBtn.disabled = false;
+        hint.style.display = 'none';
+      } else if (status === 'warning') {
+        previewStatus.textContent = 'Warning';
+        previewStatus.className = 'ul-status-badge warning';
+        addBtn.disabled = false;
+        hint.style.display = 'none';
+      } else {
+        previewStatus.textContent = 'Processing';
+        previewStatus.className = 'ul-status-badge processing';
+        addBtn.disabled = false; // Allow anyway
+        hint.style.display = 'none';
+      }
+      
+    } catch (error) {
+      console.error('Upload error:', error);
+      progress.style.display = 'none';
+      dropzone.style.display = 'block';
+      alert('Upload failed. Please try again.');
+    }
+  };
+  
+  window.clearQuickUpload = function(productId, modalId) {
+    const dropzone = document.getElementById('ul-dropzone-' + productId);
+    const preview = document.getElementById('ul-preview-' + productId);
+    const fileInput = document.getElementById('ul-file-' + productId);
+    const addBtn = document.getElementById('ul-addcart-' + productId);
+    const hint = document.getElementById('ul-hint-' + productId);
+    const uploadIdInput = document.getElementById('ul-upload-id-' + productId);
+    const dpiWarning = document.getElementById('ul-dpi-warning-' + productId);
+    
+    fileInput.value = '';
+    dropzone.style.display = 'block';
+    preview.style.display = 'none';
+    dpiWarning.style.display = 'none';
+    addBtn.disabled = true;
+    hint.style.display = 'block';
+    uploadIdInput.value = '';
+  };
+  
+  window.changeQty = function(productId, delta) {
+    const input = document.getElementById('ul-qty-' + productId);
+    let val = parseInt(input.value) || 1;
+    val = Math.max(1, Math.min(99, val + delta));
+    input.value = val;
+  };
+  
+  window.updateVariant = function(productId) {
+    const variantsData = JSON.parse(document.getElementById('ul-variants-' + productId).textContent);
+    const options = [];
+    let i = 0;
+    while (document.getElementById('ul-option-' + productId + '-' + i)) {
+      options.push(document.getElementById('ul-option-' + productId + '-' + i).value);
+      i++;
+    }
+    
+    const variant = variantsData.find(v => {
+      return options.every((opt, idx) => v['option' + (idx + 1)] === opt);
+    });
+    
+    if (variant) {
+      document.getElementById('ul-variant-' + productId).value = variant.id;
+    }
+  };
+  
+  window.addToCartQuick = async function(productId, modalId) {
+    const btn = document.getElementById('ul-addcart-' + productId);
+    const btnText = btn.querySelector('.ul-btn-text');
+    const btnLoading = btn.querySelector('.ul-btn-loading');
+    const variantId = document.getElementById('ul-variant-' + productId).value;
+    const quantity = parseInt(document.getElementById('ul-qty-' + productId).value) || 1;
+    const uploadId = document.getElementById('ul-upload-id-' + productId).value;
+    const previewName = document.getElementById('ul-preview-name-' + productId).textContent;
+    
+    if (!uploadId) {
+      alert('Please upload a design first');
+      return;
+    }
+    
+    btn.disabled = true;
+    btnText.style.display = 'none';
+    btnLoading.style.display = 'inline';
+    
+    try {
+      const response = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: variantId,
+          quantity: quantity,
+          properties: {
+            '_ul_upload_id': uploadId,
+            '_ul_design_file': previewName,
+            '_ul_uploaded': 'true'
+          }
+        })
+      });
+      
+      if (!response.ok) throw new Error('Failed to add to cart');
+      
+      // Show success
+      document.getElementById(modalId + '-step1').style.display = 'none';
+      document.getElementById(modalId + '-step2').style.display = 'block';
+      
+      // Update cart count
+      fetch('/cart.js').then(r => r.json()).then(cart => {
+        document.querySelectorAll('.cart-count, .cart-count-bubble span, [data-cart-count]').forEach(el => {
+          el.textContent = cart.item_count;
+        });
+      });
+      
+    } catch (err) {
+      console.error('Add to cart error:', err);
+      alert('Error adding to cart. Please try again.');
+    } finally {
+      btn.disabled = false;
+      btnText.style.display = 'inline';
+      btnLoading.style.display = 'none';
+    }
+  };
+})();
+</script>

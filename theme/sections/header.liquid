@@ -76,119 +76,188 @@
                     <!-- Animated Gradient Top -->
                     <div class="mega-gradient-bar"></div>
                     
-                    <!-- Links Column -->
-                    <div class="mega-column mega-links-col">
-                      <div class="mega-col-header">
-                        <div class="mega-icon-wrap">
-                          <i class="fa-solid fa-layer-group"></i>
-                        </div>
-                        <span>{{ link.title }}</span>
-                      </div>
-                      <ul class="mega-link-list">
-                        {% for childlink in link.links %}
-                          <li>
-                            <a href="{{ childlink.url }}" class="mega-link-item">
-                              <span class="mega-dot"></span>
-                              <span class="mega-link-text">{{ childlink.title }}</span>
-                              <i class="fa-solid fa-arrow-right mega-arrow"></i>
-                            </a>
-                          </li>
-                        {% endfor %}
-                        {% if link.links.size == 0 %}
-                          <li>
-                            <a href="{{ link.url }}" class="mega-link-item">
-                              <span class="mega-dot"></span>
-                              <span class="mega-link-text">View All {{ link.title }}</span>
-                              <i class="fa-solid fa-arrow-right mega-arrow"></i>
-                            </a>
-                          </li>
-                        {% endif %}
-                      </ul>
-                    </div>
-                    
-                    {% if has_mega and mega_block %}
-                      <!-- Featured Products Column -->
-                      {% if mega_block.settings.featured_product_1 != blank or mega_block.settings.featured_product_2 != blank %}
-                      <div class="mega-column mega-featured-col" {{ mega_block.shopify_attributes }}>
+                    <!-- Tabbed Mega Menu Layout -->
+                    <div class="mega-tabbed-layout">
+                      <!-- Left: Submenu Tabs -->
+                      <div class="mega-tabs-col">
                         <div class="mega-col-header">
-                          <div class="mega-icon-wrap pulse">
-                            <i class="fa-solid fa-star"></i>
+                          <div class="mega-icon-wrap">
+                            <i class="fa-solid fa-layer-group"></i>
                           </div>
-                          <span>{{ mega_block.settings.featured_title | default: 'Featured' }}</span>
+                          <span>{{ link.title }}</span>
                         </div>
-                        <div class="mega-products-grid">
-                          {% if mega_block.settings.featured_product_1 != blank %}
-                            {% assign fp1 = mega_block.settings.featured_product_1 %}
-                            <a href="{{ fp1.url }}" class="mega-product-card">
-                              <div class="mega-product-img">
-                                {% if fp1.featured_image %}
-                                  <img src="{{ fp1.featured_image | image_url: width: 200 }}" alt="{{ fp1.title }}" width="200" height="200" loading="lazy">
-                                {% else %}
-                                  <div class="mega-product-placeholder"><i class="fa-solid fa-image"></i></div>
-                                {% endif %}
-                                <div class="mega-product-hover-icon">
-                                  <i class="fa-solid fa-eye"></i>
-                                </div>
-                              </div>
-                              <div class="mega-product-details">
-                                <span class="mega-product-name">{{ fp1.title | truncate: 25 }}</span>
-                                <span class="mega-product-price">{{ fp1.price | money }}</span>
-                              </div>
-                            </a>
+                        <ul class="mega-tabs-list">
+                          {% for childlink in link.links %}
+                            <li class="mega-tab-item {% if forloop.first %}active{% endif %}" 
+                                data-tab="{{ childlink.title | handleize }}"
+                                data-parent="{{ link.title | handleize }}">
+                              <span class="mega-tab-dot"></span>
+                              <span class="mega-tab-text">{{ childlink.title }}</span>
+                              <i class="fa-solid fa-chevron-right mega-tab-arrow"></i>
+                            </li>
+                          {% endfor %}
+                          {% if link.links.size == 0 %}
+                            <li class="mega-tab-item active" 
+                                data-tab="all-{{ link.title | handleize }}"
+                                data-parent="{{ link.title | handleize }}">
+                              <span class="mega-tab-dot"></span>
+                              <span class="mega-tab-text">View All</span>
+                              <i class="fa-solid fa-chevron-right mega-tab-arrow"></i>
+                            </li>
                           {% endif %}
-                          
-                          {% if mega_block.settings.featured_product_2 != blank %}
-                            {% assign fp2 = mega_block.settings.featured_product_2 %}
-                            <a href="{{ fp2.url }}" class="mega-product-card">
-                              <div class="mega-product-img">
-                                {% if fp2.featured_image %}
-                                  <img src="{{ fp2.featured_image | image_url: width: 200 }}" alt="{{ fp2.title }}" width="200" height="200" loading="lazy">
-                                {% else %}
-                                  <div class="mega-product-placeholder"><i class="fa-solid fa-image"></i></div>
-                                {% endif %}
-                                <div class="mega-product-hover-icon">
-                                  <i class="fa-solid fa-eye"></i>
-                                </div>
-                              </div>
-                              <div class="mega-product-details">
-                                <span class="mega-product-name">{{ fp2.title | truncate: 25 }}</span>
-                                <span class="mega-product-price">{{ fp2.price | money }}</span>
-                              </div>
-                            </a>
-                          {% endif %}
-                        </div>
+                        </ul>
                       </div>
-                      {% endif %}
                       
-                      <!-- Promo Banner Column -->
-                      {% if mega_block.settings.promo_image != blank %}
-                      <div class="mega-column mega-promo-col">
-                        <a href="{{ mega_block.settings.promo_link | default: '#' }}" class="mega-promo-card">
-                          <img src="{{ mega_block.settings.promo_image | image_url: width: 400 }}" alt="{{ mega_block.settings.promo_title }}" width="400" height="400" loading="lazy">
-                          <div class="mega-promo-content">
-                            <span class="mega-promo-badge">{{ mega_block.settings.promo_badge | default: 'NEW' }}</span>
-                            <span class="mega-promo-title">{{ mega_block.settings.promo_title | default: 'Shop Now' }}</span>
-                            <span class="mega-promo-cta">
-                              Explore <i class="fa-solid fa-arrow-right"></i>
-                            </span>
+                      <!-- Center: Products Panel -->
+                      <div class="mega-products-col">
+                        {% for childlink in link.links %}
+                          {% comment %} Find matching submenu_item block {% endcomment %}
+                          {% assign submenu_block = nil %}
+                          {% for block in section.blocks %}
+                            {% if block.type == 'submenu_item' %}
+                              {% assign block_parent = block.settings.parent_menu | downcase | strip %}
+                              {% assign block_submenu = block.settings.submenu_title | downcase | strip %}
+                              {% assign link_parent = link.title | downcase | strip %}
+                              {% assign child_title = childlink.title | downcase | strip %}
+                              {% if block_parent == link_parent and block_submenu == child_title %}
+                                {% assign submenu_block = block %}
+                                {% break %}
+                              {% endif %}
+                            {% endif %}
+                          {% endfor %}
+                          
+                          <div class="mega-products-panel {% if forloop.first %}active{% endif %}" 
+                               data-panel="{{ childlink.title | handleize }}"
+                               data-parent="{{ link.title | handleize }}">
+                            <div class="mega-panel-header">
+                              <h4>{{ childlink.title }}</h4>
+                              <a href="{{ childlink.url }}" class="mega-view-all">
+                                View All <i class="fa-solid fa-arrow-right"></i>
+                              </a>
+                            </div>
+                            
+                            {% if submenu_block %}
+                              <div class="mega-products-grid-3">
+                                {% if submenu_block.settings.product_1 != blank %}
+                                  {% assign p1 = submenu_block.settings.product_1 %}
+                                  <a href="{{ p1.url }}" class="mega-product-card-sm">
+                                    <div class="mega-product-img-sm">
+                                      {% if p1.featured_image %}
+                                        <img src="{{ p1.featured_image | image_url: width: 150 }}" alt="{{ p1.title }}" width="150" height="150" loading="lazy">
+                                      {% else %}
+                                        <div class="mega-placeholder-sm"><i class="fa-solid fa-image"></i></div>
+                                      {% endif %}
+                                    </div>
+                                    <span class="mega-product-name-sm">{{ p1.title | truncate: 18 }}</span>
+                                    <span class="mega-product-price-sm">{{ p1.price | money }}</span>
+                                  </a>
+                                {% endif %}
+                                {% if submenu_block.settings.product_2 != blank %}
+                                  {% assign p2 = submenu_block.settings.product_2 %}
+                                  <a href="{{ p2.url }}" class="mega-product-card-sm">
+                                    <div class="mega-product-img-sm">
+                                      {% if p2.featured_image %}
+                                        <img src="{{ p2.featured_image | image_url: width: 150 }}" alt="{{ p2.title }}" width="150" height="150" loading="lazy">
+                                      {% else %}
+                                        <div class="mega-placeholder-sm"><i class="fa-solid fa-image"></i></div>
+                                      {% endif %}
+                                    </div>
+                                    <span class="mega-product-name-sm">{{ p2.title | truncate: 18 }}</span>
+                                    <span class="mega-product-price-sm">{{ p2.price | money }}</span>
+                                  </a>
+                                {% endif %}
+                                {% if submenu_block.settings.product_3 != blank %}
+                                  {% assign p3 = submenu_block.settings.product_3 %}
+                                  <a href="{{ p3.url }}" class="mega-product-card-sm">
+                                    <div class="mega-product-img-sm">
+                                      {% if p3.featured_image %}
+                                        <img src="{{ p3.featured_image | image_url: width: 150 }}" alt="{{ p3.title }}" width="150" height="150" loading="lazy">
+                                      {% else %}
+                                        <div class="mega-placeholder-sm"><i class="fa-solid fa-image"></i></div>
+                                      {% endif %}
+                                    </div>
+                                    <span class="mega-product-name-sm">{{ p3.title | truncate: 18 }}</span>
+                                    <span class="mega-product-price-sm">{{ p3.price | money }}</span>
+                                  </a>
+                                {% endif %}
+                                {% if submenu_block.settings.product_4 != blank %}
+                                  {% assign p4 = submenu_block.settings.product_4 %}
+                                  <a href="{{ p4.url }}" class="mega-product-card-sm">
+                                    <div class="mega-product-img-sm">
+                                      {% if p4.featured_image %}
+                                        <img src="{{ p4.featured_image | image_url: width: 150 }}" alt="{{ p4.title }}" width="150" height="150" loading="lazy">
+                                      {% else %}
+                                        <div class="mega-placeholder-sm"><i class="fa-solid fa-image"></i></div>
+                                      {% endif %}
+                                    </div>
+                                    <span class="mega-product-name-sm">{{ p4.title | truncate: 18 }}</span>
+                                    <span class="mega-product-price-sm">{{ p4.price | money }}</span>
+                                  </a>
+                                {% endif %}
+                                {% if submenu_block.settings.product_5 != blank %}
+                                  {% assign p5 = submenu_block.settings.product_5 %}
+                                  <a href="{{ p5.url }}" class="mega-product-card-sm">
+                                    <div class="mega-product-img-sm">
+                                      {% if p5.featured_image %}
+                                        <img src="{{ p5.featured_image | image_url: width: 150 }}" alt="{{ p5.title }}" width="150" height="150" loading="lazy">
+                                      {% else %}
+                                        <div class="mega-placeholder-sm"><i class="fa-solid fa-image"></i></div>
+                                      {% endif %}
+                                    </div>
+                                    <span class="mega-product-name-sm">{{ p5.title | truncate: 18 }}</span>
+                                    <span class="mega-product-price-sm">{{ p5.price | money }}</span>
+                                  </a>
+                                {% endif %}
+                              </div>
+                            {% else %}
+                              <div class="mega-empty-panel">
+                                <i class="fa-solid fa-box-open"></i>
+                                <p>No products assigned</p>
+                                <span>Add via Customizer → Submenu Products</span>
+                              </div>
+                            {% endif %}
+                          </div>
+                        {% endfor %}
+                        
+                        {% if link.links.size == 0 %}
+                          <div class="mega-products-panel active" 
+                               data-panel="all-{{ link.title | handleize }}"
+                               data-parent="{{ link.title | handleize }}">
+                            <div class="mega-panel-header">
+                              <h4>{{ link.title }}</h4>
+                              <a href="{{ link.url }}" class="mega-view-all">
+                                View All <i class="fa-solid fa-arrow-right"></i>
+                              </a>
+                            </div>
+                            <div class="mega-empty-panel">
+                              <i class="fa-solid fa-layer-group"></i>
+                              <p>Explore {{ link.title }}</p>
+                            </div>
+                          </div>
+                        {% endif %}
+                      </div>
+                      
+                      <!-- Right: Promo Banner -->
+                      {% if has_mega and mega_block %}
+                      <div class="mega-promo-col">
+                        {% if mega_block.settings.promo_image != blank %}
+                        <a href="{{ mega_block.settings.promo_link | default: '#' }}" class="mega-promo-card-vertical">
+                          <div class="mega-promo-badge-top">{{ mega_block.settings.promo_badge | default: 'NEW' }}</div>
+                          <img src="{{ mega_block.settings.promo_image | image_url: width: 200 }}" alt="{{ mega_block.settings.promo_title }}" width="200" height="200" loading="lazy">
+                          <div class="mega-promo-card-text">
+                            <span class="mega-promo-card-title">{{ mega_block.settings.promo_title | default: 'New Arrivals' }}</span>
+                            <span class="mega-promo-card-cta">Shop Now <i class="fa-solid fa-arrow-right"></i></span>
                           </div>
                         </a>
-                      </div>
-                      {% endif %}
-                    {% else %}
-                      <!-- Default Promo for items without mega block -->
-                      {% if section.settings.dropdown_image %}
-                      <div class="mega-column mega-promo-col">
-                        <div class="mega-promo-card">
-                          <img src="{{ section.settings.dropdown_image | image_url: width: 300 }}" alt="Explore" width="300" height="300" loading="lazy">
-                          <div class="mega-promo-content">
-                            <span class="mega-promo-badge">NEW</span>
-                            <span class="mega-promo-title">Explore Collection</span>
-                          </div>
+                        {% else %}
+                        <div class="mega-promo-placeholder">
+                          <i class="fa-solid fa-image"></i>
+                          <span>Add promo image</span>
                         </div>
+                        {% endif %}
                       </div>
                       {% endif %}
-                    {% endif %}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -758,6 +827,483 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 14px;
+}
+
+/* ═══ NEW TABBED MEGA MENU STYLES ═══ */
+.mega-tabbed-layout {
+  display: flex;
+  gap: 0;
+  min-height: 320px;
+}
+
+.mega-tabs-col {
+  width: 220px;
+  flex-shrink: 0;
+  border-right: 1px solid rgba(102, 126, 234, 0.1);
+  padding-right: 0;
+}
+
+.mega-tabs-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mega-tab-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border-left: 3px solid transparent;
+  position: relative;
+}
+
+.mega-tab-item:hover,
+.mega-tab-item.active {
+  background: linear-gradient(90deg, rgba(102, 126, 234, 0.08) 0%, transparent 100%);
+  border-left-color: var(--header-gradient-1);
+}
+
+.mega-tab-item.active {
+  background: linear-gradient(90deg, rgba(102, 126, 234, 0.12) 0%, transparent 100%);
+}
+
+.mega-tab-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #d1d5db;
+  transition: all 0.25s ease;
+}
+
+.mega-tab-item:hover .mega-tab-dot,
+.mega-tab-item.active .mega-tab-dot {
+  background: linear-gradient(135deg, var(--header-gradient-1), var(--header-gradient-2));
+  box-shadow: 0 0 8px rgba(102, 126, 234, 0.5);
+}
+
+.mega-tab-text {
+  flex: 1;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--header-text);
+  transition: color 0.25s ease;
+}
+
+.mega-tab-item:hover .mega-tab-text,
+.mega-tab-item.active .mega-tab-text {
+  color: var(--header-gradient-1);
+}
+
+.mega-tab-arrow {
+  font-size: 0.7rem;
+  color: #d1d5db;
+  transition: all 0.25s ease;
+  opacity: 0;
+  transform: translateX(-5px);
+}
+
+.mega-tab-item:hover .mega-tab-arrow,
+.mega-tab-item.active .mega-tab-arrow {
+  opacity: 1;
+  transform: translateX(0);
+  color: var(--header-gradient-1);
+}
+
+/* Products Panel */
+.mega-products-col {
+  flex: 1;
+  padding: 0 24px;
+  position: relative;
+  min-width: 420px;
+}
+
+.mega-products-panel {
+  display: none;
+  animation: fadeInPanel 0.3s ease;
+}
+
+.mega-products-panel.active {
+  display: block;
+}
+
+@keyframes fadeInPanel {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.mega-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.mega-panel-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--header-text);
+}
+
+.mega-view-all {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--header-gradient-1);
+  text-decoration: none;
+  transition: gap 0.25s ease;
+}
+
+.mega-view-all:hover {
+  gap: 10px;
+}
+
+/* 3-Column Product Grid (smaller cards) */
+.mega-products-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.mega-product-card-sm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px 10px;
+  background: #fff;
+  border-radius: 14px;
+  text-decoration: none;
+  border: 1px solid rgba(102, 126, 234, 0.08);
+  transition: all 0.3s ease;
+}
+
+.mega-product-card-sm:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(102, 126, 234, 0.18);
+  border-color: rgba(102, 126, 234, 0.2);
+}
+
+.mega-product-img-sm {
+  width: 90px;
+  height: 90px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+}
+
+.mega-product-img-sm img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.mega-product-card-sm:hover .mega-product-img-sm img {
+  transform: scale(1.1);
+}
+
+.mega-placeholder-sm {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d1d5db;
+  font-size: 1.5rem;
+}
+
+.mega-product-name-sm {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--header-text);
+  text-align: center;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.mega-product-price-sm {
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--header-gradient-1), var(--header-gradient-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Right Promo Column */
+.mega-promo-col {
+  width: 180px;
+  padding: 0 16px;
+  border-left: 1px solid rgba(102, 126, 234, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mega-promo-card-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  padding: 12px;
+  background: linear-gradient(145deg, #f8f9fa, #fff);
+  border-radius: 16px;
+  border: 1px solid rgba(102, 126, 234, 0.08);
+  transition: all 0.3s ease;
+  position: relative;
+  text-align: center;
+}
+
+.mega-promo-card-vertical:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(102, 126, 234, 0.15);
+}
+
+.mega-promo-badge-top {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #ef4444, #f97316);
+  padding: 4px 10px;
+  border-radius: 6px;
+  box-shadow: 0 3px 10px rgba(239, 68, 68, 0.35);
+}
+
+.mega-promo-card-vertical img {
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.mega-promo-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mega-promo-card-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--header-text);
+}
+
+.mega-promo-card-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--header-gradient-1);
+}
+
+.mega-promo-card-cta i {
+  transition: transform 0.25s ease;
+}
+
+.mega-promo-card-vertical:hover .mega-promo-card-cta i {
+  transform: translateX(4px);
+}
+
+.mega-promo-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 15px;
+  text-align: center;
+  color: #9ca3af;
+  border: 2px dashed rgba(102, 126, 234, 0.15);
+  border-radius: 16px;
+  gap: 8px;
+}
+
+.mega-promo-placeholder i {
+  font-size: 2rem;
+  opacity: 0.4;
+}
+
+.mega-promo-placeholder span {
+  font-size: 0.75rem;
+}
+
+/* Empty Panel */
+.mega-empty-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  color: #9ca3af;
+}
+
+.mega-empty-panel i {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.mega-empty-panel p {
+  margin: 0 0 4px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.mega-empty-panel span {
+  font-size: 0.75rem;
+}
+
+/* ═══ MEGA MENU MOBILE RESPONSIVE ═══ */
+@media (max-width: 1200px) {
+  .mega-promo-col {
+    display: none;
+  }
+  
+  .mega-products-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  
+  .mega-product-img-sm {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .mega-tabbed-layout {
+    flex-direction: column;
+    min-height: auto;
+  }
+  
+  .mega-tabs-col {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+  }
+  
+  .mega-tabs-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 10px;
+  }
+  
+  .mega-tab-item {
+    padding: 8px 14px;
+    border-radius: 20px;
+    border-left: none;
+    background: rgba(102, 126, 234, 0.05);
+  }
+  
+  .mega-tab-item:hover,
+  .mega-tab-item.active {
+    background: linear-gradient(135deg, var(--header-gradient-1), var(--header-gradient-2));
+  }
+  
+  .mega-tab-item:hover .mega-tab-text,
+  .mega-tab-item.active .mega-tab-text {
+    color: #fff;
+  }
+  
+  .mega-tab-item:hover .mega-tab-dot,
+  .mega-tab-item.active .mega-tab-dot {
+    background: #fff;
+    box-shadow: none;
+  }
+  
+  .mega-tab-arrow {
+    display: none;
+  }
+  
+  .mega-products-col {
+    padding: 0 10px;
+    min-width: auto;
+  }
+  
+  .mega-products-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  
+  .mega-product-img-sm {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mega-products-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .mega-product-img-sm {
+    width: 65px;
+    height: 65px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mega-tabs-list {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  
+  .mega-tabs-list::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .mega-tab-item {
+    flex-shrink: 0;
+  }
+  
+  .mega-products-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  
+  .mega-product-card-sm {
+    padding: 10px 6px;
+  }
+  
+  .mega-product-img-sm {
+    width: 55px;
+    height: 55px;
+  }
+  
+  .mega-product-name-sm {
+    font-size: 0.7rem;
+  }
+  
+  .mega-product-price-sm {
+    font-size: 0.75rem;
+  }
 }
 
 .mega-product-card {
@@ -1840,6 +2386,40 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   // ============================================
+  // MEGA MENU TABS - Submenu Hover/Click
+  // ============================================
+  document.querySelectorAll('.mega-tab-item').forEach(tab => {
+    const handleTabActivation = () => {
+      const tabId = tab.dataset.tab;
+      const parentId = tab.dataset.parent;
+      const megaDropdown = tab.closest('.mega-dropdown');
+      
+      if (!megaDropdown) return;
+      
+      // Remove active from all tabs in this menu
+      megaDropdown.querySelectorAll('.mega-tab-item').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      
+      // Show corresponding panel
+      megaDropdown.querySelectorAll('.mega-products-panel').forEach(panel => {
+        panel.classList.remove('active');
+        if (panel.dataset.panel === tabId && panel.dataset.parent === parentId) {
+          panel.classList.add('active');
+        }
+      });
+    };
+    
+    // Hover for desktop
+    tab.addEventListener('mouseenter', handleTabActivation);
+    
+    // Click for mobile/touch
+    tab.addEventListener('click', (e) => {
+      e.preventDefault();
+      handleTabActivation();
+    });
+  });
+  
+  // ============================================
   // CART COUNT ANIMATION
   // ============================================
   const cartBadge = document.querySelector('.cart-count');
@@ -1982,33 +2562,13 @@ document.addEventListener('DOMContentLoaded', function() {
   "blocks": [
     {
       "type": "mega_menu",
-      "name": "Mega Menu",
+      "name": "Mega Menu (Main)",
       "settings": [
         {
           "type": "text",
           "id": "menu_title",
-          "label": "Menu Item Title",
-          "info": "Enter the exact title of the menu item this mega menu applies to (e.g., 'Catalog', 'Products')"
-        },
-        {
-          "type": "header",
-          "content": "Featured Products"
-        },
-        {
-          "type": "text",
-          "id": "featured_title",
-          "label": "Featured Section Title",
-          "default": "Featured"
-        },
-        {
-          "type": "product",
-          "id": "featured_product_1",
-          "label": "Featured Product 1"
-        },
-        {
-          "type": "product",
-          "id": "featured_product_2",
-          "label": "Featured Product 2"
+          "label": "Main Menu Item Title",
+          "info": "Enter the exact title of the MAIN menu item (e.g., 'Special DTF', 'Products')"
         },
         {
           "type": "header",
@@ -2035,6 +2595,57 @@ document.addEventListener('DOMContentLoaded', function() {
           "type": "url",
           "id": "promo_link",
           "label": "Promo Link"
+        }
+      ]
+    },
+    {
+      "type": "submenu_item",
+      "name": "Submenu Products",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Assign products to a SUBMENU item (child link). The products will appear when user hovers over the submenu tab."
+        },
+        {
+          "type": "text",
+          "id": "parent_menu",
+          "label": "Parent Menu Title",
+          "info": "Exact title of the MAIN menu (e.g., 'Special DTF')"
+        },
+        {
+          "type": "text",
+          "id": "submenu_title",
+          "label": "Submenu Item Title",
+          "info": "Exact title of the SUBMENU item (e.g., 'Glitter DTF')"
+        },
+        {
+          "type": "header",
+          "content": "Products (up to 5)"
+        },
+        {
+          "type": "product",
+          "id": "product_1",
+          "label": "Product 1"
+        },
+        {
+          "type": "product",
+          "id": "product_2",
+          "label": "Product 2"
+        },
+        {
+          "type": "product",
+          "id": "product_3",
+          "label": "Product 3"
+        },
+        {
+          "type": "product",
+          "id": "product_4",
+          "label": "Product 4"
+        },
+        {
+          "type": "product",
+          "id": "product_5",
+          "label": "Product 5"
         }
       ]
     }

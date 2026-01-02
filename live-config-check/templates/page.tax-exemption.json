@@ -1,0 +1,229 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "color_scheme": "",
+        "show_title": true,
+        "page_width": "xs"
+      }
+    },
+    "rich_text_PjbRxb": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_9tHeyD": {
+          "type": "heading",
+          "settings": {
+            "text": "<strong>Tax Exemption</strong>",
+            "heading_tag": "h3"
+          }
+        },
+        "richtext_AG9zwL": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p><strong>Fast DTF Transfer is required to collect sales tax in the following states. </strong>If your business is located in one of these states and has the necessary registrations and authorizations to make tax-exempt or resale purchases under your state’s laws, you may apply for tax-exempt status to make sales tax–free purchases on our website.</p><p>Before starting the process, <strong>please make sure you have a customer account on our website</strong>. If you're a new customer and don't have an account yet, go ahead and <a href=\"https://account.fastdtftransfer.com/authentication/login?client_id=b3f9998b-ccf3-406f-b3ad-d4f7cb5aa2eb&locale=en&redirect_uri=https%3A%2F%2Faccount.fastdtftransfer.com%2Fauthentication%2Foauth%2Fauthorize%3Fclient_id%3Db3f9998b-ccf3-406f-b3ad-d4f7cb5aa2eb%26locale%3Den%26nonce%3Ddb305c94-c7de-4d37-97b5-a48d36d34700%26redirect_uri%3Dhttps%253A%252F%252Faccount.fastdtftransfer.com%252Fcallback%253Fsource%253Dcore%26response_type%3Dcode%26scope%3Dopenid%2Bemail%2Bcustomer-account-api%253Afull%26state%3D01K1K56PRC0MDP85MZQ8BFANBC\" target=\"_blank\" title=\"https://account.fastdtftransfer.com/authentication/login?client_id=b3f9998b-ccf3-406f-b3ad-d4f7cb5aa2eb&locale=en&redirect_uri=https%3A%2F%2Faccount.fastdtftransfer.com%2Fauthentication%2Foauth%2Fauthorize%3Fclient_id%3Db3f9998b-ccf3-406f-b3ad-d4f7cb5aa2eb%26locale%3Den%26nonce%3Ddb305c94-c7de-4d37-97b5-a48d36d34700%26redirect_uri%3Dhttps%253A%252F%252Faccount.fastdtftransfer.com%252Fcallback%253Fsource%253Dcore%26response_type%3Dcode%26scope%3Dopenid%2Bemail%2Bcustomer-account-api%253Afull%26state%3D01K1K56PRC0MDP85MZQ8BFANBC\"><strong>signup</strong></a> first. <strong>An account is required for us to grant you tax-exempt purchasing privileges at the end of the process</strong>.</p><p>To request exemption, simply follow the steps outlined below for your state to submit your resale or exemption certificate along with the required supporting documentation.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_9tHeyD",
+        "richtext_AG9zwL"
+      ],
+      "custom_css": [
+        ".container {padding: 0 30px;}"
+      ],
+      "name": "t:sections.rich_text.presets.rich_text.name",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "content_width": "sm",
+        "text_position": "start",
+        "remove_vertical_spacing": false
+      }
+    },
+    "rich_text_UWKEBh": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_kKCM4d": {
+          "type": "heading",
+          "settings": {
+            "text": "<strong>Step 1: Fill out the applicable resale or tax exemption certificate</strong>",
+            "heading_tag": "h4"
+          }
+        },
+        "richtext_6dEWLy": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Select the tab for your state to view the necessary resale or exemption certificate and instructions.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_kKCM4d",
+        "richtext_6dEWLy"
+      ],
+      "custom_css": [
+        ".container {padding: 0 30px;}"
+      ],
+      "name": "t:sections.rich_text.presets.rich_text.name",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": false,
+        "content_width": "sm",
+        "text_position": "start",
+        "remove_vertical_spacing": true
+      }
+    },
+    "faq_aAwAkL": {
+      "type": "faq",
+      "blocks": {
+        "question_7eepyq": {
+          "type": "question",
+          "disabled": true,
+          "settings": {
+            "question": "Illinois",
+            "answer": "<h4>Complete the CRT-61 Certificate of Resale</h4><p>For tax exemption in Illinois, you must complete the Illinois Certificate of Resale (Form CRT-61).</p><p>By completing and signing this form, you certify that:</p><ul><li>You are authorized to make tax-exempt purchases for resale or use as allowed under Illinois tax law.</li><li>The items or services purchased will be resold in the regular course of your business or qualify for exemption.<br/><br/></li></ul><p>👉 <a href=\"https://cdn.shopify.com/s/files/1/0864/4067/3590/files/Illinois_-_Certificate_of_Resale_CRT-61.pdf?v=1754123939\" target=\"_blank\" title=\"https://cdn.shopify.com/s/files/1/0864/4067/3590/files/Illinois_-_Certificate_of_Resale_CRT-61.pdf?v=1754123939\"><strong>Click here to access Form CRT-61</strong></a></p><p></p><p>After completing and signing the form, proceed to <strong>Step 2</strong> to submit it along with a copy of your Illinois Sales Tax Certificate of Registration.</p><p></p><h5><strong>Recommended:</strong></h5><p>We recommend completing the CRT-61 as a <strong>blanket certificate</strong> to maintain tax-exempt status for your future qualified purchases.</p>"
+          }
+        },
+        "question_ApQNbE": {
+          "type": "question",
+          "settings": {
+            "question": "New Jersey",
+            "answer": "<h4>Complete the ST-3 Resale Certificate</h4><p>To request tax-exempt status in New Jersey, please complete the <strong>New Jersey Resale Certificate (Form ST-3)</strong>.</p><p>By completing and signing this form, you certify that:</p><ul><li>You are a registered reseller or exempt entity under New Jersey law.<br/></li><li>The items or services purchased will be resold in the normal course of business or used in an exempt manner.<br/></li></ul><p>👉 <a href=\"https://cdn.shopify.com/s/files/1/0864/4067/3590/files/New_Jersey_-_Sales_Tax_Resale_Certificate_ST-3.pdf?v=1754123939\" target=\"_blank\" title=\"https://cdn.shopify.com/s/files/1/0864/4067/3590/files/New_Jersey_-_Sales_Tax_Resale_Certificate_ST-3.pdf?v=1754123939\"><strong>Click here to access Form ST-3</strong></a></p><p></p><p>Once completed and signed, proceed to <strong>Step 2</strong> to upload the certificate along with a copy of your New Jersey Sales Tax Certificate of Authority.</p><p></p><h5><strong>Recommended:</strong></h5><p>We suggest submitting the ST-3 as a <strong>blanket certificate</strong> to apply tax exemption to future orders as well.</p>"
+          }
+        },
+        "question_HQ3MJJ": {
+          "type": "question",
+          "disabled": true,
+          "settings": {
+            "question": "North Carolina",
+            "answer": "<h4><strong>Complete the Form E-595E Sales and Use Tax Exemption Certificate</strong></h4><p>To request tax-exempt status in North Carolina, please complete the <strong>North Carolina Sales and Use Tax Exemption Certificate (Form E-595E)</strong>.</p><p>By completing and signing this form, you certify that:</p><ul><li>You are eligible to make tax-exempt purchases as a reseller or exempt entity under North Carolina law.</li><li>The products or services you purchase will be used for resale or in tax-exempt activities, as specified on the certificate.<br/></li></ul><p>👉 <a href=\"https://cdn.shopify.com/s/files/1/0864/4067/3590/files/Nort_Carolina_-_Sales_and_Use_Tax_Certificate_E595E.pdf?v=1754123939\" target=\"_blank\" title=\"https://cdn.shopify.com/s/files/1/0864/4067/3590/files/Nort_Carolina_-_Sales_and_Use_Tax_Certificate_E595E.pdf?v=1754123939\"><strong>Click here to access Form E-595E</strong></a></p><p></p><p>Once the form is completed and signed, proceed to <strong>Step 2</strong> to submit the form along with a copy of your <strong>North Carolina Sales and Use Tax Certificate of Registration</strong>.</p><p></p><h5><strong>Recommended:</strong></h5><p>We suggest submitting the <strong>Form E-595E</strong> as a <strong>blanket certificate</strong> to ensure your future purchases are also tax-exempt.</p>"
+          }
+        },
+        "question_6GQ9GC": {
+          "type": "question",
+          "disabled": true,
+          "settings": {
+            "question": "Texas",
+            "answer": "<h4>Complete the Texas Sales and Use Tax Resale Certificate (Form 01-339)</h4><p>To begin your tax-exempt request in Texas, you’ll need to complete the <strong>Texas Sales and Use Tax Resale Certificate (Form 01-339)</strong>.</p><p>By completing and signing this form, you are certifying that:</p><ul><li>You are eligible to make tax-exempt purchases as a reseller or exempt organization under Texas law.</li><li>The products or services you purchase will be used in tax-exempt activities or for resale as specified on the certificate.<br/></li></ul><p>👉<a href=\"https://cdn.shopify.com/s/files/1/0864/4067/3590/files/01-339_-_Texas_Sales_and_Use_Tax_Resale_Form.pdf?v=1754123939\" target=\"_blank\" title=\"https://cdn.shopify.com/s/files/1/0864/4067/3590/files/01-339_-_Texas_Sales_and_Use_Tax_Resale_Form.pdf?v=1754123939\"> <strong>Click here to access Form 01-339</strong></a></p><p></p><p>Once the form is fully completed and signed, proceed to <strong>Step 2</strong> to submit your form and a copy of your permit.</p><p></p><h5><strong>Important Notice:</strong></h5><p>The name of the purchaser, firm, or agency listed on your tax permit and certificate must match the name or username associated with your DTF Bank account.</p><p>If you registered your account using your <strong>personal name</strong>, but the permit or certificate is issued under a business name, please <strong>include your full personal name</strong> next to your signature in the <strong>\"Purchaser Signature\"</strong> section of the form to help us verify your submission.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "question_7eepyq",
+        "question_ApQNbE",
+        "question_HQ3MJJ",
+        "question_6GQ9GC"
+      ],
+      "custom_css": [
+        ".container {padding: 0 20px;}",
+        ".accordion__content p {color: #000000 !important;}",
+        ".accordion__content {padding: 0 20px !important;}"
+      ],
+      "name": "t:sections.faq.presets.faq.name",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "separate_section_with_border": false,
+        "show_categories": false,
+        "subheading": "",
+        "title": "",
+        "content": ""
+      }
+    },
+    "rich_text_7PAra9": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_PANJCa": {
+          "type": "heading",
+          "settings": {
+            "text": "<strong>Step 2: Submit the completed form and a copy of your permit</strong>",
+            "heading_tag": "h4"
+          }
+        },
+        "richtext_K8Ed8R": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Please upload your <strong>completed and signed certificate form</strong>, along with a copy of your <strong>Sales and Use Tax Permit</strong> or <strong>Certificate of Registration</strong>, using the section below.</p><p>Ensure that the information provided in your account is accurate so we can easily locate your details and process your tax-exempt request.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_PANJCa",
+        "richtext_K8Ed8R"
+      ],
+      "custom_css": [
+        ".container {padding: 0 30px;}"
+      ],
+      "name": "t:sections.rich_text.presets.rich_text.name",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "content_width": "sm",
+        "text_position": "start",
+        "remove_vertical_spacing": false
+      }
+    },
+    "1754065602f142dfba": {
+      "type": "apps",
+      "blocks": {
+        "hulk_form_builder_form_block_wQHpBy": {
+          "type": "shopify://apps/hulk-form-builder/blocks/form-block/b6b8dd14-356b-4725-a4ed-77232212b3c3",
+          "settings": {
+            "form_uuid": "nGuwZ0XDDCQKv3VupQBOkw",
+            "form_settings": false,
+            "font_color": "#000000",
+            "size": 14,
+            "input_background_color": "#ffffff",
+            "input_background_color_focus": "#f4dada",
+            "input_border_radius": 1,
+            "input_border_color": "#ebe9e9",
+            "input_border_color_focus": "#2d2727",
+            "input_font_color": "#3d3131",
+            "input_size": 14,
+            "border_color": "#121212",
+            "border_radius": 2,
+            "border": 1,
+            "fill_color": "#ebe9e9",
+            "padding": 35,
+            "form_width": 600,
+            "btn_text": "Submit",
+            "sub_btn_txt_color": "#f3f3f3",
+            "sub_btn_bg_color": "#3f3333",
+            "sub_btn_font_size": 14,
+            "sub_btn_bdr_color": "#ffffff",
+            "sub_btn_bdr_rad": 3,
+            "sub_btn_bdr_width": 1,
+            "fonts": "Times New Roman"
+          }
+        }
+      },
+      "block_order": [
+        "hulk_form_builder_form_block_wQHpBy"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "remove_vertical_spacing": false,
+        "remove_horizontal_spacing": false
+      }
+    }
+  },
+  "order": [
+    "main",
+    "rich_text_PjbRxb",
+    "rich_text_UWKEBh",
+    "faq_aAwAkL",
+    "rich_text_7PAra9",
+    "1754065602f142dfba"
+  ]
+}

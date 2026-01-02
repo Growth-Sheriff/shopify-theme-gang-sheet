@@ -1,0 +1,9 @@
+# ═══════════════════════════════════════════════════════════
+# SHOPIFY IGNORE - Tema güncellemelerinde bu dosyalar atlanır
+# ═══════════════════════════════════════════════════════════
+
+# Kullanıcı ayarları (Customizer'da yapılan tüm ayarlar)
+config/settings_data.json
+
+# Template ayarları (sayfa düzenleri, section sıralamaları)
+templates/*.json

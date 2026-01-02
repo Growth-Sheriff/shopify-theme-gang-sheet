@@ -1,0 +1,375 @@
+{% comment %}
+  Product Instructions Section - Press info, Shipping, Care
+  CloudyPrints Theme
+  
+  Data Sources:
+  - Press Instructions: Product Metafields → Section Settings → Theme Settings (fallback chain)
+  - Care Instructions: Product Metafields → Section Blocks → Defaults
+  - Shipping: Theme Settings (global for all products)
+{% endcomment %}
+
+{% comment %} === Assign Press Values (Metafield > Section > Theme Settings) === {% endcomment %}
+{% assign press_temp = product.metafields.custom.press_temperature | default: section.settings.press_temp | default: settings.press_temperature | default: '285°F - 300°F' %}
+{% assign press_time = product.metafields.custom.press_time | default: section.settings.press_time | default: settings.press_time | default: '10-15 seconds' %}
+{% assign press_pressure = product.metafields.custom.press_pressure | default: section.settings.press_pressure | default: settings.press_pressure | default: 'Medium' %}
+{% assign press_peel = product.metafields.custom.press_peel | default: section.settings.press_peel | default: settings.press_peel | default: 'Cold Peel' %}
+
+{% comment %} === Assign Care Instructions (Metafield > Defaults) === {% endcomment %}
+{% assign care_instructions_meta = product.metafields.custom.care_instructions %}
+
+{% comment %} === Assign Shipping Values from Theme Settings === {% endcomment %}
+{% assign shipping_processing = settings.shipping_processing_time | default: section.settings.processing_time | default: '1-2 Business Days' %}
+{% assign shipping_standard = settings.shipping_standard | default: section.settings.standard_shipping | default: '3-5 Business Days' %}
+{% assign shipping_express = settings.shipping_express | default: section.settings.express_shipping | default: '1-2 Business Days' %}
+{% assign shipping_free = settings.shipping_free_threshold | default: section.settings.free_shipping_threshold | default: 'Orders $59+' %}
+
+<div class="product-instructions-wrapper" {{ section.shopify_attributes }}>
+  
+  {% comment %} ═══ PRESS INSTRUCTIONS ═══ {% endcomment %}
+  {% if section.settings.show_press_info %}
+  <div class="step-card">
+    <div class="step-header">
+      <span class="step-icon"><i class="ti ti-temperature"></i></span>
+      {{ section.settings.press_title | default: 'Press Instructions' }}
+      {% if product.metafields.custom.press_temperature %}
+        <span class="badge-metafield" title="Product-specific values">Custom</span>
+      {% endif %}
+    </div>
+    <div class="instruction-steps">
+      <div class="instruction-step">
+        <i class="ti ti-temperature"></i>
+        <span class="instruction-label">Temperature</span>
+        <span class="instruction-value">{{ press_temp }}</span>
+      </div>
+      <div class="instruction-step">
+        <i class="ti ti-clock"></i>
+        <span class="instruction-label">Time</span>
+        <span class="instruction-value">{{ press_time }}</span>
+      </div>
+      <div class="instruction-step">
+        <i class="ti ti-arrows-vertical"></i>
+        <span class="instruction-label">Pressure</span>
+        <span class="instruction-value">{{ press_pressure }}</span>
+      </div>
+      <div class="instruction-step">
+        <i class="ti ti-snowflake"></i>
+        <span class="instruction-label">Peel</span>
+        <span class="instruction-value">{{ press_peel }}</span>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% comment %} ═══ CARE INSTRUCTIONS ═══ {% endcomment %}
+  {% if section.settings.show_care_info %}
+  <div class="step-card">
+    <div class="step-header">
+      <span class="step-icon"><i class="ti ti-shirt"></i></span>
+      {{ section.settings.care_title | default: 'Care Instructions' }}
+      {% if care_instructions_meta %}
+        <span class="badge-metafield" title="Product-specific care instructions">Custom</span>
+      {% endif %}
+    </div>
+    <div class="care-instructions">
+      <p class="care-intro">{{ section.settings.care_intro | default: 'To ensure your DTF transfer lasts as long as possible:' }}</p>
+      
+      {% if care_instructions_meta %}
+        {% comment %} Use product metafield if available (expects JSON array or multi-line text) {% endcomment %}
+        <div class="care-grid">
+          {% assign care_items = care_instructions_meta | newline_to_br | split: '<br />' %}
+          {% for item in care_items %}
+            {% assign item_text = item | strip %}
+            {% if item_text != '' %}
+              <div class="care-item">
+                <i class="ti ti-check"></i>
+                <span>{{ item_text }}</span>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% elsif section.blocks.size > 0 %}
+        {% comment %} Use section blocks if available {% endcomment %}
+        <div class="care-grid">
+          {% for block in section.blocks %}
+            {% if block.type == 'care_item' %}
+              <div class="care-item" {{ block.shopify_attributes }}>
+                <i class="ti ti-{{ block.settings.icon | default: 'check' }}"></i>
+                <span>{{ block.settings.text }}</span>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% else %}
+        {% comment %} Default care instructions {% endcomment %}
+        <div class="care-grid">
+          <div class="care-item"><i class="ti ti-check"></i><span>Wait 24hrs before washing</span></div>
+          <div class="care-item"><i class="ti ti-check"></i><span>Wash inside out</span></div>
+          <div class="care-item"><i class="ti ti-check"></i><span>Cold water only</span></div>
+          <div class="care-item"><i class="ti ti-check"></i><span>Tumble dry low</span></div>
+          <div class="care-item"><i class="ti ti-check"></i><span>Do not iron on design</span></div>
+          <div class="care-item"><i class="ti ti-check"></i><span>No bleach</span></div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% comment %} ═══ SHIPPING INFO (From Theme Settings - Global) ═══ {% endcomment %}
+  {% if section.settings.show_shipping_info %}
+  <div class="step-card">
+    <div class="step-header">
+      <span class="step-icon"><i class="ti ti-truck-delivery"></i></span>
+      {{ section.settings.shipping_title | default: 'Shipping Information' }}
+    </div>
+    <ul class="shipping-specs">
+      <li>
+        <span class="spec-label">Processing Time</span>
+        <span class="spec-value">{{ shipping_processing }}</span>
+      </li>
+      <li>
+        <span class="spec-label">Standard Shipping</span>
+        <span class="spec-value">{{ shipping_standard }}</span>
+      </li>
+      <li>
+        <span class="spec-label">Express Shipping</span>
+        <span class="spec-value">{{ shipping_express }}</span>
+      </li>
+      <li>
+        <span class="spec-label">Free Shipping</span>
+        <span class="spec-value">{{ shipping_free }}</span>
+      </li>
+    </ul>
+  </div>
+  {% endif %}
+
+</div>
+
+<style>
+  .product-instructions-wrapper {
+    padding: 1rem 0;
+  }
+  
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .badge-metafield {
+    font-size: 0.625rem;
+    padding: 0.15rem 0.4rem;
+    background: linear-gradient(135deg, var(--cp-primary-light), var(--cp-primary));
+    color: #fff;
+    border-radius: 0.25rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-left: auto;
+  }
+  
+  .care-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+  
+  .care-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--cp-body-color);
+  }
+  
+  .care-item i {
+    color: var(--cp-success);
+    font-size: 1rem;
+  }
+  
+  .care-intro {
+    color: var(--cp-text-secondary);
+    font-size: 0.875rem;
+    margin: 0;
+  }
+  
+  .shipping-specs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .shipping-specs li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--cp-border-color);
+  }
+  
+  .shipping-specs li:last-child {
+    border-bottom: none;
+  }
+  
+  .spec-label {
+    color: var(--cp-text-secondary);
+    font-size: 0.875rem;
+  }
+  
+  .spec-value {
+    font-weight: 500;
+    color: var(--cp-heading-color);
+    font-size: 0.875rem;
+  }
+
+  @media (max-width: 576px) {
+    .care-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Product Instructions",
+  "tag": "section",
+  "class": "cp-product-instructions-section",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Press Instructions"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_press_info",
+      "label": "Show Press Instructions",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "press_title",
+      "label": "Title",
+      "default": "Press Instructions"
+    },
+    {
+      "type": "text",
+      "id": "press_temp",
+      "label": "Temperature",
+      "default": "285°F - 300°F"
+    },
+    {
+      "type": "text",
+      "id": "press_time",
+      "label": "Time",
+      "default": "10-15 seconds"
+    },
+    {
+      "type": "text",
+      "id": "press_pressure",
+      "label": "Pressure",
+      "default": "Medium"
+    },
+    {
+      "type": "text",
+      "id": "press_peel",
+      "label": "Peel",
+      "default": "Cold Peel"
+    },
+    {
+      "type": "header",
+      "content": "Care Instructions"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_care_info",
+      "label": "Show Care Instructions",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "care_title",
+      "label": "Title",
+      "default": "Care Instructions"
+    },
+    {
+      "type": "text",
+      "id": "care_intro",
+      "label": "Intro Text",
+      "default": "To ensure your DTF transfer lasts as long as possible:"
+    },
+    {
+      "type": "header",
+      "content": "Shipping Information"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shipping_info",
+      "label": "Show Shipping Information",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "shipping_title",
+      "label": "Title",
+      "default": "Shipping Information"
+    },
+    {
+      "type": "text",
+      "id": "processing_time",
+      "label": "Processing Time",
+      "default": "1-2 Business Days"
+    },
+    {
+      "type": "text",
+      "id": "standard_shipping",
+      "label": "Standard Shipping",
+      "default": "3-5 Business Days"
+    },
+    {
+      "type": "text",
+      "id": "express_shipping",
+      "label": "Express Shipping",
+      "default": "1-2 Business Days"
+    },
+    {
+      "type": "text",
+      "id": "free_shipping_threshold",
+      "label": "Free Shipping Threshold",
+      "default": "Orders $59+"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "care_item",
+      "name": "Care Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (Tabler)",
+          "default": "check"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Instruction Text",
+          "default": "Wash inside out"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Instructions",
+      "blocks": [
+        { "type": "care_item", "settings": { "icon": "check", "text": "Wait 24hrs before washing" } },
+        { "type": "care_item", "settings": { "icon": "check", "text": "Wash inside out" } },
+        { "type": "care_item", "settings": { "icon": "check", "text": "Cold water only" } },
+        { "type": "care_item", "settings": { "icon": "check", "text": "Tumble dry low" } },
+        { "type": "care_item", "settings": { "icon": "check", "text": "Do not iron on design" } },
+        { "type": "care_item", "settings": { "icon": "check", "text": "No bleach" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

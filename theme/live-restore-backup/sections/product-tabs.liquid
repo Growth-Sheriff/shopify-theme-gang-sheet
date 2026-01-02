@@ -1,0 +1,290 @@
+{% comment %}
+  Product Tabs Section - Details, Shipping, Care
+  Separate section for product information tabs
+{% endcomment %}
+
+<style>
+.product-tabs-section {
+  background: var(--cp-card-bg, #fff);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 0;
+  border: 1px solid var(--cp-border-color, #ebe9f1);
+}
+
+.product-tab-buttons {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--cp-border-color, #ebe9f1);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.product-tab-btn {
+  background: transparent;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--cp-muted-color, #b9b9c3);
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.product-tab-btn:hover {
+  color: var(--cp-primary, #7367f0);
+  background: var(--cp-primary-lighter, rgba(115, 103, 240, 0.08));
+}
+
+.product-tab-btn.active {
+  color: var(--cp-primary, #7367f0);
+  background: var(--cp-primary-lighter, rgba(115, 103, 240, 0.12));
+  font-weight: 600;
+}
+
+.product-tab-btn i {
+  font-size: 1rem;
+}
+
+.product-tab-content {
+  min-height: 100px;
+}
+
+.product-tab-pane {
+  display: none;
+}
+
+.product-tab-pane.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tab-description {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--cp-body-color, #6e6b7b);
+}
+
+.tab-spec-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tab-spec-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--cp-border-color, #ebe9f1);
+}
+
+.tab-spec-list li:last-child {
+  border-bottom: none;
+}
+
+.spec-label {
+  font-weight: 500;
+  color: var(--cp-heading-color, #5e5873);
+}
+
+.spec-value {
+  color: var(--cp-body-color, #6e6b7b);
+}
+
+.tab-features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.tab-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--cp-body-color, #6e6b7b);
+}
+
+.tab-feature-item i {
+  color: var(--cp-success, #28c76f);
+  font-size: 1rem;
+}
+
+@media (max-width: 576px) {
+  .product-tab-buttons {
+    flex-wrap: wrap;
+  }
+  
+  .tab-features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<div class="product-tabs-section">
+  <div class="product-tab-buttons" role="tablist" aria-label="Product information tabs">
+    <button class="product-tab-btn active" onclick="switchProductTab('details', this)" role="tab" aria-selected="true" aria-controls="tab-details" id="tab-btn-details">
+      <i class="ti ti-file-description" aria-hidden="true"></i> {{ 'products.product.tab_description' | t | default: 'Details' }}
+    </button>
+    <button class="product-tab-btn" onclick="switchProductTab('shipping', this)" role="tab" aria-selected="false" aria-controls="tab-shipping" id="tab-btn-shipping">
+      <i class="ti ti-truck" aria-hidden="true"></i> {{ 'products.product.tab_shipping' | t | default: 'Shipping' }}
+    </button>
+    <button class="product-tab-btn" onclick="switchProductTab('care', this)" role="tab" aria-selected="false" aria-controls="tab-care" id="tab-btn-care">
+      <i class="ti ti-shirt" aria-hidden="true"></i> {{ 'products.product.tab_care' | t | default: 'Care' }}
+    </button>
+  </div>
+  
+  <div class="product-tab-content">
+    <div class="product-tab-pane active" id="tab-details" role="tabpanel" aria-labelledby="tab-btn-details">
+      <div class="tab-description">
+        {{ product.description | default: section.settings.default_description }}
+      </div>
+    </div>
+    
+    <div class="product-tab-pane" id="tab-shipping" role="tabpanel" aria-labelledby="tab-btn-shipping">
+      <ul class="tab-spec-list">
+        <li>
+          <span class="spec-label">Processing</span>
+          <span class="spec-value">{{ section.settings.processing_time | default: '1-2 Business Days' }}</span>
+        </li>
+        <li>
+          <span class="spec-label">Standard Shipping</span>
+          <span class="spec-value">{{ section.settings.standard_shipping | default: '3-5 Business Days' }}</span>
+        </li>
+        <li>
+          <span class="spec-label">Express Shipping</span>
+          <span class="spec-value">{{ section.settings.express_shipping | default: '1-2 Business Days' }}</span>
+        </li>
+        <li>
+          <span class="spec-label">Free Shipping</span>
+          <span class="spec-value">{{ section.settings.free_shipping | default: 'Orders $59+' }}</span>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="product-tab-pane" id="tab-care" role="tabpanel" aria-labelledby="tab-btn-care">
+      <div class="tab-features-grid">
+        {% for block in section.blocks %}
+          {% if block.type == 'care_item' %}
+            <div class="tab-feature-item" {{ block.shopify_attributes }}>
+              <i class="ti ti-{{ block.settings.icon | default: 'check' }}"></i>
+              <span>{{ block.settings.text }}</span>
+            </div>
+          {% endif %}
+        {% endfor %}
+        {% if section.blocks.size == 0 %}
+          <div class="tab-feature-item"><i class="ti ti-check"></i><span>Wait 24hrs before washing</span></div>
+          <div class="tab-feature-item"><i class="ti ti-check"></i><span>Wash inside out, cold water</span></div>
+          <div class="tab-feature-item"><i class="ti ti-check"></i><span>Tumble dry low</span></div>
+          <div class="tab-feature-item"><i class="ti ti-check"></i><span>Do not iron on design</span></div>
+          <div class="tab-feature-item"><i class="ti ti-check"></i><span>No bleach</span></div>
+          <div class="tab-feature-item"><i class="ti ti-check"></i><span>No dry cleaning</span></div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchProductTab(tabId, btn) {
+  // Remove active from all buttons and update aria-selected
+  document.querySelectorAll('.product-tabs-section .product-tab-btn').forEach(function(b) {
+    b.classList.remove('active');
+    b.setAttribute('aria-selected', 'false');
+  });
+  // Remove active from all panes
+  document.querySelectorAll('.product-tabs-section .product-tab-pane').forEach(function(p) {
+    p.classList.remove('active');
+  });
+  // Add active to clicked button
+  btn.classList.add('active');
+  btn.setAttribute('aria-selected', 'true');
+  // Add active to corresponding pane
+  var pane = document.getElementById('tab-' + tabId);
+  if (pane) pane.classList.add('active');
+}
+</script>
+
+{% schema %}
+{
+  "name": "Product Tabs",
+  "tag": "section",
+  "class": "product-tabs-container",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "default_description",
+      "label": "Default Description",
+      "default": "<p>Premium quality DTF transfers for your custom apparel projects.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Shipping Information"
+    },
+    {
+      "type": "text",
+      "id": "processing_time",
+      "label": "Processing Time",
+      "default": "1-2 Business Days"
+    },
+    {
+      "type": "text",
+      "id": "standard_shipping",
+      "label": "Standard Shipping",
+      "default": "3-5 Business Days"
+    },
+    {
+      "type": "text",
+      "id": "express_shipping",
+      "label": "Express Shipping",
+      "default": "1-2 Business Days"
+    },
+    {
+      "type": "text",
+      "id": "free_shipping",
+      "label": "Free Shipping Threshold",
+      "default": "Orders $59+"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "care_item",
+      "name": "Care Instruction",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon Name (Tabler)",
+          "default": "check"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Instruction Text",
+          "default": "Wait 24hrs before washing"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Tabs",
+      "blocks": [
+        { "type": "care_item", "settings": { "icon": "check", "text": "Wait 24hrs before washing" } },
+        { "type": "care_item", "settings": { "icon": "check", "text": "Wash inside out, cold water" } },
+        { "type": "care_item", "settings": { "icon": "check", "text": "Tumble dry low" } },
+        { "type": "care_item", "settings": { "icon": "check", "text": "Do not iron on design" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

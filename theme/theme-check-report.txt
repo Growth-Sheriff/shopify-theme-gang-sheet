@@ -1,0 +1,635 @@
+Ôò¡ÔöÇ info ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò«
+Ôöé                                                                              Ôöé
+Ôöé  :\Users\mhmmd\Desktop\shopify-theme\theme\layout\theme.liquid               Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: RemoteAsset                                                      Ôöé
+Ôöé  Asset should be served by the Shopify CDN for better performance.           Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  24  <link rel="preconnect" href="https://fonts.googleapis.com" />           Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: RemoteAsset                                                      Ôöé
+Ôöé  Asset should be served by the Shopify CDN for better performance.           Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  25  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />  Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: RemoteAsset                                                      Ôöé
+Ôöé  Asset should be served by the Shopify CDN for better performance.           Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  29  <link                                                                   Ôöé
+Ôöé  href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500  Ôöé
+Ôöé  ;600;700&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400  Ôöé
+Ôöé  ;500;600;700&family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;  Ôöé
+Ôöé  400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"  Ôöé
+Ôöé   rel="stylesheet" />                                                        Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: RemoteAsset                                                      Ôöé
+Ôöé  Asset should be served by the Shopify CDN for better performance.           Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  32  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icon  Ôöé
+Ôöé  s-webfont@2.44.0/tabler-icons.min.css" />                                   Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: RemoteAsset                                                      Ôöé
+Ôöé  Asset should be served by the Shopify CDN for better performance.           Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  35  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fo  Ôöé
+Ôöé  nt-awesome/6.5.1/css/all.min.css" />                                        Ôöé
+Ôöé                                                                              Ôöé
+Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò»
+
+Ôò¡ÔöÇ info ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò«
+Ôöé                                                                              Ôöé
+Ôöé  :\Users\mhmmd\Desktop\shopify-theme\theme\sections\header.liquid            Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  146  <img src="{{ p1.featured_image | image_url: width: 150 }}" alt="{{     Ôöé
+Ôöé  p1.title }}" loading="lazy">                                                Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  160  <img src="{{ p2.featured_image | image_url: width: 150 }}" alt="{{     Ôöé
+Ôöé  p2.title }}" loading="lazy">                                                Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  174  <img src="{{ p3.featured_image | image_url: width: 150 }}" alt="{{     Ôöé
+Ôöé  p3.title }}" loading="lazy">                                                Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  188  <img src="{{ p4.featured_image | image_url: width: 150 }}" alt="{{     Ôöé
+Ôöé  p4.title }}" loading="lazy">                                                Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  202  <img src="{{ p5.featured_image | image_url: width: 150 }}" alt="{{     Ôöé
+Ôöé  p5.title }}" loading="lazy">                                                Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  246  <img src="{{ mega_block.settings.promo_image | image_url: width: 200   Ôöé
+Ôöé  }}" alt="{{ mega_block.settings.promo_title }}" loading="lazy">             Ôöé
+Ôöé                                                                              Ôöé
+Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò»
+
+Ôò¡ÔöÇ info ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò«
+Ôöé                                                                              Ôöé
+Ôöé  :\Users\mhmmd\Desktop\shopify-theme\theme\sections\hero-banner-pro.liquid   Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  527                      <img                                               Ôöé
+Ôöé  528                        src="{{ block.settings.bg_image | image_url:     Ôöé
+Ôöé  width: 2000 }}"                                                             Ôöé
+Ôöé  529                        alt="{{ block.settings.bg_image.alt | default:   Ôöé
+Ôöé  block.settings.title | escape }}"                                           Ôöé
+Ôöé  530                        loading="{% if forloop.first %}eager{% else      Ôöé
+Ôöé  %}lazy{% endif %}"                                                          Ôöé
+Ôöé  531                        style="object-position: {{                       Ôöé
+Ôöé  block.settings.bg_position }};"                                             Ôöé
+Ôöé  532                      >
+                                                 Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: RemoteAsset                                                      Ôöé
+Ôöé  Use one of the asset_url filters to serve assets for better performance.    Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  541  <source src="{{ block.settings.bg_video_url }}" type="video/mp4">      Ôöé
+Ôöé                                                                              Ôöé
+Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò»
+
+Ôò¡ÔöÇ info ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò«
+Ôöé                                                                              Ôöé
+Ôöé  :\Users\mhmmd\Desktop\shopify-theme\theme\sections\homepage-categories.liq  Ôöé
+Ôöé  uid                                                                         Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: RemoteAsset                                                      Ôöé
+Ôöé  Use one of the asset_url filters to serve assets for better performance.    Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  50  <img src="{{ block.settings.image_url | default: 'https://images.unspl  Ôöé
+Ôöé  ash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop' }}" alt="{{  Ôöé
+Ôöé   block.settings.name | default: 'Customer' }}" width="100" height="100"     Ôöé
+Ôöé  loading="lazy">                                                             Ôöé
+Ôöé                                                                              Ôöé
+Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò»
+
+Ôò¡ÔöÇ info ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò«
+Ôöé                                                                              Ôöé
+Ôöé  :\Users\mhmmd\Desktop\shopify-theme\theme\sections\homepage-grid.liquid     Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: RemoteAsset                                                      Ôöé
+Ôöé  Use one of the asset_url filters to serve assets for better performance.    Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  278  <img src="{{ block.settings.image_url }}" alt="{{                      Ôöé
+Ôöé  block.settings.title }}" width="400" height="400" loading="lazy">           Ôöé
+Ôöé                                                                              Ôöé
+Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò»
+
+Ôò¡ÔöÇ info ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò«
+Ôöé                                                                              Ôöé
+Ôöé  :\Users\mhmmd\Desktop\shopify-theme\theme\sections\homepage-hero.liquid     Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ParserBlockingScript                                               Ôöé
+Ôöé  Avoid parser blocking scripts by adding `defer` or `async` on this tag      Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  108  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/thr  Ôöé
+Ôöé  ee.min.js"></script>                                                        Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ParserBlockingScript                                               Ôöé
+Ôöé  Avoid parser blocking scripts by adding `defer` or `async` on this tag      Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  109  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/l  Ôöé
+Ôöé  oaders/GLTFLoader.js"></script>                                             Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ParserBlockingScript                                               Ôöé
+Ôöé  Avoid parser blocking scripts by adding `defer` or `async` on this tag      Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  110  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/c  Ôöé
+Ôöé  ontrols/OrbitControls.js"></script>                                         Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: RemoteAsset                                                      Ôöé
+Ôöé  Asset should be served by the Shopify CDN for better performance.           Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  108  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/thr  Ôöé
+Ôöé  ee.min.js"></script>                                                        Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: RemoteAsset                                                      Ôöé
+Ôöé  Asset should be served by the Shopify CDN for better performance.           Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  109  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/l  Ôöé
+Ôöé  oaders/GLTFLoader.js"></script>                                             Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: RemoteAsset                                                      Ôöé
+Ôöé  Asset should be served by the Shopify CDN for better performance.           Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  110  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/c  Ôöé
+Ôöé  ontrols/OrbitControls.js"></script>                                         Ôöé
+Ôöé                                                                              Ôöé
+Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò»
+
+Ôò¡ÔöÇ info ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò«
+Ôöé                                                                              Ôöé
+Ôöé  :\Users\mhmmd\Desktop\shopify-theme\theme\sections\homepage-product-bar.li  Ôöé
+Ôöé  quid                                                                        Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  36  <img src="{{ card_product.featured_image | image_url: width: 300 }}"    Ôöé
+Ôöé  alt="{{ card_product.title }}" loading="lazy"                               Ôöé
+Ôöé  style="width:100%;height:100%;object-fit:cover;display:block;">             Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  111  <img src="{{ block.settings.image | image_url: width: 300 }}" alt="{{  Ôöé
+Ôöé   block.settings.title }}" loading="lazy"                                    Ôöé
+Ôöé  style="width:100%;height:100%;object-fit:cover;display:block;">             Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  113  <img src="{{ block.settings.image_url }}" alt="{{                      Ôöé
+Ôöé  block.settings.title }}" loading="lazy"                                     Ôöé
+Ôöé  style="width:100%;height:100%;object-fit:cover;display:block;">             Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: RemoteAsset                                                      Ôöé
+Ôöé  Use one of the asset_url filters to serve assets for better performance.    Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  113  <img src="{{ block.settings.image_url }}" alt="{{                      Ôöé
+Ôöé  block.settings.title }}" loading="lazy"                                     Ôöé
+Ôöé  style="width:100%;height:100%;object-fit:cover;display:block;">             Ôöé
+Ôöé                                                                              Ôöé
+Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò»
+
+Ôò¡ÔöÇ info ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò«
+Ôöé                                                                              Ôöé
+Ôöé  :\Users\mhmmd\Desktop\shopify-theme\theme\sections\homepage-product-showca  Ôöé
+Ôöé  se.liquid                                                                   Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  89                              <img src="{{ product.featured_image |       Ôöé
+Ôöé  image_url: width: 400 }}"                                                   Ôöé
+Ôöé  90                                   alt="{{ product.title | escape }}"     Ôöé
+Ôöé  91                                   loading="lazy"                         Ôöé
+Ôöé  92                                                                          Ôöé
+Ôöé  style="width:100%;height:100%;object-fit:cover;display:block;">
+            Ôöé
+Ôöé                                                                              Ôöé
+Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò»
+
+Ôò¡ÔöÇ info ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò«
+Ôöé                                                                              Ôöé
+Ôöé  :\Users\mhmmd\Desktop\shopify-theme\theme\sections\homepage-testimonials.l  Ôöé
+Ôöé  iquid                                                                       Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: RemoteAsset                                                      Ôöé
+Ôöé  Use one of the asset_url filters to serve assets for better performance.    Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  78  <img src="{{ block.settings.avatar_url }}" alt="{{ block.settings.name  Ôöé
+Ôöé   }}" width="80" height="80" loading="lazy">                                 Ôöé
+Ôöé                                                                              Ôöé
+Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò»
+
+Ôò¡ÔöÇ info ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò«
+Ôöé                                                                              Ôöé
+Ôöé  :\Users\mhmmd\Desktop\shopify-theme\theme\sections\product-main.liquid      Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  56  <img src="{{ image | image_url: width: 100 }}" alt="{{ product.title    Ôöé
+Ôöé  }}" loading="lazy">                                                         Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  64                  <img src="{{ product.featured_image | image_url:        Ôöé
+Ôöé  width: 800 }}"                                                              Ôöé
+Ôöé  65                       alt="{{ product.title }}"                          Ôöé
+Ôöé  66                       class="main-product-image"                         Ôöé
+Ôöé  67                       id="pm-main-image">
+                               Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  503                    <img src="{{ block.settings.image | image_url:       Ôöé
+Ôöé  width: 600 }}"                                                              Ôöé
+Ôöé  504                         alt="{{ block.settings.caption | default:       Ôöé
+Ôöé  product.title }}"                                                           Ôöé
+Ôöé  505                         loading="lazy"                                  Ôöé
+Ôöé  506                         style="width: 100%; border-radius: 8px;">
+      Ôöé
+Ôöé                                                                              Ôöé
+Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò»
+
+Ôò¡ÔöÇ info ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò«
+Ôöé                                                                              Ôöé
+Ôöé  :\Users\mhmmd\Desktop\shopify-theme\theme\sections\trust-badges.liquid      Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  252  <img                                                                   Ôöé
+Ôöé  src="https://cdn.shopify.com/shopifycloud/shopify/assets/payment_icons/vis  Ôöé
+Ôöé  a-319d545c6fd255c9aad5eeaad21fd6f7f7b4fdbdb1a35ce83b89cca12a187f00.svg"     Ôöé
+Ôöé  alt="Visa" class="trust-payment-icon">                                      Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  253  <img                                                                   Ôöé
+Ôöé  src="https://cdn.shopify.com/shopifycloud/shopify/assets/payment_icons/mas  Ôöé
+Ôöé  ter-173035bc8124581983d4bbe50b89c845e255c2c7b126e5f0d629bcd52ae06ed8.svg"   Ôöé
+Ôöé  alt="Mastercard" class="trust-payment-icon">                                Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  254  <img src="https://cdn.shopify.com/shopifycloud/shopify/assets/payment  Ôöé
+Ôöé  _icons/american_express-2264c9b8b57b23b766b9c2f86f5f2f83d3b4c1d2f7c07f7d8b  Ôöé
+Ôöé  6c32c4d5c5e6c0.svg" alt="American Express" class="trust-payment-icon">      Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  255  <img                                                                   Ôöé
+Ôöé  src="https://cdn.shopify.com/shopifycloud/shopify/assets/payment_icons/pay  Ôöé
+Ôöé  pal-49e4c1e03244b6d2de0d270ca0d22dd15da6e92cc7266e93eb43762df5aa355d.svg"   Ôöé
+Ôöé  alt="PayPal" class="trust-payment-icon">                                    Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  256  <img src="https://cdn.shopify.com/shopifycloud/shopify/assets/payment  Ôöé
+Ôöé  _icons/apple_pay-f6db0077dc7c325b436ecbdcf254239c5c12590ea1d9e3d8ea9a6be7f  Ôöé
+Ôöé  d7e7a20.svg" alt="Apple Pay" class="trust-payment-icon">                    Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  257  <img src="https://cdn.shopify.com/shopifycloud/shopify/assets/payment  Ôöé
+Ôöé  _icons/google_pay-c66a29c63facf2053bf69352982c958e9675cabea4f2f7ccec08d169  Ôöé
+Ôöé  d1856b31.svg" alt="Google Pay" class="trust-payment-icon">                  Ôöé
+Ôöé                                                                              Ôöé
+Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò»
+
+Ôò¡ÔöÇ info ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò«
+Ôöé                                                                              Ôöé
+Ôöé  :\Users\mhmmd\Desktop\shopify-theme\theme\snippets\breadcrumb.liquid        Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: HardcodedRoutes                                                  Ôöé
+Ôöé  Use routes object {{ routes.root_url }} instead of hardcoding /             Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  109  <a href="/" itemprop="item">                                           Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: HardcodedRoutes                                                  Ôöé
+Ôöé  Use routes object {{ routes.collections_url }} instead of hardcoding        Ôöé
+Ôöé  /collections                                                                Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  141  <a href="/collections" itemprop="item">                                Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: HardcodedRoutes                                                  Ôöé
+Ôöé  Use routes object {{ routes.account_url }} instead of hardcoding /account   Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  213  <a href="/account" itemprop="item">                                    Ôöé
+Ôöé                                                                              Ôöé
+Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò»
+
+Ôò¡ÔöÇ info ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò«
+Ôöé                                                                              Ôöé
+Ôöé  :\Users\mhmmd\Desktop\shopify-theme\theme\snippets\customizer-widget-tshir  Ôöé
+Ôöé  t.liquid                                                                    Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  86  <img id="cw-preview-img-{{ product.id }}" src="" alt="Uploaded          Ôöé
+Ôöé  design">                                                                    Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: RemoteAsset                                                      Ôöé
+Ôöé  Use one of the asset_url filters to serve assets for better performance.    Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  86  <img id="cw-preview-img-{{ product.id }}" src="" alt="Uploaded          Ôöé
+Ôöé  design">                                                                    Ôöé
+Ôöé                                                                              Ôöé
+Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò»
+
+Ôò¡ÔöÇ info ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò«
+Ôöé                                                                              Ôöé
+Ôöé  :\Users\mhmmd\Desktop\shopify-theme\theme\snippets\dtf-quick-upload-btn.li  Ôöé
+Ôöé  quid                                                                        Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  46  <img src="{{ product.featured_image | image_url: width: 80 }}" alt="{{  Ôöé
+Ôöé   product.title }}" class="ul-quick-modal-thumb">                            Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  76  <img id="ul-preview-img-{{ product.id }}" src="" alt="Preview">         Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: RemoteAsset                                                      Ôöé
+Ôöé  Use one of the asset_url filters to serve assets for better performance.    Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  76  <img id="ul-preview-img-{{ product.id }}" src="" alt="Preview">         Ôöé
+Ôöé                                                                              Ôöé
+Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò»
+
+Ôò¡ÔöÇ info ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò«
+Ôöé                                                                              Ôöé
+Ôöé  :\Users\mhmmd\Desktop\shopify-theme\theme\snippets\hero-categories.liquid   Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  99  <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330  Ôöé
+Ôöé  ?w=100&h=100&fit=crop" alt="User">                                          Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  102  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2  Ôöé
+Ôöé  d?w=100&h=100&fit=crop" alt="User">                                         Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  105  <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d8  Ôöé
+Ôöé  0?w=100&h=100&fit=crop" alt="User">                                         Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  108  <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43  Ôöé
+Ôöé  e?w=100&h=100&fit=crop" alt="User">                                         Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  111  <img src="https://images.unsplash.com/photo-1534528741775-53994a69dae  Ôöé
+Ôöé  b?w=100&h=100&fit=crop" alt="User">                                         Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: RemoteAsset                                                      Ôöé
+Ôöé  Asset should be served by the Shopify CDN for better performance.           Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  99  <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330  Ôöé
+Ôöé  ?w=100&h=100&fit=crop" alt="User">                                          Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: RemoteAsset                                                      Ôöé
+Ôöé  Asset should be served by the Shopify CDN for better performance.           Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  102  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2  Ôöé
+Ôöé  d?w=100&h=100&fit=crop" alt="User">                                         Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: RemoteAsset                                                      Ôöé
+Ôöé  Asset should be served by the Shopify CDN for better performance.           Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  105  <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d8  Ôöé
+Ôöé  0?w=100&h=100&fit=crop" alt="User">                                         Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: RemoteAsset                                                      Ôöé
+Ôöé  Asset should be served by the Shopify CDN for better performance.           Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  108  <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43  Ôöé
+Ôöé  e?w=100&h=100&fit=crop" alt="User">                                         Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: RemoteAsset                                                      Ôöé
+Ôöé  Asset should be served by the Shopify CDN for better performance.           Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  111  <img src="https://images.unsplash.com/photo-1534528741775-53994a69dae  Ôöé
+Ôöé  b?w=100&h=100&fit=crop" alt="User">                                         Ôöé
+Ôöé                                                                              Ôöé
+Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò»
+
+Ôò¡ÔöÇ info ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò«
+Ôöé                                                                              Ôöé
+Ôöé  :\Users\mhmmd\Desktop\shopify-theme\theme\templates\customers\login.liquid  Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  277  <img src="{{ settings.logo | image_url: width: 200 }}" alt="{{         Ôöé
+Ôöé  shop.name }}">                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò»
+
+Ôò¡ÔöÇ info ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò«
+Ôöé                                                                              Ôöé
+Ôöé  :\Users\mhmmd\Desktop\shopify-theme\theme\templates\customers\order.liquid  Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  327  <img src="{{ line_item.image | image_url: width: 160 }}" alt="{{       Ôöé
+Ôöé  line_item.title }}">                                                        Ôöé
+Ôöé                                                                              Ôöé
+Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò»
+
+Ôò¡ÔöÇ info ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò«
+Ôöé                                                                              Ôöé
+Ôöé  :\Users\mhmmd\Desktop\shopify-theme\theme\templates\customers\register.liq  Ôöé
+Ôöé  uid                                                                         Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  22  <img src="{{ settings.logo | image_url: width: 200 }}" alt="{{          Ôöé
+Ôöé  shop.name }}">                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: MissingAsset                                                       Ôöé
+Ôöé  'assets/customers/login' does not exist                                     Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  8  {{ 'customers/login' | asset_url | stylesheet_tag }}                     Ôöé
+Ôöé                                                                              Ôöé
+Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò»
+
+Ôò¡ÔöÇ info ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò«
+Ôöé                                                                              Ôöé
+Ôöé  :\Users\mhmmd\Desktop\shopify-theme\theme\templates\list-collections.liqui  Ôöé
+Ôöé  d                                                                           Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: TranslationKeyExists                                               Ôöé
+Ôöé  'collections.general.title' does not have a matching entry in               Ôöé
+Ôöé  'locales/en.default.json'                                                   Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  299  <h1 class="collections-title">{{ 'collections.general.title' | t |     Ôöé
+Ôöé  default: 'Our Collections' }}</h1>                                          Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: TranslationKeyExists                                               Ôöé
+Ôöé  'collections.general.subtitle' does not have a matching entry in            Ôöé
+Ôöé  'locales/en.default.json'                                                   Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  300  <p class="collections-subtitle">{{ 'collections.general.subtitle' | t  Ôöé
+Ôöé   | default: 'Explore our curated collection of premium DTF transfers and    Ôöé
+Ôöé  accessories' }}</p>                                                         Ôöé
+Ôöé                                                                              Ôöé
+Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò»
+
+Ôò¡ÔöÇ info ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò«
+Ôöé                                                                              Ôöé
+Ôöé  :\Users\mhmmd\Desktop\shopify-theme\theme\templates\password.liquid         Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [error]: ImgWidthAndHeight                                                  Ôöé
+Ôöé  Missing width and height attributes on img tag                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  390  <img src="{{ settings.logo | image_url: width: 240 }}" alt="{{         Ôöé
+Ôöé  shop.name }}">                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: RemoteAsset                                                      Ôöé
+Ôöé  Asset should be served by the Shopify CDN for better performance.           Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  18  <link rel="preconnect" href="https://fonts.googleapis.com">             Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: RemoteAsset                                                      Ôöé
+Ôöé  Asset should be served by the Shopify CDN for better performance.           Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  19  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: RemoteAsset                                                      Ôöé
+Ôöé  Asset should be served by the Shopify CDN for better performance.           Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  20  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;50  Ôöé
+Ôöé  0;600;700&display=swap" rel="stylesheet">                                   Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: RemoteAsset                                                      Ôöé
+Ôöé  Asset should be served by the Shopify CDN for better performance.           Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  21  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fo  Ôöé
+Ôöé  nt-awesome/6.5.1/css/all.min.css">                                          Ôöé
+Ôöé                                                                              Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  [warning]: UndefinedObject                                                  Ôöé
+Ôöé  Unknown object 'form' used.                                                 Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  494  {%- if form.errors -%}                                                 Ôöé
+Ôöé                                                                              Ôöé
+Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò»
+
+Ôò¡ÔöÇ info ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò«
+Ôöé                                                                              Ôöé
+Ôöé  Theme Check Summary.                                                        Ôöé
+Ôöé                                                                              Ôöé
+Ôöé  74 files inspected with 66 total offenses found across 20 files.            Ôöé
+Ôöé  38 errors.                                                                  Ôöé
+Ôöé  28 warnings.                                                                Ôöé
+Ôöé                                                                              Ôöé
+Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔò»
+

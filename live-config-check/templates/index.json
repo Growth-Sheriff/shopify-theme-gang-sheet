@@ -1,0 +1,941 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "slideshow": {
+      "type": "slideshow",
+      "blocks": {
+        "image_ExrXBA": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/fastsliderdcmbr2.jpg",
+            "mobile_image": "shopify://shop_images/fastsliderdcmbr.jpg",
+            "subheading": "",
+            "title": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "content_max_width": 780,
+            "button_1_text": "",
+            "button_1_link": "",
+            "button_1_style": "solid",
+            "button_1_background": "#ffffff",
+            "button_1_text_color": "#000000",
+            "button_2_text": "",
+            "button_2_link": "",
+            "button_2_style": "solid",
+            "button_2_background": "#000000",
+            "button_2_text_color": "#000000",
+            "background": "",
+            "background_opacity": 50,
+            "text_color": "#ffffff",
+            "border_color": "",
+            "gradient_overlay": ""
+          }
+        },
+        "image_aUBht7": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Fast-Dtf-Transfer-Heat-Pres.jpg",
+            "mobile_image": "shopify://shop_images/Fast-Dtf-Transfer-Heat-Press-Mobile.jpg",
+            "subheading": "",
+            "title": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "content_max_width": 780,
+            "button_1_text": "Heat Presses",
+            "button_1_link": "https://fastdtfsupply.com/collections/heat-presses",
+            "button_1_style": "solid",
+            "button_1_background": "#ffffff",
+            "button_1_text_color": "#000000",
+            "button_2_text": "",
+            "button_2_link": "",
+            "button_2_style": "outline",
+            "button_2_background": "#ffffff",
+            "button_2_text_color": "#000000",
+            "background": "",
+            "background_opacity": 100,
+            "text_color": "#ffffff",
+            "border_color": "",
+            "gradient_overlay": "linear-gradient(180deg, rgba(NaN, NaN, NaN, 1), rgba(4, 4, 4, 0.65) 100%)"
+          }
+        },
+        "image_3AAEXN": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Fast_Dtf_T._Dtf_Banner_Web_2x-100.jpg",
+            "mobile_image": "shopify://shop_images/Fast_Dtf_T._Dtf_Banner_Mobile_2x-100.jpg",
+            "subheading": "",
+            "title": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_text_position": "sm:place-self-end-start sm:text-start",
+            "content_max_width": 780,
+            "button_1_text": "DTF Gang Sheet",
+            "button_1_link": "shopify://products/custom-dtf-transfer",
+            "button_1_style": "solid",
+            "button_1_background": "#ffffff",
+            "button_1_text_color": "#000000",
+            "button_2_text": "Build Your DTF Gang Sheet",
+            "button_2_link": "shopify://products/free-dtf-gang-sheet-builder",
+            "button_2_style": "solid",
+            "button_2_background": "#ffffff",
+            "button_2_text_color": "#000000",
+            "background": "",
+            "background_opacity": 50,
+            "text_color": "#ffffff",
+            "border_color": "",
+            "gradient_overlay": ""
+          }
+        },
+        "image_WcL6Uw": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Fast-Dtf-Transfer-UV-DTF-Banner_Web.jpg",
+            "mobile_image": "shopify://shop_images/Fast-Dtf-Transfer-Uv-Dtf-Mobile.jpg",
+            "subheading": "",
+            "title": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_text_position": "sm:place-self-end-center sm:text-center",
+            "content_max_width": 780,
+            "button_1_text": "UV Stickers",
+            "button_1_link": "shopify://products/uv-dtf-gang-sheets",
+            "button_1_style": "solid",
+            "button_1_background": "#ffffff",
+            "button_1_text_color": "#000000",
+            "button_2_text": "Build Your uv stickers",
+            "button_2_link": "",
+            "button_2_style": "solid",
+            "button_2_background": "#ffffff",
+            "button_2_text_color": "#000000",
+            "background": "",
+            "background_opacity": 100,
+            "text_color": "#ffffff",
+            "border_color": "",
+            "gradient_overlay": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_ExrXBA",
+        "image_aUBht7",
+        "image_3AAEXN",
+        "image_WcL6Uw"
+      ],
+      "custom_css": [
+        ".slideshow__slide .content-over-media .slideshow__slide-content .prose .button-group {flex-direction: row;}",
+        ".slideshow__slide .content-over-media .slideshow__slide-content {bottom: -30px;}",
+        ".circular-progress {}"
+      ],
+      "settings": {
+        "enable_full_width": false,
+        "allow_transparent_header": true,
+        "show_next_section_button": true,
+        "media_size": "auto",
+        "show_initial_transition": true,
+        "autoplay": true,
+        "autoplay_pause_on_video": true,
+        "cycle_speed": 7,
+        "background": "#ffffff",
+        "controls_color": "#ff0000"
+      }
+    },
+    "featured_collections_XnANp8": {
+      "type": "featured-collections",
+      "blocks": {
+        "collection_zWEqPJ": {
+          "type": "collection",
+          "settings": {
+            "collection": "dtf-transfers",
+            "products_count": 14,
+            "title": "",
+            "link_url": "shopify://collections/dtf-transfers",
+            "link_text": "View all"
+          }
+        }
+      },
+      "block_order": [
+        "collection_zWEqPJ"
+      ],
+      "name": "t:sections.featured_collections.presets.featured_collections.name",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "hide_product_information": false,
+        "shipping_information": true,
+        "shipping_text": "Local Pickup & Shipping",
+        "stack_products": true,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "horizontal_spacing_factor": 1,
+        "vertical_spacing_factor": 1,
+        "subheading": ""
+      }
+    },
+    "multi_column_U8AYY6": {
+      "type": "multi-column",
+      "blocks": {
+        "image_with_text_gTxnYB": {
+          "type": "image_with_text",
+          "settings": {
+            "image": "shopify://shop_images/line_T-shirt_1.png",
+            "title": "Position the Transfer",
+            "heading_tag": "h3",
+            "content": "<p>Place the transfer precisely where you want it on the shirt, ensuring to avoid areas with large wrinkles.</p>",
+            "link_url": "",
+            "link_text": ""
+          }
+        },
+        "image_with_text_U4yGNJ": {
+          "type": "image_with_text",
+          "settings": {
+            "image": "shopify://shop_images/line_T-shirt_2.png",
+            "title": "Apply Heat",
+            "heading_tag": "h3",
+            "content": "<p>Press the transfer with the appropriate pressure for the following time.</p>",
+            "link_url": "",
+            "link_text": ""
+          }
+        },
+        "image_with_text_PURM9y": {
+          "type": "image_with_text",
+          "settings": {
+            "image": "shopify://shop_images/line_T-shirt_3.png",
+            "title": "<strong>INSTANT PEEL</strong>",
+            "heading_tag": "h3",
+            "content": "<p>Peel your transfer instantly after heat pressing, no delays or extra steps. Prefer a different approach? You also have the flexibility to peel warm or cold, making<br/>it versatile for your needs.</p>",
+            "link_url": "",
+            "link_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_with_text_gTxnYB",
+        "image_with_text_U4yGNJ",
+        "image_with_text_PURM9y"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "columns_per_row": 3,
+        "stack_on_mobile": false,
+        "overlap_image": false,
+        "content_alignment": "center",
+        "text_alignment": "center",
+        "spacing": "md",
+        "subheading": "The FAST DTF Transfers Process",
+        "title": "Faster, easier, happier customers.",
+        "content": ""
+      }
+    },
+    "text_with_icons_YY6aCp": {
+      "type": "text-with-icons",
+      "blocks": {
+        "item_X9TemP": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-delivery-truck",
+            "icon_url": "",
+            "custom_icon": "shopify://shop_images/2_27b251c6-655d-4662-af0b-7488d62c81d3.png",
+            "icon_width": 64,
+            "mobile_icon_width": 52,
+            "title": "Battles and containers",
+            "content": ""
+          }
+        },
+        "item_ztrPPc": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-customer-support",
+            "icon_url": "",
+            "custom_icon": "shopify://shop_images/20.png",
+            "icon_width": 64,
+            "mobile_icon_width": 52,
+            "title": "Clothing and Sweatshirts",
+            "content": ""
+          }
+        },
+        "item_yfBbyh": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-shield",
+            "icon_url": "",
+            "custom_icon": "shopify://shop_images/14.png",
+            "icon_width": 64,
+            "mobile_icon_width": 52,
+            "title": "Accessories",
+            "content": ""
+          }
+        },
+        "item_3RGYL7": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-award-gift",
+            "icon_url": "",
+            "custom_icon": "shopify://shop_images/10.png",
+            "icon_width": 64,
+            "mobile_icon_width": 52,
+            "title": "Pant and track suits",
+            "content": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_X9TemP",
+        "item_ztrPPc",
+        "item_yfBbyh",
+        "item_3RGYL7"
+      ],
+      "disabled": true,
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "stack_on_mobile": false,
+        "icon_color": "",
+        "text_color": "",
+        "text_alignment": "center"
+      }
+    },
+    "multi-column": {
+      "type": "multi-column",
+      "blocks": {
+        "column-1": {
+          "type": "image_with_text",
+          "settings": {
+            "image": "shopify://shop_images/mug_5f53d35d-2e32-429f-844b-7b8ba929eed1.jpg",
+            "title": "Bottles and containers",
+            "heading_tag": "h3",
+            "content": "",
+            "link_url": "",
+            "link_text": ""
+          }
+        },
+        "column-2": {
+          "type": "image_with_text",
+          "settings": {
+            "image": "shopify://shop_images/hoody.jpg",
+            "title": "Clothing and Sweatshirts",
+            "heading_tag": "h3",
+            "content": "",
+            "link_url": "",
+            "link_text": ""
+          }
+        },
+        "column-3": {
+          "type": "image_with_text",
+          "settings": {
+            "image": "shopify://shop_images/sports-bag.jpg",
+            "title": "Accessories",
+            "heading_tag": "h3",
+            "content": "",
+            "link_url": "",
+            "link_text": ""
+          }
+        },
+        "image_with_text_m9gdzE": {
+          "type": "image_with_text",
+          "settings": {
+            "image": "shopify://shop_images/short_aee92634-4f55-444b-a69f-0cb5a0c2f610.jpg",
+            "title": "Pant and tracksuits",
+            "heading_tag": "h3",
+            "content": "",
+            "link_url": "",
+            "link_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "column-1",
+        "column-2",
+        "column-3",
+        "image_with_text_m9gdzE"
+      ],
+      "custom_css": [],
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "columns_per_row": 4,
+        "stack_on_mobile": true,
+        "overlap_image": false,
+        "content_alignment": "center",
+        "text_alignment": "center",
+        "spacing": "sm",
+        "subheading": "",
+        "title": "<strong>High-Quality DTF Printing Services & DTF Transfer Solutions</strong>",
+        "content": "<p>Fast DTF Transfer is one of New Jersey’s trusted providers of <strong>DTF printing services</strong> and <strong>DTF transfer solutions</strong>. Our professional DTF printing process is designed for brands, apparel businesses, and print shops that require precision, consistency, and long-lasting results.</p><p>We use premium materials and cutting-edge DTF print systems to ensure smooth application, strong adhesion, and excellent wash durability. Whether you’re producing custom t-shirts, hoodies, jerseys, or large-scale textile orders, our <strong>DTF printing service</strong> delivers clean, reliable, and repeatable results every time.</p><p>Our team proudly supports businesses across New Jersey with fast turnaround times and dependable customer support.</p>"
+      }
+    },
+    "rich_text_PB9eVi": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_EN6mXX": {
+          "type": "subheading",
+          "settings": {
+            "text": ""
+          }
+        },
+        "heading_rzUxWt": {
+          "type": "heading",
+          "settings": {
+            "text": "<strong>Place Your DTF Order with Fast DTF Transfer</strong>",
+            "heading_tag": "h2"
+          }
+        },
+        "richtext_dXd9d4": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Looking to place a <strong>DTF order</strong>? Fast DTF Transfer makes ordering simple, fast, and reliable. Our streamlined DTF order process is trusted by customers searching for <strong>fast DTF transfers</strong> and professional <strong>DTF printing services</strong> in New Jersey.</p><p>Placing your DTF order is easy:</p><ol><li>Upload your design<br/></li><li>Select your products or transfer size<br/></li><li>Confirm your order — we handle the rest<br/></li></ol><p>From small custom jobs to bulk production, our fast and consistent workflow ensures high-quality DTF prints with every order.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_EN6mXX",
+        "heading_rzUxWt",
+        "richtext_dXd9d4"
+      ],
+      "name": "t:sections.rich_text.presets.rich_text.name",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "content_width": "sm",
+        "text_position": "center",
+        "remove_vertical_spacing": false
+      }
+    },
+    "multi_column_aEjqEe": {
+      "type": "multi-column",
+      "blocks": {
+        "image_with_text_g7g3ya": {
+          "type": "image_with_text",
+          "settings": {
+            "image": "shopify://shop_images/Adsiz_tasarim_25.png",
+            "title": "Clean the Surface",
+            "heading_tag": "h3",
+            "content": "<p>Make sure the surface you’re applying the sticker to is clean and dry. Remove any dust, oil, or moisture.</p>",
+            "link_url": "",
+            "link_text": ""
+          }
+        },
+        "image_with_text_cFHX3b": {
+          "type": "image_with_text",
+          "settings": {
+            "image": "shopify://shop_images/Adsiz_tasarim_26.png",
+            "title": "Position the Sticker",
+            "heading_tag": "h3",
+            "content": "<p>Carefully place the sticker where you want it. Double-check alignment before sticking.</p>",
+            "link_url": "",
+            "link_text": ""
+          }
+        },
+        "image_with_text_PzicdB": {
+          "type": "image_with_text",
+          "settings": {
+            "image": "shopify://shop_images/Adsiz_tasarim_27.png",
+            "title": "Apply & Smooth Out",
+            "heading_tag": "h3",
+            "content": "<p>Peel and stick slowly. Use a card or squeegee to press the sticker and remove air bubbles.</p>",
+            "link_url": "",
+            "link_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_with_text_g7g3ya",
+        "image_with_text_cFHX3b",
+        "image_with_text_PzicdB"
+      ],
+      "name": "t:sections.multi_column.presets.multi_column.name",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "columns_per_row": 3,
+        "stack_on_mobile": false,
+        "overlap_image": false,
+        "content_alignment": "center",
+        "text_alignment": "center",
+        "spacing": "md",
+        "subheading": "Apply Your UV Sticker in 3 Simple Steps",
+        "title": "",
+        "content": "<p>No tools, no mess – just a clean surface and a few minutes. Here’s how to apply your UV sticker the right way.</p>"
+      }
+    },
+    "rich_text_4iiVUi": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_jEQRBj": {
+          "type": "subheading",
+          "settings": {
+            "text": "DTF ORDER"
+          }
+        },
+        "heading_MCPhVb": {
+          "type": "heading",
+          "settings": {
+            "text": "<strong>Place Your DTF Order with Fast DTF Transfer</strong>",
+            "heading_tag": "h3"
+          }
+        },
+        "richtext_A8DxTP": {
+          "type": "richtext",
+          "settings": {
+            "content": "<h3></h3><p>Looking to place a <strong>DTF order</strong>? At <strong>Fast DTF Transfer</strong>, we offer fast, reliable, and high-quality <strong>DTF print</strong> services. Whether it’s custom t-shirts, hoodies, or large textile products, our <strong>DTF printing technology</strong> guarantees vibrant colors, fine details, and long-lasting transfers.</p><p>Placing your <strong>DTF order</strong> is easy:</p><ol><li>Upload your design.<br/></li><li>Select your products.<br/></li><li>Confirm your order, and we handle the rest!<br/></li></ol><p>Based in <strong>New Jersey</strong>, we ensure quick turnaround times and exceptional service for businesses and individuals alike.<br/><br/>👉 <strong>Place your DTF order today</strong> and experience top-quality printing!</p>"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_jEQRBj",
+        "heading_MCPhVb",
+        "richtext_A8DxTP"
+      ],
+      "name": "t:sections.rich_text.presets.rich_text.name",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "content_width": "sm",
+        "text_position": "center",
+        "remove_vertical_spacing": false
+      }
+    },
+    "custom_liquid_J3hHLe": {
+      "type": "custom-liquid",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "remove_vertical_spacing": false,
+        "remove_horizontal_spacing": false,
+        "liquid": "<!-- Bootstrap CSS CDN -->\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css\" rel=\"stylesheet\">\n   \n\t\n\t<div class=\"ql\">\n\t\n\t<div class=\"container\">\n    <div class=\"heading-section\">\n        <h2> DTF TRANSFERS FEATURES</h2>\n        <p>DTF transfers have unique flexibility and provide the possibility of creating vivid and colorful designs on different types of fabrics, including polyester, cotton, and their combinations. The high durability of these transfers shows the resistance of these prints against cracking and fading even after many washings. For this reason, it is considered a good choice for custom clothes and advertising products. </p>\n    </div>\n</div>\n\t\n    <div class=\"container bg-img\">\n        <div class=\"row\">\n            <!-- Left Image Section -->\n            <div class=\"col-12 col-md-3 mb-3\">\n                <div class=\"image-left\">\n                    <img src=\"{{ 'Feature___mankan-end copy.jpg' | asset_url }}\"DTF Shirt Image\"  alt=\"DTF TANSFER FEATUREs\">\n                </div>\n            </div>\n\n            <!-- Right Content Section -->\n            <div class=\"col-12 col-md-9\">\n                <!-- First Row of 4 Products -->\n                <div class=\"row\">\n                    <div class=\"col-12 col-sm-6 col-md-4\">\n                        <div class=\"section\">\n                            <img src=\"{{ 'Feature___Durability and Longevity.jpg' | asset_url }}\" alt=\"Image 1\">\n                            <h2> Durability and Longevity</h2>\n                            <p> DTF transfers are known for their durability. The prints are resistant to wear and tear, including repeated washing and stretching. This makes them perfect for products that need to withstand heavy use, such as sportswear and work uniforms.</p>\n                        </div>\n                    </div>\n                    <div class=\"col-12 col-sm-6 col-md-4\">\n                        <div class=\"section\">\n                            <img src=\"{{ 'Feature____Fine Detail Reproduction.jpg' | asset_url }}\" alt=\"Image 2\">\n                            <h2>  Fine Detail Reproduction </h2>\n                            <p> One of the standout features of DTF transfers is their ability to capture fine details and intricate designs. This is especially beneficial for complex logos, patterns, and illustrations where precision is key.</p>\n                        </div>\n                    </div>\n                    <div class=\"col-12 col-sm-6 col-md-4\">\n                        <div class=\"section\">\n                            <img src=\"{{ 'Feature____No Pre-Treatment Required.jpg' | asset_url }}\" alt=\"Image 3\">\n                            <h2> No Pre-Treatment Required</h2>\n                            <p> Unlike other printing methods, DTF transfers do not require the fabric to be pre-treated before application. This reduces production time and effort, making it a more efficient process overall.</p>\n                        </div>\n                    </div>\n                    \n                </div>\n                <!-- Second Row of 4 Products -->\n                <div class=\"row\">\n                    <div class=\"col-12 col-sm-6 col-md-4\">\n                        <div class=\"section\">\n                            <img src=\"{{ 'Feature____Versatility on Fabrics.jpg' | asset_url }}\" alt=\"Image 5\">\n                            <h2>Versatility on Fabrics</h2>\n                            <p> DTF transfers can be applied to a wide range of fabric types, including cotton, polyester, blends, and even non-textile surfaces like leather. This versatility allows for diverse applications across different industries.</p>\n                        </div>\n                    </div>\n                    <div class=\"col-12 col-sm-6 col-md-4\">\n                        <div class=\"section\">\n                            <img src=\"{{ 'Feature____Soft Hand Feel.jpg' | asset_url }}\" alt=\"Image 6\">\n                            <h2> Soft Hand Feel</h2>\n                            <p> Despite their durability, DTF transfers maintain a soft hand feel, ensuring comfort for the wearer. The transfers do not create a heavy or plasticky texture on the fabric, which is ideal for apparel.</p>\n\t\t\t\t\t\t\t\n                        </div>\n                    </div>\n                    <div class=\"col-12 col-sm-6 col-md-4\">\n                        <div class=\"section\">\n                            <img src=\"{{ 'Feature____Vibrant Color Quality.jpg' | asset_url }}\" alt=\"Image 7\">\n                            <h2>  Vibrant Color Quality </h2>\n                            <p> DTF transfers deliver highly vibrant colors, making them ideal for designs that require bold, eye-catching visuals. The inks are specifically formulated to maintain their intensity even after multiple washes.</p>\n                        </div>\n                    </div>\n                   \n                </div>\n            </div>\n        </div>\n    </div>\n\n\n</div>\n <style>\n       \n.ql .section {\n            background-color: white;\n            \n            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);\n            text-align: center;\n            margin-bottom: 15px;\n            border-radius: 10px; /* Rounded corners */\n\t\t\t    height: 476px;\n        }\n\n        .ql .section img {\n            width: 100%;\n            height: auto;\n\t\t\tborder-radius: 10px 10px 0 0;\n        }\n\n        .ql h2 {\n            margin: 0;\n            padding: 10px 5px;\n            font-size: 18px;\n\t\t\tfont-weight: 700;\n        }\n\n        .ql p {\n            font-size: 14px;\n\t\t\ttext-align: left;\n\t\t\tpadding: 10px;\n        }\n\n        .ql .image-left img {\n            width: 100%;\n            height: auto;\n            border-radius: 10px;\n        }\n\n        @media (max-width: 767px) {\n            .ql h2 {\n                font-size: 16px;\n            }\n\n            .ql p {\n                font-size: 12px;\n            }\n        }\n\t\t\n\t\t  .heading-section {\n            display: flex;\n            align-items: center;\n            justify-content: space-between;\n            padding: 20px 20px 20px 0px;\n        }\n\n        .heading-section h2 {\n            font-weight: bold;\n            font-size: 2.3rem;\n            margin: 0;\n\t\t\tTEXT-ALIGN: LEFT;\n\t\tPADDING-RIGHT: 15PX;\n        }\n\n        .heading-section p {\n            margin: 0;\n            font-size: 1rem;\n            color: #888;\n\t\t\t border-left: 1px solid #ccc;\n             padding: 10px 10px 10px 37px;\n              margin-left: 26px;\n\t\t\t \n        }\n\n        @media (max-width: 768px) {\n            .heading-section {\n                flex-direction: column;\n                align-items: flex-start;\n            }\n\n            .heading-section p {\n                margin-top: 10px;\n            }\n        }\n\t\t\n\t\t\n    </style>",
+        "text_alignment": "center"
+      }
+    },
+    "rich_text_PHy7mE": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_LLFK38": {
+          "type": "subheading",
+          "settings": {
+            "text": ""
+          }
+        },
+        "heading_9qppDW": {
+          "type": "heading",
+          "settings": {
+            "text": "<strong>DTF Transfer & DTF Printing Near Me in New Jersey</strong>",
+            "heading_tag": "h2"
+          }
+        },
+        "richtext_iFDKCn": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Looking for <strong>DTF transfer near me</strong>? Fast DTF Transfer is your reliable <strong>local DTF printing</strong> partner in <strong>New Jersey (NJ)</strong>. We provide high-quality <strong>DTF print</strong> and <strong>DTF transfer services</strong> for local businesses, print shops, and individuals who need fast and dependable results.</p><p>As a New Jersey–based DTF printer, we serve customers searching for <strong>DTF printing near me</strong>, <strong>DTF print shops near me</strong>, and <strong>DTF printer near me</strong> with quick turnaround times and professional support. Our local production allows us to deliver consistent quality, fast processing, and dependable service you can trust.</p><p>If you need a local solution for durable, vibrant, and professional DTF transfers, Fast DTF Transfer is here to help.</p><p>👉 Contact us today for <strong>DTF transfer near me</strong> and get top-tier service right here in New Jersey.</p><p>If you need a local solution for durable, vibrant, and professional DTF transfers, Fast DTF Transfer is here to help.</p><p>👉 Contact us today for <strong>DTF transfer near me</strong> and get top-tier service right here in New Jersey.<br/><br/>Whether you’re printing custom t-shirts, hoodies, or large-scale textile products, our DTF print technology delivers smooth, accurate, and durable transfers that make your brand stand out.<br/><br/>Located in New Jersey (NJ), we proudly serve local businesses, print shops, and apparel brands with fast turnaround times and exceptional customer support.<br/><br/>Experience the next generation of printing — vibrant, durable, and ready for any fabric.<br/>👉 Choose Fast DTF Transfer in New Jersey today and elevate your printing quality to the next level!</p>"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_LLFK38",
+        "heading_9qppDW",
+        "richtext_iFDKCn"
+      ],
+      "name": "t:sections.rich_text.presets.rich_text.name",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "content_width": "sm",
+        "text_position": "center",
+        "remove_vertical_spacing": false
+      }
+    },
+    "featured_collections_EKmmmx": {
+      "type": "featured-collections",
+      "blocks": {
+        "collection_zEFgRa": {
+          "type": "collection",
+          "settings": {
+            "collection": "supplies",
+            "products_count": 8,
+            "title": "",
+            "link_url": "shopify://collections/supplies",
+            "link_text": "View all"
+          }
+        }
+      },
+      "block_order": [
+        "collection_zEFgRa"
+      ],
+      "name": "t:sections.featured_collections.presets.featured_collections.name",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "hide_product_information": false,
+        "shipping_information": true,
+        "shipping_text": "Local Pickup & Shipping",
+        "stack_products": false,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "horizontal_spacing_factor": 1,
+        "vertical_spacing_factor": 1,
+        "subheading": ""
+      }
+    },
+    "17099886706cca895b": {
+      "type": "apps",
+      "blocks": {
+        "google_reviews_plus_app_block_HREWCL": {
+          "type": "shopify://apps/rocket-google-reviews/blocks/app-block/d11c8893-a181-4aff-a280-7446d42cec3b",
+          "settings": {
+            "widget_layout": "default"
+          }
+        },
+        "judge_me_reviews_medals_WkiiQd": {
+          "type": "shopify://apps/judge-me-reviews/blocks/medals/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "google_reviews_plus_app_block_HREWCL",
+        "judge_me_reviews_medals_WkiiQd"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "remove_vertical_spacing": false,
+        "remove_horizontal_spacing": false
+      }
+    },
+    "blog-posts": {
+      "type": "blog-posts",
+      "settings": {
+        "color_scheme": "scheme-3",
+        "separate_section_with_border": true,
+        "blog": "news",
+        "posts_count": 3,
+        "stack_on_mobile": true,
+        "show_category": false,
+        "show_excerpt": true,
+        "show_read_more": true,
+        "subheading": "",
+        "title": "Blog posts",
+        "content": "",
+        "button_link": "",
+        "button_text": "View all"
+      }
+    },
+    "faq_QXVWNb": {
+      "type": "faq",
+      "blocks": {
+        "question_LgkFYQ": {
+          "type": "question",
+          "settings": {
+            "question": "What is a DTF transfer❓",
+            "answer": "<p>A <strong>DTF (Direct to Film) transfer</strong> is a printing method where designs are printed onto a special film and then heat-pressed onto fabric. DTF transfers work on cotton, polyester, blends, and many other materials, delivering vibrant colors, fine details, and long-lasting durability.</p>"
+          }
+        },
+        "question_WCqmc7": {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer DTF transfer near me in New Jersey❓",
+            "answer": "<p>Yes. Fast DTF Transfer provides <strong>DTF transfer services in New Jersey</strong>, serving local businesses, print shops, and individuals. If you’re searching for a <strong>DTF transfer near me</strong>, our New Jersey-based production ensures fast turnaround times and reliable service.d!</p>"
+          }
+        },
+        "question_CfN4C8": {
+          "type": "question",
+          "settings": {
+            "question": "What is the minimum DTF order❓",
+            "answer": "<p>There is no large minimum order requirement. You can place small custom DTF orders or bulk orders depending on your needs. This flexibility makes our DTF printing services ideal for both individual projects and large-scale production.</p>"
+          }
+        },
+        "question_QCeaQd": {
+          "type": "question",
+          "settings": {
+            "question": "How fast is your DTF transfer turnaround❓",
+            "answer": "<p>Most DTF orders are produced quickly, with fast turnaround options available. Our streamlined process allows customers across New Jersey to receive <strong>fast DTF transfers</strong>, including rush and next-day options depending on order size.</p>"
+          }
+        },
+        "question_3nHLbb": {
+          "type": "question",
+          "settings": {
+            "question": "How durable are DTF transfers❓",
+            "answer": "<p>DTF transfers are highly durable when applied correctly. They resist cracking, peeling, and fading, even after multiple washes. Our high-quality DTF prints are designed to maintain color vibrancy and flexibility over time.</p>"
+          }
+        },
+        "question_4zCBAa": {
+          "type": "question",
+          "settings": {
+            "question": "What file format should I upload for DTF printing❓",
+            "answer": "<p>For best results, we recommend high-resolution PNG files with transparent backgrounds. PDF and other print-ready formats are also accepted to ensure clean, accurate DTF prints.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "question_LgkFYQ",
+        "question_WCqmc7",
+        "question_CfN4C8",
+        "question_QCeaQd",
+        "question_3nHLbb",
+        "question_4zCBAa"
+      ],
+      "custom_css": [],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "separate_section_with_border": true,
+        "show_categories": false,
+        "subheading": "Need help ?",
+        "title": "Frequently Asked Questions",
+        "content": ""
+      }
+    },
+    "image-with-text-scroll": {
+      "type": "images-with-text-scroll",
+      "blocks": {
+        "item-1": {
+          "type": "image_with_text",
+          "settings": {
+            "image": "shopify://shop_images/dtf-printing.jpg",
+            "subheading": "",
+            "title": "Printing Services",
+            "content": "<p>We are committed to providing our customers with high-quality printing services that meet their unique needs and specifications. Whether you are looking to print custom designs on apparel, accessories, or other products, we have the technology and expertise to bring your vision to life. Our DTF printing process allows us to produce vibrant, durable, and soft prints that will stand the test of time. We use only the best equipment and materials, ensuring that every print is of the highest quality.</p><p>Our team of experienced professionals is dedicated to delivering exceptional customer service, from the initial design consultation to the final product delivery. Trust us for all of your printing needs, and experience the difference that DTF printing can make.</p>",
+            "link_text": "",
+            "link_url": "",
+            "link_style": "solid"
+          }
+        },
+        "image_with_text_DaeAnX": {
+          "type": "image_with_text",
+          "settings": {
+            "subheading": "",
+            "title": "Custom Design",
+            "content": "<p>We believe that everyone should have the ability to create their own unique designs that represent their individuality and style. That’s why we offer “Create Your Custom Design” services, which allows our customers to design their own products using our easy-to-use design tool. With our design tool, you can choose from a wide range of products and customize them with your own text, images, and graphics.</p><p>Whether you’re designing a shirt for a special occasion, creating a custom bag for your business, or looking to add a personal touch to your home decor, our “Create Your Custom Design” services make it easy to bring your ideas to life. Our team of professionals is always available to help with any questions or design advice you may need along the way. Trust us to deliver high-quality products that are as unique as you are. Contact us today to learn more about our “Create Your Custom Design” services and start designing your perfect product today!</p>",
+            "link_text": "",
+            "link_url": "",
+            "link_style": "solid"
+          }
+        },
+        "item-2": {
+          "type": "image_with_text",
+          "settings": {
+            "subheading": "",
+            "title": "Price Calculator",
+            "content": "<p>We understand that pricing is an important consideration when it comes to custom printing services. That’s why we offer a “Calculate Price Tool” on our website, which allows our customers to get an instant quote for their printing needs. With this tool, you can easily input the specifications of your project, such as the type of product, quantity, and design specifications, and receive an accurate price quote within minutes. Our pricing is transparent, competitive, and based on the specific requirements of each project, ensuring that you always get a fair and reasonable price for your custom printing needs. We take pride in our ability to offer high-quality printing services at an affordable price, and our “Calculate Price Tool” makes it easy to get started. Contact us today to learn more about our pricing options and how we can help you with your custom printing needs.</p>",
+            "link_text": "",
+            "link_url": "",
+            "link_style": "solid"
+          }
+        }
+      },
+      "block_order": [
+        "item-1",
+        "image_with_text_DaeAnX",
+        "item-2"
+      ],
+      "disabled": true,
+      "settings": {
+        "color_scheme": "",
+        "image_position": "start",
+        "text_alignment": "center",
+        "heading_tag": "h3",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0
+      }
+    },
+    "rich_text_mxU49e": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_4DdEBJ": {
+          "type": "subheading",
+          "settings": {
+            "text": "Fast DTF Transfer in New Jersey"
+          }
+        },
+        "heading_YjYfDG": {
+          "type": "heading",
+          "settings": {
+            "text": "DTF Transfer & DTF Printing Near Me in New Jersey",
+            "heading_tag": "h2"
+          }
+        },
+        "richtext_rCQNrR": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Looking for <strong>DTF transfer near me</strong>? <strong>Fast DTF Transfer</strong> is your local solution in <strong>New Jersey (NJ)</strong> for high-quality <strong>DTF print</strong> and <strong>DTF transfer</strong> services. Whether you're a local business, print shop, or individual looking for custom apparel printing, we provide fast and reliable DTF printing that ensures vibrant, durable, and long-lasting results.</p><p>Our <strong>DTF printing systems</strong> deliver smooth, accurate, and durable transfers that stand out on any fabric. Located in the heart of <strong>New Jersey</strong>, we proudly serve the local community with quick turnaround times, professional support, and the latest in <strong>DTF transfer technology</strong>.</p><p>From custom t-shirts and hoodies to large-scale textile production, <strong>Fast DTF Transfer</strong> is your trusted local partner for all your <strong>DTF print</strong> needs.</p><p>Experience the next generation of printing — vibrant, durable, and ready for any fabric.<br/><br/>👉 Contact us today for <strong>DTF transfer near me</strong> and get top-tier service and quality — right here in New Jersey!</p>"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_4DdEBJ",
+        "heading_YjYfDG",
+        "richtext_rCQNrR"
+      ],
+      "name": "t:sections.rich_text.presets.rich_text.name",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "content_width": "sm",
+        "text_position": "center",
+        "remove_vertical_spacing": false
+      }
+    },
+    "google_maps_877RUi": {
+      "type": "google-maps",
+      "name": "Google Map",
+      "settings": {
+        "max_width_1": false,
+        "google_maps_url": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3016.856703241253!2d-74.11268958822927!3d40.87501882750013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2f9e4ccea1b75%3A0x581d67d9c5f929bb!2sFast%20DTF%20Transfer!5e0!3m2!1sen!2sde!4v1762444525033!5m2!1sen!2sde\" width=\"100%\" height=\"450\" style=\"border:0; max-width: 1400px;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
+      }
+    },
+    "rich_text_kV3Cwe": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_Hb9rFp": {
+          "type": "subheading",
+          "settings": {
+            "text": ""
+          }
+        },
+        "heading_nYAaVn": {
+          "type": "heading",
+          "settings": {
+            "text": "<strong>Fast & Reliable DTF Transfers for Businesses and Print Shops</strong>",
+            "heading_tag": "h2"
+          }
+        },
+        "richtext_mRmGE3": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Speed matters when deadlines are tight. Our <strong>Fast DTF transfer</strong> service is built for print shops, apparel brands, and businesses that need consistent quality without delays. We specialize in <strong>Fast DTF transfers</strong> that maintain color accuracy, sharp detail, and long-lasting durability.</p><p>Whether you’re fulfilling client orders or scaling production, our reliable turnaround times help you stay competitive while delivering professional results.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_Hb9rFp",
+        "heading_nYAaVn",
+        "richtext_mRmGE3"
+      ],
+      "name": "t:sections.rich_text.presets.rich_text.name",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "content_width": "sm",
+        "text_position": "center",
+        "remove_vertical_spacing": false
+      }
+    },
+    "17613112541b6aa55b": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_videos_carousel_ChqdFC": {
+          "type": "shopify://apps/judge-me-reviews/blocks/videos_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "show_sample_reviews": false,
+            "reviews_selection": "all",
+            "products": [
+              "uv-dtf-gang-sheets-1",
+              "custom-dtf-transfer",
+              "glitter-dtf-gang-sheets",
+              "glitter-dtf-transfers-by-size",
+              "dtf-gang-sheet-builder",
+              "glow-in-the-dark-dtf-gang-sheets",
+              "glow-in-the-dark-dtf",
+              "uv-dtf-gang-sheets",
+              "glitter-dtf-transfer-gang-sheet-builder"
+            ],
+            "star_rating": "all",
+            "review_type": "photo_and_video",
+            "max_reviews": 20,
+            "show_reviewer_name": true,
+            "stars_size": "medium",
+            "text_size": "medium",
+            "arrows_position": "bottom",
+            "max_width": 1100,
+            "corner_styling": "soft",
+            "header_text_color": "#000000",
+            "card_color": "#7d7d7d",
+            "stars_color": "",
+            "text_color": "#ffffff",
+            "arrows_color": "#000000",
+            "show_drop_shadow": false,
+            "show_border": false,
+            "border_color": "#108474",
+            "autoplay_media": true,
+            "transition_speed": 5,
+            "carousel_style": "highlight",
+            "header_text": "Real customer stories",
+            "show_average_rating": true
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_videos_carousel_ChqdFC"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "remove_vertical_spacing": false,
+        "remove_horizontal_spacing": false
+      }
+    },
+    "rich_text_tPNFfU": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_gmxyr9": {
+          "type": "subheading",
+          "settings": {
+            "text": ""
+          }
+        },
+        "heading_8WwUf8": {
+          "type": "heading",
+          "settings": {
+            "text": "<strong>Durable DTF Prints That Work on Any Fabric</strong>",
+            "heading_tag": "h2"
+          }
+        },
+        "richtext_3hEh3F": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Our DTF prints are designed to perform on a wide range of fabrics, including cotton, polyester, blends, and performance materials. With strong adhesion and excellent flexibility, our transfers resist cracking, fading, and peeling — even after repeated washing.</p><p>If you’re looking for <strong>DTF prints</strong> that combine durability, vibrant color, and professional finish, Fast DTF Transfer delivers results you can rely on.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_gmxyr9",
+        "heading_8WwUf8",
+        "richtext_3hEh3F"
+      ],
+      "name": "t:sections.rich_text.presets.rich_text.name",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "content_width": "sm",
+        "text_position": "center",
+        "remove_vertical_spacing": false
+      }
+    }
+  },
+  "order": [
+    "slideshow",
+    "featured_collections_XnANp8",
+    "multi_column_U8AYY6",
+    "text_with_icons_YY6aCp",
+    "multi-column",
+    "rich_text_PB9eVi",
+    "multi_column_aEjqEe",
+    "rich_text_4iiVUi",
+    "custom_liquid_J3hHLe",
+    "rich_text_PHy7mE",
+    "featured_collections_EKmmmx",
+    "17099886706cca895b",
+    "blog-posts",
+    "faq_QXVWNb",
+    "image-with-text-scroll",
+    "rich_text_mxU49e",
+    "google_maps_877RUi",
+    "rich_text_kV3Cwe",
+    "17613112541b6aa55b",
+    "rich_text_tPNFfU"
+  ]
+}

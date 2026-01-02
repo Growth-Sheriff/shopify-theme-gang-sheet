@@ -1,0 +1,174 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-list-collections",
+      "disabled": true,
+      "settings": {
+        "color_scheme": "",
+        "show_title": true,
+        "collections": [],
+        "collections_per_row_mobile": "1",
+        "collections_per_row_desktop": 3,
+        "image_size": "auto",
+        "content_position": "place-self-end-start text-start",
+        "text_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 30
+      }
+    },
+    "rich_text_fUedtf": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_VfdCTL": {
+          "type": "heading",
+          "settings": {
+            "text": "DTF Transfers Ready To Press",
+            "heading_tag": "h1"
+          }
+        },
+        "richtext_nLJKEn": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Say goodbye to design complications and effortlessly craft stylish graphic apparel with Fast DTF Transfer's growing collection of Ready-To-Press DTF Transfers. Utilizing advanced DTF technology, each transfer delivers vibrant, long-lasting colors that remain resilient through countless washes, ensuring an enduring finish every time.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_VfdCTL",
+        "richtext_nLJKEn"
+      ],
+      "custom_css": [
+        ".h1 {font-size: 32px; font-weight: bolder;}"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "content_width": "lg",
+        "text_position": "start",
+        "remove_vertical_spacing": false
+      }
+    },
+    "custom_liquid_8CmQCr": {
+      "type": "custom-liquid",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "remove_vertical_spacing": false,
+        "remove_horizontal_spacing": false,
+        "liquid": "<title>\n    Category Boxes with Sub-Links</title>\n<style>\n    .container {\n        max-width: 1200px;\n        margin: auto;\n    }\n    \n    .category-grid {\n        display: grid;\n        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));\n        gap: 20px;\n    }\n    \n    .category-box {\n        background-color: #fff;\n        /*border-radius: 8px;*/\n        transition: transform 0.5s ease;\n        margin-bottom: 20px;\n    }\n    \n    .category-box img:hover {\n        transform: scale(1.05);\n        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);\n        border-radius: 15px;\n        transition: transform 0.5s ease-in-out;\n    }\n    \n    .category-box img {\n        width: 100%;\n        height: auto;\n        s margin-bottom: 15px;\n        margin-bottom: 20px;\n    }\n    \n    .category-box h3 {\n        font-size: 1.2em;\n        color: #333;\n        margin-bottom: 10px;\n    }\n    \n    .category-box ul {\n        list-style: none;\n        padding: 0;\n        margin: 0 0 10px;\n    }\n    \n    .category-box ul li {\n        margin-bottom: 5px;\n    }\n    \n    .category-box ul li a {\n        color: #0073e6;\n        text-decoration: none;\n        font-size: 0.9em;\n    }\n    \n    .category-box ul li a:hover {\n        text-decoration: underline;\n    }\n    \n    .category-box button {\n        background-color: #ff6a00;\n        color: #fff;\n        border: none;\n        padding: 10px 20px;\n        cursor: pointer;\n        border-radius: 5px;\n        transition: background-color 0.2s ease;\n    }\n    \n    .category-box button:hover {\n        background-color: #e65c00;\n    }\n    \n    .category-box ul li a {\n        color: #464b50;\n    }\n    \n    .text-center {\n        text-align: left !important;\n    }\n    \n    .category-box h3 {\n        text-align: left !important;\n        margin-left: 10px !important;\n    }\n</style>\n\n\n<div class=\"container\">\n    <div class=\"category-grid\">\n        <!-- Trending Category -->\n        <div class=\"category-box\">\n\n            <h3>Trending</h3>\n            <br>\n\n            <img src=\"https://cdn.shopify.com/s/files/1/0864/4067/3590/files/Trending.jpg?v=1728718334\" alt=\"Trending Category\">\n\n            <ul>\n\n                <li><a href=\"#\"> Football </a></li>\n                <li><a href=\"#\"> Halloween  </a></li>\n                <li><a href=\"#\"> Breast Cancer Awareness </a></li>\n                <li><a href=\"#\"> Oktoberfest </a></li>\n                <li><a href=\"#\"> Baseball </a></li>\n                <li><a href=\"#\"> Military Veterans </a></li>\n                <li><a href=\"#\"> Dogs </a></li>\n                <li><a href=\"#\"> Inspirational Quotes </a></li>\n                <li><a href=\"#\"> View All </a></li>\n\n            </ul>\n\n        </div>\n\n        <!-- Outdoors Category -->\n        <div class=\"category-box\">\n\n            <h3>Sports </h3>\n            <br>\n            <img src=\"https://cdn.shopify.com/s/files/1/0864/4067/3590/files/Sports.jpg?v=1728718334\" alt=\"Outdoors Category\">\n\n            <ul>\n                <li><a href=\"#\"> Football </a></li>\n                <li><a href=\"#\"> Basketball </a></li>\n                <li><a href=\"#\"> Soccer </a></li>\n                <li><a href=\"#\"> Baseball </a></li>\n                <li><a href=\"#\"> Hockey </a></li>\n                <li><a href=\"#\"> Volleyball </a></li>\n                <li><a href=\"#\"> Golf </a></li>\n                <li><a href=\"#\"> Softball </a></li>\n                <li><a href=\"#\"> View All </a></li>\n\n            </ul>\n\n        </div>\n\n        <!-- Best Sellers Category -->\n        <div class=\"category-box\">\n            <h3> Holidays & Seasons </h3>\n            <br>\n            <img src=\"https://cdn.shopify.com/s/files/1/0864/4067/3590/files/Holidays_Seasons.jpg?v=1728718334\" alt=\"Best Sellers Category\">\n\n            <ul>\n                <li><a href=\"#\"> Oktoberfest </a></li>\n                <li><a href=\"#\"> Halloween </a></li>\n                <li><a href=\"#\"> Autumn </a></li>\n                <li><a href=\"#\"> Day of the Dead </a></li>\n                <li><a href=\"#\"> Thanksgiving </a></li>\n                <li><a href=\"#\"> Winter </a></li>\n                <li><a href=\"#\"> Christmas </a></li>\n                <li><a href=\"#\"> Hanukkah </a></li>\n                <li><a href=\"#\"> View All </a></li>\n\n            </ul>\n\n        </div>\n\n        <!-- New Arrivals Category -->\n        <div class=\"category-box\">\n            <h3>Charities & Causes </h3>\n            <br>\n            <img src=\" https://cdn.shopify.com/s/files/1/0864/4067/3590/files/Charities_Causes.jpg?v=1728718487\" alt=\"New Arrivals Category\">\n\n            <ul>\n                <li><a href=\"#\"> Breast Cancer Awareness </a></li>\n                <li><a href=\"#\"> Autism Awareness  </a></li>\n                <li><a href=\"#\"> Environmental </a></li>\n                <li><a href=\"#\">  Mental Health Awareness </a></li>\n                <li><a href=\"#\"> Anti-Bullying </a></li>\n                <li><a href=\"#\"> Diabetes Awareness </a></li>\n                <li><a href=\"#\"> Leukemia Awareness </a></li>\n                <li><a href=\"#\"> Lymphoma Awareness </a></li>\n                <li><a href=\"#\"> View All </a></li>\n\n            </ul>\n\n        </div>\n\n        <!-- Clearance Category -->\n        <div class=\"category-box\">\n            <h3>Military & First Responders </h3>\n            <br>\n            <img src=\"https://cdn.shopify.com/s/files/1/0864/4067/3590/files/Military_First_Responders.jpg?v=1728718333\" alt=\"Clearance Category\">\n\n            <ul>\n                <li><a href=\"#\"> Military Veterans </a></li>\n                <li><a href=\"#\"> Police </a></li>\n                <li><a href=\"#\"> Fire Department </a></li>\n                <li><a href=\"#\"> Nursing </a></li>\n                <li><a href=\"#\"> EMT </a></li>\n                <li><a href=\"#\"> View All </a></li>\n\n            </ul>\n\n        </div>\n\n        <!-- Clearance Category -->\n        <div class=\"category-box\">\n\n            <h3>Animals </h3>\n            <br>\n            <img src=\"https://cdn.shopify.com/s/files/1/0864/4067/3590/files/Animals.jpg?v=1728718334\" alt=\"Clearance Category\">\n\n            <ul>\n\n                <li><a href=\"#\"> Cats </a></li>\n                <li><a href=\"#\"> Dogs </a></li>\n                <li><a href=\"#\"> Sloths </a></li>\n                <li><a href=\"#\"> Horses </a></li>\n                <li><a href=\"#\"> Farm Animals </a></li>\n                <li><a href=\"#\"> View All </a></li>\n\n            </ul>\n\n        </div>\n        <!-- Clearance Category -->\n        <div class=\"category-box\">\n            <h3> Fitness</h3>\n            <br>\n            <img src=\"https://cdn.shopify.com/s/files/1/0864/4067/3590/files/Fitness.jpg?v=1728718334\" alt=\"Clearance Category\">\n\n            <ul>\n                <li><a href=\"#\"> Gym </a></li>\n                <li><a href=\"#\"> Yoga </a></li>\n                <li><a href=\"#\"> Gymnastics </a></li>\n                <li><a href=\"#\"> Meditation </a></li>\n                <li><a href=\"#\"> Running </a></li>\n                <li><a href=\"#\"> Vegan </a></li>\n                <li><a href=\"#\"> Muay Thai </a></li>\n                <li><a href=\"#\"> View All </a></li>\n\n\n            </ul>\n\n        </div>\n\n        <!-- Clearance Category -->\n        <div class=\"category-box\">\n            <h3> Outdoors</h3>\n            <br>\n            <img src=\" https://cdn.shopify.com/s/files/1/0864/4067/3590/files/Outdoors.jpg?v=1728718334\" alt=\"Clearance Category\">\n\n            <ul>\n                <li><a href=\"#\"> Camping </a></li>\n                <li><a href=\"#\"> Beach </a></li>\n                <li><a href=\"#\"> Boating </a></li>\n                <li><a href=\"#\"> Fishing </a></li>\n                <li><a href=\"#\"> Hunting </a></li>\n                <li><a href=\"#\"> Hiking </a></li>\n                <li><a href=\"#\"> Cruise Vacation </a></li>\n                <li><a href=\"#\"> Western </a></li>\n                <li><a href=\"#\"> View All </a></li>\n\n\n            </ul>\n\n        </div>\n    </div>\n</div>",
+        "text_alignment": "center"
+      }
+    },
+    "rich_text_ECfaNW": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_haWxNz": {
+          "type": "heading",
+          "settings": {
+            "text": "Top-Notch DTF Transfers Ready to Press by Fast DTF Transfer",
+            "heading_tag": "h1"
+          }
+        },
+        "subheading_tMGqTi": {
+          "type": "subheading",
+          "settings": {
+            "text": "Enhance Your Clothing with Fast DTF Transfer’s DTF Solutions"
+          }
+        },
+        "richtext_hPBANz": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Need a fast and reliable way to customize your clothing? Fast DTF Transfer has you covered. Our ready-to-use transfers come in a variety of categories such as Holidays, Sports, Animals, Charities & Causes, and more. Each transfer provides vibrant, durable prints and ensures ease of application, making them perfect for any apparel project.</p>"
+          }
+        },
+        "subheading_UHAi9L": {
+          "type": "subheading",
+          "settings": {
+            "text": "Why Fast DTF Transfer Should Be Your Go-To for DTF Transfers?"
+          }
+        },
+        "richtext_hVgGft": {
+          "type": "richtext",
+          "settings": {
+            "content": "<ul><li><strong>Vibrant Colors</strong>: Fast DTF Transfer’s prints deliver eye-catching, full-color designs that pop.</li><li><strong>Long-Lasting</strong>: Crafted to endure 60+ washes, these transfers resist fading and cracking.</li><li><strong>Simple to Use</strong>: Just press and go! Our transfers come ready for easy application.</li><li><strong>Multi-Purpose</strong>: Ideal for t-shirts, hoodies, bags, and a variety of other apparel items.</li></ul>"
+          }
+        },
+        "subheading_9z8keh": {
+          "type": "subheading",
+          "settings": {
+            "text": "How to Use Fast DTF Transfer's DTF Transfers"
+          }
+        },
+        "richtext_6hxHBK": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Applying Fast DTF Transfer's DTF transfers is easy and efficient. Here's how to get the best results:<br/><br/>1.<strong>Align Your Design</strong>: Position the transfer carefully on the fabric. While heat-resistant tape isn't typically needed for flat surfaces, it's recommended for securing transfers on hats or for ironing.<br/>2.<strong>Press</strong>: Set your heat press to 310°F (155°C) and press for 15 seconds with medium pressure. Avoid overheating the garment by testing beforehand and using parchment paper or a protective sheet.<br/>3.<strong>Cool and Peel</strong>: After pressing, let the transfer cool for 15-30 seconds before gently peeling from a corner. If it hasn't adhered fully, repress with more time and pressure, adjusting heat in 15°F increments if needed. Multiple presses won't harm the transfer.<br/>4<strong>.Final Press</strong>: To boost durability and soften the design, place parchment paper or a t-shirt layer over it and press again for 15 seconds. To achieve a shiny finish, use a protective guard sheet. Wash inside out on cold, and tumble dry on low or hang to dry.</p>"
+          }
+        },
+        "subheading_6d97xP": {
+          "type": "subheading",
+          "settings": {
+            "text": "Why Choose Ready-to-Press DTF Transfers? Key Benefits"
+          }
+        },
+        "richtext_C7Drz4": {
+          "type": "richtext",
+          "settings": {
+            "content": "<ul><li><strong>Affordable</strong>: Suitable for projects of any size, whether small or large batches.</li><li><strong>Saves Time</strong>: No need to waste time on cutting or weeding—just press and go!</li><li><strong>Exceptional Detail</strong>: Reproduces intricate designs with precision.</li><li><strong>Eco-Friendly</strong>: Crafted from environmentally safe inks and materials.</li></ul>"
+          }
+        },
+        "subheading_4kNTAz": {
+          "type": "subheading",
+          "settings": {
+            "text": "Ideal for Any Project"
+          }
+        },
+        "richtext_A99Fme": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>Fast DTF Transfer’s press-ready DTF transfers work seamlessly across multiple applications, including:</p><ul><li><strong>Personalized Clothing</strong></li><li><strong>Branded Promotional Items</strong></li><li><strong>Uniforms for Teams</strong></li><li><strong>Customized Gifts</strong></li><li><strong>Merchandise for Events</strong></li></ul>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_haWxNz",
+        "subheading_tMGqTi",
+        "richtext_hPBANz",
+        "subheading_UHAi9L",
+        "richtext_hVgGft",
+        "subheading_9z8keh",
+        "richtext_6hxHBK",
+        "subheading_6d97xP",
+        "richtext_C7Drz4",
+        "subheading_4kNTAz",
+        "richtext_A99Fme"
+      ],
+      "custom_css": [
+        ".h1 {font-size: 28px; font-weight: bold;}",
+        "p.h6 {font-size: 18px; font-weight: 700;}"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "content_width": "sm",
+        "text_position": "center",
+        "remove_vertical_spacing": false
+      }
+    }
+  },
+  "order": [
+    "main",
+    "rich_text_fUedtf",
+    "custom_liquid_8CmQCr",
+    "rich_text_ECfaNW"
+  ]
+}

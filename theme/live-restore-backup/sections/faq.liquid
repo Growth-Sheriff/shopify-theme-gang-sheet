@@ -1,0 +1,481 @@
+{% comment %}
+  ============================================
+  FAQ SECTION - Accordion Style
+  Shopify 2.0 Compatible
+  ============================================
+{% endcomment %}
+
+<style>
+/* ===== FAQ SECTION STYLES ===== */
+.faq-section {
+  padding: 60px 0 80px;
+  background: linear-gradient(180deg, #fff 0%, #f8f9fc 100%);
+}
+
+.faq-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.faq-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2d2d3a;
+  margin-bottom: 12px;
+}
+
+.faq-subtitle {
+  font-size: 1.1rem;
+  color: #6c757d;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* FAQ Container */
+.faq-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Category Tabs */
+.faq-categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+.faq-category-btn {
+  padding: 10px 20px;
+  background: #fff;
+  border: 1px solid rgba(115, 103, 240, 0.2);
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #5d596c;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.faq-category-btn:hover,
+.faq-category-btn.active {
+  background: #7367f0;
+  color: #fff;
+  border-color: #7367f0;
+}
+
+/* FAQ Items */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.faq-item {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+  border: 1px solid rgba(115, 103, 240, 0.08);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+  box-shadow: 0 8px 30px rgba(115, 103, 240, 0.1);
+}
+
+.faq-item.active {
+  border-color: rgba(115, 103, 240, 0.3);
+}
+
+.faq-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.faq-question:hover {
+  background: rgba(115, 103, 240, 0.02);
+}
+
+.faq-question-text {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  flex: 1;
+}
+
+.faq-question-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(115, 103, 240, 0.1);
+  color: #7367f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.faq-item.active .faq-question-icon {
+  background: #7367f0;
+  color: #fff;
+}
+
+.faq-question h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2d2d3a;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.faq-toggle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #f8f9fc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9a97a8;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.faq-item.active .faq-toggle {
+  background: #7367f0;
+  color: #fff;
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+}
+
+.faq-item.active .faq-answer {
+  max-height: 500px;
+}
+
+.faq-answer-content {
+  padding: 0 24px 24px 70px;
+  font-size: 0.95rem;
+  color: #5d596c;
+  line-height: 1.7;
+}
+
+.faq-answer-content p {
+  margin: 0 0 12px 0;
+}
+
+.faq-answer-content p:last-child {
+  margin-bottom: 0;
+}
+
+.faq-answer-content ul,
+.faq-answer-content ol {
+  margin: 12px 0;
+  padding-left: 20px;
+}
+
+.faq-answer-content li {
+  margin-bottom: 6px;
+}
+
+.faq-answer-content a {
+  color: #7367f0;
+  text-decoration: none;
+}
+
+.faq-answer-content a:hover {
+  text-decoration: underline;
+}
+
+/* Still Have Questions */
+.faq-cta {
+  text-align: center;
+  margin-top: 50px;
+  padding: 40px;
+  background: linear-gradient(135deg, rgba(115, 103, 240, 0.05), rgba(158, 149, 245, 0.1));
+  border-radius: 20px;
+}
+
+.faq-cta h4 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2d2d3a;
+  margin: 0 0 10px 0;
+}
+
+.faq-cta p {
+  font-size: 0.95rem;
+  color: #6c757d;
+  margin: 0 0 20px 0;
+}
+
+.faq-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #7367f0, #9e95f5);
+  border-radius: 12px;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.faq-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(115, 103, 240, 0.35);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 767.98px) {
+  .faq-section {
+    padding: 40px 0 60px;
+  }
+  
+  .faq-title {
+    font-size: 1.8rem;
+  }
+  
+  .faq-categories {
+    margin-bottom: 30px;
+  }
+  
+  .faq-category-btn {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+  }
+  
+  .faq-question {
+    padding: 16px 20px;
+  }
+  
+  .faq-question h3 {
+    font-size: 0.95rem;
+  }
+  
+  .faq-question-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+  }
+  
+  .faq-answer-content {
+    padding: 0 20px 20px 62px;
+    font-size: 0.9rem;
+  }
+  
+  .faq-cta {
+    padding: 30px 20px;
+  }
+}
+</style>
+
+<section class="faq-section" id="faq-{{ section.id }}">
+  <div class="container">
+    
+    <!-- Header -->
+    <div class="faq-header">
+      <h2 class="faq-title">{{ section.settings.title | default: 'Frequently Asked Questions' }}</h2>
+      <p class="faq-subtitle">{{ section.settings.subtitle | default: 'Find answers to the most common questions about our products and services.' }}</p>
+    </div>
+    
+    <div class="faq-container">
+      
+      <!-- FAQ List -->
+      <div class="faq-list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'faq_item' -%}
+            <div class="faq-item" data-category="{{ block.settings.category }}" {{ block.shopify_attributes }}>
+              <div class="faq-question" onclick="toggleFaq(this)">
+                <div class="faq-question-text">
+                  <div class="faq-question-icon">
+                    <i class="fa-solid fa-question"></i>
+                  </div>
+                  <h3>{{ block.settings.question }}</h3>
+                </div>
+                <div class="faq-toggle">
+                  <i class="fa-solid fa-chevron-down"></i>
+                </div>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  {{ block.settings.answer }}
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      
+      <!-- CTA -->
+      {%- if section.settings.show_cta -%}
+        <div class="faq-cta">
+          <h4>{{ section.settings.cta_title | default: 'Still have questions?' }}</h4>
+          <p>{{ section.settings.cta_text | default: 'Cannot find the answer you are looking for? Our team is here to help.' }}</p>
+          <a href="{{ section.settings.cta_link | default: '/pages/contact' }}" class="faq-cta-btn">
+            <i class="fa-solid fa-envelope"></i>
+            {{ section.settings.cta_button | default: 'Contact Us' }}
+          </a>
+        </div>
+      {%- endif -%}
+      
+    </div>
+    
+  </div>
+</section>
+
+<script>
+function toggleFaq(element) {
+  const item = element.closest('.faq-item');
+  const isActive = item.classList.contains('active');
+  
+  // Close all items
+  document.querySelectorAll('.faq-item').forEach(faq => {
+    faq.classList.remove('active');
+  });
+  
+  // Open clicked item if it wasn't active
+  if (!isActive) {
+    item.classList.add('active');
+  }
+}
+
+// Open first item by default
+document.addEventListener('DOMContentLoaded', function() {
+  const firstItem = document.querySelector('.faq-item');
+  if (firstItem) {
+    firstItem.classList.add('active');
+  }
+});
+</script>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "tag": "section",
+  "class": "section-faq",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Find answers to the most common questions about our products and services."
+    },
+    {
+      "type": "header",
+      "content": "Call to Action"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Show CTA Box",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_title",
+      "label": "CTA Title",
+      "default": "Still have questions?"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Text",
+      "default": "Can't find the answer you're looking for? Our team is here to help."
+    },
+    {
+      "type": "text",
+      "id": "cta_button",
+      "label": "Button Text",
+      "default": "Contact Us"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What is your return policy?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>We offer a 30-day return policy on all unused items in their original packaging. Simply contact our support team to initiate a return.</p>"
+        },
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Category (optional)",
+          "info": "Group FAQs by category"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "<p>We offer a 30-day return policy on all unused items in their original packaging. Simply contact our support team to initiate a return.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "<p>Standard shipping takes 3-5 business days. Express shipping is available for 1-2 business day delivery. International orders may take 7-14 business days.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do you offer wholesale pricing?",
+            "answer": "<p>Yes! We offer competitive wholesale pricing for bulk orders. Contact our sales team at wholesale@yourstore.com for more information and pricing details.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I track my order?",
+            "answer": "<p>Once your order ships, you'll receive an email with a tracking number. You can use this number to track your package on our website or the carrier's website.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

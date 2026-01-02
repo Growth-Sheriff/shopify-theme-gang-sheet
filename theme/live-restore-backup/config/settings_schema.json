@@ -1,0 +1,424 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "CloudyPrints Theme",
+    "theme_version": "1.0.0",
+    "theme_author": "CloudyPrints",
+    "theme_documentation_url": "https://cloudyprints.com",
+    "theme_support_url": "https://cloudyprints.com/support"
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Section Headers"
+      },
+      {
+        "type": "select",
+        "id": "heading_font",
+        "label": "Heading Font",
+        "options": [
+          { "value": "Montserrat", "label": "Montserrat" },
+          { "value": "Inter", "label": "Inter" },
+          { "value": "Poppins", "label": "Poppins" },
+          { "value": "Roboto", "label": "Roboto" },
+          { "value": "Open Sans", "label": "Open Sans" },
+          { "value": "Playfair Display", "label": "Playfair Display" }
+        ],
+        "default": "Montserrat"
+      },
+      {
+        "type": "select",
+        "id": "heading_weight",
+        "label": "Heading Weight",
+        "options": [
+          { "value": "300", "label": "Light (300)" },
+          { "value": "400", "label": "Regular (400)" },
+          { "value": "500", "label": "Medium (500)" },
+          { "value": "600", "label": "Semi-Bold (600)" },
+          { "value": "700", "label": "Bold (700)" }
+        ],
+        "default": "500"
+      },
+      {
+        "type": "checkbox",
+        "id": "heading_uppercase",
+        "label": "Uppercase Headings",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Primary Colors"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary Color",
+        "default": "#7367F0"
+      },
+      {
+        "type": "color",
+        "id": "color_primary_dark",
+        "label": "Primary Dark",
+        "default": "#5e50ee"
+      },
+      {
+        "type": "color",
+        "id": "color_primary_light",
+        "label": "Primary Light",
+        "default": "#9e95f5"
+      },
+      {
+        "type": "header",
+        "content": "Semantic Colors"
+      },
+      {
+        "type": "color",
+        "id": "color_success",
+        "label": "Success Color",
+        "default": "#28c76f"
+      },
+      {
+        "type": "color",
+        "id": "color_danger",
+        "label": "Danger Color",
+        "default": "#ea5455"
+      },
+      {
+        "type": "color",
+        "id": "color_warning",
+        "label": "Warning Color",
+        "default": "#ff9f43"
+      },
+      {
+        "type": "color",
+        "id": "color_info",
+        "label": "Info Color",
+        "default": "#00cfe8"
+      },
+      {
+        "type": "header",
+        "content": "Background Colors"
+      },
+      {
+        "type": "color",
+        "id": "color_body_bg",
+        "label": "Body Background",
+        "default": "#f8f8f8"
+      },
+      {
+        "type": "color",
+        "id": "color_card_bg",
+        "label": "Card Background",
+        "default": "#ffffff"
+      },
+      {
+        "type": "header",
+        "content": "Text Colors"
+      },
+      {
+        "type": "color",
+        "id": "color_heading",
+        "label": "Heading Color",
+        "default": "#5e5873"
+      },
+      {
+        "type": "color",
+        "id": "color_body_text",
+        "label": "Body Text Color",
+        "default": "#6e6b7b"
+      },
+      {
+        "type": "color",
+        "id": "color_muted",
+        "label": "Muted Text Color",
+        "default": "#b9b9c3"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "Border Color",
+        "default": "#ebe9f1"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading Font",
+        "default": "montserrat_n5"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body Font",
+        "default": "montserrat_n4"
+      },
+      {
+        "type": "range",
+        "id": "font_size_base",
+        "label": "Base Font Size",
+        "min": 14,
+        "max": 18,
+        "step": 1,
+        "default": 16,
+        "unit": "px"
+      }
+    ]
+  },
+  {
+    "name": "3D Viewer Settings",
+    "settings": [
+      {
+        "type": "header",
+        "content": "T-Shirt Model"
+      },
+      {
+        "type": "text",
+        "id": "tshirt_model_url",
+        "label": "T-Shirt GLB Model URL",
+        "info": "URL to the 3D t-shirt model (.glb format)"
+      },
+      {
+        "type": "color",
+        "id": "tshirt_default_color",
+        "label": "Default T-Shirt Color",
+        "default": "#7dd3fc"
+      },
+      {
+        "type": "range",
+        "id": "tshirt_rotation_speed",
+        "label": "Auto Rotation Speed",
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "default": 2
+      },
+      {
+        "type": "checkbox",
+        "id": "tshirt_auto_rotate",
+        "label": "Enable Auto Rotation",
+        "default": false
+      }
+    ]
+  },
+  {
+    "name": "Social Media",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_facebook",
+        "label": "Facebook URL"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram URL"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter",
+        "label": "Twitter/X URL"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube",
+        "label": "YouTube URL"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok",
+        "label": "TikTok URL"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest",
+        "label": "Pinterest URL"
+      }
+    ]
+  },
+  {
+    "name": "Cart & Checkout",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Cart Type",
+        "options": [
+          { "value": "drawer", "label": "Drawer" },
+          { "value": "page", "label": "Page" },
+          { "value": "popup", "label": "Popup" }
+        ],
+        "default": "drawer"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_cart_note",
+        "label": "Show Cart Note",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_ajax_cart",
+        "label": "Enable AJAX Add to Cart",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Chat & Support Widget",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "chat_widget_enabled",
+        "label": "Enable Chat Widget",
+        "default": true,
+        "info": "Show/hide the floating chat button"
+      },
+      {
+        "type": "header",
+        "content": "WhatsApp Settings"
+      },
+      {
+        "type": "text",
+        "id": "chat_whatsapp_number",
+        "label": "WhatsApp Phone Number",
+        "info": "Include country code (e.g., +1234567890)"
+      },
+      {
+        "type": "text",
+        "id": "chat_whatsapp_message",
+        "label": "Default WhatsApp Message",
+        "default": "Hello! I need help with my order."
+      },
+      {
+        "type": "header",
+        "content": "Email Support"
+      },
+      {
+        "type": "text",
+        "id": "chat_support_email",
+        "label": "Support Email",
+        "info": "Leave blank to use shop email"
+      },
+      {
+        "type": "text",
+        "id": "chat_email_subject",
+        "label": "Email Subject",
+        "default": "Support Request"
+      },
+      {
+        "type": "header",
+        "content": "Phone Support"
+      },
+      {
+        "type": "text",
+        "id": "chat_support_phone",
+        "label": "Support Phone Number",
+        "info": "Include country code"
+      },
+      {
+        "type": "header",
+        "content": "Messenger (Facebook)"
+      },
+      {
+        "type": "text",
+        "id": "chat_messenger_username",
+        "label": "Facebook Page Username",
+        "info": "Your Facebook page username for Messenger"
+      }
+    ]
+  },
+  {
+    "name": "Shipping Settings",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Shipping Information"
+      },
+      {
+        "type": "text",
+        "id": "shipping_processing_time",
+        "label": "Processing Time",
+        "default": "1-2 Business Days"
+      },
+      {
+        "type": "text",
+        "id": "shipping_standard",
+        "label": "Standard Shipping",
+        "default": "3-5 Business Days"
+      },
+      {
+        "type": "text",
+        "id": "shipping_express",
+        "label": "Express Shipping",
+        "default": "1-2 Business Days"
+      },
+      {
+        "type": "text",
+        "id": "shipping_free_threshold",
+        "label": "Free Shipping Threshold",
+        "default": "Orders $59+"
+      },
+      {
+        "type": "header",
+        "content": "Default Press Instructions"
+      },
+      {
+        "type": "text",
+        "id": "press_temperature",
+        "label": "Temperature",
+        "default": "285°F - 300°F"
+      },
+      {
+        "type": "text",
+        "id": "press_time",
+        "label": "Press Time",
+        "default": "10-15 seconds"
+      },
+      {
+        "type": "text",
+        "id": "press_pressure",
+        "label": "Pressure",
+        "default": "Medium"
+      },
+      {
+        "type": "text",
+        "id": "press_peel",
+        "label": "Peel Type",
+        "default": "Cold Peel"
+      },
+      {
+        "type": "header",
+        "content": "Default Care Instructions"
+      },
+      {
+        "type": "textarea",
+        "id": "care_instructions_default",
+        "label": "Default Care Instructions",
+        "default": "Wait 24hrs before washing\nWash inside out, cold water\nTumble dry low\nDo not iron on design\nNo bleach\nNo dry cleaning",
+        "info": "One instruction per line"
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon Image",
+        "info": "32x32 pixels recommended"
+      }
+    ]
+  }
+]

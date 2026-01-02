@@ -1,0 +1,253 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "custom_css": [
+        ".container {padding: 0 30px;}"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "show_title": true,
+        "page_width": "xs"
+      }
+    },
+    "text_with_icons_PNWtTn": {
+      "type": "text-with-icons",
+      "blocks": {
+        "item_thwUJE": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-user",
+            "icon_url": "https://account.fastdtftransfer.com/authentication/login?client_id=b3f9998b-ccf3-406f-b3ad-d4f7cb5aa2eb&locale=en&redirect_uri=https%3A%2F%2Faccount.fastdtftransfer.com%2Fauthentication%2Foauth%2Fauthorize%3Fclient_id%3Db3f9998b-ccf3-406f-b3ad-d4f7cb5aa2eb%26locale%3Den%26nonce%3Ddaad02de-f8d2-420f-8d03-859768eb4273%26redirect_uri%3Dhttps%253A%252F%252Faccount.fastdtftransfer.com%252Fcallback%253Fsource%253Dcore%26response_type%3Dcode%26scope%3Dopenid%2Bemail%2Bcustomer-account-api%253Afull%26state%3D01K1ZT37423MTMZCB2Y56PDAKA",
+            "icon_width": 24,
+            "mobile_icon_width": 24,
+            "title": "<strong>My Account</strong>",
+            "content": "<p>Manage your personal information, and view your order history all in one place.</p>"
+          }
+        },
+        "item_VRHYd8": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-customer-support",
+            "icon_url": "shopify://pages/contact",
+            "icon_width": 24,
+            "mobile_icon_width": 24,
+            "title": "Contact Us",
+            "content": "<p>Get in touch with us for any inquiries or support requests. We’re here to help!</p>"
+          }
+        },
+        "item_3ef3Mm": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-comment",
+            "icon_url": "shopify://pages/order-issue-form",
+            "icon_width": 24,
+            "mobile_icon_width": 24,
+            "title": "Order Support Request",
+            "content": "<p>Create a case and get help with order issues like delays, missing items, or product concerns.</p>"
+          }
+        },
+        "item_LMkedm": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-document",
+            "icon_url": "shopify://pages/tax-exemption",
+            "icon_width": 24,
+            "mobile_icon_width": 24,
+            "title": "Tax Exemption",
+            "content": "<p>Learn more about our tax exemption process and how you can apply for eligibility.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "item_thwUJE",
+        "item_VRHYd8",
+        "item_3ef3Mm",
+        "item_LMkedm"
+      ],
+      "custom_css": [
+        ".container {padding: 0 30px;}"
+      ],
+      "name": "t:sections.text_with_icons.presets.text_with_icons.name",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "stack_on_mobile": false,
+        "icon_color": "",
+        "text_color": "",
+        "text_alignment": "center"
+      }
+    },
+    "text_with_icons_QqBhCU": {
+      "type": "text-with-icons",
+      "blocks": {
+        "item_mneyG3": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-info",
+            "icon_url": "shopify://pages/faq",
+            "icon_width": 24,
+            "mobile_icon_width": 24,
+            "title": "FAQs",
+            "content": "<p>Find answers to the commonly asked questions regarding our products and services.</p>"
+          }
+        },
+        "item_UmU84b": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-building",
+            "icon_url": "shopify://pages/join-our-team",
+            "icon_width": 24,
+            "mobile_icon_width": 24,
+            "title": "Job Openings",
+            "content": "<p>View and apply for current job opportunities available across our teams and locations.</p>"
+          }
+        },
+        "item_HL8Umk": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-pin",
+            "icon_url": "https://www.google.com/maps/place/Fast+DTF+Transfer/@40.8750148,-74.1126842,17z/data=!3m1!4b1!4m6!3m5!1s0x89c2f9e4ccea1b75:0x581d67d9c5f929bb!8m2!3d40.8750148!4d-74.1101093!16s%2Fg%2F11v021yrnh?entry=ttu&g_ep=EgoyMDI1MDgwNC4wIKXMDSoASAFQAw%3D%3D",
+            "icon_width": 24,
+            "mobile_icon_width": 24,
+            "title": "Visit Us",
+            "content": "<p>Stop by our store location to explore products, get support, or speak with our team in person.</p>"
+          }
+        },
+        "item_jDbkVm": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-star",
+            "icon_url": "https://www.google.com/maps/place/Fast+DTF+Transfer/@40.8750148,-74.1101093,16z/data=!4m8!3m7!1s0x89c2f9e4ccea1b75:0x581d67d9c5f929bb!8m2!3d40.8750148!4d-74.1101093!9m1!1b1!16s%2Fg%2F11v021yrnh?entry=ttu&g_ep=EgoyMDI1MDgwNC4wIKXMDSoASAFQAw%3D%3D",
+            "icon_width": 24,
+            "mobile_icon_width": 24,
+            "title": "Rate Us",
+            "content": "<p>Leave a quick review and share your experience with our store on Google.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "item_mneyG3",
+        "item_UmU84b",
+        "item_HL8Umk",
+        "item_jDbkVm"
+      ],
+      "custom_css": [
+        ".container {padding: 0 30px;}"
+      ],
+      "name": "t:sections.text_with_icons.presets.text_with_icons.name",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "stack_on_mobile": false,
+        "icon_color": "",
+        "text_color": "",
+        "text_alignment": "center"
+      }
+    },
+    "text_with_icons_MmTHWj": {
+      "type": "text-with-icons",
+      "blocks": {
+        "item_n6aLcy": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-avatar",
+            "icon_url": "shopify://policies/terms-of-service",
+            "icon_width": 24,
+            "mobile_icon_width": 24,
+            "title": "Terms of Service",
+            "content": "<p> Review our terms and conditions for using our website, services, and making purchases.</p>"
+          }
+        },
+        "item_eJkWhE": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-lock",
+            "icon_url": "shopify://policies/privacy-policy",
+            "icon_width": 24,
+            "mobile_icon_width": 24,
+            "title": "Data and Privacy",
+            "content": "<p>Understand how we protect your personal data and ensure your privacy.</p>"
+          }
+        },
+        "item_rjNQ6j": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-box",
+            "icon_url": "shopify://policies/shipping-policy",
+            "icon_width": 24,
+            "mobile_icon_width": 24,
+            "title": "Shipping Policy",
+            "content": "<p>Learn about our shipping methods, delivery times, and associated costs for your orders.</p>"
+          }
+        },
+        "item_EXeMQG": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-return",
+            "icon_url": "shopify://policies/refund-policy",
+            "icon_width": 24,
+            "mobile_icon_width": 24,
+            "title": "Return Policy",
+            "content": "<p>Get the details on how to return products, the process, costs, and our refund policies.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "item_n6aLcy",
+        "item_eJkWhE",
+        "item_rjNQ6j",
+        "item_EXeMQG"
+      ],
+      "custom_css": [
+        ".container {padding: 0 30px;}"
+      ],
+      "name": "t:sections.text_with_icons.presets.text_with_icons.name",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "stack_on_mobile": false,
+        "icon_color": "rgba(0,0,0,0)",
+        "text_color": "",
+        "text_alignment": "center"
+      }
+    },
+    "17544884578faa589e": {
+      "type": "apps",
+      "blocks": {
+        "rocket_google_reviews_app_block_fwr3B3": {
+          "type": "shopify://apps/rocket-google-reviews/blocks/app-block/d11c8893-a181-4aff-a280-7446d42cec3b",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "rocket_google_reviews_app_block_fwr3B3"
+      ],
+      "custom_css": [
+        ".container {padding: 0 30px;}"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "remove_vertical_spacing": false,
+        "remove_horizontal_spacing": false
+      }
+    }
+  },
+  "order": [
+    "main",
+    "text_with_icons_PNWtTn",
+    "text_with_icons_QqBhCU",
+    "text_with_icons_MmTHWj",
+    "17544884578faa589e"
+  ]
+}

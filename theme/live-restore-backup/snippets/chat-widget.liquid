@@ -1,0 +1,327 @@
+{% comment %}
+  Chat Widget - WhatsApp & Support Button
+  Floating chat button with WhatsApp integration
+  Control via Theme Settings > Chat & Support Widget > Enable Chat Widget
+{% endcomment %}
+
+{% if settings.chat_widget_enabled %}
+<div class="chat-widget" id="chatWidget">
+  <!-- Main Chat Button -->
+  <button class="chat-toggle" id="chatToggle" aria-label="Open chat menu">
+    <span class="chat-icon-open">
+      <i class="fa-solid fa-comment-dots"></i>
+    </span>
+    <span class="chat-icon-close">
+      <i class="fa-solid fa-xmark"></i>
+    </span>
+    <span class="chat-pulse"></span>
+  </button>
+  
+  <!-- Chat Options Menu -->
+  <div class="chat-menu" id="chatMenu">
+    <div class="chat-menu-header">
+      <span>💬 Need Help?</span>
+    </div>
+    
+    <!-- WhatsApp Option -->
+    {% assign whatsapp_number = settings.chat_whatsapp_number | default: '' %}
+    {% if whatsapp_number != blank %}
+    <a href="https://wa.me/{{ whatsapp_number | remove: '+' | remove: ' ' | remove: '-' }}?text={{ settings.chat_whatsapp_message | default: 'Hello! I need help with my order.' | url_encode }}" 
+       class="chat-option whatsapp"
+       target="_blank"
+       rel="noopener">
+      <div class="chat-option-icon">
+        <i class="fa-brands fa-whatsapp"></i>
+      </div>
+      <div class="chat-option-text">
+        <span class="chat-option-title">WhatsApp</span>
+        <span class="chat-option-subtitle">Chat with us</span>
+      </div>
+    </a>
+    {% endif %}
+    
+    <!-- Email Option -->
+    {% assign support_email = settings.chat_support_email | default: shop.email %}
+    {% if support_email != blank %}
+    <a href="mailto:{{ support_email }}?subject={{ settings.chat_email_subject | default: 'Support Request' | url_encode }}" 
+       class="chat-option email">
+      <div class="chat-option-icon">
+        <i class="fa-solid fa-envelope"></i>
+      </div>
+      <div class="chat-option-text">
+        <span class="chat-option-title">Email Us</span>
+        <span class="chat-option-subtitle">{{ support_email }}</span>
+      </div>
+    </a>
+    {% endif %}
+    
+    <!-- Phone Option -->
+    {% assign support_phone = settings.chat_support_phone | default: '' %}
+    {% if support_phone != blank %}
+    <a href="tel:{{ support_phone | remove: ' ' | remove: '-' }}" 
+       class="chat-option phone">
+      <div class="chat-option-icon">
+        <i class="fa-solid fa-phone"></i>
+      </div>
+      <div class="chat-option-text">
+        <span class="chat-option-title">Call Us</span>
+        <span class="chat-option-subtitle">{{ support_phone }}</span>
+      </div>
+    </a>
+    {% endif %}
+    
+    <!-- Messenger Option -->
+    {% assign messenger_username = settings.chat_messenger_username | default: '' %}
+    {% if messenger_username != blank %}
+    <a href="https://m.me/{{ messenger_username }}" 
+       class="chat-option messenger"
+       target="_blank"
+       rel="noopener">
+      <div class="chat-option-icon">
+        <i class="fa-brands fa-facebook-messenger"></i>
+      </div>
+      <div class="chat-option-text">
+        <span class="chat-option-title">Messenger</span>
+        <span class="chat-option-subtitle">Facebook Chat</span>
+      </div>
+    </a>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+/* ================================================
+   CHAT WIDGET STYLES
+   ================================================ */
+.chat-widget {
+  position: fixed;
+  bottom: 100px;
+  right: 24px;
+  z-index: 9998;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Main Toggle Button */
+.chat-toggle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7367f0 0%, #9e95f5 100%);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 
+    0 4px 20px rgba(115, 103, 240, 0.4),
+    0 0 0 0 rgba(115, 103, 240, 0.3);
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  color: #fff;
+  font-size: 24px;
+}
+
+.chat-toggle:hover {
+  transform: scale(1.08);
+  box-shadow: 
+    0 6px 30px rgba(115, 103, 240, 0.5),
+    0 0 0 8px rgba(115, 103, 240, 0.1);
+}
+
+.chat-toggle .chat-icon-close {
+  display: none;
+}
+
+.chat-widget.active .chat-toggle .chat-icon-open {
+  display: none;
+}
+
+.chat-widget.active .chat-toggle .chat-icon-close {
+  display: block;
+}
+
+/* Pulse Animation */
+.chat-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(115, 103, 240, 0.3);
+  animation: chatPulse 2s infinite;
+  pointer-events: none;
+}
+
+@keyframes chatPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.chat-widget.active .chat-pulse {
+  display: none;
+}
+
+/* Chat Menu */
+.chat-menu {
+  position: absolute;
+  bottom: 75px;
+  right: 0;
+  width: 280px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 
+    0 10px 50px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(0, 0, 0, 0.03);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.95);
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  overflow: hidden;
+}
+
+.chat-widget.active .chat-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+/* Menu Header */
+.chat-menu-header {
+  background: linear-gradient(135deg, #7367f0 0%, #9e95f5 100%);
+  color: #fff;
+  padding: 16px 20px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+/* Chat Options */
+.chat-option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  text-decoration: none;
+  color: #333;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.chat-option:last-child {
+  border-bottom: none;
+}
+
+.chat-option:hover {
+  background: #f8f8f8;
+}
+
+.chat-option-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+/* WhatsApp */
+.chat-option.whatsapp .chat-option-icon {
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  color: #fff;
+}
+
+/* Email */
+.chat-option.email .chat-option-icon {
+  background: linear-gradient(135deg, #7367f0 0%, #9e95f5 100%);
+  color: #fff;
+}
+
+/* Phone */
+.chat-option.phone .chat-option-icon {
+  background: linear-gradient(135deg, #28c76f 0%, #48da89 100%);
+  color: #fff;
+}
+
+/* Messenger */
+.chat-option.messenger .chat-option-icon {
+  background: linear-gradient(135deg, #0084FF 0%, #00C6FF 100%);
+  color: #fff;
+}
+
+.chat-option-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.chat-option-title {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+.chat-option-subtitle {
+  font-size: 12px;
+  color: #888;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .chat-widget {
+    bottom: 85px;
+    right: 16px;
+  }
+  
+  .chat-toggle {
+    width: 54px;
+    height: 54px;
+    font-size: 22px;
+  }
+  
+  .chat-menu {
+    width: 260px;
+    right: -8px;
+  }
+}
+
+/* Hide on very small screens if bottom nav exists */
+@media (max-width: 480px) {
+  .chat-widget {
+    bottom: 75px;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const chatWidget = document.getElementById('chatWidget');
+  const chatToggle = document.getElementById('chatToggle');
+  const chatMenu = document.getElementById('chatMenu');
+  
+  if (chatToggle) {
+    chatToggle.addEventListener('click', function() {
+      chatWidget.classList.toggle('active');
+    });
+    
+    // Close on outside click
+    document.addEventListener('click', function(e) {
+      if (!chatWidget.contains(e.target)) {
+        chatWidget.classList.remove('active');
+      }
+    });
+    
+    // Close on escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        chatWidget.classList.remove('active');
+      }
+    });
+  }
+});
+</script>
+{% endif %}

@@ -1,0 +1,71 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "column_customer_care": {
+          "type": "link_column",
+          "settings": {
+            "title": "Customer Care",
+            "menu": "customer-care"
+          }
+        },
+        "column_custom_transfers": {
+          "type": "link_column",
+          "settings": {
+            "title": "Custom Transfers",
+            "menu": "custom-transfers"
+          }
+        },
+        "column_dtf_supplies": {
+          "type": "link_column",
+          "settings": {
+            "title": "DTF Supplies",
+            "menu": "dtf-supplies"
+          }
+        },
+        "column_dtf_transfer": {
+          "type": "link_column",
+          "settings": {
+            "title": "DTF Transfer",
+            "menu": "dtf-transfer"
+          }
+        },
+        "contact_info": {
+          "type": "contact",
+          "settings": {
+            "title": "Contact Us",
+            "address": "Dallas, TX 75201",
+            "phone": "+1 (201) 250-5146",
+            "email": "info@fastdtftransfer.com",
+            "hours": "Mon - Fri: 9AM - 6PM EST"
+          }
+        }
+      },
+      "block_order": [
+        "column_customer_care",
+        "column_custom_transfers",
+        "column_dtf_supplies",
+        "column_dtf_transfer",
+        "contact_info"
+      ],
+      "settings": {
+        "show_newsletter": true,
+        "newsletter_title": "Join Our Newsletter",
+        "newsletter_subtitle": "Get exclusive offers, new arrivals & 10% off your first order",
+        "show_trust_badges": true,
+        "description": "High-quality custom DTF transfers for your apparel business. Fast turnaround, vibrant colors, and exceptional durability.",
+        "facebook": "https://www.facebook.com/FastDTFPrint/",
+        "instagram": "https://www.instagram.com/fastdtftransfer",
+        "youtube": "https://www.youtube.com/@Fast.DTF.Transfer",
+        "tiktok": "https://www.tiktok.com/@fastdtftransfer",
+        "pinterest": "https://www.pinterest.com/fastdtftransfer"
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

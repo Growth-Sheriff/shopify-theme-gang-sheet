@@ -1,0 +1,315 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "vendor",
+          "disabled": true,
+          "settings": {}
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "heading_tag": "h1"
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_taxes_notice": false
+          }
+        },
+        "judge_me_reviews_all_reviews_text_jHXCGh": {
+          "type": "shopify://apps/judge-me-reviews/blocks/all_reviews_text/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        },
+        "liquid_6gUje8": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "<div class=\"pickup-modern\">\n  <p><strong>📍 Pick Up in Store:</strong> 66 Belmont Ave Unit A, Garfield, NJ 07026</p>\n  <p>🚚 <strong>Shipping Available</strong></p>\n</div>\n\n<style>\n.pickup-modern {\n  text-align:left;\n  padding:12px 0;\n  font-size:17px;\n  line-height:1.5;\n  color:#333;\n}\n@media (max-width:480px) {\n  .pickup-modern {\n    text-align:center;\n    font-size:15px;\n  }\n}\n</style>"
+          }
+        },
+        "liquid_TKWTUG": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "<div class=\"fast-dtf\">\n  <div class=\"fast-text\">\n    🔥 FAST DTF Transfer<br>\n    Use Code: <span style=\"text-decoration: underline;\">FAST30</span><br>\n    First Order – 30% OFF \n  </div>\n</div>\n\n<style>\n/* Masaüstü */\n.fast-dtf {\n  text-align:left;\n  padding:10px 0;\n}\n\n.fast-text {\n  color:#ff0000;\n  font-weight:700;\n  font-size:22px;\n  line-height:1.3;\n}\n\n/* Mobil */\n@media (max-width: 480px) {\n  .fast-dtf {\n    text-align:center !important;\n  }\n  .fast-text {\n    font-size:16px !important;\n  }\n}\n</style>"
+          }
+        },
+        "bloy_loyalty_rewards_bloy_point_caculator_pdp_7RCzLP": {
+          "type": "shopify://apps/bloy-loyalty-rewards/blocks/bloy-point-caculator-pdp/97e8894d-00f0-41a9-b986-49828146257c",
+          "settings": {}
+        },
+        "file_uploads_by_uploadkit_app_block_C9fVdr": {
+          "type": "shopify://apps/file-uploads-by-uploadkit/blocks/app-block/d7b05810-6170-4288-808a-df45248c4d28",
+          "settings": {
+            "product": "{{product}}"
+          }
+        },
+        "liquid_WKNbDt": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "<a href=\"https://www.youtube.com/watch?v=fsAPlDGKX3M\" style=\"width:100%;display:flex;align-items:center\">\n\t<span style=\"width:6%;display:flex;align-items:center\">\n\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1.4em\" height=\"1.4em\" viewBox=\"0 0 16 14\"><path fill=\"black\" d=\"M8 1.5c-6.88 0-7 .62-7 5.5s.12 5.5 7 5.5s7-.62 7-5.5s-.12-5.5-7-5.5m2.24 5.74L7.1 8.74c-.28.13-.5-.02-.5-.33V5.59c0-.31.23-.46.5-.33l3.14 1.5c.28.13.28.35 0 .48\"/></svg>\n\t</span>\n\t<span style=\"width:94%;display:flex;align-items:center\">\n\t\tWatch - How To Order Tutorial\n\t</span>\n</a>"
+          }
+        },
+        "text_7gy9RV": {
+          "type": "text",
+          "settings": {
+            "text": "<h5><strong>Choose your size</strong></h5>"
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "hide_sold_out_variants": false,
+            "selector_style": "dropdown",
+            "swatch_selector_style": "swatch",
+            "variant_image_options": "",
+            "size_chart_page": ""
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "separator": {
+          "type": "separator",
+          "settings": {}
+        },
+        "drip_apps_build_a_gang_sheet_main_product_8Ddm3A": {
+          "type": "shopify://apps/build-a-gang-sheet/blocks/main-product/ee9ed31c-1d66-4e11-bf77-f31e69c2ec2b",
+          "settings": {
+            "btn-label": "Build your own Gang Sheet",
+            "btn-bg": "#ed8a00",
+            "btn-fg": "#ffffff",
+            "show_quantity": false,
+            "product": "{{product}}",
+            "custom_button_css": ""
+          }
+        },
+        "pickup_availability_8fHFqV": {
+          "type": "pickup_availability",
+          "settings": {}
+        },
+        "liquid_BcyMpG": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "{% if shop.enabled_payment_types contains 'paypal' %}\n<div  style=\"display:flex; align-items:center; gap:15px; justify-content:flex-start;\">\n   <div style=\"font-weight:600;font-size: var(--text-h6);\">Checkout with PAYPAL</div>\n <svg viewBox=\"0 0 38 24\" xmlns=\"http://www.w3.org/2000/svg\" width=\"114\" height=\"72\" role=\"img\" aria-labelledby=\"pi-paypal\">\n      <title id=\"pi-paypal\">PayPal</title>\n      <path opacity=\".07\" d=\"M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z\"></path>\n      <path fill=\"#fff\" d=\"M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32\"></path>\n      <path fill=\"#003087\" d=\"M23.9 8.3c.2-1 0-1.7-.6-2.3-.6-.7-1.7-1-3.1-1h-4.1c-.3 0-.5.2-.6.5L14 15.6c0 .2.1.4.3.4H17l.4-3.4 1.8-2.2 4.7-2.1z\"></path>\n      <path fill=\"#3086C8\" d=\"M23.9 8.3l-.2.2c-.5 2.8-2.2 3.8-4.6 3.8H18c-.3 0-.5.2-.6.5l-.6 3.9-.2 1c0 .2.1.4.3.4H19c.3 0 .5-.2.5-.4v-.1l.4-2.4v-.1c0-.2.3-.4.5-.4h.3c2.1 0 3.7-.8 4.1-3.2.2-1 .1-1.8-.4-2.4-.1-.5-.3-.7-.5-.8z\"></path>\n      <path fill=\"#012169\" d=\"M23.3 8.1c-.1-.1-.2-.1-.3-.1-.1 0-.2 0-.3-.1-.3-.1-.7-.1-1.1-.1h-3c-.1 0-.2 0-.2.1-.2.1-.3.2-.3.4l-.7 4.4v.1c0-.3.3-.5.6-.5h1.3c2.5 0 4.1-1 4.6-3.8v-.2c-.1-.1-.3-.2-.5-.2h-.1z\"></path>\n    </svg>\n\n  \n\n</div>\n{% endif %}"
+          }
+        },
+        "payment_terms": {
+          "type": "payment_terms",
+          "settings": {}
+        },
+        "description": {
+          "type": "description",
+          "settings": {
+            "collapse_content": true,
+            "show_below_gallery": false
+          }
+        },
+        "accordion_VAt6Pq": {
+          "type": "accordion",
+          "disabled": true,
+          "settings": {
+            "show_below_gallery": true,
+            "icon": "none",
+            "title": "BUILD YOUR OWN DTF GANG SHEET QUICKLY, NOT PAINSTAKINGLY!",
+            "content": "<p>Craft your personalized DTF gang sheet effortlessly using our user-friendly online builder. Maximize your efficiency and cost savings by incorporating multiple designs on a single sheet. Our builder caters to both novices and experts, providing a range of tools to help you create the ideal gang sheet for your specific requirements.</p>",
+            "liquid": "",
+            "page": ""
+          }
+        },
+        "accordion_rw6fNJ": {
+          "type": "accordion",
+          "disabled": true,
+          "settings": {
+            "show_below_gallery": true,
+            "icon": "none",
+            "title": "FEATURES",
+            "content": "<ol><li>Diverse Sizes: Select from five different gang sheet dimensions to suit your demands.</li><li>Creative Freedom: Play around with various design combinations and placements.</li><li>User-Friendly: Our builder is intuitive and straightforward, allowing you to create your gang sheet in a matter of minutes.</li><li>Premium Prints: Our DTF transfers boast top-quality materials and equipment, guaranteeing vivid and consistent results.</li></ol>",
+            "liquid": "",
+            "page": ""
+          }
+        },
+        "accordion_A4egWc": {
+          "type": "accordion",
+          "disabled": true,
+          "settings": {
+            "show_below_gallery": true,
+            "icon": "none",
+            "title": "BENEFITS",
+            "content": "<ol><li>Time and Cost Savings: Printing multiple designs on a single gang sheet can significantly reduce your expenses and production time.</li><li>Enhanced Efficiency: Simplify your printing process by pre-designing, arranging, and optimizing your gang sheets.</li><li>Unleash Creativity: Our builder offers an array of features to aid in crafting distinctive and attention-grabbing gang sheets.</li><li>Professional Excellence: Our DTF transfers are crafted with top-tier materials and equipment for consistently vibrant results.</li></ol>",
+            "liquid": "",
+            "page": ""
+          }
+        },
+        "accordion_CbPdLW": {
+          "type": "accordion",
+          "disabled": true,
+          "settings": {
+            "show_below_gallery": true,
+            "icon": "none",
+            "title": "Effortless DTF Sheets",
+            "content": "<p>Whether you’re a newcomer or a seasoned pro, our DTF Gang Sheet builder is the ultimate solution for crafting tailor-made gang sheets to meet your unique needs.</p>",
+            "liquid": "",
+            "page": ""
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "disabled": true,
+          "settings": {
+            "show_payment_button": true,
+            "show_gift_card_recipient": true,
+            "atc_button_background": "#f5db8b",
+            "atc_button_text_color": "#1c1c1c",
+            "payment_button_background": "",
+            "payment_button_text_color": ""
+          }
+        },
+        "complementary_products": {
+          "type": "complementary_products",
+          "settings": {
+            "title": "Pairs well with",
+            "products_count": 2,
+            "show_below_gallery": true,
+            "stack_products": false,
+            "show_quick_buy": true
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "price",
+        "judge_me_reviews_all_reviews_text_jHXCGh",
+        "liquid_6gUje8",
+        "liquid_TKWTUG",
+        "bloy_loyalty_rewards_bloy_point_caculator_pdp_7RCzLP",
+        "file_uploads_by_uploadkit_app_block_C9fVdr",
+        "liquid_WKNbDt",
+        "text_7gy9RV",
+        "variant_picker",
+        "quantity_selector",
+        "separator",
+        "drip_apps_build_a_gang_sheet_main_product_8Ddm3A",
+        "pickup_availability_8fHFqV",
+        "liquid_BcyMpG",
+        "payment_terms",
+        "description",
+        "accordion_VAt6Pq",
+        "accordion_rw6fNJ",
+        "accordion_A4egWc",
+        "accordion_CbPdLW",
+        "buy_buttons",
+        "complementary_products"
+      ],
+      "custom_css": [],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "container_size": "lg",
+        "product_info_size": 35,
+        "show_sticky_add_to_cart": true,
+        "center_basic_info": false,
+        "desktop_media_layout": "carousel_thumbnails_left",
+        "desktop_media_grid_gap": 30,
+        "mobile_controls": "dots",
+        "enable_media_autoplay": false,
+        "enable_video_looping": true,
+        "enable_image_zoom": true,
+        "max_image_zoom_level": 3
+      }
+    },
+    "custom_liquid_GarXzk": {
+      "type": "custom-liquid",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "remove_vertical_spacing": false,
+        "remove_horizontal_spacing": false,
+        "liquid": "<div class=\"faqdiv\">\n\t<div class=\"cardfaqdiv\">\n\t\t<span style=\"font-weight:bold;margin-bottom:2%\">\n\t\t\tProduct Details\n\t\t</span>\n\t\t<span style=\"font-weight:500;margin-bottom:1%\">\nDesign custom layouts, streamline your workflow, and utilize multiple designs on a single gang sheet. Unleash creativity and enhance your printing process with our DTF Gang Sheet Builder.\t\t\t\t\n\t\t</span>\n\t\t\n\t</div>\n\t<div class=\"cardfaqdiv\" style=\"width:50%;display:flex;flex-direction:column\">\n\t\t<div class=\"page\">\n\t\t<div class=\"page-wrapper\">\n\t\t<div class=\"accordion-group\">\n\t\t\t<div class=\"accordion\">\n\t\t\t\t<input type=\"checkbox\" class=\"ac-state\" id=\"ac-1\" name=\"ac-group-1\">\n\t\t\t\t<label for=\"ac-1\" class=\"ac-trigger\" tabindex=\"0\">\n\t\t\t\t\t<div class=\"ac-title\">Features</div>\n\t\t\t\t\t<div class=\"ac-icon\">\n\t\t\t\t\t\t<i class=\"ac-icon-close fa-solid fa-plus\">\n\t\t\t\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\"><path fill=\"black\" d=\"M18 11H6a2 2 0 0 0 0 4h12a2 2 0 0 0 0-4\"/></svg>\n\t\t\t\t\t\t</i>\n\t\t\t\t\t\t<i class=\"ac-icon-open fa-solid fa-minus\">\n\t\t\t\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\"><path fill=\"black\" d=\"M18 10h-4V6a2 2 0 0 0-4 0l.071 4H6a2 2 0 0 0 0 4l4.071-.071L10 18a2 2 0 0 0 4 0v-4.071L18 14a2 2 0 0 0 0-4\"/></svg>\n\t\t\t\t\t\t</i>\n\t\t\t\t\t</div>\n\t\t\t\t</label>\n\t\t\t\t<div class=\"ac-content\">\n\t\t\t\t\t<div class=\"ac-content-inner\">\n\t\t\t\t\t\t\t<p>Unleash Your Designs on Anything with DTF Fast Transfers!</p>\n\t\t\t\t\t\t<ul class=\"ulfaq\"  >\n\t\t\t\t\t\t  <li><strong>Unleash Your Creativity:</strong>DTF Fast Transfers are your one-stop shop for vibrant, long-lasting designs on any garment or material. From cotton tees to leather jackets, our cutting-edge inks and adhesive powders ensure flawless application across various fabrics.\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t  <li><strong>Breathtaking Details, Bold Colors:</strong>Witness the difference! Our transfers produce unmatched color accuracy and intricate details, bringing your designs to life with exceptional clarity. Fine lines, gradients, and complex patterns are flawlessly captured, making even the most detailed artwork pop on any surface.‌\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t  <li><strong>Effortless Application, Pro Results:</strong>Ditch the weeding and pre-treatment! DTF Fast Transfers are designed for quick and easy application, allowing you to achieve professional-looking results in record time. Simply position and press - it's that easy!\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t  <li><strong>Unbelievably Soft Feel:</strong>Experience the difference! Unlike bulky vinyl or stiff DTG printing, DTF Fast Transfers offer a luxuriously soft feel, resulting in a smooth, comfortable finish that wears beautifully.‌\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t  <li><strong>Wash After Wash, Design Stays Put:</strong>Our transfers are built to last. We rigorously test them to ensure they maintain their vibrancy and quality for over 60 washes, so you can wear your creations with confidence, wash after wash.\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t<p>Ready to unleash your creativity? DTF Fast Transfers are your key!</p>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"accordion\">\n\t\t\t\t<input type=\"checkbox\" class=\"ac-state\" id=\"ac-2\" name=\"ac-group-1\">\n\t\t\t\t<label for=\"ac-2\" class=\"ac-trigger\" tabindex=\"0\">\n\t\t\t\t\t<div class=\"ac-title\">Satisfaction Guarantee</div>\n\t\t\t\t\t<div class=\"ac-icon\">\n\t\t\t\t\t\t<i class=\"ac-icon-close fa-solid fa-plus\">\n\t\t\t\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\"><path fill=\"black\" d=\"M18 11H6a2 2 0 0 0 0 4h12a2 2 0 0 0 0-4\"/></svg>\n\t\t\t\t\t\t</i>\n\t\t\t\t\t\t<i class=\"ac-icon-open fa-solid fa-minus\">\n\t\t\t\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\"><path fill=\"black\" d=\"M18 10h-4V6a2 2 0 0 0-4 0l.071 4H6a2 2 0 0 0 0 4l4.071-.071L10 18a2 2 0 0 0 4 0v-4.071L18 14a2 2 0 0 0 0-4\"/></svg>\n\t\t\t\t\t\t</i>\n\t\t\t\t\t</div>\n\t\t\t\t</label>\n\t\t\t\t<div class=\"ac-content\">\n\t\t\t\t\t<div class=\"ac-content-inner\">\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\tWe stand behind the quality of the transfers we print for you. If you’re not satisfied, we’ll reprint with a new or revised file at no additional charge. Learn More\n\t\t\t\t\t\t</p>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"accordion\">\n\t\t\t\t<input type=\"checkbox\" class=\"ac-state\" id=\"ac-3\" name=\"ac-group-1\">\n\t\t\t\t<label for=\"ac-3\" class=\"ac-trigger\" tabindex=\"0\">\n\t\t\t\t\t<div class=\"ac-title\">Pressing Instructions</div>\n\t\t\t\t\t<div class=\"ac-icon\">\n\t\t\t\t\t\t<i class=\"ac-icon-close fa-solid fa-plus\">\n\t\t\t\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\"><path fill=\"black\" d=\"M18 11H6a2 2 0 0 0 0 4h12a2 2 0 0 0 0-4\"/></svg>\n\t\t\t\t\t\t</i>\n\t\t\t\t\t\t<i class=\"ac-icon-open fa-solid fa-minus\">\n\t\t\t\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\"><path fill=\"black\" d=\"M18 10h-4V6a2 2 0 0 0-4 0l.071 4H6a2 2 0 0 0 0 4l4.071-.071L10 18a2 2 0 0 0 4 0v-4.071L18 14a2 2 0 0 0 0-4\"/></svg>\n\t\t\t\t\t\t</i>\n\t\t\t\t\t</div>\n\t\t\t\t</label>\n\t\t\t\t<div class=\"ac-content\">\n\t\t\t\t\t<div class=\"ac-content-inner\">\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tLook no further for achieving professional-looking DTF transfers every single time! DTF Fast Transfer offers this comprehensive guide to walk you through the process, ensuring a flawless application.\n\t\t\t\t\t\t</p>\t\t\t\t\t\t\n\t\t\t\t\t\t<ul class=\"ulfaq\"  >\n\t\t\t\t\t\t  <li><strong> Skip the Pre-Press:</strong> Ditch the unnecessary step of removing moisture. Pre-pressing is entirely optional!</li>\n\t\t\t\t\t\t  <li><strong>Precise Positioning: </strong> Take your time and carefully align the transfer on your garment. For flat heat presses, heat-resistant tape is generally not required. However, it becomes highly recommended when working with hats or using an iron for better placement. Our DTF Alignment Ruler Set can further enhance your positioning accuracy.</li>\n\t\t\t\t\t\t  \n\t\t\t\t\t\t  <li><strong>Effortless Application:</strong> Apply medium pressure while pressing your transfer for 15 seconds at 310°F (155°C). Don't worry about damaging the transfer – within reason, more heat, pressure, or time won't affect it. However, excessive heat can harm your garment. Always test beforehand and utilize parchment paper or a protective sheet when using an iron.</li>\n\t\t\t\t\t\t  \n\t\t\t\t\t\t  <li><strong>Cool Down & Careful Peel:</strong> After pressing, let the transfer cool completely (around 15-30 seconds) before peeling. For faster cooling, consider our Fast Cool Peel Air Transfer Blower. Once cool, gently peel the transfer from a corner, keeping a watchful eye on the design for complete adhesion (our motto: use your eyes, not just your hands!). If you notice any areas that haven't adhered, stop peeling, lay it back down, and troubleshoot</li>\n\t\t\t\t\t\t  \n\t\t\t\t\t\t  <li><strong>Low Heat/Pressure/Time:</strong> Re-press the transfer with increased pressure and time (add 5-10 seconds).\n\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t  <li><strong>Fine-Tuning:</strong> If needed, try increasing the heat in 15°F increments until you achieve optimal results. Remember, multiple presses won't harm the transfer.\n\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t  <li><strong>Final Touches & Washing Instructions:</strong> Achieve a softer design, enhanced durability, and remove any shine with a final 15-second press using the included parchment paper or a single layer of t-shirt material. For a shiny finish, use a protective guard sheet during the final press.\n\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t  <li><strong>Washing Made Easy:</strong> Wash your garment inside out with cold water and low heat drying (or hang dry).\n\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t  <li><strong>Detailed Iron & Cricut EasyPress Instructions:</strong>Click here for step-by-step instructions on using a household iron or a Cricut EasyPress.\n\t\t\t\t\t\t</li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t<span style=\"font-weight:500;margin-bottom:2%;font-weight:bold\">\n\t\t\tHow Long Does It Take for My Order to Arrive?\n\t\t</span>\n\t\t<span style=\"font-weight:500;margin-bottom:1%\">\n\n\t\t\tWe prioritize the swift delivery of your orders within the US, offeringsame-day shippingfor your convenience, ensuring your items arrive quickly and efficiently.\t\t‌\n\n\t\t\t\n\t\t</span>\n\t\t<span style=\"font-weight:500;margin-bottom:2%;font-weight:bold\">\n\t‌\n\n\t\t\tWhat File Types should I use when Uploading my Artwork to Fast DTF Transfer?\t‌\n\n\t\t</span>\n\t\t<span style=\"font-weight:500;margin-bottom:2%\">\n\n\t\t\tAt Fast DTF Transfer, we prefer the following file types when uploading artwork:\t\n\t\t</span>\n\t\t<div style=\"padding-left:2%;display:flex;flex-direction:column\">\n\t\t\t<span style=\"font-weight:500;margin-bottom:1%\">‌\n\t\t\t\tPSD (Photoshop)\n\t\t\t</span>\n\t\t\t<span style=\"font-weight:500;margin-bottom:1%\">‌\n\t\t\t\tPNG\n\t\t\t</span>\n\t\t\t<span style=\"font-weight:500;margin-bottom:1%\">‌\n\t\t\t\tPDF\n\t\t\t</span>\n\t\t\t<span style=\"font-weight:500;margin-bottom:1%\">‌\n\t\t\t\tAI (AdobeIllustrator)\n\t\t\t</span>\n\t\t\t<span style=\"font-weight:500;margin-bottom:1%\">‌\n\t\t\t\tSVG\n\t\t\t</span>\n\t\t\t<span style=\"font-weight:500;margin-bottom:1%\">‌\n\t\t\t\tSVG files work best as they allow us to resize artwork without losing quality. However, any file uploaded with 300 DPI ensures that we can resize the image to your liking without any loss of quality.\n\t\t\t</span>\n\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"accordion\">\n\t\t\t\t<input type=\"checkbox\" class=\"ac-state\" id=\"ac-4\" name=\"ac-group-1\">\n\t\t\t\t<label for=\"ac-4\" class=\"ac-trigger\" tabindex=\"0\">\n\t\t\t\t\t<div class=\"ac-title\">Shipping & Returns</div>\n\t\t\t\t\t<div class=\"ac-icon\">\n\t\t\t\t\t\t<i class=\"ac-icon-close fa-solid fa-plus\">\n\t\t\t\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\"><path fill=\"black\" d=\"M18 11H6a2 2 0 0 0 0 4h12a2 2 0 0 0 0-4\"/></svg>\n\t\t\t\t\t\t</i>\n\t\t\t\t\t\t<i class=\"ac-icon-open fa-solid fa-minus\">\n\t\t\t\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\"><path fill=\"black\" d=\"M18 10h-4V6a2 2 0 0 0-4 0l.071 4H6a2 2 0 0 0 0 4l4.071-.071L10 18a2 2 0 0 0 4 0v-4.071L18 14a2 2 0 0 0 0-4\"/></svg>\n\t\t\t\t\t\t</i>\n\t\t\t\t\t</div>\n\t\t\t\t</label>\n\t\t\t\t<div class=\"ac-content\">\n\t\t\t\t\t<div class=\"ac-content-inner\">\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t<ul class=\"ulfaq\"  >\n\t\t\t\t\t\t  <li>All orders are shipped out on the same or next business day.</li>\n\t\t\t\t\t\t  <li>Orders over $100 automatically qualify for Free Shipping.</li>\n\t\t\t\t\t\t  <li>Express shipping options, including Rush Delivery and our Guaranteed Delivery option (UPS Next Day Air Saver®), are available at checkout.</li>\n\t\t\t\t\t\t  <li>For more details, please refer to our Shipping Policy.</li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"accordion\">\n\t\t\t\t<input type=\"checkbox\" class=\"ac-state\" id=\"ac-5\" name=\"ac-group-1\">\n\t\t\t\t<label for=\"ac-5\" class=\"ac-trigger\" tabindex=\"0\">\n\t\t\t\t\t<div class=\"ac-title\">Refunds & Reprints</div>\n\t\t\t\t\t<div class=\"ac-icon\">\n\t\t\t\t\t\t<i class=\"ac-icon-close fa-solid fa-plus\">\n\t\t\t\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\"><path fill=\"black\" d=\"M18 11H6a2 2 0 0 0 0 4h12a2 2 0 0 0 0-4\"/></svg>\n\t\t\t\t\t\t</i>\n\t\t\t\t\t\t<i class=\"ac-icon-open fa-solid fa-minus\">\n\t\t\t\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\"><path fill=\"black\" d=\"M18 10h-4V6a2 2 0 0 0-4 0l.071 4H6a2 2 0 0 0 0 4l4.071-.071L10 18a2 2 0 0 0 4 0v-4.071L18 14a2 2 0 0 0 0-4\"/></svg>\n\t\t\t\t\t\t</i>\n\t\t\t\t\t</div>\n\t\t\t\t</label>\n\t\t\t\t<div class=\"ac-content\">\n\t\t\t\t\t<div class=\"ac-content-inner\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t<ul class=\"ulfaq\"  >\n\t\t\t\t\t\t  <li>Contact us within 45 days of receiving your order to request a refund or reprint.</li>\n\t\t\t\t\t\t  <li>We will reprint any order with print quality or adherence issues.</li>\n\t\t\t\t\t\t  <li>Reprints will not be issued for low-quality uploaded files.</li>\n\t\t\t\t\t\t  <li>Requests for refunds or reprints for other reasons must be approved by management.</li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"accordion\">\n\t\t\t\t<input type=\"checkbox\" class=\"ac-state\" id=\"ac-6\" name=\"ac-group-1\">\n\t\t\t\t<label for=\"ac-6\" class=\"ac-trigger\" tabindex=\"0\">\n\t\t\t\t\t<div class=\"ac-title\">Art Upload Recommendations</div>\n\t\t\t\t\t<div class=\"ac-icon\">\n\t\t\t\t\t\t<i class=\"ac-icon-close fa-solid fa-plus\">\n\t\t\t\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\"><path fill=\"black\" d=\"M18 11H6a2 2 0 0 0 0 4h12a2 2 0 0 0 0-4\"/></svg>\n\t\t\t\t\t\t</i>\n\t\t\t\t\t\t<i class=\"ac-icon-open fa-solid fa-minus\">\n\t\t\t\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\"><path fill=\"black\" d=\"M18 10h-4V6a2 2 0 0 0-4 0l.071 4H6a2 2 0 0 0 0 4l4.071-.071L10 18a2 2 0 0 0 4 0v-4.071L18 14a2 2 0 0 0 0-4\"/></svg>\n\t\t\t\t\t\t</i>\n\t\t\t\t\t</div>\n\t\t\t\t</label>\n\t\t\t\t<div class=\"ac-content\">\n\t\t\t\t\t<div class=\"ac-content-inner\">\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t<ul class=\"ulfaq\"  >\n\t\t\t\t\t\t  <li>We accept all file types, but vector files are preferred.</li>\n\t\t\t\t\t\t  <li>For raster art, ensure a minimum resolution of 300 dpi.</li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>\n\t</div>\n</div>\n\n<style>\n\n* {\n\tbox-sizing: border-box;\n}\n\n.ulfaq{\n\tlist-style-type: disc;\n\tmargin-left: 20px !important;\n}\n.ulfaq1{\n\tlist-style-type: decimal;\n\tmargin-left: 20px !important;\n}\n\n.page-wrapper {\n\tbox-sizing: content-box;\n\tmax-width: 960px;\n\tmargin: 0 auto;\n\tpadding: 0 1rem;\n}\n\n.accordion-group {\n\tmargin: 1rem 0;\n}\n\n.accordion {\n\tborder-top:1px solid #ccc\n}\n\n.accordion + .accordion {\n\tmargin-top: 1rem;\n}\n\n.ac-state {\n\tdisplay: none;\n}\n\n.ac-trigger {\n\tdisplay: flex;\n\tjustify-content: space-between;\n\talign-items: center;\n\tcursor: pointer;\n\tpadding: 5px;\n\tmargin:0 !important\n}\n\n\n\n.ac-title {\n\tfont-weight: 600;\n}\n\n.ac-content {\n\tdisplay: grid;\n\tgrid-template-rows: 0fr;\n\ttransition: grid-template-rows 300ms ease;\n}\n\n.ac-content-inner {\n\toverflow: hidden;\n\tpadding: 0 1rem;\n\tdisplay: flex;\n    flex-direction: column;\n}\n.ac-content-inner span{\n\tmargin:4px 0 4px 20px\n}\n\n.ac-content img {\n\tdisplay: block;\n\tmargin: 0 auto;\n}\n\n.ac-state:not(:checked) ~ .ac-trigger .ac-icon-close {\n\tdisplay: none;\n}\n\n\n\n.ac-state:checked ~ .ac-trigger .ac-icon-open {\n\tdisplay: none;\n}\n\n.ac-state:checked ~ .ac-content {\n\tgrid-template-rows: 1fr;\n}\n.page-width--narrow{\n\tmax-width: 100% !important;\n}\n\n.faqdiv{\n\twidth:100%;\n\tdisplay:flex;\n\t}\n.cardfaqdiv{\n\twidth:50%;\n\tdisplay:flex;\n\tflex-direction:column\n}\t\n@media (min-width: 320px ) and (max-width: 768px) {\n  .faqdiv {\n    width: 100%;\n    display: flex;\n    flex-direction: column !important;\n  }\n  .cardfaqdiv{\n\t\twidth:100% !important\n\t}\n}\n</style>",
+        "text_alignment": "start"
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "hide_product_information": false,
+        "stack_products": false,
+        "recommendations_count": 10,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "horizontal_spacing_factor": 1,
+        "vertical_spacing_factor": 1,
+        "subheading": "",
+        "title": "Related products",
+        "content": ""
+      }
+    },
+    "recently_viewed_products_zTDakp": {
+      "type": "recently-viewed-products",
+      "name": "t:sections.recently_viewed_products.presets.recently_viewed_products.name",
+      "settings": {
+        "separate_section_with_border": true,
+        "color_scheme": "",
+        "hide_product_information": false,
+        "stack_products": false,
+        "products_count": 9,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "horizontal_spacing_factor": 1,
+        "vertical_spacing_factor": 1,
+        "subheading": "",
+        "title": "Recently viewed products",
+        "content": ""
+      }
+    },
+    "175197893444a9b765": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_jCa44W": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        },
+        "avada_seo_suite_avada_faqs_b9fE6y": {
+          "type": "shopify://apps/avada-seo-suite/blocks/avada-faqs/15507c6e-1aa3-45d3-b698-7e175e033440",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_jCa44W",
+        "avada_seo_suite_avada_faqs_b9fE6y"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "remove_vertical_spacing": false,
+        "remove_horizontal_spacing": false
+      }
+    }
+  },
+  "order": [
+    "main",
+    "custom_liquid_GarXzk",
+    "related-products",
+    "recently_viewed_products_zTDakp",
+    "175197893444a9b765"
+  ]
+}

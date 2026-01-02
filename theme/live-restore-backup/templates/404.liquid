@@ -1,0 +1,114 @@
+{% comment %}
+  404 Page Not Found Template
+{% endcomment %}
+
+<section class="cp-404-section">
+  <div class="container">
+    <div class="cp-404-content">
+      <div class="cp-404-icon">
+        <i class="fa-solid fa-face-sad-tear"></i>
+      </div>
+      <h1 class="cp-404-title">404</h1>
+      <h2 class="cp-404-subtitle">{{ 'general.404.title' | t | default: 'Page Not Found' }}</h2>
+      <p class="cp-404-text">{{ 'general.404.subtext' | t | default: "Sorry, we couldn't find the page you're looking for." }}</p>
+      <div class="cp-404-actions">
+        <a href="{{ routes.root_url }}" class="cp-btn cp-btn-primary">
+          <i class="fa-solid fa-home"></i>
+          {{ 'general.404.back_home' | t | default: 'Back to Home' }}
+        </a>
+        <a href="{{ routes.all_products_collection_url }}" class="cp-btn cp-btn-outline">
+          {{ 'general.404.browse_products' | t | default: 'Browse Products' }}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cp-404-section {
+    padding: 6rem 0;
+    text-align: center;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+  }
+  
+  .cp-404-content {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .cp-404-icon {
+    font-size: 5rem;
+    color: #7367F0;
+    margin-bottom: 1rem;
+  }
+  
+  .cp-404-title {
+    font-size: 8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #7367F0, #ce9ffc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  
+  .cp-404-subtitle {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #5d596c;
+    margin-bottom: 1rem;
+  }
+  
+  .cp-404-text {
+    font-size: 1rem;
+    color: #6e6b7b;
+    margin-bottom: 2rem;
+  }
+  
+  .cp-404-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .cp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  
+  .cp-btn-primary {
+    background: linear-gradient(135deg, #7367F0, #5e50ee);
+    color: #fff;
+  }
+  
+  .cp-btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(115, 103, 240, 0.4);
+  }
+  
+  .cp-btn-outline {
+    background: transparent;
+    color: #7367F0;
+    border: 2px solid #7367F0;
+  }
+  
+  .cp-btn-outline:hover {
+    background: #7367F0;
+    color: #fff;
+  }
+</style>
+
+
+
+
+
+

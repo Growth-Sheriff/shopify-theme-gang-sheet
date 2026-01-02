@@ -270,6 +270,70 @@
     ]
   },
   {
+    "name": "Chat & Support Widget",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "chat_widget_enabled",
+        "label": "Enable Chat Widget",
+        "default": true,
+        "info": "Show/hide the floating chat button"
+      },
+      {
+        "type": "header",
+        "content": "WhatsApp Settings"
+      },
+      {
+        "type": "text",
+        "id": "chat_whatsapp_number",
+        "label": "WhatsApp Phone Number",
+        "info": "Include country code (e.g., +1234567890)"
+      },
+      {
+        "type": "text",
+        "id": "chat_whatsapp_message",
+        "label": "Default WhatsApp Message",
+        "default": "Hello! I need help with my order."
+      },
+      {
+        "type": "header",
+        "content": "Email Support"
+      },
+      {
+        "type": "text",
+        "id": "chat_support_email",
+        "label": "Support Email",
+        "info": "Leave blank to use shop email"
+      },
+      {
+        "type": "text",
+        "id": "chat_email_subject",
+        "label": "Email Subject",
+        "default": "Support Request"
+      },
+      {
+        "type": "header",
+        "content": "Phone Support"
+      },
+      {
+        "type": "text",
+        "id": "chat_support_phone",
+        "label": "Support Phone Number",
+        "info": "Include country code"
+      },
+      {
+        "type": "header",
+        "content": "Messenger (Facebook)"
+      },
+      {
+        "type": "text",
+        "id": "chat_messenger_username",
+        "label": "Facebook Page Username",
+        "info": "Your Facebook page username for Messenger"
+      }
+    ]
+  },
+  {
     "name": "Shipping Settings",
     "settings": [
       {

@@ -1,0 +1,103 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "color_scheme": "",
+        "show_title": true,
+        "page_width": "xs"
+      }
+    },
+    "text_with_icons_dn94hB": {
+      "type": "text-with-icons",
+      "blocks": {
+        "item_6YzVJw": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-phone",
+            "icon_url": "",
+            "icon_width": 48,
+            "mobile_icon_width": 24,
+            "title": "Phone",
+            "content": "<p><a href=\"tel:+12012505146\" title=\"tel:+12012505146\">+1 (201) 250-5146 </a></p>"
+          }
+        },
+        "item_mNjbtJ": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-customer-support",
+            "icon_url": "",
+            "icon_width": 48,
+            "mobile_icon_width": 24,
+            "title": "Text on Whatsapp",
+            "content": "<h5><a href=\"https://wa.me/12012505146\" title=\"https://wa.me/12012505146\"><strong>+1 (201) 250-5146</strong></a></h5>"
+          }
+        },
+        "item_gw7CWw": {
+          "type": "item",
+          "settings": {
+            "icon": "picto-mailbox",
+            "icon_url": "",
+            "icon_width": 48,
+            "mobile_icon_width": 24,
+            "title": "E-Mail",
+            "content": "<h5><a href=\"mailto:info@fastdtftransfer.com\" title=\"mailto:info@fastdtftransfer.com\">info@fastdtftransfer.com</a></h5>"
+          }
+        }
+      },
+      "block_order": [
+        "item_6YzVJw",
+        "item_mNjbtJ",
+        "item_gw7CWw"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "stack_on_mobile": true,
+        "icon_color": "",
+        "text_color": "",
+        "text_alignment": "center"
+      }
+    },
+    "contact-form": {
+      "type": "contact",
+      "custom_css": [
+        ".container--xs {max-width: 42.5rem;}"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "subheading": "",
+        "title": "Reach Us Easily",
+        "content": ""
+      }
+    },
+    "custom_liquid_A9qfyN": {
+      "type": "custom-liquid",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "remove_vertical_spacing": true,
+        "remove_horizontal_spacing": true,
+        "liquid": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6033.713406471675!2d-74.11268422355498!3d40.87501882761897!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2f9e4ccea1b75%3A0x581d67d9c5f929bb!2sFast%20DTF%20Transfer!5e0!3m2!1sen!2sde!4v1762007610604!5m2!1sen!2sde\" width=\"100%\" height=\"450\" style=\"border:0; max-width: 1400px; margin: auto;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+        "text_alignment": "center"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "text_with_icons_dn94hB",
+    "contact-form",
+    "custom_liquid_A9qfyN"
+  ]
+}

@@ -1,0 +1,101 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "color_primary": "#7367F0",
+    "color_primary_dark": "#5e50ee",
+    "color_primary_light": "#9e95f5",
+    "color_success": "#28c76f",
+    "color_danger": "#ea5455",
+    "color_warning": "#ff9f43",
+    "color_info": "#00cfe8",
+    "color_body_bg": "#f8f8f8",
+    "color_card_bg": "#ffffff",
+    "color_heading": "#5e5873",
+    "color_body_text": "#6e6b7b",
+    "color_muted": "#b9b9c3",
+    "color_border": "#ebe9f1",
+    "font_size_base": 16,
+    "tshirt_default_color": "#7dd3fc",
+    "tshirt_rotation_speed": 2,
+    "tshirt_auto_rotate": false,
+    "cart_type": "page",
+    "show_cart_note": true,
+    "enable_ajax_cart": true,
+    "chat_widget_enabled": false,
+    "chat_whatsapp_number": "15613",
+    "sections": {
+      "header": {
+        "type": "header",
+        "blocks": {
+          "submenu_item_YXniye": {
+            "type": "submenu_item",
+            "settings": {
+              "parent_menu": "Special DTF",
+              "submenu_title": "Glitter DTF",
+              "product_1": "uv-dtf-gang-sheets-1",
+              "product_2": "custom-dtf-transfer",
+              "product_3": "",
+              "product_4": "",
+              "product_5": ""
+            }
+          },
+          "mega_menu_8Vjrhe": {
+            "type": "mega_menu",
+            "settings": {
+              "menu_title": "Special DTF",
+              "promo_image": "shopify://shop_images/1_1.webp",
+              "promo_badge": "NEW",
+              "promo_title": "New Arrivals",
+              "promo_link": ""
+            }
+          }
+        },
+        "block_order": [
+          "submenu_item_YXniye",
+          "mega_menu_8Vjrhe"
+        ],
+        "settings": {
+          "logo": "shopify://shop_images/logo-final-dark_304d9844-e878-403d-8f2f-faf93d5a49de.svg",
+          "menu": "main-menu",
+          "show_announcement": true,
+          "announcement_icon": "fa-solid fa-truck-fast",
+          "announcement_text": "Free shipping on orders over $50!",
+          "announcement_link_text": "Shop Now",
+          "announcement_link": "",
+          "sticky_header": true,
+          "show_account": true,
+          "show_wishlist": true,
+          "show_social_mobile": true,
+          "facebook": "",
+          "instagram": "",
+          "twitter": "",
+          "tiktok": ""
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "description": "High-quality custom DTF transfers for your apparel business. Fast turnaround, vibrant colors, and exceptional durability.",
+          "show_newsletter": true,
+          "newsletter_title": "Join Our Newsletter",
+          "newsletter_subtitle": "Get exclusive offers, new arrivals & 10% off your first order",
+          "show_trust_badges": true,
+          "facebook": "",
+          "instagram": "",
+          "twitter": "",
+          "youtube": "",
+          "tiktok": ""
+        }
+      }
+    },
+    "content_for_index": []
+  }
+}

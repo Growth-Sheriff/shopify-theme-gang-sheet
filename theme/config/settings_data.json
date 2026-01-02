@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "color_primary": "#7367F0",
@@ -19,6 +28,18 @@
     "tshirt_auto_rotate": false,
     "cart_type": "drawer",
     "show_cart_note": true,
-    "enable_ajax_cart": true
+    "enable_ajax_cart": true,
+    "social_facebook": "https://www.facebook.com/FastDTFPrint/",
+    "social_instagram": "https://www.instagram.com/fastdtftransfer",
+    "social_twitter": "",
+    "social_youtube": "https://www.youtube.com/@Fast.DTF.Transfer",
+    "social_tiktok": "https://www.tiktok.com/@fastdtftransfer",
+    "social_pinterest": "https://www.pinterest.com/fastdtftransfer",
+    "chat_widget_enabled": true,
+    "chat_whatsapp_number": "+12012505146",
+    "chat_whatsapp_message": "Hello! I need help with my order.",
+    "chat_support_email": "info@fastdtftransfer.com",
+    "chat_email_subject": "Support Request",
+    "chat_support_phone": "+1 201 250 5146"
   }
 }
