@@ -1,22 +1,26 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "header",
   "name": "Header group",
   "sections": {
     "announcement-bar": {
       "type": "announcement-bar",
-      "settings": {
-        "show_announcement": true,
-        "announcement_text": "🔥 Free shipping on all U.S. orders $100+ | SameDay Print&Ship Cut Off 1:00PM | Local Pickup Available",
-        "announcement_link": "/collections/all",
-        "announcement_link_text": "Shop Now"
-      }
+      "settings": {}
     },
     "header": {
       "type": "header",
       "settings": {
-        "sticky_header": true,
-        "show_announcement": false,
         "menu": "main-menu",
+        "show_announcement": false,
+        "sticky_header": true,
         "show_account": true,
         "show_wishlist": true,
         "facebook": "https://www.facebook.com/FastDTFPrint/",

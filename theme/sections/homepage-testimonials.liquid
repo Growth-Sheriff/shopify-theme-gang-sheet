@@ -103,14 +103,16 @@
   
   .cp-testimonials-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    /* FLUID: auto-fit for smooth responsive */
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+    gap: clamp(1rem, 2vw, 1.5rem);
   }
   
   .cp-testimonial-card {
-    padding: 1.5rem;
+    padding: clamp(1rem, 2vw, 1.5rem);
     border-radius: 12px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    min-width: 0;
   }
   
   .cp-testimonial-avatar-img {

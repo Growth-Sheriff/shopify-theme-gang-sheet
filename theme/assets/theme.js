@@ -87,12 +87,13 @@ window.addEventListener('scroll', function() {
     document.querySelectorAll(".sb-btn:not(.sb-initialized)").forEach(function(button) {
       button.classList.add('sb-initialized');
       
+      // SHIMMER EFFECT DISABLED - Commented out to remove light animation
       // Add shimmer div if not exists
-      if (!button.querySelector('.sb-shimmer')) {
-        var shimmer = document.createElement("div");
-        shimmer.className = "sb-shimmer";
-        button.appendChild(shimmer);
-      }
+      // if (!button.querySelector('.sb-shimmer')) {
+      //   var shimmer = document.createElement("div");
+      //   shimmer.className = "sb-shimmer";
+      //   button.appendChild(shimmer);
+      // }
       
       // Wrap text content in .sb-text span for animation (if not already wrapped)
       var childNodes = Array.prototype.slice.call(button.childNodes);

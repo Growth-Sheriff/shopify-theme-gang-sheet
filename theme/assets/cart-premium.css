@@ -210,9 +210,15 @@
 /* ═══ MAIN CART LAYOUT - 2 COLUMNS ═══ */
 .cart-main-layout {
   display: grid;
-  grid-template-columns: 1fr 420px;
-  gap: 32px;
+  grid-template-columns: 1fr minmax(320px, 420px);
+  gap: clamp(16px, 3vw, 32px);
   align-items: start;
+}
+
+@media (max-width: 992px) {
+  .cart-main-layout {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ═══ LEFT COLUMN - CART ITEMS ═══ */
@@ -277,8 +283,8 @@
 
 .cart-line-item {
   display: grid;
-  grid-template-columns: 120px 1fr auto;
-  gap: 20px;
+  grid-template-columns: minmax(80px, 120px) 1fr auto;
+  gap: clamp(12px, 2vw, 20px);
   padding: 20px;
   border-radius: var(--cart-radius-md);
   transition: all 0.3s ease;
@@ -938,8 +944,8 @@
 
 .recommendations-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+  gap: clamp(12px, 2vw, 20px);
 }
 
 .rec-loading {
@@ -966,6 +972,7 @@
   box-shadow: var(--cart-shadow-sm);
   border: 1px solid var(--cart-border);
   transition: all 0.4s ease;
+  min-width: 0;
 }
 
 .rec-product-card:hover {
@@ -1188,14 +1195,7 @@
 
 /* ═══ RESPONSIVE - LAPTOP ═══ */
 @media (max-width: 1200px) {
-  .cart-main-layout {
-    grid-template-columns: 1fr 380px;
-    gap: 24px;
-  }
-  
-  .recommendations-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
+  /* Grid auto-fit handles column count automatically */
 }
 
 /* ═══ RESPONSIVE - TABLET ═══ */
@@ -1204,23 +1204,9 @@
     padding: 0 16px;
   }
   
-  .cart-main-layout {
-    grid-template-columns: 1fr 340px;
-    gap: 20px;
-  }
-  
-  .cart-line-item {
-    grid-template-columns: 100px 1fr auto;
-    gap: 16px;
-  }
-  
   .line-item-image {
     width: 100px;
     height: 100px;
-  }
-  
-  .recommendations-grid {
-    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -1304,11 +1290,6 @@
     order: 2;
     width: 36px;
     height: 36px;
-  }
-  
-  .recommendations-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
   }
   
   .mobile-checkout-bar {

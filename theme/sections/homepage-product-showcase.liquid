@@ -136,15 +136,68 @@
                           <span class="price-current">{{ product.price | money }}</span>
                         </div>
 
-                        {%- comment -%} Upload Widget Area (Global OR Block level) {%- endcomment -%}
-                        {%- assign show_upload = false -%}
-                        {%- if section.settings.enable_upload_mode_global or block.settings.enable_upload_mode -%}
-                          {%- assign show_upload = true -%}
-                        {%- endif -%}
+                        {%- comment -%} Upload Widget Area - Merkezi Sistem {%- endcomment -%}
+                        {%- liquid
+                          assign show_upload = false
+                          if settings.upload_mode_enabled and product != blank
+                            assign check_handle = product.handle
+                            if settings.upload_mode_product_1.handle == check_handle
+                              assign show_upload = true
+                            elsif settings.upload_mode_product_2.handle == check_handle
+                              assign show_upload = true
+                            elsif settings.upload_mode_product_3.handle == check_handle
+                              assign show_upload = true
+                            elsif settings.upload_mode_product_4.handle == check_handle
+                              assign show_upload = true
+                            elsif settings.upload_mode_product_5.handle == check_handle
+                              assign show_upload = true
+                            elsif settings.upload_mode_product_6.handle == check_handle
+                              assign show_upload = true
+                            elsif settings.upload_mode_product_7.handle == check_handle
+                              assign show_upload = true
+                            elsif settings.upload_mode_product_8.handle == check_handle
+                              assign show_upload = true
+                            elsif settings.upload_mode_product_9.handle == check_handle
+                              assign show_upload = true
+                            elsif settings.upload_mode_product_10.handle == check_handle
+                              assign show_upload = true
+                            elsif settings.upload_mode_product_11.handle == check_handle
+                              assign show_upload = true
+                            elsif settings.upload_mode_product_12.handle == check_handle
+                              assign show_upload = true
+                            elsif settings.upload_mode_product_13.handle == check_handle
+                              assign show_upload = true
+                            elsif settings.upload_mode_product_14.handle == check_handle
+                              assign show_upload = true
+                            elsif settings.upload_mode_product_15.handle == check_handle
+                              assign show_upload = true
+                            elsif settings.upload_mode_product_16.handle == check_handle
+                              assign show_upload = true
+                            elsif settings.upload_mode_product_17.handle == check_handle
+                              assign show_upload = true
+                            elsif settings.upload_mode_product_18.handle == check_handle
+                              assign show_upload = true
+                            elsif settings.upload_mode_product_19.handle == check_handle
+                              assign show_upload = true
+                            elsif settings.upload_mode_product_20.handle == check_handle
+                              assign show_upload = true
+                            elsif settings.upload_mode_product_21.handle == check_handle
+                              assign show_upload = true
+                            elsif settings.upload_mode_product_22.handle == check_handle
+                              assign show_upload = true
+                            elsif settings.upload_mode_product_23.handle == check_handle
+                              assign show_upload = true
+                            elsif settings.upload_mode_product_24.handle == check_handle
+                              assign show_upload = true
+                            elsif settings.upload_mode_product_25.handle == check_handle
+                              assign show_upload = true
+                            endif
+                          endif
+                        -%}
                         
                         {% if show_upload %}
                           <div class="upload-widget-area">
-                            {% render 'dtf-quick-upload-btn', product: product, button_text: 'Upload Design' %}
+                            {% render 'dtf-quick-upload-btn', product: product, button_text: settings.upload_button_text | default: 'Upload Design' %}
                           </div>
                         {% endif %}
 
@@ -156,10 +209,11 @@
                         {%- endif -%}
                         
                         <div class="showcase-card-actions">
-                          {% if showcase_btn_action == 'go_to_product' %}
+                          {% if showcase_btn_action == 'go_to_product' or product.variants.size > 1 %}
+                            {%- comment -%} Go to product page if has variants or setting says so {%- endcomment -%}
                             <a href="{{ product.url }}" class="btn-view-product btn-full">
-                              <i class="ti ti-arrow-right"></i>
-                              <span>View Product</span>
+                              <i class="ti ti-{% if product.variants.size > 1 %}eye{% else %}arrow-right{% endif %}"></i>
+                              <span>{% if product.variants.size > 1 %}View Options{% else %}View Product{% endif %}</span>
                             </a>
                           {% else %}
                             <a href="{{ product.url }}" class="btn-view-product">
@@ -280,15 +334,68 @@
                       </div>
                     {%- endif -%}
 
-                    {%- comment -%} Upload Widget Area (Global OR Block level) {%- endcomment -%}
-                    {%- assign show_upload_main = false -%}
-                    {%- if section.settings.enable_upload_mode_global or block.settings.enable_upload_mode -%}
-                      {%- assign show_upload_main = true -%}
-                    {%- endif -%}
+                    {%- comment -%} Upload Widget Area - Merkezi Sistem {%- endcomment -%}
+                    {%- liquid
+                      assign show_upload_main = false
+                      if settings.upload_mode_enabled and product != blank
+                        assign check_handle = product.handle
+                        if settings.upload_mode_product_1.handle == check_handle
+                          assign show_upload_main = true
+                        elsif settings.upload_mode_product_2.handle == check_handle
+                          assign show_upload_main = true
+                        elsif settings.upload_mode_product_3.handle == check_handle
+                          assign show_upload_main = true
+                        elsif settings.upload_mode_product_4.handle == check_handle
+                          assign show_upload_main = true
+                        elsif settings.upload_mode_product_5.handle == check_handle
+                          assign show_upload_main = true
+                        elsif settings.upload_mode_product_6.handle == check_handle
+                          assign show_upload_main = true
+                        elsif settings.upload_mode_product_7.handle == check_handle
+                          assign show_upload_main = true
+                        elsif settings.upload_mode_product_8.handle == check_handle
+                          assign show_upload_main = true
+                        elsif settings.upload_mode_product_9.handle == check_handle
+                          assign show_upload_main = true
+                        elsif settings.upload_mode_product_10.handle == check_handle
+                          assign show_upload_main = true
+                        elsif settings.upload_mode_product_11.handle == check_handle
+                          assign show_upload_main = true
+                        elsif settings.upload_mode_product_12.handle == check_handle
+                          assign show_upload_main = true
+                        elsif settings.upload_mode_product_13.handle == check_handle
+                          assign show_upload_main = true
+                        elsif settings.upload_mode_product_14.handle == check_handle
+                          assign show_upload_main = true
+                        elsif settings.upload_mode_product_15.handle == check_handle
+                          assign show_upload_main = true
+                        elsif settings.upload_mode_product_16.handle == check_handle
+                          assign show_upload_main = true
+                        elsif settings.upload_mode_product_17.handle == check_handle
+                          assign show_upload_main = true
+                        elsif settings.upload_mode_product_18.handle == check_handle
+                          assign show_upload_main = true
+                        elsif settings.upload_mode_product_19.handle == check_handle
+                          assign show_upload_main = true
+                        elsif settings.upload_mode_product_20.handle == check_handle
+                          assign show_upload_main = true
+                        elsif settings.upload_mode_product_21.handle == check_handle
+                          assign show_upload_main = true
+                        elsif settings.upload_mode_product_22.handle == check_handle
+                          assign show_upload_main = true
+                        elsif settings.upload_mode_product_23.handle == check_handle
+                          assign show_upload_main = true
+                        elsif settings.upload_mode_product_24.handle == check_handle
+                          assign show_upload_main = true
+                        elsif settings.upload_mode_product_25.handle == check_handle
+                          assign show_upload_main = true
+                        endif
+                      endif
+                    -%}
                     
                     {% if show_upload_main %}
                       <div class="upload-widget-area">
-                        {% render 'dtf-quick-upload-btn', product: product, button_text: 'Upload Design' %}
+                        {% render 'dtf-quick-upload-btn', product: product, button_text: settings.upload_button_text | default: 'Upload Design' %}
                       </div>
                     {% endif %}
 
@@ -300,10 +407,11 @@
                     {%- endif -%}
                     
                     <div class="main-card-actions">
-                      {% if main_btn_action == 'go_to_product' %}
+                      {% if main_btn_action == 'go_to_product' or product.variants.size > 1 %}
+                        {%- comment -%} Go to product page if has variants or setting says so {%- endcomment -%}
                         <a href="{{ product.url }}" class="sb-btn btn-view-full">
-                          <i class="ti ti-arrow-right"></i>
-                          <span>View Product</span>
+                          <i class="ti ti-{% if product.variants.size > 1 %}eye{% else %}arrow-right{% endif %}"></i>
+                          <span>{% if product.variants.size > 1 %}View Options{% else %}View Product{% endif %}</span>
                         </a>
                       {% else %}
                         <a href="{{ product.url }}" class="btn-view-details">
@@ -469,10 +577,6 @@ document.addEventListener('DOMContentLoaded', function() {
       "content": "Button Settings (Global)"
     },
     {
-      "type": "paragraph",
-      "content": "⚠️ These settings only work when 'Enable Upload Mode' is OFF"
-    },
-    {
       "type": "select",
       "id": "button_action_global",
       "label": "Button Action (All Cards)",
@@ -481,17 +585,6 @@ document.addEventListener('DOMContentLoaded', function() {
         { "value": "go_to_product", "label": "Go to Product Page" }
       ],
       "default": "add_to_cart"
-    },
-    {
-      "type": "header",
-      "content": "Upload Settings (Global)"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_upload_mode_global",
-      "label": "Enable Upload Mode (All Cards)",
-      "default": false,
-      "info": "When enabled, shows Upload button and hides Add to Cart for ALL cards"
     },
     {
       "type": "header",
@@ -547,17 +640,6 @@ document.addEventListener('DOMContentLoaded', function() {
           "id": "review_count",
           "label": "Review Count",
           "default": 42
-        },
-        {
-          "type": "header",
-          "content": "Upload Settings"
-        },
-        {
-          "type": "checkbox",
-          "id": "enable_upload_mode",
-          "label": "Enable Upload Mode",
-          "default": false,
-          "info": "When enabled, shows Upload button and hides Add to Cart"
         },
         {
           "type": "textarea",
@@ -624,17 +706,6 @@ document.addEventListener('DOMContentLoaded', function() {
             { "value": "go_to_product", "label": "Go to Product Page" }
           ],
           "default": "default"
-        },
-        {
-          "type": "header",
-          "content": "Upload Settings"
-        },
-        {
-          "type": "checkbox",
-          "id": "enable_upload_mode",
-          "label": "Enable Upload Mode",
-          "default": false,
-          "info": "When enabled, shows Upload button and hides Add to Cart"
         },
         {
           "type": "textarea",

@@ -1,8 +1,28 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "product-main": {
       "type": "product-main",
-      
+      "blocks": {
+        "fdt_upload_dtf_transfer_M6E9PC": {
+          "type": "shopify://apps/fdt-upload/blocks/dtf-transfer/019b7646-629d-7e82-9ebc-a6a3948b7dad",
+          "settings": {
+            "show_header": true,
+            "header_text": "Upload Your Design"
+          }
+        }
+      },
+      "block_order": [
+        "fdt_upload_dtf_transfer_M6E9PC"
+      ],
       "settings": {
         "show_breadcrumb": true,
         "show_rating": true,
@@ -10,7 +30,7 @@
         "review_count": "5,432",
         "recommend_percent": "98% recommend",
         "price_badge": "📐 BY SIZE",
-        "show_delivery": true,
+        "show_delivery": false,
         "delivery_time": "Same Day Shipping",
         "order_by": "Order by 3PM",
         "show_tabs": true,
@@ -28,26 +48,29 @@
         "badge_1": "Secure Checkout",
         "badge_2": "Same Day Shipping",
         "badge_3": "Custom Sizes Available",
-        "show_variants": true,
+        "show_variants": false,
         "color_display_mode": "swatches",
         "size_display_mode": "dropdown",
-        "show_quantity": true,
-        "show_add_to_cart": true,
-        "show_buy_now": true
+        "show_quantity": false,
+        "show_add_to_cart": false,
+        "show_buy_now": false,
+        "custom_css": ""
       }
     },
     "recommendations": {
       "type": "product-recommendations",
       "settings": {
-        "heading": "More Transfer Sizes",
-        "products_count": 4
+        "title": "You May Also Like",
+        "custom_css": ""
       }
     },
     "recently-viewed": {
       "type": "recently-viewed",
       "settings": {
         "title": "Recently Viewed",
-        "products_to_show": 8
+        "products_to_show": 8,
+        "max_products": 10,
+        "custom_css": ""
       }
     }
   },

@@ -119,15 +119,17 @@
   
   .cp-features-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    /* FLUID: auto-fit for smooth responsive */
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+    gap: clamp(1rem, 2vw, 1.5rem);
   }
   
   .cp-feature-card {
-    padding: 1.5rem;
+    padding: clamp(1rem, 2vw, 1.5rem);
     border-radius: 12px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.06);
     text-align: center;
+    min-width: 0;
   }
   
   .cp-feature-icon {

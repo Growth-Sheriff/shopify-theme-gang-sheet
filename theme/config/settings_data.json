@@ -9,6 +9,11 @@
  */
 {
   "current": {
+    "social_facebook": "https://www.facebook.com/FastDTFPrint/",
+    "social_instagram": "https://www.instagram.com/fastdtftransfer/",
+    "social_youtube": "https://www.youtube.com/@Fast.DTF.Transfer",
+    "social_tiktok": "https://www.tiktok.com/@fastdtftransfer",
+    "social_whatsapp": "https://wa.me/12012505146",
     "color_primary": "#7367F0",
     "color_primary_dark": "#5e50ee",
     "color_primary_light": "#9e95f5",
@@ -29,17 +34,431 @@
     "cart_type": "drawer",
     "show_cart_note": true,
     "enable_ajax_cart": true,
-    "social_facebook": "https://www.facebook.com/FastDTFPrint/",
-    "social_instagram": "https://www.instagram.com/fastdtftransfer",
-    "social_twitter": "",
-    "social_youtube": "https://www.youtube.com/@Fast.DTF.Transfer",
-    "social_tiktok": "https://www.tiktok.com/@fastdtftransfer",
-    "social_pinterest": "https://www.pinterest.com/fastdtftransfer",
-    "chat_widget_enabled": true,
     "chat_whatsapp_number": "+12012505146",
-    "chat_whatsapp_message": "Hello! I need help with my order.",
     "chat_support_email": "info@fastdtftransfer.com",
-    "chat_email_subject": "Support Request",
-    "chat_support_phone": "+1 201 250 5146"
+    "chat_support_phone": "+12012505146",
+    "chat_messenger_username": "fastdtftransfer",
+    "chat_shopify_inbox_enabled": false,
+    "favicon": "shopify://shop_images/logo-final-dark.png",
+    "delivery_enabled": true,
+    "delivery_weekend": true,
+    "warehouse_2_enabled": true,
+    "upload_mode_enabled": true,
+    "upload_mode_product_1": "hoodie-transfer",
+    "upload_mode_product_2": "dtf-transfers-by-size",
+    "upload_mode_product_3": "t-shirt-transfers",
+    "upload_mode_product_4": "glitter-dtf-gang-sheets",
+    "upload_mode_product_5": "glow-in-the-dark-dtf",
+    "upload_mode_product_6": "dtf-transfers-by-size",
+    "upload_mode_product_7": "uv-dtf-transfers",
+    "upload_mode_product_8": "glitter-dtf-transfers-by-size",
+    "upload_mode_product_9": "glow-in-the-dark-dtf-gang-sheets",
+    "upload_mode_product_10": "custom-dtf-transfer",
+    "upload_mode_product_11": "glow-in-the-dark-dtf-gang-sheets",
+    "upload_mode_product_12": "glow-in-the-dark-dtf",
+    "upload_mode_product_13": "uv-dtf-gang-sheets",
+    "upload_mode_product_14": "glitter-dtf-gang-sheets",
+    "sections": {
+      "header": {
+        "type": "header",
+        "blocks": {
+          "submenu_item_bcQMHM": {
+            "type": "submenu_item",
+            "settings": {
+              "parent_menu": "DTF Transfers",
+              "submenu_title": "Custom DTF Transfer - Gang Sheet",
+              "product_1": "custom-dtf-transfer",
+              "product_2": "",
+              "product_3": "",
+              "product_4": "",
+              "product_5": ""
+            }
+          },
+          "submenu_item_GHCnzq": {
+            "type": "submenu_item",
+            "settings": {
+              "parent_menu": "DTF Transfers",
+              "submenu_title": "DTF Transfers by size",
+              "product_1": "dtf-transfers-by-size",
+              "product_2": "hoodie-transfer",
+              "product_3": "t-shirt-transfers",
+              "product_4": "",
+              "product_5": ""
+            }
+          },
+          "submenu_item_YxnNK3": {
+            "type": "submenu_item",
+            "settings": {
+              "parent_menu": "DTF Transfers",
+              "submenu_title": "Free DTF Gang Sheet Builder",
+              "product_1": "free-dtf-gang-sheet-builder",
+              "product_2": "",
+              "product_3": "",
+              "product_4": "",
+              "product_5": ""
+            }
+          },
+          "submenu_item_Gg63fg": {
+            "type": "submenu_item",
+            "settings": {
+              "parent_menu": "Special DTF",
+              "submenu_title": "Glitter DTF",
+              "product_1": "glitter-dtf-gang-sheets",
+              "product_2": "glitter-dtf-transfers-by-size",
+              "product_3": "glitter-dtf-transfer-gang-sheet-builder",
+              "product_4": "",
+              "product_5": ""
+            }
+          },
+          "submenu_item_DGqWVa": {
+            "type": "submenu_item",
+            "settings": {
+              "parent_menu": "Special DTF",
+              "submenu_title": "Glow in the Dark DTF",
+              "product_1": "glow-in-the-dark-dtf-gang-sheets",
+              "product_2": "glow-in-the-dark-dtf",
+              "product_3": "dtf-gang-sheet-builder",
+              "product_4": "",
+              "product_5": ""
+            }
+          },
+          "submenu_item_gDReVM": {
+            "type": "submenu_item",
+            "settings": {
+              "parent_menu": "UV Stickers",
+              "submenu_title": "",
+              "product_1": "uv-dtf-gang-sheets",
+              "product_2": "uv-dtf-transfers",
+              "product_3": "uv-dtf-gang-sheets-1",
+              "product_4": "",
+              "product_5": ""
+            }
+          },
+          "submenu_item_gDUP8U": {
+            "type": "submenu_item",
+            "settings": {
+              "parent_menu": "UV Stickers",
+              "submenu_title": "UV DTF Gang Sheets",
+              "product_1": "uv-dtf-gang-sheets",
+              "product_2": "",
+              "product_3": "",
+              "product_4": "",
+              "product_5": ""
+            }
+          },
+          "submenu_item_MdCpgB": {
+            "type": "submenu_item",
+            "settings": {
+              "parent_menu": "UV Stickers",
+              "submenu_title": "UV DTF Transfers By Size",
+              "product_1": "uv-dtf-transfers",
+              "product_2": "",
+              "product_3": "",
+              "product_4": "",
+              "product_5": ""
+            }
+          },
+          "submenu_item_JNyeCR": {
+            "type": "submenu_item",
+            "settings": {
+              "parent_menu": "UV Stickers",
+              "submenu_title": "Build Your Own UV DTF Gang Sheets",
+              "product_1": "uv-dtf-gang-sheets-1",
+              "product_2": "",
+              "product_3": "",
+              "product_4": "",
+              "product_5": ""
+            }
+          },
+          "submenu_item_XbVrhA": {
+            "type": "submenu_item",
+            "settings": {
+              "parent_menu": "DTF Supplies",
+              "submenu_title": "DTF Film",
+              "product_1": "dtf-film-peel",
+              "product_2": "dtf-film-1",
+              "product_3": "",
+              "product_4": "",
+              "product_5": ""
+            }
+          },
+          "submenu_item_6B8XBU": {
+            "type": "submenu_item",
+            "settings": {
+              "parent_menu": "DTF Supplies",
+              "submenu_title": "DTF Inks",
+              "product_1": "dtf-ink",
+              "product_2": "",
+              "product_3": "",
+              "product_4": "",
+              "product_5": ""
+            }
+          },
+          "submenu_item_M4bBEw": {
+            "type": "submenu_item",
+            "settings": {
+              "parent_menu": "DTF Supplies",
+              "submenu_title": "Premium DTF Transfer Powders – 1 KG",
+              "product_1": "dtf-transfer-powders",
+              "product_2": "",
+              "product_3": "",
+              "product_4": "",
+              "product_5": ""
+            }
+          },
+          "submenu_item_aXYamj": {
+            "type": "submenu_item",
+            "settings": {
+              "parent_menu": "DTF Supplies",
+              "submenu_title": "DTF Printer Supplies",
+              "product_1": "dtf-printhead-cleaning-solution",
+              "product_2": "printer-cleaning-foam-swabs-50-pack",
+              "product_3": "printhead-wiping-cloths-9x9-100-pack",
+              "product_4": "",
+              "product_5": ""
+            }
+          },
+          "submenu_item_f8ccH8": {
+            "type": "submenu_item",
+            "settings": {
+              "parent_menu": "UV DTF Supplies",
+              "submenu_title": "UV DTF Inks - 1 Liter",
+              "product_1": "uv-dtf-inks-1-liter",
+              "product_2": "",
+              "product_3": "",
+              "product_4": "",
+              "product_5": ""
+            }
+          },
+          "submenu_item_pgXPpy": {
+            "type": "submenu_item",
+            "settings": {
+              "parent_menu": "UV DTF Supplies",
+              "submenu_title": "UV DTF A&B Film Roll",
+              "product_1": "uv-dtf-a-b-film-roll-24-325",
+              "product_2": "",
+              "product_3": "",
+              "product_4": "",
+              "product_5": ""
+            }
+          },
+          "submenu_item_k8LUNt": {
+            "type": "submenu_item",
+            "settings": {
+              "parent_menu": "UV DTF Supplies",
+              "submenu_title": "UV DTF Cleaning Supplies",
+              "product_1": "uv-dtf-cleaning-solution-1-liter",
+              "product_2": "printer-cleaning-foam-swabs-50-pack",
+              "product_3": "printhead-wiping-cloths-9x9-100-pack",
+              "product_4": "",
+              "product_5": ""
+            }
+          }
+        },
+        "block_order": [
+          "submenu_item_bcQMHM",
+          "submenu_item_GHCnzq",
+          "submenu_item_YxnNK3",
+          "submenu_item_Gg63fg",
+          "submenu_item_DGqWVa",
+          "submenu_item_gDReVM",
+          "submenu_item_gDUP8U",
+          "submenu_item_MdCpgB",
+          "submenu_item_JNyeCR",
+          "submenu_item_XbVrhA",
+          "submenu_item_6B8XBU",
+          "submenu_item_M4bBEw",
+          "submenu_item_aXYamj",
+          "submenu_item_f8ccH8",
+          "submenu_item_pgXPpy",
+          "submenu_item_k8LUNt"
+        ],
+        "custom_css": [],
+        "settings": {
+          "header_layout": "stacked",
+          "search_placeholder": "Search products...",
+          "logo": "shopify://shop_images/logo-final-dark_0ae5672f-089c-4ed2-8079-857c823d3be6.png",
+          "menu": "main-menu-new",
+          "show_announcement": false,
+          "announcement_icon": "fa-solid fa-truck-fast",
+          "announcement_text": "",
+          "announcement_link_text": "Shop Now",
+          "announcement_link": "",
+          "sticky_header": true,
+          "show_account": true,
+          "show_wishlist": true,
+          "show_social_mobile": true,
+          "facebook": "",
+          "instagram": "",
+          "twitter": "",
+          "tiktok": ""
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "link_column_YzVhqj": {
+            "type": "link_column",
+            "settings": {
+              "title": "DTF TRANSFERS",
+              "menu": "dtf-transfer-new",
+              "custom_css": ""
+            }
+          },
+          "link_column_PgyebL": {
+            "type": "link_column",
+            "settings": {
+              "title": "UV STICKERS",
+              "menu": "uv-stickers",
+              "custom_css": ""
+            }
+          },
+          "link_column_tUzVrR": {
+            "type": "link_column",
+            "settings": {
+              "title": "SPECIAL DTF",
+              "menu": "special-dtf",
+              "custom_css": ""
+            }
+          },
+          "link_column_EB9X9A": {
+            "type": "link_column",
+            "settings": {
+              "title": "DTF SUPPLIES",
+              "menu": "dtf-supplies-new",
+              "custom_css": ""
+            }
+          },
+          "link_column_JQbqtd": {
+            "type": "link_column",
+            "settings": {
+              "title": "UV DTF SUPPLIES",
+              "menu": "uv-supplies",
+              "custom_css": ""
+            }
+          },
+          "link_column_jEQJX4": {
+            "type": "link_column",
+            "settings": {
+              "title": "EQUIPMENT",
+              "menu": "equipment",
+              "custom_css": ""
+            }
+          },
+          "link_column_X4bRrr": {
+            "type": "link_column",
+            "settings": {
+              "title": "SUPPORT",
+              "menu": "support",
+              "custom_css": ""
+            }
+          }
+        },
+        "block_order": [
+          "link_column_YzVhqj",
+          "link_column_PgyebL",
+          "link_column_tUzVrR",
+          "link_column_EB9X9A",
+          "link_column_JQbqtd",
+          "link_column_jEQJX4",
+          "link_column_X4bRrr"
+        ],
+        "settings": {
+          "logo": "shopify://shop_images/logo-final-dark.png",
+          "description": "<strong>FAST DTF Transfer</strong> <br><br>\nHigh-quality custom DTF transfers for your apparel business. Fast turnaround, vibrant colors, and exceptional durability.",
+          "show_newsletter": true,
+          "newsletter_title": "Join Our Newsletter",
+          "newsletter_subtitle": "Get exclusive offers, new arrivals & 10% off your first order",
+          "show_trust_badges": true,
+          "custom_css": ""
+        }
+      }
+    },
+    "content_for_index": [],
+    "blocks": {
+      "319724205969189013": {
+        "type": "shopify://apps/hulk-form-builder/blocks/app-embed/b6b8dd14-356b-4725-a4ed-77232212b3c3",
+        "disabled": false,
+        "settings": {}
+      },
+      "1935445597218932304": {
+        "type": "shopify://apps/avada-seo-suite/blocks/avada-seo/15507c6e-1aa3-45d3-b698-7e175e033440",
+        "disabled": false,
+        "settings": {}
+      },
+      "9010622670419788200": {
+        "type": "shopify://apps/avada-seo-suite/blocks/avada-site-verification/15507c6e-1aa3-45d3-b698-7e175e033440",
+        "disabled": false,
+        "settings": {
+          "google_search_console": "",
+          "bing_webmaster_tools": "",
+          "baidu_webmaster_tools": "",
+          "pinterest": "",
+          "yandex_webmaster_tools": ""
+        }
+      },
+      "855628211100114053": {
+        "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
+        "disabled": false,
+        "settings": {}
+      },
+      "12120936241911852800": {
+        "type": "shopify://apps/judge-me-reviews/blocks/reviews_tab/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {
+          "position": "right"
+        }
+      },
+      "14060646107696862457": {
+        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {}
+      },
+      "15181020662106344915": {
+        "type": "shopify://apps/judge-me-reviews/blocks/popup_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {}
+      },
+      "9137299313046473183": {
+        "type": "shopify://apps/regios-discounts/blocks/regios_discounts_embed/dc1514bb-4830-4102-bffa-e8b300bac5bd",
+        "disabled": false,
+        "settings": {
+          "theme_type": "auto_detect",
+          "currency_code_enabled": false,
+          "discount_description": "[discount_message]",
+          "discount_description_css": "",
+          "badge_description": "[discount_percentage] OFF",
+          "badge_css": "",
+          "price_on_sale_class": "",
+          "sale_price_description": "[sale_price]",
+          "regular_price_description": "[regular_price]",
+          "delay": 0,
+          "customer_metafields_to_check": "",
+          "calculate_discount_based_on_quantity": false,
+          "log_level": "error",
+          "feature_flags": ""
+        }
+      },
+      "7636027282380745860": {
+        "type": "shopify://apps/fdt-upload/blocks/cart-upload-display/019b7646-629d-7e82-9ebc-a6a3948b7dad",
+        "disabled": false,
+        "settings": {
+          "enabled": true
+        }
+      },
+      "2567389343055140935": {
+        "type": "shopify://apps/microsoft-clarity/blocks/clarity_js/31c3d126-8116-4b4a-8ba1-baeda7c4aeea",
+        "disabled": false,
+        "settings": {}
+      },
+      "2200952712151285029": {
+        "type": "shopify://apps/microsoft-clarity/blocks/brandAgents_js/31c3d126-8116-4b4a-8ba1-baeda7c4aeea",
+        "disabled": false,
+        "settings": {}
+      }
+    }
+  },
+  "platform_customizations": {
+    "custom_css": []
   }
 }

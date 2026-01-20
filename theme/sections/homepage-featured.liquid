@@ -116,15 +116,73 @@
         </div>
         {% endif %}
         
-        {%- comment -%} Upload Widget Area {%- endcomment -%}
-        {% if section.settings.enable_upload_mode %}
+        {%- comment -%} Upload Widget Area - Merkezi Kontrol {%- endcomment -%}
+        {%- liquid
+          assign show_upload_featured = false
+          if settings.upload_mode_enabled and selected_product != blank
+            assign check_handle = selected_product.handle
+            if settings.upload_mode_product_1.handle == check_handle
+              assign show_upload_featured = true
+            elsif settings.upload_mode_product_2.handle == check_handle
+              assign show_upload_featured = true
+            elsif settings.upload_mode_product_3.handle == check_handle
+              assign show_upload_featured = true
+            elsif settings.upload_mode_product_4.handle == check_handle
+              assign show_upload_featured = true
+            elsif settings.upload_mode_product_5.handle == check_handle
+              assign show_upload_featured = true
+            elsif settings.upload_mode_product_6.handle == check_handle
+              assign show_upload_featured = true
+            elsif settings.upload_mode_product_7.handle == check_handle
+              assign show_upload_featured = true
+            elsif settings.upload_mode_product_8.handle == check_handle
+              assign show_upload_featured = true
+            elsif settings.upload_mode_product_9.handle == check_handle
+              assign show_upload_featured = true
+            elsif settings.upload_mode_product_10.handle == check_handle
+              assign show_upload_featured = true
+            elsif settings.upload_mode_product_11.handle == check_handle
+              assign show_upload_featured = true
+            elsif settings.upload_mode_product_12.handle == check_handle
+              assign show_upload_featured = true
+            elsif settings.upload_mode_product_13.handle == check_handle
+              assign show_upload_featured = true
+            elsif settings.upload_mode_product_14.handle == check_handle
+              assign show_upload_featured = true
+            elsif settings.upload_mode_product_15.handle == check_handle
+              assign show_upload_featured = true
+            elsif settings.upload_mode_product_16.handle == check_handle
+              assign show_upload_featured = true
+            elsif settings.upload_mode_product_17.handle == check_handle
+              assign show_upload_featured = true
+            elsif settings.upload_mode_product_18.handle == check_handle
+              assign show_upload_featured = true
+            elsif settings.upload_mode_product_19.handle == check_handle
+              assign show_upload_featured = true
+            elsif settings.upload_mode_product_20.handle == check_handle
+              assign show_upload_featured = true
+            elsif settings.upload_mode_product_21.handle == check_handle
+              assign show_upload_featured = true
+            elsif settings.upload_mode_product_22.handle == check_handle
+              assign show_upload_featured = true
+            elsif settings.upload_mode_product_23.handle == check_handle
+              assign show_upload_featured = true
+            elsif settings.upload_mode_product_24.handle == check_handle
+              assign show_upload_featured = true
+            elsif settings.upload_mode_product_25.handle == check_handle
+              assign show_upload_featured = true
+            endif
+          endif
+        -%}
+        
+        {% if show_upload_featured %}
           <div class="upload-widget-area">
-            {% render 'dtf-quick-upload-btn', product: selected_product, button_text: 'Upload Design' %}
+            {% render 'dtf-quick-upload-btn', product: selected_product, button_text: settings.upload_button_text | default: 'Upload Design' %}
           </div>
         {% endif %}
         
         {%- comment -%} Size, Quantity, Options & Add to Cart (Hidden when upload mode is enabled) {%- endcomment -%}
-        {% unless section.settings.enable_upload_mode %}
+        {% unless show_upload_featured %}
         <!-- Size + Quantity Row -->
         <div class="cp-size-qty-row">
           {% if selected_product.has_only_default_variant == false %}
@@ -1374,10 +1432,6 @@
       "content": "Button Settings"
     },
     {
-      "type": "paragraph",
-      "content": "⚠️ These settings only work when 'Enable Upload Mode' is OFF"
-    },
-    {
       "type": "select",
       "id": "button_action",
       "label": "Button Action",
@@ -1386,17 +1440,6 @@
         { "value": "go_to_product", "label": "Go to Product Page" }
       ],
       "default": "add_to_cart"
-    },
-    {
-      "type": "header",
-      "content": "Upload Settings"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_upload_mode",
-      "label": "Enable Upload Mode",
-      "default": false,
-      "info": "When enabled, shows Upload button and hides Add to Cart, Quantity, Size and Color selectors"
     },
     {
       "type": "header",

@@ -396,6 +396,21 @@
     "settings": [
       {
         "type": "header",
+        "content": "Free Shipping Progress Bar"
+      },
+      {
+        "type": "range",
+        "id": "free_shipping_threshold",
+        "label": "Free Shipping Threshold ($)",
+        "min": 0,
+        "max": 500,
+        "step": 5,
+        "default": 100,
+        "unit": "$",
+        "info": "Cart total required for free shipping. Set to 0 to disable progress bar."
+      },
+      {
+        "type": "header",
         "content": "Shipping Information"
       },
       {
@@ -471,6 +486,440 @@
         "id": "favicon",
         "label": "Favicon Image",
         "info": "32x32 pixels recommended"
+      }
+    ]
+  },
+  {
+    "name": "Delivery Calculator",
+    "settings": [
+      {
+        "type": "header",
+        "content": "General Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "delivery_enabled",
+        "label": "Enable Delivery Calculator",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "delivery_debug",
+        "label": "Debug Mode",
+        "default": false,
+        "info": "Enable console logging for troubleshooting"
+      },
+      {
+        "type": "header",
+        "content": "Cut-off Time"
+      },
+      {
+        "type": "range",
+        "id": "delivery_cutoff_hour",
+        "label": "Cut-off Hour",
+        "min": 0,
+        "max": 23,
+        "step": 1,
+        "default": 14,
+        "info": "Orders placed before this hour ship same day (24h format)"
+      },
+      {
+        "type": "range",
+        "id": "delivery_cutoff_minute",
+        "label": "Cut-off Minute",
+        "min": 0,
+        "max": 45,
+        "step": 15,
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Shipping Options"
+      },
+      {
+        "type": "select",
+        "id": "delivery_default_carrier",
+        "label": "Default Shipping Carrier",
+        "options": [
+          { "value": "ups_ground", "label": "UPS Ground" },
+          { "value": "ups_3day", "label": "UPS 3 Day Select" },
+          { "value": "ups_2day", "label": "UPS 2nd Day Air" },
+          { "value": "fedex_ground", "label": "FedEx Ground" },
+          { "value": "fedex_express", "label": "FedEx Express Saver" },
+          { "value": "fedex_2day", "label": "FedEx 2Day" },
+          { "value": "usps_priority", "label": "USPS Priority Mail" },
+          { "value": "usps_first_class", "label": "USPS First Class" },
+          { "value": "dhl_express", "label": "DHL Express" },
+          { "value": "dhl_ground", "label": "DHL eCommerce" }
+        ],
+        "default": "ups_ground"
+      },
+      {
+        "type": "checkbox",
+        "id": "delivery_express_enabled",
+        "label": "Show Express Options",
+        "default": true,
+        "info": "Display faster shipping alternatives"
+      },
+      {
+        "type": "checkbox",
+        "id": "delivery_weekend",
+        "label": "Weekend Delivery Available",
+        "default": false,
+        "info": "Enable if your carriers deliver on weekends"
+      },
+      {
+        "type": "header",
+        "content": "Primary Warehouse"
+      },
+      {
+        "type": "checkbox",
+        "id": "warehouse_1_enabled",
+        "label": "Enable Primary Warehouse",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "warehouse_1_id",
+        "label": "Warehouse ID",
+        "default": "east",
+        "info": "Unique identifier for this warehouse"
+      },
+      {
+        "type": "text",
+        "id": "warehouse_1_name",
+        "label": "Warehouse Name",
+        "default": "East Coast Warehouse"
+      },
+      {
+        "type": "text",
+        "id": "warehouse_1_zip",
+        "label": "Warehouse ZIP Code",
+        "default": "07001",
+        "info": "Used for shipping zone calculation"
+      },
+      {
+        "type": "select",
+        "id": "warehouse_1_state",
+        "label": "Warehouse State",
+        "options": [
+          { "value": "AL", "label": "Alabama" },
+          { "value": "AK", "label": "Alaska" },
+          { "value": "AZ", "label": "Arizona" },
+          { "value": "AR", "label": "Arkansas" },
+          { "value": "CA", "label": "California" },
+          { "value": "CO", "label": "Colorado" },
+          { "value": "CT", "label": "Connecticut" },
+          { "value": "DE", "label": "Delaware" },
+          { "value": "FL", "label": "Florida" },
+          { "value": "GA", "label": "Georgia" },
+          { "value": "HI", "label": "Hawaii" },
+          { "value": "ID", "label": "Idaho" },
+          { "value": "IL", "label": "Illinois" },
+          { "value": "IN", "label": "Indiana" },
+          { "value": "IA", "label": "Iowa" },
+          { "value": "KS", "label": "Kansas" },
+          { "value": "KY", "label": "Kentucky" },
+          { "value": "LA", "label": "Louisiana" },
+          { "value": "ME", "label": "Maine" },
+          { "value": "MD", "label": "Maryland" },
+          { "value": "MA", "label": "Massachusetts" },
+          { "value": "MI", "label": "Michigan" },
+          { "value": "MN", "label": "Minnesota" },
+          { "value": "MS", "label": "Mississippi" },
+          { "value": "MO", "label": "Missouri" },
+          { "value": "MT", "label": "Montana" },
+          { "value": "NE", "label": "Nebraska" },
+          { "value": "NV", "label": "Nevada" },
+          { "value": "NH", "label": "New Hampshire" },
+          { "value": "NJ", "label": "New Jersey" },
+          { "value": "NM", "label": "New Mexico" },
+          { "value": "NY", "label": "New York" },
+          { "value": "NC", "label": "North Carolina" },
+          { "value": "ND", "label": "North Dakota" },
+          { "value": "OH", "label": "Ohio" },
+          { "value": "OK", "label": "Oklahoma" },
+          { "value": "OR", "label": "Oregon" },
+          { "value": "PA", "label": "Pennsylvania" },
+          { "value": "RI", "label": "Rhode Island" },
+          { "value": "SC", "label": "South Carolina" },
+          { "value": "SD", "label": "South Dakota" },
+          { "value": "TN", "label": "Tennessee" },
+          { "value": "TX", "label": "Texas" },
+          { "value": "UT", "label": "Utah" },
+          { "value": "VT", "label": "Vermont" },
+          { "value": "VA", "label": "Virginia" },
+          { "value": "WA", "label": "Washington" },
+          { "value": "WV", "label": "West Virginia" },
+          { "value": "WI", "label": "Wisconsin" },
+          { "value": "WY", "label": "Wyoming" },
+          { "value": "DC", "label": "Washington DC" }
+        ],
+        "default": "NJ"
+      },
+      {
+        "type": "header",
+        "content": "Secondary Warehouse (Optional)"
+      },
+      {
+        "type": "checkbox",
+        "id": "warehouse_2_enabled",
+        "label": "Enable Secondary Warehouse",
+        "default": false,
+        "info": "Enable for multi-warehouse setup"
+      },
+      {
+        "type": "text",
+        "id": "warehouse_2_id",
+        "label": "Warehouse ID",
+        "default": "west"
+      },
+      {
+        "type": "text",
+        "id": "warehouse_2_name",
+        "label": "Warehouse Name",
+        "default": "West Coast Warehouse"
+      },
+      {
+        "type": "text",
+        "id": "warehouse_2_zip",
+        "label": "Warehouse ZIP Code",
+        "default": "90001"
+      },
+      {
+        "type": "select",
+        "id": "warehouse_2_state",
+        "label": "Warehouse State",
+        "options": [
+          { "value": "AL", "label": "Alabama" },
+          { "value": "AK", "label": "Alaska" },
+          { "value": "AZ", "label": "Arizona" },
+          { "value": "AR", "label": "Arkansas" },
+          { "value": "CA", "label": "California" },
+          { "value": "CO", "label": "Colorado" },
+          { "value": "CT", "label": "Connecticut" },
+          { "value": "DE", "label": "Delaware" },
+          { "value": "FL", "label": "Florida" },
+          { "value": "GA", "label": "Georgia" },
+          { "value": "HI", "label": "Hawaii" },
+          { "value": "ID", "label": "Idaho" },
+          { "value": "IL", "label": "Illinois" },
+          { "value": "IN", "label": "Indiana" },
+          { "value": "IA", "label": "Iowa" },
+          { "value": "KS", "label": "Kansas" },
+          { "value": "KY", "label": "Kentucky" },
+          { "value": "LA", "label": "Louisiana" },
+          { "value": "ME", "label": "Maine" },
+          { "value": "MD", "label": "Maryland" },
+          { "value": "MA", "label": "Massachusetts" },
+          { "value": "MI", "label": "Michigan" },
+          { "value": "MN", "label": "Minnesota" },
+          { "value": "MS", "label": "Mississippi" },
+          { "value": "MO", "label": "Missouri" },
+          { "value": "MT", "label": "Montana" },
+          { "value": "NE", "label": "Nebraska" },
+          { "value": "NV", "label": "Nevada" },
+          { "value": "NH", "label": "New Hampshire" },
+          { "value": "NJ", "label": "New Jersey" },
+          { "value": "NM", "label": "New Mexico" },
+          { "value": "NY", "label": "New York" },
+          { "value": "NC", "label": "North Carolina" },
+          { "value": "ND", "label": "North Dakota" },
+          { "value": "OH", "label": "Ohio" },
+          { "value": "OK", "label": "Oklahoma" },
+          { "value": "OR", "label": "Oregon" },
+          { "value": "PA", "label": "Pennsylvania" },
+          { "value": "RI", "label": "Rhode Island" },
+          { "value": "SC", "label": "South Carolina" },
+          { "value": "SD", "label": "South Dakota" },
+          { "value": "TN", "label": "Tennessee" },
+          { "value": "TX", "label": "Texas" },
+          { "value": "UT", "label": "Utah" },
+          { "value": "VT", "label": "Vermont" },
+          { "value": "VA", "label": "Virginia" },
+          { "value": "WA", "label": "Washington" },
+          { "value": "WV", "label": "West Virginia" },
+          { "value": "WI", "label": "Wisconsin" },
+          { "value": "WY", "label": "Wyoming" },
+          { "value": "DC", "label": "Washington DC" }
+        ],
+        "default": "CA"
+      },
+      {
+        "type": "header",
+        "content": "Holiday Settings"
+      },
+      {
+        "type": "textarea",
+        "id": "delivery_holidays",
+        "label": "Additional Holidays",
+        "info": "Add custom holidays in YYYY-MM-DD format, separated by commas. Example: 2026-12-26,2026-12-31",
+        "placeholder": "2026-12-26,2026-12-31"
+      }
+    ]
+  },
+  {
+    "name": "Upload Mode Products",
+    "settings": [
+      {
+        "type": "header",
+        "content": "🎨 Upload Mode Ürün Tanımlama"
+      },
+      {
+        "type": "paragraph",
+        "content": "Burada seçtiğiniz ürünler tüm temalarda 'Upload Mode' olarak çalışır. Bu ürünler için Add to Cart yerine 'Upload Design' butonu gösterilir."
+      },
+      {
+        "type": "checkbox",
+        "id": "upload_mode_enabled",
+        "label": "Upload Mode Aktif",
+        "default": true,
+        "info": "Seçili ürünler için upload modunu etkinleştirir"
+      },
+      {
+        "type": "header",
+        "content": "Ürün Seçimi"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_1",
+        "label": "Upload Mode Ürün 1"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_2",
+        "label": "Upload Mode Ürün 2"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_3",
+        "label": "Upload Mode Ürün 3"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_4",
+        "label": "Upload Mode Ürün 4"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_5",
+        "label": "Upload Mode Ürün 5"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_6",
+        "label": "Upload Mode Ürün 6"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_7",
+        "label": "Upload Mode Ürün 7"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_8",
+        "label": "Upload Mode Ürün 8"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_9",
+        "label": "Upload Mode Ürün 9"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_10",
+        "label": "Upload Mode Ürün 10"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_11",
+        "label": "Upload Mode Ürün 11"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_12",
+        "label": "Upload Mode Ürün 12"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_13",
+        "label": "Upload Mode Ürün 13"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_14",
+        "label": "Upload Mode Ürün 14"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_15",
+        "label": "Upload Mode Ürün 15"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_16",
+        "label": "Upload Mode Ürün 16"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_17",
+        "label": "Upload Mode Ürün 17"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_18",
+        "label": "Upload Mode Ürün 18"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_19",
+        "label": "Upload Mode Ürün 19"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_20",
+        "label": "Upload Mode Ürün 20"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_21",
+        "label": "Upload Mode Ürün 21"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_22",
+        "label": "Upload Mode Ürün 22"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_23",
+        "label": "Upload Mode Ürün 23"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_24",
+        "label": "Upload Mode Ürün 24"
+      },
+      {
+        "type": "product",
+        "id": "upload_mode_product_25",
+        "label": "Upload Mode Ürün 25"
+      },
+      {
+        "type": "header",
+        "content": "Upload Butonu Ayarları"
+      },
+      {
+        "type": "text",
+        "id": "upload_button_text",
+        "label": "Upload Buton Metni",
+        "default": "Upload Design"
+      },
+      {
+        "type": "color",
+        "id": "upload_button_bg",
+        "label": "Upload Buton Rengi",
+        "default": "#667eea"
       }
     ]
   }

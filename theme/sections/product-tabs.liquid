@@ -152,6 +152,21 @@
     </div>
     
     <div class="product-tab-pane" id="tab-shipping" role="tabpanel" aria-labelledby="tab-btn-shipping">
+      <!-- Dynamic Delivery Calculator Badge -->
+      {% if settings.delivery_enabled %}
+        {% render 'delivery-data', product: product %}
+        <div id="delivery-badge" class="delivery-badge-wrapper">
+          <!-- LiveShipping v4 anında render edecek, loading gerekmez -->
+        </div>
+      {% else %}
+        <!-- Debug: delivery_enabled is OFF -->
+        <div style="padding: 1rem; background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; margin-bottom: 1rem;">
+          <strong>⚠️ Delivery Calculator is disabled</strong><br>
+          <small>Enable it from Theme Settings → Delivery Calculator → Enable Delivery Calculator</small>
+        </div>
+      {% endif %}
+      
+      <!-- Static Shipping Info -->
       <ul class="tab-spec-list">
         <li>
           <span class="spec-label">Processing</span>

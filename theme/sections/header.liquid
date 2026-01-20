@@ -66,6 +66,13 @@
 
         <!-- Actions (Right) -->
         <div class="header-actions-stacked">
+          <!-- Mobile Toggle for Stacked - Moved to top row -->
+          <button class="mobile-toggle mobile-toggle-stacked" id="mobileToggleStacked" aria-label="Menu">
+            <span class="toggle-bar"></span>
+            <span class="toggle-bar"></span>
+            <span class="toggle-bar"></span>
+          </button>
+          
           {% if section.settings.show_account %}
           <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}"
              class="stacked-action-btn"
@@ -135,29 +142,67 @@
                           </div>
                           <span>{{ link.title }}</span>
                         </div>
+                        {%- comment %} Check if ANY submenu has products assigned {% endcomment -%}
+                        {%- assign has_any_products = false -%}
+                        {%- for childlink in link.links -%}
+                          {%- for block in section.blocks -%}
+                            {%- if block.type == 'submenu_item' -%}
+                              {%- assign block_parent = block.settings.parent_menu | downcase | strip -%}
+                              {%- assign block_submenu = block.settings.submenu_title | downcase | strip -%}
+                              {%- assign link_parent = link.title | downcase | strip -%}
+                              {%- assign child_title = childlink.title | downcase | strip -%}
+                              {%- if block_parent == link_parent and block_submenu == child_title -%}
+                                {%- if block.settings.product_1 != blank or block.settings.product_2 != blank or block.settings.product_3 != blank -%}
+                                  {%- assign has_any_products = true -%}
+                                  {%- break -%}
+                                {%- endif -%}
+                              {%- endif -%}
+                            {%- endif -%}
+                          {%- endfor -%}
+                          {%- if has_any_products -%}{%- break -%}{%- endif -%}
+                        {%- endfor -%}
+                        
                         <ul class="mega-tabs-list">
                           {% for childlink in link.links %}
-                            <li class="mega-tab-item {% if forloop.first %}active{% endif %}"
+                            <a href="{{ childlink.url }}" class="mega-tab-item {% if forloop.first %}active{% endif %}"
                                 data-tab="{{ childlink.title | handleize }}"
-                                data-parent="{{ link.title | handleize }}">
+                                data-parent="{{ link.title | handleize }}"
+                                {% if has_any_products %}data-has-products="true"{% endif %}>
                               <span class="mega-tab-dot"></span>
                               <span class="mega-tab-text">{{ childlink.title }}</span>
-                              <i class="fa-solid fa-chevron-right mega-tab-arrow"></i>
-                            </li>
+                              {% if has_any_products %}
+                                <i class="fa-solid fa-chevron-right mega-tab-arrow"></i>
+                              {% endif %}
+                            </a>
                           {% endfor %}
                           {% if link.links.size == 0 %}
-                            <li class="mega-tab-item active"
+                            <a href="{{ link.url }}" class="mega-tab-item active"
                                 data-tab="all-{{ link.title | handleize }}"
                                 data-parent="{{ link.title | handleize }}">
                               <span class="mega-tab-dot"></span>
                               <span class="mega-tab-text">View All</span>
-                              <i class="fa-solid fa-chevron-right mega-tab-arrow"></i>
-                            </li>
+                            </a>
                           {% endif %}
                         </ul>
                       </div>
+                      {% if has_any_products %}
                       <div class="mega-products-col">
                         {% for childlink in link.links %}
+                          {% comment %} Find matching submenu_item block {% endcomment %}
+                          {% assign submenu_block = nil %}
+                          {% for block in section.blocks %}
+                            {% if block.type == 'submenu_item' %}
+                              {% assign block_parent = block.settings.parent_menu | downcase | strip %}
+                              {% assign block_submenu = block.settings.submenu_title | downcase | strip %}
+                              {% assign link_parent = link.title | downcase | strip %}
+                              {% assign child_title = childlink.title | downcase | strip %}
+                              {% if block_parent == link_parent and block_submenu == child_title %}
+                                {% assign submenu_block = block %}
+                                {% break %}
+                              {% endif %}
+                            {% endif %}
+                          {% endfor %}
+                          
                           <div class="mega-products-panel {% if forloop.first %}active{% endif %}"
                                data-panel="{{ childlink.title | handleize }}"
                                data-parent="{{ link.title | handleize }}">
@@ -167,12 +212,64 @@
                                 View All <i class="fa-solid fa-arrow-right"></i>
                               </a>
                             </div>
-                            <div class="mega-products-grid-3">
-                              {% comment %} Products loaded from submenu_item blocks {% endcomment %}
-                            </div>
+                            
+                            {% if submenu_block %}
+                              <div class="mega-products-grid-3">
+                                {% if submenu_block.settings.product_1 != blank %}
+                                  {% assign p1 = submenu_block.settings.product_1 %}
+                                  <a href="{{ p1.url }}" class="mega-product-card-sm">
+                                    <div class="mega-product-img-sm">
+                                      {% if p1.featured_image %}
+                                        <img src="{{ p1.featured_image | image_url: width: 150 }}" alt="{{ p1.title }}" width="150" height="150" loading="lazy">
+                                      {% else %}
+                                        <div class="mega-placeholder-sm"><i class="fa-solid fa-image"></i></div>
+                                      {% endif %}
+                                    </div>
+                                    <span class="mega-product-name-sm">{{ p1.title | truncate: 18 }}</span>
+                                    <span class="mega-product-price-sm">{{ p1.price | money }}</span>
+                                  </a>
+                                {% endif %}
+                                {% if submenu_block.settings.product_2 != blank %}
+                                  {% assign p2 = submenu_block.settings.product_2 %}
+                                  <a href="{{ p2.url }}" class="mega-product-card-sm">
+                                    <div class="mega-product-img-sm">
+                                      {% if p2.featured_image %}
+                                        <img src="{{ p2.featured_image | image_url: width: 150 }}" alt="{{ p2.title }}" width="150" height="150" loading="lazy">
+                                      {% else %}
+                                        <div class="mega-placeholder-sm"><i class="fa-solid fa-image"></i></div>
+                                      {% endif %}
+                                    </div>
+                                    <span class="mega-product-name-sm">{{ p2.title | truncate: 18 }}</span>
+                                    <span class="mega-product-price-sm">{{ p2.price | money }}</span>
+                                  </a>
+                                {% endif %}
+                                {% if submenu_block.settings.product_3 != blank %}
+                                  {% assign p3 = submenu_block.settings.product_3 %}
+                                  <a href="{{ p3.url }}" class="mega-product-card-sm">
+                                    <div class="mega-product-img-sm">
+                                      {% if p3.featured_image %}
+                                        <img src="{{ p3.featured_image | image_url: width: 150 }}" alt="{{ p3.title }}" width="150" height="150" loading="lazy">
+                                      {% else %}
+                                        <div class="mega-placeholder-sm"><i class="fa-solid fa-image"></i></div>
+                                      {% endif %}
+                                    </div>
+                                    <span class="mega-product-name-sm">{{ p3.title | truncate: 18 }}</span>
+                                    <span class="mega-product-price-sm">{{ p3.price | money }}</span>
+                                  </a>
+                                {% endif %}
+                              </div>
+                            {% else %}
+                              <div class="mega-products-grid-3">
+                                <div class="mega-no-products">
+                                  <i class="fa-solid fa-box-open"></i>
+                                  <span>No products assigned</span>
+                                </div>
+                              </div>
+                            {% endif %}
                           </div>
                         {% endfor %}
                       </div>
+                      {% endif %}
                     </div>
                   </div>
                 </div>
@@ -183,13 +280,6 @@
           {% endif %}
         </ul>
       </nav>
-
-      <!-- Mobile Toggle for Stacked -->
-      <button class="mobile-toggle mobile-toggle-stacked" id="mobileToggleStacked" aria-label="Menu">
-        <span class="toggle-bar"></span>
-        <span class="toggle-bar"></span>
-        <span class="toggle-bar"></span>
-      </button>
     </div>
   </div>
   {% else %}
@@ -256,28 +346,51 @@
                           </div>
                           <span>{{ link.title }}</span>
                         </div>
+                        {%- comment %} Check if ANY submenu has products assigned {% endcomment -%}
+                        {%- assign has_any_products = false -%}
+                        {%- for childlink in link.links -%}
+                          {%- for block in section.blocks -%}
+                            {%- if block.type == 'submenu_item' -%}
+                              {%- assign block_parent = block.settings.parent_menu | downcase | strip -%}
+                              {%- assign block_submenu = block.settings.submenu_title | downcase | strip -%}
+                              {%- assign link_parent = link.title | downcase | strip -%}
+                              {%- assign child_title = childlink.title | downcase | strip -%}
+                              {%- if block_parent == link_parent and block_submenu == child_title -%}
+                                {%- if block.settings.product_1 != blank or block.settings.product_2 != blank or block.settings.product_3 != blank -%}
+                                  {%- assign has_any_products = true -%}
+                                  {%- break -%}
+                                {%- endif -%}
+                              {%- endif -%}
+                            {%- endif -%}
+                          {%- endfor -%}
+                          {%- if has_any_products -%}{%- break -%}{%- endif -%}
+                        {%- endfor -%}
+                        
                         <ul class="mega-tabs-list">
                           {% for childlink in link.links %}
-                            <li class="mega-tab-item {% if forloop.first %}active{% endif %}" 
+                            <a href="{{ childlink.url }}" class="mega-tab-item {% if forloop.first %}active{% endif %}" 
                                 data-tab="{{ childlink.title | handleize }}"
-                                data-parent="{{ link.title | handleize }}">
+                                data-parent="{{ link.title | handleize }}"
+                                {% if has_any_products %}data-has-products="true"{% endif %}>
                               <span class="mega-tab-dot"></span>
                               <span class="mega-tab-text">{{ childlink.title }}</span>
-                              <i class="fa-solid fa-chevron-right mega-tab-arrow"></i>
-                            </li>
+                              {% if has_any_products %}
+                                <i class="fa-solid fa-chevron-right mega-tab-arrow"></i>
+                              {% endif %}
+                            </a>
                           {% endfor %}
                           {% if link.links.size == 0 %}
-                            <li class="mega-tab-item active" 
+                            <a href="{{ link.url }}" class="mega-tab-item active" 
                                 data-tab="all-{{ link.title | handleize }}"
                                 data-parent="{{ link.title | handleize }}">
                               <span class="mega-tab-dot"></span>
                               <span class="mega-tab-text">View All</span>
-                              <i class="fa-solid fa-chevron-right mega-tab-arrow"></i>
-                            </li>
+                            </a>
                           {% endif %}
                         </ul>
                       </div>
                       
+                      {% if has_any_products %}
                       <!-- Center: Products Panel -->
                       <div class="mega-products-col">
                         {% for childlink in link.links %}
@@ -406,6 +519,7 @@
                           </div>
                         {% endif %}
                       </div>
+                      {% endif %}
                       
                       <!-- Right: Promo Banner -->
                       {% if has_mega and mega_block %}
@@ -812,8 +926,8 @@
 .mega-dropdown {
   position: absolute;
   top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: auto;
   padding-top: 15px;
   z-index: 1000;
   opacity: 0;
@@ -822,7 +936,28 @@
   transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.nav-item.has-mega:hover .mega-dropdown,
+/* Prevent mega menu from going off-screen */
+.nav-item:first-child .mega-dropdown {
+  left: 0;
+  right: auto;
+}
+
+.nav-item:last-child .mega-dropdown,
+.nav-item:nth-last-child(2) .mega-dropdown {
+  left: auto;
+  right: 0;
+}
+
+/* Show mega menu on hover (desktop with mouse) OR when mega-active class is set */
+@media (hover: hover) and (pointer: fine) {
+  .nav-item.has-mega:hover .mega-dropdown {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}
+
+/* Always show when mega-active class is present (touch devices, tablets) */
 .nav-item.mega-active .mega-dropdown {
   opacity: 1;
   visibility: visible;
@@ -842,11 +977,22 @@
     0 0 0 1px rgba(102, 126, 234, 0.08);
   display: flex;
   gap: 0;
-  min-width: 650px;
-  max-width: 900px;
-  overflow: hidden;
+  /* FLUID: min 320px, ideal 650px, max 95vw */
+  min-width: min(320px, 95vw);
+  max-width: min(900px, 95vw);
+  overflow-x: auto;
+  overflow-y: visible;
   position: relative;
   padding: 5px;
+}
+
+/* No products - tabs only */
+.mega-tabbed-layout:not(:has(.mega-products-col)) {
+  min-height: auto;
+}
+
+.mega-tabbed-layout:not(:has(.mega-products-col)) .mega-tabs-col {
+  border-right: none;
 }
 
 /* Animated Gradient Bar */
@@ -881,18 +1027,19 @@
 }
 
 .mega-links-col {
-  min-width: 220px;
+  min-width: clamp(160px, 20vw, 220px);
   flex: 1;
 }
 
 .mega-featured-col {
-  min-width: 260px;
+  min-width: clamp(200px, 25vw, 260px);
   flex: 1.2;
   background: rgba(102, 126, 234, 0.02);
 }
 
 .mega-promo-col {
-  width: 220px;
+  width: clamp(160px, 18vw, 220px);
+  flex-shrink: 0;
   padding: 20px;
   background: linear-gradient(180deg, rgba(102, 126, 234, 0.03) 0%, rgba(118, 75, 162, 0.05) 100%);
 }
@@ -1006,10 +1153,11 @@
   display: flex;
   gap: 0;
   min-height: 320px;
+  width: 100%;
 }
 
 .mega-tabs-col {
-  width: 220px;
+  width: clamp(160px, 22vw, 220px);
   flex-shrink: 0;
   border-right: 1px solid rgba(102, 126, 234, 0.1);
   padding: 5px;
@@ -1019,6 +1167,12 @@
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+/* Tab item as link - clickable */
+a.mega-tab-item {
+  text-decoration: none;
+  color: inherit;
 }
 
 .mega-tab-item {
@@ -1089,7 +1243,7 @@
   flex: 1;
   padding: 5px 24px;
   position: relative;
-  min-width: 420px;
+  min-width: 0; /* Allow shrinking */
 }
 
 .mega-products-panel {
@@ -1347,6 +1501,8 @@
 }
 
 /* ═══ MEGA MENU MOBILE RESPONSIVE ═══ */
+
+/* Large Desktop - promo column visible */
 @media (max-width: 1200px) {
   .mega-promo-col {
     display: none;
@@ -1360,6 +1516,17 @@
   .mega-product-img-sm {
     width: 80px;
     height: 80px;
+  }
+}
+
+/* Medium screens - adjust grid */
+@media (max-width: 992px) {
+  .mega-inner {
+    min-width: min(550px, 95vw);
+  }
+  
+  .mega-products-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -2610,6 +2777,7 @@
 
 .mobile-toggle-stacked {
   display: none;
+  order: -1; /* Show first in mobile */
 }
 
 /* Stacked Layout Responsive */
@@ -2642,6 +2810,17 @@
     background: var(--header-text);
     border-radius: 2px;
     transition: all 0.3s ease;
+  }
+  
+  /* Hamburger animation when active */
+  .mobile-toggle-stacked.active .toggle-bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  .mobile-toggle-stacked.active .toggle-bar:nth-child(2) {
+    opacity: 0;
+  }
+  .mobile-toggle-stacked.active .toggle-bar:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
   }
   
   .header-layout-stacked .stacked-action-label {
@@ -2774,38 +2953,55 @@ document.addEventListener('DOMContentLoaded', function() {
   // ============================================
   const navItems = document.querySelectorAll('.nav-item.has-mega');
   
-  // Desktop: Hover behavior with delay
-  navItems.forEach(item => {
-    let hoverTimeout;
-    
-    item.addEventListener('mouseenter', () => {
-      clearTimeout(hoverTimeout);
-      // Close other mega menus
-      navItems.forEach(other => {
-        if (other !== item) other.classList.remove('mega-active');
+  // Detect touch device
+  const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+  
+  // Desktop: Hover behavior with delay (only for non-touch devices)
+  if (!isTouchDevice) {
+    navItems.forEach(item => {
+      let hoverTimeout;
+      
+      item.addEventListener('mouseenter', () => {
+        clearTimeout(hoverTimeout);
+        // Close other mega menus
+        navItems.forEach(other => {
+          if (other !== item) other.classList.remove('mega-active');
+        });
+        item.classList.add('mega-active');
       });
-      item.classList.add('mega-active');
+      
+      item.addEventListener('mouseleave', () => {
+        hoverTimeout = setTimeout(() => {
+          item.classList.remove('mega-active');
+        }, 150);
+      });
     });
-    
-    item.addEventListener('mouseleave', () => {
-      hoverTimeout = setTimeout(() => {
-        item.classList.remove('mega-active');
-      }, 150);
-    });
-    
-    // Touch/Click support for tablets
+  }
+  
+  // Touch/Click support for tablets AND touch devices
+  navItems.forEach(item => {
     const navLink = item.querySelector('.nav-link');
     navLink?.addEventListener('click', (e) => {
-      if (window.innerWidth <= 1024) return; // Skip on mobile
+      // On mobile (hamburger menu visible), don't handle here
+      if (window.innerWidth <= 1024 && document.querySelector('.mobile-menu')) {
+        // Check if mobile menu is the active navigation method
+        const mobileToggle = document.querySelector('.mobile-toggle, .mobile-toggle-stacked');
+        if (mobileToggle && window.getComputedStyle(mobileToggle).display !== 'none') {
+          return; // Let mobile menu handle it
+        }
+      }
       
-      if (item.classList.contains('mega-active')) {
-        // If already open, navigate
-        return;
-      } else {
-        // Prevent navigation, open mega menu
-        e.preventDefault();
-        navItems.forEach(other => other.classList.remove('mega-active'));
-        item.classList.add('mega-active');
+      // For touch devices or when mega menu should toggle
+      if (isTouchDevice || window.innerWidth <= 1200) {
+        if (item.classList.contains('mega-active')) {
+          // If already open, navigate to link
+          return;
+        } else {
+          // Prevent navigation, open mega menu
+          e.preventDefault();
+          navItems.forEach(other => other.classList.remove('mega-active'));
+          item.classList.add('mega-active');
+        }
       }
     });
   });
@@ -2828,7 +3024,12 @@ document.addEventListener('DOMContentLoaded', function() {
   // MEGA MENU TABS - Submenu Hover/Click
   // ============================================
   document.querySelectorAll('.mega-tab-item').forEach(tab => {
+    const hasProducts = tab.dataset.hasProducts === 'true';
+    
     const handleTabActivation = () => {
+      // Only activate panel if this menu has products
+      if (!hasProducts) return;
+      
       const tabId = tab.dataset.tab;
       const parentId = tab.dataset.parent;
       const megaDropdown = tab.closest('.mega-dropdown');
@@ -2848,13 +3049,21 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     };
     
-    // Hover for desktop
+    // Hover for desktop - only show panel if has products
     tab.addEventListener('mouseenter', handleTabActivation);
     
-    // Click for mobile/touch
+    // Click - navigate to link if no products, otherwise show panel
     tab.addEventListener('click', (e) => {
-      e.preventDefault();
-      handleTabActivation();
+      if (hasProducts) {
+        // Has products: prevent default on click, panel will show on hover
+        // Let the link work on second click or direct click
+        const href = tab.getAttribute('href');
+        if (href && href !== '#') {
+          // Allow navigation - don't prevent default
+          return;
+        }
+      }
+      // No products or no href: let link work naturally
     });
   });
   

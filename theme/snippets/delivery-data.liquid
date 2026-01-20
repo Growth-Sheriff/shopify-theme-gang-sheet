@@ -55,6 +55,10 @@
   
   # Final kargo firması
   assign final_carrier = product_carrier | default: vendor_carrier | default: nil
+  
+  # Free shipping threshold (Shopify settings'den)
+  assign free_threshold = settings.free_shipping_threshold | default: 10000
+  assign free_threshold_display = free_threshold | divided_by: 100
 %}
 
 <script type="application/json" id="delivery-product-data-{{ product.id }}">
@@ -72,7 +76,15 @@
   "isHeavy": {{ is_heavy | json }},
   "weight": {{ product.variants.first.weight | json }},
   "variantId": {{ product.selected_or_first_available_variant.id | json }},
-  "tags": {{ product.tags | json }}
+  "price": {{ product.selected_or_first_available_variant.price | json }},
+  "tags": {{ product.tags | json }},
+  "freeShippingThreshold": {{ free_threshold | json }},
+  "freeShippingThresholdDisplay": {{ free_threshold_display | json }},
+  "defaults": {
+    "processingTime": "Same Day",
+    "standardShipping": "3-5 Business Days",
+    "expressShipping": "1-2 Business Days"
+  }
 }
 </script>
 

@@ -1,14 +1,31 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "product-main": {
       "type": "product-main",
       "blocks": {
-        "customizer_gangsheet": {
-          "type": "customizer_gangsheet"
+        "build_a_gang_sheet_main_product_7GxgJf": {
+          "type": "shopify://apps/build-a-gang-sheet/blocks/main-product/ee9ed31c-1d66-4e11-bf77-f31e69c2ec2b",
+          "settings": {
+            "btn-label": "Build your own Gang Sheet",
+            "btn-bg": "#5e50ee",
+            "btn-fg": "#ffffff",
+            "show_quantity": false,
+            "product": "{{product}}",
+            "custom_button_css": ""
+          }
         }
       },
       "block_order": [
-        "customizer_gangsheet"
+        "build_a_gang_sheet_main_product_7GxgJf"
       ],
       "settings": {
         "show_breadcrumb": true,
@@ -38,29 +55,163 @@
         "show_variants": true,
         "color_display_mode": "swatches",
         "size_display_mode": "dropdown",
-        "show_quantity": true,
-        "show_add_to_cart": true,
-        "show_buy_now": false
+        "show_quantity": false,
+        "show_add_to_cart": false,
+        "show_buy_now": false,
+        "custom_css": ""
       }
     },
     "recommendations": {
       "type": "product-recommendations",
       "settings": {
-        "heading": "You May Also Like",
-        "products_count": 4
+        "title": "You May Also Like",
+        "custom_css": ""
       }
     },
     "recently-viewed": {
       "type": "recently-viewed",
       "settings": {
         "title": "Recently Viewed",
-        "products_to_show": 8
+        "products_to_show": 8,
+        "max_products": 10,
+        "custom_css": ""
+      }
+    },
+    "homepage_product_bar_3b9HeC": {
+      "type": "homepage-product-bar",
+      "blocks": {
+        "product_card_d7TdKA": {
+          "type": "product_card",
+          "settings": {
+            "show_3d_viewer": false,
+            "show_4d_badge": false,
+            "badge_discount_text": "20% OFF",
+            "product": "uv-dtf-gang-sheets-1",
+            "image_url": "",
+            "title": "Premium DTF Transfer",
+            "link": "",
+            "price": "$4.99",
+            "compare_price": "$9.99",
+            "rating": 5,
+            "half_star": false,
+            "review_count": 55,
+            "enable_upload_mode": true,
+            "custom_css": ""
+          }
+        },
+        "product_card_Bpyn8T": {
+          "type": "product_card",
+          "settings": {
+            "show_3d_viewer": false,
+            "show_4d_badge": false,
+            "badge_discount_text": "20% OFF",
+            "product": "glitter-dtf-transfer-gang-sheet-builder",
+            "image_url": "",
+            "title": "Premium DTF Transfer",
+            "link": "",
+            "price": "$4.99",
+            "compare_price": "$9.99",
+            "rating": 5,
+            "half_star": false,
+            "review_count": 55,
+            "enable_upload_mode": true,
+            "custom_css": ""
+          }
+        },
+        "product_card_TVVFHD": {
+          "type": "product_card",
+          "settings": {
+            "show_3d_viewer": false,
+            "show_4d_badge": false,
+            "badge_discount_text": "20% OFF",
+            "product": "custom-dtf-transfer",
+            "image_url": "",
+            "title": "Premium DTF Transfer",
+            "link": "",
+            "price": "$4.99",
+            "compare_price": "$9.99",
+            "rating": 5,
+            "half_star": false,
+            "review_count": 55,
+            "enable_upload_mode": true,
+            "custom_css": ""
+          }
+        },
+        "product_card_zFUftn": {
+          "type": "product_card",
+          "settings": {
+            "show_3d_viewer": false,
+            "show_4d_badge": false,
+            "badge_discount_text": "20% OFF",
+            "product": "glitter-dtf-gang-sheets",
+            "image_url": "",
+            "title": "Premium DTF Transfer",
+            "link": "",
+            "price": "$4.99",
+            "compare_price": "$9.99",
+            "rating": 5,
+            "half_star": false,
+            "review_count": 55,
+            "enable_upload_mode": true,
+            "custom_css": ""
+          }
+        },
+        "product_card_8KkMEQ": {
+          "type": "product_card",
+          "settings": {
+            "show_3d_viewer": false,
+            "show_4d_badge": false,
+            "badge_discount_text": "20% OFF",
+            "product": "dtf-gang-sheet-builder",
+            "image_url": "",
+            "title": "Premium DTF Transfer",
+            "link": "",
+            "price": "$4.99",
+            "compare_price": "$9.99",
+            "rating": 5,
+            "half_star": false,
+            "review_count": 55,
+            "enable_upload_mode": true,
+            "custom_css": ""
+          }
+        }
+      },
+      "block_order": [
+        "product_card_d7TdKA",
+        "product_card_Bpyn8T",
+        "product_card_TVVFHD",
+        "product_card_zFUftn",
+        "product_card_8KkMEQ"
+      ],
+      "disabled": true,
+      "name": "Product Bar",
+      "settings": {
+        "mobile_columns": "2",
+        "section_bg": "#ffffff",
+        "section_padding": "2rem 0",
+        "show_header": false,
+        "badge_text": "",
+        "title": "",
+        "view_product_text": "VIEW PRODUCT",
+        "add_to_cart_text": "Add to Cart",
+        "sold_out_text": "Sold Out",
+        "show_pickup_alert": true,
+        "pickup_badge": "LOCAL PICKUP",
+        "pickup_location": "Dallas, TX",
+        "pickup_time": "Today until 7:00 PM",
+        "pickup_btn_text": "Check Availability",
+        "pickup_link": "",
+        "show_floating_cart": true,
+        "floating_cart_text": "View Cart",
+        "enable_upload_mode_global": false,
+        "custom_css": ""
       }
     }
   },
   "order": [
     "product-main",
     "recommendations",
-    "recently-viewed"
+    "recently-viewed",
+    "homepage_product_bar_3b9HeC"
   ]
 }

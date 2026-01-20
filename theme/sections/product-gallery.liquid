@@ -68,7 +68,13 @@
                 </div>
               {% endif %}
               
-              <button class="wishlist-btn" title="Add to wishlist">
+              <button class="wishlist-btn" title="Add to wishlist"
+                data-product-id="{{ product.id }}"
+                data-product-handle="{{ product.handle }}"
+                data-product-title="{{ product.title | escape }}"
+                data-product-image="{{ product.featured_image | image_url: width: 300 }}"
+                data-product-price="{{ product.price | money }}"
+                data-product-compare-price="{{ product.compare_at_price | money }}">
                 <i class="ti ti-heart"></i>
               </button>
               

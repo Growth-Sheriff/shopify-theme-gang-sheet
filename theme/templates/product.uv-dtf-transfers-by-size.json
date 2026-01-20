@@ -1,8 +1,28 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "product-main": {
       "type": "product-main",
-      
+      "blocks": {
+        "fdt_upload_dtf_transfer_VYXW6x": {
+          "type": "shopify://apps/fdt-upload/blocks/dtf-transfer/019b7646-629d-7e82-9ebc-a6a3948b7dad",
+          "settings": {
+            "show_header": true,
+            "header_text": "Upload Your Design"
+          }
+        }
+      },
+      "block_order": [
+        "fdt_upload_dtf_transfer_VYXW6x"
+      ],
       "settings": {
         "show_breadcrumb": true,
         "show_rating": true,
@@ -10,7 +30,7 @@
         "review_count": "2,156",
         "recommend_percent": "99% recommend",
         "price_badge": "✨ UV DTF BY SIZE",
-        "show_delivery": true,
+        "show_delivery": false,
         "delivery_time": "Same Day Shipping",
         "order_by": "Order by 3PM",
         "show_tabs": true,
@@ -24,36 +44,170 @@
         "press_time": "Peel & Apply",
         "press_pressure": "Light",
         "press_peel": "Cold Application",
-        "show_trust_badges": true,
+        "show_trust_badges": false,
         "badge_1": "Secure Checkout",
         "badge_2": "Same Day Shipping",
         "badge_3": "Premium Quality",
-        "show_variants": true,
+        "show_variants": false,
         "color_display_mode": "swatches",
         "size_display_mode": "dropdown",
-        "show_quantity": true,
-        "show_add_to_cart": true,
-        "show_buy_now": true
+        "show_quantity": false,
+        "show_add_to_cart": false,
+        "show_buy_now": false,
+        "custom_css": ""
       }
     },
     "recommendations": {
       "type": "product-recommendations",
       "settings": {
-        "heading": "More UV DTF Sizes",
-        "products_count": 4
+        "title": "You May Also Like",
+        "custom_css": ""
       }
     },
     "recently-viewed": {
       "type": "recently-viewed",
       "settings": {
         "title": "Recently Viewed",
-        "products_to_show": 8
+        "products_to_show": 8,
+        "max_products": 10,
+        "custom_css": ""
+      }
+    },
+    "homepage_product_bar_MYEC36": {
+      "type": "homepage-product-bar",
+      "blocks": {
+        "product_card_cam9wJ": {
+          "type": "product_card",
+          "settings": {
+            "show_3d_viewer": false,
+            "show_4d_badge": false,
+            "badge_discount_text": "20% OFF",
+            "product": "dtf-transfers-by-size",
+            "image_url": "",
+            "title": "Premium DTF Transfer",
+            "link": "",
+            "price": "$4.99",
+            "compare_price": "$9.99",
+            "rating": 5,
+            "half_star": false,
+            "review_count": 55,
+            "enable_upload_mode": false,
+            "custom_css": ""
+          }
+        },
+        "product_card_VwLjnc": {
+          "type": "product_card",
+          "settings": {
+            "show_3d_viewer": false,
+            "show_4d_badge": false,
+            "badge_discount_text": "20% OFF",
+            "product": "uv-dtf-inks-1-liter",
+            "image_url": "",
+            "title": "Premium DTF Transfer",
+            "link": "",
+            "price": "$4.99",
+            "compare_price": "$9.99",
+            "rating": 5,
+            "half_star": false,
+            "review_count": 55,
+            "enable_upload_mode": false,
+            "custom_css": ""
+          }
+        },
+        "product_card_9CArqr": {
+          "type": "product_card",
+          "settings": {
+            "show_3d_viewer": false,
+            "show_4d_badge": false,
+            "badge_discount_text": "20% OFF",
+            "product": "free-dtf-gang-sheet-builder",
+            "image_url": "",
+            "title": "Premium DTF Transfer",
+            "link": "",
+            "price": "$4.99",
+            "compare_price": "$9.99",
+            "rating": 5,
+            "half_star": false,
+            "review_count": 55,
+            "enable_upload_mode": false,
+            "custom_css": ""
+          }
+        },
+        "product_card_9p7fnH": {
+          "type": "product_card",
+          "settings": {
+            "show_3d_viewer": false,
+            "show_4d_badge": false,
+            "badge_discount_text": "20% OFF",
+            "product": "glitter-dtf-transfers-by-size",
+            "image_url": "",
+            "title": "Premium DTF Transfer",
+            "link": "",
+            "price": "$4.99",
+            "compare_price": "$9.99",
+            "rating": 5,
+            "half_star": false,
+            "review_count": 55,
+            "enable_upload_mode": false,
+            "custom_css": ""
+          }
+        },
+        "product_card_WNcpDR": {
+          "type": "product_card",
+          "settings": {
+            "show_3d_viewer": false,
+            "show_4d_badge": false,
+            "badge_discount_text": "20% OFF",
+            "product": "uv-dtf-a-b-film-roll-24-325",
+            "image_url": "",
+            "title": "Premium DTF Transfer",
+            "link": "",
+            "price": "$4.99",
+            "compare_price": "$9.99",
+            "rating": 5,
+            "half_star": false,
+            "review_count": 55,
+            "enable_upload_mode": false,
+            "custom_css": ""
+          }
+        }
+      },
+      "block_order": [
+        "product_card_cam9wJ",
+        "product_card_VwLjnc",
+        "product_card_9CArqr",
+        "product_card_9p7fnH",
+        "product_card_WNcpDR"
+      ],
+      "disabled": true,
+      "name": "Product Bar",
+      "settings": {
+        "mobile_columns": "2",
+        "section_bg": "#ffffff",
+        "section_padding": "2rem 0",
+        "show_header": false,
+        "badge_text": "",
+        "title": "",
+        "view_product_text": "VIEW PRODUCT",
+        "add_to_cart_text": "Add to Cart",
+        "sold_out_text": "Sold Out",
+        "show_pickup_alert": true,
+        "pickup_badge": "LOCAL PICKUP",
+        "pickup_location": "Dallas, TX",
+        "pickup_time": "Today until 7:00 PM",
+        "pickup_btn_text": "Check Availability",
+        "pickup_link": "",
+        "show_floating_cart": true,
+        "floating_cart_text": "View Cart",
+        "enable_upload_mode_global": false,
+        "custom_css": ""
       }
     }
   },
   "order": [
     "product-main",
     "recommendations",
-    "recently-viewed"
+    "recently-viewed",
+    "homepage_product_bar_MYEC36"
   ]
 }

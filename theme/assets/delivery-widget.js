@@ -102,9 +102,17 @@
   }
   
   function formatDeliveryDays(daysValue, state) {
-    // If daysValue exists and is valid, use it
-    if (daysValue) {
-      const daysStr = String(daysValue).replace(',', '.');
+    // If daysValue is array [min, max]
+    if (Array.isArray(daysValue)) {
+      const min = daysValue[0];
+      const max = daysValue[1] || min;
+      if (min > 0 || max > 0) {
+        return min === max ? `${min}` : `${min}-${max}`;
+      }
+    }
+    // If daysValue is string like "3,4"
+    if (daysValue && typeof daysValue === 'string') {
+      const daysStr = daysValue.replace(',', '.');
       const parsed = parseFloat(daysStr);
       if (!isNaN(parsed) && parsed > 0) {
         const min = Math.floor(parsed);
@@ -114,6 +122,35 @@
     }
     // Fallback to zone-based calculation
     return getZoneDaysText(state);
+  }
+  
+  function formatDeliveryDate(dateStr) {
+    if (!dateStr) return null;
+    try {
+      const date = new Date(dateStr + 'T12:00:00');
+      return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    } catch(e) {
+      return null;
+    }
+  }
+  
+  function getDeliveryText(rate, state) {
+    // Priority 1: Use delivery_date (most accurate - same as checkout)
+    if (rate.deliveryDate) {
+      const formatted = formatDeliveryDate(rate.deliveryDate);
+      if (formatted) return formatted;
+    }
+    // Priority 2: Use delivery_range
+    if (rate.deliveryRange && rate.deliveryRange.length >= 2) {
+      const min = formatDeliveryDate(rate.deliveryRange[0]);
+      const max = formatDeliveryDate(rate.deliveryRange[1]);
+      if (min && max) {
+        return min === max ? min : `${min} - ${max}`;
+      }
+    }
+    // Priority 3: Use delivery_days
+    const days = formatDeliveryDays(rate.deliveryDays, state);
+    return `${days} business days`;
   }
 
   function getETHour() {
@@ -291,12 +328,30 @@
       const data = await resp.json();
       if (!data.shipping_rates) return [];
       
-      return data.shipping_rates.map(rate => ({
+      console.log('[DeliveryWidget] Raw API rates:', JSON.stringify(data.shipping_rates, null, 2));
+      
+      const rates = data.shipping_rates.map(rate => ({
         name: rate.name,
         price: normalizePrice(rate.price),
         code: rate.code,
-        deliveryDays: rate.delivery_days
+        deliveryDays: rate.delivery_days,
+        deliveryDate: rate.delivery_date,
+        deliveryRange: rate.delivery_range
       })).sort((a, b) => a.price - b.price);
+      
+      // Cache rates to localStorage for panel sync
+      try {
+        localStorage.setItem('delivery_shipping_rates', JSON.stringify({
+          rates: rates,
+          zip: zip,
+          state: state,
+          timestamp: Date.now()
+        }));
+        // Dispatch event for panel to refresh
+        document.dispatchEvent(new CustomEvent('delivery:rates-updated', { detail: { rates, zip, state } }));
+      } catch(e) {}
+      
+      return rates;
     } catch (e) {
       console.log('[DeliveryWidget] Rates fetch error:', e);
       return [];
@@ -768,7 +823,7 @@
               </div>
               <div class="dw-rates-list">
                 ${shippingRates.slice(0, 4).map((rate, idx) => {
-                  const daysText = formatDeliveryDays(rate.deliveryDays, state);
+                  const deliveryText = getDeliveryText(rate, state);
                   return `
                   <div class="dw-rate-item ${idx === 0 ? 'best' : ''}" data-rate="${rate.code}">
                     <div class="dw-rate-info">
@@ -776,7 +831,7 @@
                         ${rate.name}
                         ${idx === 0 ? '<span class="dw-rate-badge">BEST VALUE</span>' : ''}
                       </span>
-                      <span class="dw-rate-delivery">${daysText} business days</span>
+                      <span class="dw-rate-delivery">${deliveryText}</span>
                     </div>
                     <span class="dw-rate-price ${rate.price === 0 ? 'free' : ''}">
                       ${rate.price === 0 ? 'FREE' : '$' + rate.price.toFixed(2)}

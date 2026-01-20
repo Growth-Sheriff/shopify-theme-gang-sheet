@@ -1,7 +1,17 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "show_title": true,
         "title_size": 40,
@@ -10,14 +20,26 @@
         "content_max_width": 800,
         "full_width": false,
         "text_color": "#6e6b7b",
-        "link_color": "#7367F0",
+        "link_color": "#7367f0",
         "background_color": "#ffffff",
         "padding_top": 50,
-        "padding_bottom": 80
+        "padding_bottom": 80,
+        "custom_css": ""
+      }
+    },
+    "homepage_rich_text_bkEAKk": {
+      "type": "homepage-rich-text",
+      "name": "Rich Text Block",
+      "settings": {
+        "subtitle": "",
+        "title": "ABOUT FASTPOINT USAGE",
+        "content": "<p><strong>What is FastPoint?</strong></p><p>FastPoint is the loyalty points system of Fast DTF Transfer.<br/>You earn FastPoints by completing certain actions and making purchases on our website.<br/>Our goal is to reward our loyal customers and make every purchase more valuable.<br/></p><p><strong>How to Earn FastPoints ?</strong></p><p>You can earn FastPoints by completing the following actions:<br/><br/>Action Earned FastPoints<br/><strong>Sign Up 100 FastPoints<br/>Make a Purchase 5 FastPoints for every $1 spent<br/>Celebrate Your Birthday 100 FastPoints<br/>Like on Facebook 5 FastPoints<br/>Follow on Instagram 10 FastPoints<br/>Follow on TikTok 5 FastPoints<br/>Like on YouTube 5 FastPoints<br/>Subscribe to YouTube 5 FastPoints</strong><br/></p><p><strong>How to Use FastPoints ?</strong></p><p>You can redeem your FastPoints by generating a <strong>discount coupon</strong> from your customer account.</p><ul><li>Log in to your account and check your available FastPoint balance<br/></li><li>Based on your points, generate a <strong>coupon code</strong> from the Rewards / Loyalty section<br/></li><li>Use the generated coupon code during checkout to receive your discount<br/></li></ul><p><strong>Redemption Rate:</strong></p><ul><li><strong>100 FastPoints = $1 discount</strong><br/></li></ul><p>FastPoints are not applied automatically at checkout. Discounts are granted only when a valid coupon code is entered.</p><p><strong>FastPoint Rules & Conditions</strong></p><p>FastPoints have no cash value and cannot be exchanged for money<br/><br/>FastPoints are non-transferable and can only be used by the account that earned them<br/><br/>Redeemed points are deducted once the order is completed<br/><br/>In case of eligible refunds, used FastPoints may be returned according to system rules<br/><br/>fastdtftransfer reserves the right to modify or terminate the FastPoint program at any time.</p><p><strong>Where Can I See My FastPoints?</strong></p><p>After logging into your account, you can view:<br/><br/>Your total FastPoint balance<br/><br/>Your earning and redemption history<br/><br/>by clicking the <strong>FastPoint</strong> button our Website<br/><br/></p><p><strong>Why FastPoint?</strong></p><p>Earn rewards for every purchase<br/><br/>Get extra points through social media engagement<br/><br/>Enjoy exclusive discounts as a loyal customer<br/><br/>Simple, transparent, and easy-to-use rewards system</p>",
+        "custom_css": ""
       }
     }
   },
   "order": [
-    "main"
+    "main",
+    "homepage_rich_text_bkEAKk"
   ]
 }

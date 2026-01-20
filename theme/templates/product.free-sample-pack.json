@@ -1,8 +1,16 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "product-main": {
       "type": "product-main",
-      
       "settings": {
         "show_breadcrumb": true,
         "show_rating": true,
@@ -38,10 +46,7 @@
     },
     "recommendations": {
       "type": "product-recommendations",
-      "settings": {
-        "heading": "Products You'll Love",
-        "products_count": 4
-      }
+      "settings": {}
     },
     "recently-viewed": {
       "type": "recently-viewed",

@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "collection-banner": {
@@ -6,7 +15,17 @@
         "show_title": true,
         "show_description": true,
         "show_product_count": true,
-        "show_breadcrumb": true
+        "show_breadcrumb": true,
+        "show_shipping_stat": true,
+        "shipping_stat_value": "Free",
+        "shipping_stat_label": "Shipping $100+",
+        "show_guarantee_stat": true,
+        "guarantee_stat_value": "100%",
+        "guarantee_stat_label": "Guaranteed",
+        "show_rating_stat": true,
+        "rating_stat_value": "4.9",
+        "rating_stat_label": "Rating",
+        "custom_css": ""
       }
     },
     "collection-products": {
@@ -14,15 +33,12 @@
       "settings": {
         "products_per_page": 12,
         "columns_desktop": "4",
-        "columns_mobile": "2",
-        "show_vendor": false,
-        "show_rating": true,
-        "show_quick_add": true,
-        "show_quick_actions": true,
         "show_second_image": true,
-        "show_sort": true,
-        "card_style": "modern",
-        "image_ratio": "square"
+        "show_vendor": false,
+        "show_rating": false,
+        "show_quick_add": true,
+        "show_compare": false,
+        "custom_css": ""
       }
     }
   },

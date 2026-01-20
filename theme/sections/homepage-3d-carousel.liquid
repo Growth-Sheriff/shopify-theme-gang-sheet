@@ -155,7 +155,13 @@
                   </div>
                   
                   <!-- Wishlist -->
-                  <button class="wishlist-btn" aria-label="Add to wishlist">
+                  <button class="wishlist-btn" aria-label="Add to wishlist"
+                    data-product-id="{{ product.id }}"
+                    data-product-handle="{{ product.handle }}"
+                    data-product-title="{{ product.title | escape }}"
+                    data-product-image="{{ product.featured_image | image_url: width: 300 }}"
+                    data-product-price="{{ product.price | money }}"
+                    data-product-compare-price="{{ product.compare_at_price | money }}">
                     <i class="fa-regular fa-heart"></i>
                   </button>
                   
@@ -225,20 +231,79 @@
                       <span class="current-price">{{ product.price | money }}</span>
                     </div>
                     
-                    <!-- Upload Widget Area -->
-                    {% if block.settings.enable_upload_mode %}
+                    <!-- Upload Widget Area - Merkezi Sistem -->
+                    {%- liquid
+                      assign show_upload_carousel = false
+                      if settings.upload_mode_enabled and product != blank
+                        assign check_handle = product.handle
+                        if settings.upload_mode_product_1.handle == check_handle
+                          assign show_upload_carousel = true
+                        elsif settings.upload_mode_product_2.handle == check_handle
+                          assign show_upload_carousel = true
+                        elsif settings.upload_mode_product_3.handle == check_handle
+                          assign show_upload_carousel = true
+                        elsif settings.upload_mode_product_4.handle == check_handle
+                          assign show_upload_carousel = true
+                        elsif settings.upload_mode_product_5.handle == check_handle
+                          assign show_upload_carousel = true
+                        elsif settings.upload_mode_product_6.handle == check_handle
+                          assign show_upload_carousel = true
+                        elsif settings.upload_mode_product_7.handle == check_handle
+                          assign show_upload_carousel = true
+                        elsif settings.upload_mode_product_8.handle == check_handle
+                          assign show_upload_carousel = true
+                        elsif settings.upload_mode_product_9.handle == check_handle
+                          assign show_upload_carousel = true
+                        elsif settings.upload_mode_product_10.handle == check_handle
+                          assign show_upload_carousel = true
+                        elsif settings.upload_mode_product_11.handle == check_handle
+                          assign show_upload_carousel = true
+                        elsif settings.upload_mode_product_12.handle == check_handle
+                          assign show_upload_carousel = true
+                        elsif settings.upload_mode_product_13.handle == check_handle
+                          assign show_upload_carousel = true
+                        elsif settings.upload_mode_product_14.handle == check_handle
+                          assign show_upload_carousel = true
+                        elsif settings.upload_mode_product_15.handle == check_handle
+                          assign show_upload_carousel = true
+                        elsif settings.upload_mode_product_16.handle == check_handle
+                          assign show_upload_carousel = true
+                        elsif settings.upload_mode_product_17.handle == check_handle
+                          assign show_upload_carousel = true
+                        elsif settings.upload_mode_product_18.handle == check_handle
+                          assign show_upload_carousel = true
+                        elsif settings.upload_mode_product_19.handle == check_handle
+                          assign show_upload_carousel = true
+                        elsif settings.upload_mode_product_20.handle == check_handle
+                          assign show_upload_carousel = true
+                        elsif settings.upload_mode_product_21.handle == check_handle
+                          assign show_upload_carousel = true
+                        elsif settings.upload_mode_product_22.handle == check_handle
+                          assign show_upload_carousel = true
+                        elsif settings.upload_mode_product_23.handle == check_handle
+                          assign show_upload_carousel = true
+                        elsif settings.upload_mode_product_24.handle == check_handle
+                          assign show_upload_carousel = true
+                        elsif settings.upload_mode_product_25.handle == check_handle
+                          assign show_upload_carousel = true
+                        endif
+                      endif
+                    -%}
+                    
+                    {% if show_upload_carousel %}
                       <div class="upload-widget-area">
-                        {% render 'dtf-quick-upload-btn', product: product, button_text: 'Upload Design' %}
+                        {% render 'dtf-quick-upload-btn', product: product, button_text: settings.upload_button_text | default: 'Upload Design' %}
                       </div>
                     {% endif %}
                     
                     <!-- Product Action Button (Add to Cart or Go to Product) -->
-                    {% unless block.settings.enable_upload_mode %}
+                    {% unless show_upload_carousel %}
                     <div class="product-actions">
-                      {% if block.settings.button_action == 'go_to_product' %}
+                      {% if block.settings.button_action == 'go_to_product' or product.variants.size > 1 %}
+                        {%- comment -%} Go to product page if has variants or setting says so {%- endcomment -%}
                         <a href="{{ product.url }}" class="sb-btn view-product-btn">
-                          <i class="fa-solid fa-arrow-right"></i>
-                          <span>{{ block.settings.button_text | default: 'View Product' }}</span>
+                          <i class="fa-solid fa-{% if product.variants.size > 1 %}eye{% else %}arrow-right{% endif %}"></i>
+                          <span>{% if product.variants.size > 1 %}View Options{% else %}{{ block.settings.button_text | default: 'View Product' }}{% endif %}</span>
                         </a>
                       {% else %}
                         {% if product.available %}
@@ -904,17 +969,6 @@ document.addEventListener('DOMContentLoaded', function() {
           "id": "button_text",
           "label": "Button Text",
           "placeholder": "Add to Cart / View Product"
-        },
-        {
-          "type": "header",
-          "content": "Upload Settings"
-        },
-        {
-          "type": "checkbox",
-          "id": "enable_upload_mode",
-          "label": "Enable Upload Mode",
-          "default": false,
-          "info": "When enabled, shows Upload button and hides other buttons"
         },
         {
           "type": "textarea",

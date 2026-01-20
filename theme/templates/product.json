@@ -1,15 +1,27 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "product-main": {
       "type": "product-main",
+      "custom_css": [],
       "settings": {
         "show_breadcrumb": true,
-        "show_rating": true,
+        "show_review_badge": true,
+        "reviews_provider": "judgeme",
+        "show_rating": false,
         "rating_score": "4.8",
         "review_count": "2,847",
         "recommend_percent": "99% recommend",
         "price_badge": "LIMITED TIME OFFER",
-        "show_delivery": true,
+        "show_delivery": false,
         "delivery_time": "Tomorrow 5PM – 9PM",
         "order_by": "Order by 3PM",
         "show_tabs": true,
@@ -23,7 +35,7 @@
         "press_time": "10-15 seconds",
         "press_pressure": "Medium",
         "press_peel": "Cold Peel",
-        "show_trust_badges": true,
+        "show_trust_badges": false,
         "badge_1": "Secure Checkout",
         "badge_2": "Fast Shipping",
         "badge_3": "Easy Returns",
@@ -32,20 +44,136 @@
         "size_display_mode": "buttons",
         "show_quantity": true,
         "show_add_to_cart": true,
-        "show_buy_now": true
+        "show_buy_now": true,
+        "custom_css": ""
       }
     },
     "recommendations": {
       "type": "product-recommendations",
+      "disabled": true,
+      "custom_css": [],
       "settings": {
-        "title": "Recommended Products",
+        "title": "You May Also Like",
         "products_count": 4,
-        "bg_color": "#f8f9fa"
+        "bg_color": "#f8f9fa",
+        "custom_css": ""
+      }
+    },
+    "homepage_product_bar_YnUjNJ": {
+      "type": "homepage-product-bar",
+      "blocks": {
+        "product_card_WUqBNB": {
+          "type": "product_card",
+          "settings": {
+            "show_3d_viewer": false,
+            "show_4d_badge": false,
+            "badge_discount_text": "20% OFF",
+            "product": "printhead-wiping-cloths-9x9-100-pack",
+            "image_url": "",
+            "title": "Premium DTF Transfer",
+            "link": "",
+            "price": "$4.99",
+            "compare_price": "$9.99",
+            "rating": 5,
+            "half_star": false,
+            "review_count": 55,
+            "button_action": "default",
+            "custom_css": ""
+          }
+        },
+        "product_card_zJbUUr": {
+          "type": "product_card",
+          "settings": {
+            "show_3d_viewer": false,
+            "show_4d_badge": false,
+            "badge_discount_text": "20% OFF",
+            "product": "printer-cleaning-foam-swabs-50-pack",
+            "image_url": "",
+            "title": "Premium DTF Transfer",
+            "link": "",
+            "price": "$4.99",
+            "compare_price": "$9.99",
+            "rating": 5,
+            "half_star": false,
+            "review_count": 55,
+            "button_action": "default",
+            "custom_css": ""
+          }
+        },
+        "product_card_94WXCY": {
+          "type": "product_card",
+          "settings": {
+            "show_3d_viewer": false,
+            "show_4d_badge": false,
+            "badge_discount_text": "20% OFF",
+            "product": "uv-dtf-inks-1-liter",
+            "image_url": "",
+            "title": "Premium DTF Transfer",
+            "link": "",
+            "price": "$4.99",
+            "compare_price": "$9.99",
+            "rating": 5,
+            "half_star": false,
+            "review_count": 55,
+            "button_action": "default",
+            "custom_css": ""
+          }
+        },
+        "product_card_Eih3XN": {
+          "type": "product_card",
+          "settings": {
+            "show_3d_viewer": false,
+            "show_4d_badge": false,
+            "badge_discount_text": "20% OFF",
+            "product": "uv-dtf-cleaning-solution-1-liter",
+            "image_url": "",
+            "title": "Premium DTF Transfer",
+            "link": "",
+            "price": "$4.99",
+            "compare_price": "$9.99",
+            "rating": 5,
+            "half_star": false,
+            "review_count": 55,
+            "button_action": "default",
+            "custom_css": ""
+          }
+        }
+      },
+      "block_order": [
+        "product_card_WUqBNB",
+        "product_card_zJbUUr",
+        "product_card_94WXCY",
+        "product_card_Eih3XN"
+      ],
+      "name": "Product Bar",
+      "settings": {
+        "mobile_columns": "2",
+        "section_bg": "#ffffff",
+        "section_padding": "2rem 0",
+        "show_header": false,
+        "badge_text": "",
+        "title": "",
+        "view_product_text": "VIEW PRODUCT",
+        "add_to_cart_text": "Add to Cart",
+        "sold_out_text": "Sold Out",
+        "show_pickup_alert": false,
+        "pickup_badge": "LOCAL PICKUP 7/24",
+        "pickup_location_1": "Garfield, NJ",
+        "pickup_time_1": "6pm",
+        "pickup_location_2": "Whippany, NJ",
+        "pickup_time_2": "24/7",
+        "pickup_btn_text": "Check Availability",
+        "pickup_link": "",
+        "show_floating_cart": true,
+        "floating_cart_text": "View Cart",
+        "button_action_global": "add_to_cart",
+        "custom_css": ""
       }
     }
   },
   "order": [
     "product-main",
-    "recommendations"
+    "recommendations",
+    "homepage_product_bar_YnUjNJ"
   ]
 }

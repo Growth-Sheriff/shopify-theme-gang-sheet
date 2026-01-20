@@ -38,7 +38,7 @@
 
 <!-- Modal Template (will be moved to body) -->
 <template id="{{ modal_id }}-tpl">
-<div id="{{ modal_id }}" class="ul-quick-modal" data-api-base="{{ api_base }}" data-shop="{{ shop_domain }}" data-product-id="{{ product.id }}" data-unique-id="{{ unique_id }}">
+<div id="{{ modal_id }}" class="ul-quick-modal" data-api-base="{{ api_base }}" data-shop="{{ shop_domain }}" data-product-id="{{ product.id }}" data-unique-id="{{ unique_id }}" data-customer-id="{{ customer.id | default: '' }}" data-customer-email="{{ customer.email | default: '' }}">
   <div class="ul-quick-modal-overlay" data-close="{{ modal_id }}"></div>
   <div class="ul-quick-modal-content">
     <button class="ul-quick-modal-close" data-close="{{ modal_id }}">&times;</button>
@@ -66,8 +66,8 @@
             <line x1="12" y1="3" x2="12" y2="15"/>
           </svg>
           <p><strong>Click to upload</strong></p>
-          <span>PNG, JPG, PDF (Max 25MB)</span>
-          <input type="file" id="ul-file-{{ unique_id }}" accept=".png,.jpg,.jpeg,.pdf,.ai,.psd,.eps,.svg" style="display:none">
+          <span>PNG, JPG, WEBP, TIFF, PSD, PDF, AI, EPS (Max 1GB)</span>
+          <input type="file" id="ul-file-{{ unique_id }}" accept=".png,.jpg,.jpeg,.webp,.tiff,.tif,.psd,.svg,.pdf,.ai,.eps" style="display:none">
         </div>
         
         <!-- Upload Progress -->
@@ -75,7 +75,15 @@
           <div class="ul-progress-bar">
             <div class="ul-progress-fill" id="ul-progress-fill-{{ unique_id }}"></div>
           </div>
-          <p id="ul-progress-text-{{ unique_id }}">Uploading...</p>
+          <div class="ul-progress-info">
+            <p id="ul-progress-text-{{ unique_id }}">Uploading...</p>
+            <button type="button" class="ul-cancel-btn" id="ul-cancel-{{ unique_id }}" data-cancel="{{ unique_id }}">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/>
+              </svg>
+              Cancel
+            </button>
+          </div>
         </div>
         
         <!-- Preview (after upload) -->
@@ -84,6 +92,7 @@
           <div class="ul-preview-info">
             <span id="ul-preview-name-{{ unique_id }}"></span>
             <span id="ul-preview-status-{{ unique_id }}" class="ul-status-badge"></span>
+            <span id="ul-preview-duration-{{ unique_id }}" class="ul-upload-duration" style="display:none;"></span>
           </div>
           <button type="button" data-clear="{{ unique_id }}" data-modal="{{ modal_id }}">&times;</button>
         </div>
@@ -323,6 +332,36 @@
   margin: 0;
   font-size: 13px;
   color: #6b7280;
+  flex: 1;
+}
+.ul-progress-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.ul-cancel-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: transparent;
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.ul-cancel-btn:hover {
+  background: #ef4444;
+  color: white;
+}
+.ul-cancel-btn svg {
+  width: 14px;
+  height: 14px;
 }
 .ul-quick-preview {
   display: flex;
@@ -338,6 +377,11 @@
   height: 48px;
   object-fit: cover;
   border-radius: 6px;
+}
+.ul-quick-preview img.loading-spinner {
+  object-fit: contain;
+  background: #f3f4f6;
+  padding: 4px;
 }
 .ul-preview-info {
   flex: 1;
@@ -362,6 +406,12 @@
 .ul-status-badge.ready { background: #d1fae5; color: #065f46; }
 .ul-status-badge.warning { background: #fef3c7; color: #92400e; }
 .ul-status-badge.error { background: #fee2e2; color: #991b1b; }
+.ul-upload-duration {
+  display: block;
+  font-size: 11px;
+  color: #059669;
+  margin-top: 2px;
+}
 .ul-quick-preview > button {
   width: 24px;
   height: 24px;
@@ -544,9 +594,18 @@
 <!-- JavaScript - Full API Integration with Event Delegation -->
 <script>
 (function() {
+  console.log('[UL Quick Upload] Script starting...');
+  
   // Prevent multiple initializations
-  if (window.ULQuickUploadInit) return;
+  if (window.ULQuickUploadInit) {
+    console.log('[UL Quick Upload] Already initialized, skipping');
+    return;
+  }
   window.ULQuickUploadInit = true;
+  console.log('[UL Quick Upload] Initializing...');
+  
+  // Track active XHR requests for cancel support
+  const activeUploads = {};
   
   // Hide all modals function (for theme editor events)
   function hideAllModals() {
@@ -578,14 +637,21 @@
   let isInitializing = false;
   
   function initModals() {
+    console.log('[UL Quick Upload] initModals called');
+    
     // Prevent re-entry during initialization
-    if (isInitializing) return;
+    if (isInitializing) {
+      console.log('[UL Quick Upload] Already initializing, skipping');
+      return;
+    }
     isInitializing = true;
     
     // Collect templates first, then process (to avoid mutation during iteration)
     const templates = Array.from(document.querySelectorAll('template[id$="-tpl"]:not([data-moved])'));
+    console.log('[UL Quick Upload] Found templates:', templates.length, templates.map(t => t.id));
     
     if (templates.length === 0) {
+      console.log('[UL Quick Upload] No templates to move');
       isInitializing = false;
       return;
     }
@@ -594,12 +660,14 @@
     if (observer) observer.disconnect();
     
     templates.forEach(tpl => {
+      console.log('[UL Quick Upload] Moving template:', tpl.id);
       // Mark as moved immediately
       tpl.dataset.moved = 'true';
       
       // Clone content and append to body container
       const content = tpl.content.cloneNode(true);
       modalContainer.appendChild(content);
+      console.log('[UL Quick Upload] Template moved to body');
       
       // CRITICAL: Remove original template from section to prevent duplicate modals
       tpl.remove();
@@ -652,10 +720,12 @@
   // Event delegation for all clicks
   document.addEventListener('click', function(e) {
     const target = e.target;
+    console.log('[UL Quick Upload] Click detected on:', target.tagName, target.className);
     
     // Open modal button - highest priority
     const openBtn = target.closest('.ul-quick-btn-trigger');
     if (openBtn) {
+      console.log('[UL Quick Upload] Open button clicked, modal:', openBtn.dataset.modal);
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
@@ -730,6 +800,14 @@
       changeQty(uniqueId, delta);
       return;
     }
+    
+    // Cancel upload button
+    const cancelBtn = target.closest('[data-cancel]');
+    if (cancelBtn) {
+      const uniqueId = cancelBtn.dataset.cancel;
+      cancelUpload(uniqueId);
+      return;
+    }
   });
   
   // File input change
@@ -780,15 +858,22 @@
   let openTimestamp = 0;
   
   function openModal(id) {
+    console.log('[UL Quick Upload] openModal called with id:', id);
+    
     // Don't open modal in Shopify theme editor/preview mode
     if (window.Shopify && window.Shopify.designMode) {
-      console.log('[Upload Lift] Design mode detected, modal disabled');
+      console.log('[UL Quick Upload] Design mode detected, modal disabled');
       return;
     }
     
     const modal = document.getElementById(id);
+    console.log('[UL Quick Upload] Modal element found:', !!modal);
+    
     if (!modal) {
-      console.error('Modal not found:', id);
+      console.error('[UL Quick Upload] Modal not found:', id);
+      // Debug: List all modals in the page
+      const allModals = document.querySelectorAll('.ul-quick-modal');
+      console.log('[UL Quick Upload] All modals in page:', allModals.length, Array.from(allModals).map(m => m.id));
       return;
     }
     
@@ -845,6 +930,8 @@
     const apiBase = modal.dataset.apiBase;
     const shopDomain = modal.dataset.shop;
     const productId = modal.dataset.productId;
+    const customerId = modal.dataset.customerId || null;
+    const customerEmail = modal.dataset.customerEmail || null;
     
     const dropzone = document.getElementById('ul-dropzone-' + uniqueId);
     const progress = document.getElementById('ul-progress-' + uniqueId);
@@ -869,6 +956,13 @@
     progressFill.style.width = '10%';
     progressText.textContent = 'Getting upload URL...';
     
+    // Get MIME type with fallback for unsupported types (PSD, AI, EPS etc.)
+    const mimeType = file.type || 'application/octet-stream';
+    
+    // Get visitor tracking info (from ul-visitor.js)
+    const visitorId = window.ULVisitor?.getVisitorId?.() || null;
+    const sessionId = window.ULVisitor?.getSessionId?.() || null;
+    
     try {
       // Step 1: Get upload intent
       const intentResponse = await fetch(`${apiBase}/api/upload/intent`, {
@@ -878,9 +972,13 @@
           shopDomain: shopDomain,
           productId: productId,
           mode: 'quick',
-          contentType: file.type,
+          contentType: mimeType,
           fileName: file.name,
-          fileSize: file.size
+          fileSize: file.size,
+          customerId: customerId,
+          customerEmail: customerEmail,
+          visitorId: visitorId,
+          sessionId: sessionId
         })
       });
       
@@ -889,37 +987,126 @@
         throw new Error(errData.error || 'Failed to get upload URL');
       }
       const intentData = await intentResponse.json();
+      const { uploadId, itemId, uploadUrl, storageProvider, uploadHeaders, publicUrl, key } = intentData;
+      
+      // Progress tracking variables
+      const startTime = Date.now();
+      const totalBytes = file.size;
       
       progressFill.style.width = '30%';
-      progressText.textContent = 'Uploading file...';
+      progressText.textContent = 'Uploading... 0%';
       
-      // Step 2: Upload file - always local storage (POST with FormData)
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('key', intentData.key);
-      formData.append('uploadId', intentData.uploadId);
-      formData.append('itemId', intentData.itemId);
-      const uploadResponse = await fetch(intentData.uploadUrl, {
-        method: 'POST',
-        body: formData
-      });
+      // Step 2: Upload file with progress tracking (XHR for progress events)
+      let uploadResponse;
+      if (storageProvider === 'bunny' || storageProvider === 'r2') {
+        // Direct PUT to CDN storage with progress
+        uploadResponse = await new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          
+          // Store XHR for cancel support
+          activeUploads[uniqueId] = xhr;
+          
+          xhr.upload.onprogress = (e) => {
+            if (e.lengthComputable) {
+              const percent = Math.round((e.loaded / e.total) * 100);
+              const elapsed = (Date.now() - startTime) / 1000;
+              const speed = elapsed > 0 ? e.loaded / elapsed : 0;
+              const remaining = speed > 0 ? (e.total - e.loaded) / speed : 0;
+              
+              // Update progress bar (30% to 80% range for upload phase)
+              progressFill.style.width = `${Math.min(30 + (percent * 0.5), 80)}%`;
+              
+              const speedMB = (speed / (1024 * 1024)).toFixed(1);
+              const remainingSec = Math.ceil(remaining);
+              
+              if (remainingSec > 60) {
+                progressText.textContent = `Uploading... ${percent}% • ${speedMB} MB/s • ~${Math.ceil(remainingSec/60)}m remaining`;
+              } else if (remainingSec > 0) {
+                progressText.textContent = `Uploading... ${percent}% • ${speedMB} MB/s • ~${remainingSec}s remaining`;
+              } else {
+                progressText.textContent = `Uploading... ${percent}%`;
+              }
+            }
+          };
+          
+          xhr.onload = () => resolve({ ok: xhr.status >= 200 && xhr.status < 300, status: xhr.status });
+          xhr.onerror = () => reject(new Error('Network error during upload'));
+          xhr.ontimeout = () => reject(new Error('Upload timeout'));
+          
+          xhr.open('PUT', uploadUrl);
+          xhr.setRequestHeader('Content-Type', mimeType);
+          if (uploadHeaders) {
+            Object.entries(uploadHeaders).forEach(([k, v]) => xhr.setRequestHeader(k, v));
+          }
+          xhr.send(file);
+        });
+      } else {
+        // Local storage with progress - POST with FormData
+        uploadResponse = await new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          const formData = new FormData();
+          formData.append('file', file);
+          formData.append('key', key);
+          formData.append('uploadId', uploadId);
+          formData.append('itemId', itemId);
+          
+          // Store XHR for cancel support
+          activeUploads[uniqueId] = xhr;
+          
+          xhr.upload.onprogress = (e) => {
+            if (e.lengthComputable) {
+              const percent = Math.round((e.loaded / e.total) * 100);
+              const elapsed = (Date.now() - startTime) / 1000;
+              const speed = elapsed > 0 ? e.loaded / elapsed : 0;
+              const remaining = speed > 0 ? (e.total - e.loaded) / speed : 0;
+              
+              // Update progress bar (30% to 80% range for upload phase)
+              progressFill.style.width = `${Math.min(30 + (percent * 0.5), 80)}%`;
+              
+              const speedMB = (speed / (1024 * 1024)).toFixed(1);
+              const remainingSec = Math.ceil(remaining);
+              
+              if (remainingSec > 60) {
+                progressText.textContent = `Uploading... ${percent}% • ${speedMB} MB/s • ~${Math.ceil(remainingSec/60)}m remaining`;
+              } else if (remainingSec > 0) {
+                progressText.textContent = `Uploading... ${percent}% • ${speedMB} MB/s • ~${remainingSec}s remaining`;
+              } else {
+                progressText.textContent = `Uploading... ${percent}%`;
+              }
+            }
+          };
+          
+          xhr.onload = () => resolve({ ok: xhr.status >= 200 && xhr.status < 300, status: xhr.status });
+          xhr.onerror = () => reject(new Error('Network error during upload'));
+          xhr.ontimeout = () => reject(new Error('Upload timeout'));
+          
+          xhr.open('POST', uploadUrl);
+          xhr.send(formData);
+        });
+      }
       
       if (!uploadResponse.ok) throw new Error('Upload failed');
+      
+      // Clear active upload reference
+      delete activeUploads[uniqueId];
       
       progressFill.style.width = '60%';
       progressText.textContent = 'Processing...';
       
-      // Step 3: Complete upload - always local storage
+      // Step 3: Complete upload (provider-aware)
+      const uploadDurationMs = Date.now() - startTime;
       const completeResponse = await fetch(`${apiBase}/api/upload/complete`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          uploadId: intentData.uploadId,
+          uploadId: uploadId,
           shopDomain: shopDomain,
           items: [{
-            itemId: intentData.itemId,
+            itemId: itemId,
             location: 'front',
-            storageProvider: 'local'
+            fileUrl: publicUrl || null,
+            storageProvider: storageProvider || 'local',
+            uploadDurationMs: uploadDurationMs
           }]
         })
       });
@@ -930,7 +1117,6 @@
       progressText.textContent = 'Analyzing...';
       
       // Store upload ID
-      const uploadId = intentData.uploadId;
       if (uploadIdInput) uploadIdInput.value = uploadId;
       
       // Poll for status and get the signed download URL from API
@@ -959,28 +1145,82 @@
       }
       
       // Use the signed URL from API, fallback to constructed URL if not available
-      const publicUrl = finalDownloadUrl || `https://customizerapp.dev/api/upload/file/${uploadId}`;
-      if (uploadUrlInput) uploadUrlInput.value = publicUrl;
+      const finalUrl = finalDownloadUrl || publicUrl || `https://customizerapp.dev/api/upload/file/${uploadId}`;
+      if (uploadUrlInput) uploadUrlInput.value = finalUrl;
+      
+      // Calculate upload duration
+      const uploadDuration = ((Date.now() - startTime) / 1000).toFixed(1);
       
       // Show preview
       progress.style.display = 'none';
       preview.style.display = 'flex';
       if (previewName) previewName.textContent = file.name;
       
-      if (file.type.startsWith('image/') && previewImg) {
-        const reader = new FileReader();
-        reader.onload = (e) => { previewImg.src = e.target.result; };
-        reader.readAsDataURL(file);
+      // v4.3.0: Check if non-browser format (needs server-side thumbnail)
+      const NON_BROWSER_EXTENSIONS = ['psd', 'pdf', 'ai', 'eps', 'tiff', 'tif'];
+      const fileExt = file.name.split('.').pop()?.toLowerCase() || '';
+      const isNonBrowserFormat = NON_BROWSER_EXTENSIONS.includes(fileExt);
+      
+      if (previewImg) {
+        if (isNonBrowserFormat) {
+          // Non-browser format: Show spinner and poll for thumbnail
+          console.log('[UL Quick Upload] Non-browser format detected, showing spinner:', fileExt);
+          previewImg.src = 'data:image/svg+xml,' + encodeURIComponent(`
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 50 50">
+              <circle cx="25" cy="25" r="20" fill="none" stroke="#e5e7eb" stroke-width="4"/>
+              <circle cx="25" cy="25" r="20" fill="none" stroke="#3b82f6" stroke-width="4" 
+                stroke-dasharray="80" stroke-dashoffset="60">
+                <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s" repeatCount="indefinite"/>
+              </circle>
+            </svg>
+          `);
+          previewImg.classList.add('loading-spinner');
+          
+          // Start background polling for thumbnail
+          pollForThumbnail(uploadId, uniqueId, apiBase, shopDomain, previewImg);
+        } else if (file.type.startsWith('image/')) {
+          // Browser-supported image: Use FileReader for instant preview
+          const reader = new FileReader();
+          reader.onload = (e) => { previewImg.src = e.target.result; };
+          reader.readAsDataURL(file);
+        } else {
+          // Generic file icon
+          previewImg.src = 'data:image/svg+xml,' + encodeURIComponent(`
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="#6b7280">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
+            </svg>
+          `);
+        }
       }
       
-      // Update status badge
+      // Update status badge - always show positive message to customer
       if (previewStatus) {
-        previewStatus.textContent = status === 'ready' || status === 'completed' ? 'Ready' : 'Processing';
-        previewStatus.className = 'ul-status-badge ' + (status === 'ready' || status === 'completed' ? 'ready' : 'processing');
+        previewStatus.textContent = 'Ready for print';
+        previewStatus.className = 'ul-status-badge ready';
+      }
+      
+      // Show upload duration
+      const previewDuration = document.getElementById('ul-preview-duration-' + uniqueId);
+      if (previewDuration) {
+        previewDuration.textContent = `Uploaded in ${uploadDuration}s`;
+        previewDuration.style.display = 'block';
       }
       
       if (addBtn) addBtn.disabled = false;
       if (hint) hint.style.display = 'none';
+      
+      // Visitor tracking: dispatch upload complete event
+      try {
+        window.dispatchEvent(new CustomEvent('ul:upload:complete', {
+          detail: {
+            uploadId: uploadId,
+            productId: productId,
+            fileName: file.name,
+            fileSize: file.size,
+            source: 'quick-upload-btn'
+          }
+        }));
+      } catch (e) { /* Visitor tracking optional */ }
       
     } catch (error) {
       console.error('Upload error:', error);
@@ -988,6 +1228,90 @@
       dropzone.style.display = 'block';
       alert('Upload failed: ' + error.message);
     }
+  }
+  
+  // v4.3.0: Poll for server-generated thumbnail (for PSD/PDF/AI/EPS/TIFF)
+  async function pollForThumbnail(uploadId, uniqueId, apiBase, shopDomain, imgElement) {
+    const MAX_POLLS = 60; // 60 seconds max
+    let pollCount = 0;
+    
+    console.log('[UL Quick Upload] Starting thumbnail polling for:', uploadId);
+    
+    const doPoll = async () => {
+      pollCount++;
+      
+      if (pollCount > MAX_POLLS) {
+        console.log('[UL Quick Upload] Thumbnail polling timeout');
+        // Show file icon as fallback
+        imgElement.src = 'data:image/svg+xml,' + encodeURIComponent(`
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="#6b7280">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
+          </svg>
+        `);
+        imgElement.classList.remove('loading-spinner');
+        return;
+      }
+      
+      try {
+        const response = await fetch(`${apiBase}/api/upload/status/${uploadId}?shopDomain=${encodeURIComponent(shopDomain)}`);
+        
+        if (response.ok) {
+          const data = await response.json();
+          
+          if (data.thumbnailUrl) {
+            console.log('[UL Quick Upload] Thumbnail received:', data.thumbnailUrl);
+            
+            // Preload image to avoid flickering
+            const img = new Image();
+            img.onload = () => {
+              imgElement.src = data.thumbnailUrl;
+              imgElement.classList.remove('loading-spinner');
+            };
+            img.onerror = () => {
+              console.warn('[UL Quick Upload] Thumbnail load failed, continuing polling');
+              setTimeout(doPoll, 1500);
+            };
+            img.src = data.thumbnailUrl;
+            return;
+          }
+        }
+        
+        // Continue polling
+        setTimeout(doPoll, 1500);
+        
+      } catch (error) {
+        console.warn('[UL Quick Upload] Thumbnail poll error:', error);
+        setTimeout(doPoll, 2000);
+      }
+    };
+    
+    // Start polling after short delay
+    setTimeout(doPoll, 1000);
+  }
+  
+  function cancelUpload(uniqueId) {
+    console.log('[UL Quick Upload] Cancelling upload for:', uniqueId);
+    
+    // Abort active XHR if exists
+    if (activeUploads[uniqueId]) {
+      activeUploads[uniqueId].abort();
+      delete activeUploads[uniqueId];
+    }
+    
+    // Reset UI
+    const dropzone = document.getElementById('ul-dropzone-' + uniqueId);
+    const progress = document.getElementById('ul-progress-' + uniqueId);
+    const progressFill = document.getElementById('ul-progress-fill-' + uniqueId);
+    const progressText = document.getElementById('ul-progress-text-' + uniqueId);
+    const fileInput = document.getElementById('ul-file-' + uniqueId);
+    
+    if (progress) progress.style.display = 'none';
+    if (dropzone) dropzone.style.display = 'block';
+    if (progressFill) progressFill.style.width = '0%';
+    if (progressText) progressText.textContent = 'Upload cancelled';
+    if (fileInput) fileInput.value = '';
+    
+    console.log('[UL Quick Upload] Upload cancelled successfully');
   }
   
   function clearUpload(uniqueId, modalId) {
@@ -1260,6 +1584,19 @@
       }
       
       console.log('[Upload Lift] Added to cart successfully:', responseData);
+      
+      // Visitor tracking: dispatch cart add event
+      try {
+        window.dispatchEvent(new CustomEvent('ul:cart:add', {
+          detail: {
+            uploadId: uploadId,
+            variantId: variantId,
+            quantity: quantity,
+            productId: responseData.product_id,
+            source: 'quick-upload-btn'
+          }
+        }));
+      } catch (e) { /* Visitor tracking optional */ }
       
       // Show success
       const step1 = document.getElementById(modalId + '-step1');

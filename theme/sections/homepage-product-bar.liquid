@@ -77,15 +77,68 @@
                 </div>
               </a>
               
-              {%- comment -%} Upload Widget Area (Global OR Block level) {%- endcomment -%}
-              {%- assign show_upload_bar = false -%}
-              {%- if section.settings.enable_upload_mode_global or block.settings.enable_upload_mode -%}
-                {%- assign show_upload_bar = true -%}
-              {%- endif -%}
+              {%- comment -%} Upload Widget Area - Merkezi Kontrol {%- endcomment -%}
+              {%- liquid
+                assign show_upload_bar = false
+                if settings.upload_mode_enabled and card_product != blank
+                  assign check_handle = card_product.handle
+                  if settings.upload_mode_product_1.handle == check_handle
+                    assign show_upload_bar = true
+                  elsif settings.upload_mode_product_2.handle == check_handle
+                    assign show_upload_bar = true
+                  elsif settings.upload_mode_product_3.handle == check_handle
+                    assign show_upload_bar = true
+                  elsif settings.upload_mode_product_4.handle == check_handle
+                    assign show_upload_bar = true
+                  elsif settings.upload_mode_product_5.handle == check_handle
+                    assign show_upload_bar = true
+                  elsif settings.upload_mode_product_6.handle == check_handle
+                    assign show_upload_bar = true
+                  elsif settings.upload_mode_product_7.handle == check_handle
+                    assign show_upload_bar = true
+                  elsif settings.upload_mode_product_8.handle == check_handle
+                    assign show_upload_bar = true
+                  elsif settings.upload_mode_product_9.handle == check_handle
+                    assign show_upload_bar = true
+                  elsif settings.upload_mode_product_10.handle == check_handle
+                    assign show_upload_bar = true
+                  elsif settings.upload_mode_product_11.handle == check_handle
+                    assign show_upload_bar = true
+                  elsif settings.upload_mode_product_12.handle == check_handle
+                    assign show_upload_bar = true
+                  elsif settings.upload_mode_product_13.handle == check_handle
+                    assign show_upload_bar = true
+                  elsif settings.upload_mode_product_14.handle == check_handle
+                    assign show_upload_bar = true
+                  elsif settings.upload_mode_product_15.handle == check_handle
+                    assign show_upload_bar = true
+                  elsif settings.upload_mode_product_16.handle == check_handle
+                    assign show_upload_bar = true
+                  elsif settings.upload_mode_product_17.handle == check_handle
+                    assign show_upload_bar = true
+                  elsif settings.upload_mode_product_18.handle == check_handle
+                    assign show_upload_bar = true
+                  elsif settings.upload_mode_product_19.handle == check_handle
+                    assign show_upload_bar = true
+                  elsif settings.upload_mode_product_20.handle == check_handle
+                    assign show_upload_bar = true
+                  elsif settings.upload_mode_product_21.handle == check_handle
+                    assign show_upload_bar = true
+                  elsif settings.upload_mode_product_22.handle == check_handle
+                    assign show_upload_bar = true
+                  elsif settings.upload_mode_product_23.handle == check_handle
+                    assign show_upload_bar = true
+                  elsif settings.upload_mode_product_24.handle == check_handle
+                    assign show_upload_bar = true
+                  elsif settings.upload_mode_product_25.handle == check_handle
+                    assign show_upload_bar = true
+                  endif
+                endif
+              -%}
               
               {% if show_upload_bar %}
                 <div class="upload-widget-area">
-                  {% render 'dtf-quick-upload-btn', product: card_product, button_text: 'Upload Design' %}
+                  {% render 'dtf-quick-upload-btn', product: card_product, button_text: settings.upload_button_text | default: 'Upload Design' %}
                 </div>
               {% endif %}
 
@@ -96,10 +149,11 @@
                 {%- assign btn_action = section.settings.button_action_global | default: 'add_to_cart' -%}
               {%- endif -%}
               
-              {% if btn_action == 'go_to_product' %}
+              {% if btn_action == 'go_to_product' or card_product.variants.size > 1 %}
+                {%- comment -%} Go to product page if has variants or setting says so {%- endcomment -%}
                 <a href="{{ card_product.url }}" class="sb-btn cp-product-bar-add-btn">
-                  <i class="fa-solid fa-arrow-right"></i>
-                  {{ section.settings.view_product_text | default: 'View Product' }}
+                  <i class="fa-solid fa-{% if card_product.variants.size > 1 %}eye{% else %}arrow-right{% endif %}"></i>
+                  {% if card_product.variants.size > 1 %}View Options{% else %}{{ section.settings.view_product_text | default: 'View Product' }}{% endif %}
                 </a>
               {% else %}
                 <form action="{{ routes.cart_add_url }}" method="post" class="cp-product-bar-cart-form">
@@ -161,16 +215,67 @@
               {%- assign manual_product_handle = block.settings.link | split: '/products/' | last | split: '?' | first | split: '/' | first -%}
               {%- assign manual_product = all_products[manual_product_handle] -%}
               
-              {%- assign show_upload_manual = false -%}
-              {%- if section.settings.enable_upload_mode_global or block.settings.enable_upload_mode -%}
-                {%- if manual_product != blank -%}
-                  {%- assign show_upload_manual = true -%}
-                {%- endif -%}
-              {%- endif -%}
+              {%- liquid
+                assign show_upload_manual = false
+                if settings.upload_mode_enabled and manual_product != blank
+                  assign check_handle = manual_product.handle
+                  if settings.upload_mode_product_1.handle == check_handle
+                    assign show_upload_manual = true
+                  elsif settings.upload_mode_product_2.handle == check_handle
+                    assign show_upload_manual = true
+                  elsif settings.upload_mode_product_3.handle == check_handle
+                    assign show_upload_manual = true
+                  elsif settings.upload_mode_product_4.handle == check_handle
+                    assign show_upload_manual = true
+                  elsif settings.upload_mode_product_5.handle == check_handle
+                    assign show_upload_manual = true
+                  elsif settings.upload_mode_product_6.handle == check_handle
+                    assign show_upload_manual = true
+                  elsif settings.upload_mode_product_7.handle == check_handle
+                    assign show_upload_manual = true
+                  elsif settings.upload_mode_product_8.handle == check_handle
+                    assign show_upload_manual = true
+                  elsif settings.upload_mode_product_9.handle == check_handle
+                    assign show_upload_manual = true
+                  elsif settings.upload_mode_product_10.handle == check_handle
+                    assign show_upload_manual = true
+                  elsif settings.upload_mode_product_11.handle == check_handle
+                    assign show_upload_manual = true
+                  elsif settings.upload_mode_product_12.handle == check_handle
+                    assign show_upload_manual = true
+                  elsif settings.upload_mode_product_13.handle == check_handle
+                    assign show_upload_manual = true
+                  elsif settings.upload_mode_product_14.handle == check_handle
+                    assign show_upload_manual = true
+                  elsif settings.upload_mode_product_15.handle == check_handle
+                    assign show_upload_manual = true
+                  elsif settings.upload_mode_product_16.handle == check_handle
+                    assign show_upload_manual = true
+                  elsif settings.upload_mode_product_17.handle == check_handle
+                    assign show_upload_manual = true
+                  elsif settings.upload_mode_product_18.handle == check_handle
+                    assign show_upload_manual = true
+                  elsif settings.upload_mode_product_19.handle == check_handle
+                    assign show_upload_manual = true
+                  elsif settings.upload_mode_product_20.handle == check_handle
+                    assign show_upload_manual = true
+                  elsif settings.upload_mode_product_21.handle == check_handle
+                    assign show_upload_manual = true
+                  elsif settings.upload_mode_product_22.handle == check_handle
+                    assign show_upload_manual = true
+                  elsif settings.upload_mode_product_23.handle == check_handle
+                    assign show_upload_manual = true
+                  elsif settings.upload_mode_product_24.handle == check_handle
+                    assign show_upload_manual = true
+                  elsif settings.upload_mode_product_25.handle == check_handle
+                    assign show_upload_manual = true
+                  endif
+                endif
+              -%}
               
               {% if show_upload_manual %}
                 <div class="upload-widget-area">
-                  {% render 'dtf-quick-upload-btn', product: manual_product, button_text: 'Upload Design' %}
+                  {% render 'dtf-quick-upload-btn', product: manual_product, button_text: settings.upload_button_text | default: 'Upload Design' %}
                 </div>
               {% else %}
                 {%- assign btn_action_manual = block.settings.button_action | default: 'default' -%}
@@ -178,10 +283,11 @@
                   {%- assign btn_action_manual = section.settings.button_action_global | default: 'add_to_cart' -%}
                 {%- endif -%}
                 
-                {% if btn_action_manual == 'go_to_product' %}
-                  <a href="{{ block.settings.link | default: '#' }}" class="sb-btn cp-product-bar-add-btn">
-                    <i class="fa-solid fa-arrow-right"></i>
-                    {{ section.settings.view_product_text | default: 'View Product' }}
+                {% if btn_action_manual == 'go_to_product' or manual_product.variants.size > 1 %}
+                  {%- comment -%} Go to product page if has variants or setting says so {%- endcomment -%}
+                  <a href="{% if manual_product %}{{ manual_product.url }}{% else %}{{ block.settings.link | default: '#' }}{% endif %}" class="sb-btn cp-product-bar-add-btn">
+                    <i class="fa-solid fa-{% if manual_product.variants.size > 1 %}eye{% else %}arrow-right{% endif %}"></i>
+                    {% if manual_product.variants.size > 1 %}View Options{% else %}{{ section.settings.view_product_text | default: 'View Product' }}{% endif %}
                   </a>
                 {% else %}
                   <button class="sb-btn cp-product-bar-add-btn" onclick="window.location.href='{{ block.settings.link | default: '#' }}'">
@@ -207,17 +313,20 @@
         <div class="cp-pickup-center">
           <span class="cp-pickup-location">
             <i class="fa-solid fa-store"></i>
-            {{ section.settings.pickup_location | default: 'Dallas, TX' }}
+            {{ section.settings.pickup_location_1 | default: 'Garfield, NJ' }}
+            <span class="cp-pickup-time-inline">{{ section.settings.pickup_time_1 | default: '6pm' }}</span>
           </span>
           <span class="cp-pickup-divider">•</span>
-          <span class="cp-pickup-time-soft">
-            {{ section.settings.pickup_time | default: 'Today until 7:00 PM' }}
+          <span class="cp-pickup-location">
+            <i class="fa-solid fa-store"></i>
+            {{ section.settings.pickup_location_2 | default: 'Whippany, NJ' }}
+            <span class="cp-pickup-time-inline">{{ section.settings.pickup_time_2 | default: '24/7' }}</span>
           </span>
         </div>
-        <a href="{{ section.settings.pickup_link | default: '#' }}" class="cp-pickup-link">
-          {{ section.settings.pickup_btn_text | default: 'View store info' }}
-          <i class="fa-solid fa-chevron-right"></i>
-        </a>
+        <span class="cp-pickup-badge-status">
+          <i class="fa-solid fa-circle-check"></i>
+          {{ section.settings.pickup_btn_text | default: 'Ready for Pickup' }}
+        </span>
       </div>
     </div>
     {% endif %}
@@ -239,18 +348,30 @@
   /* Product Bar Styles */
   .cp-product-bar-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1.25rem;
+    /* FLUID: auto-fit for smooth responsive - min 220px, fills available space */
+    grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+    gap: clamp(0.75rem, 2vw, 1.25rem);
+  }
+  
+  /* Ensure minimum columns on larger screens */
+  @media (min-width: 1200px) {
+    .cp-product-bar-grid.cols-5 {
+      grid-template-columns: repeat(5, 1fr);
+    }
+    .cp-product-bar-grid.cols-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
   
   .cp-product-bar-item {
     background: #fff;
     border-radius: 12px;
-    overflow: hidden;
+    overflow: visible; /* Allow buttons to show even if they overflow */
     box-shadow: 0 2px 15px rgba(0,0,0,0.06);
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
+    min-width: 0; /* Allow shrinking */
   }
   
   .cp-product-bar-item:hover {
@@ -260,7 +381,42 @@
   
   .cp-product-bar-link {
     text-decoration: none;
-    flex: 1;
+    flex: 0 0 auto; /* Don't grow to fill all space, allow room for buttons */
+  }
+  
+  /* Ensure Add to Cart form and upload widget are visible */
+  .cp-product-bar-cart-form,
+  .upload-widget-area {
+    flex-shrink: 0;
+    display: block !important;
+    visibility: visible !important;
+    padding: 0 8px 8px;
+    box-sizing: border-box;
+  }
+  
+  /* Compact Upload Button - Responsive */
+  .upload-widget-area button {
+    padding: 8px 10px !important;
+    font-size: 11px !important;
+    gap: 4px !important;
+    white-space: nowrap !important;
+    line-height: 1.2 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+  
+  .upload-widget-area button svg {
+    width: 12px !important;
+    height: 12px !important;
+    flex-shrink: 0;
+    min-width: 12px;
+  }
+  
+  .upload-widget-area button span {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
   .cp-product-bar-placeholder {
@@ -290,14 +446,16 @@
   .cp-product-bar-img {
     position: relative;
     width: 100%;
-    aspect-ratio: 1;
+    aspect-ratio: 4/5; /* Better ratio for product images - less cropping */
     overflow: hidden;
+    background: #f8f9fa;
   }
   
   .cp-product-bar-img img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain; /* Show full image without cropping */
+    object-position: center;
     transition: transform 0.3s ease;
     display: block;
   }
@@ -633,6 +791,25 @@
     color: #6e6b7b;
   }
   
+  /* Pickup Status Badge */
+  .cp-pickup-badge-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+    color: #28a745;
+    font-weight: 600;
+    background: rgba(40, 167, 69, 0.1);
+    padding: 0.375rem 0.875rem;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  
+  .cp-pickup-badge-status i {
+    font-size: 0.875rem;
+    color: #28a745;
+  }
+  
   .cp-pickup-link {
     display: inline-flex;
     align-items: center;
@@ -748,25 +925,30 @@
     }
     
     .cp-product-bar .container {
-      padding: 0 8px !important;
+      padding: 0 12px !important;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     
     .cp-product-bar-grid {
       grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
+      gap: 10px;
       max-width: 100%;
-      margin: 0;
+      width: 100%;
+      margin: 0 auto;
       padding: 0;
     }
     
     .cp-product-bar-grid.cols-1 {
       grid-template-columns: 1fr;
-      max-width: 320px;
+      max-width: 280px;
       margin: 0 auto;
     }
     
     .cp-product-bar-grid.cols-2 {
       grid-template-columns: repeat(2, 1fr);
+      max-width: 100%;
     }
     
     .cp-product-bar-item {
@@ -774,6 +956,8 @@
       box-shadow: 0 1px 6px rgba(0,0,0,0.05);
       background: #fff;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
     
     .cp-product-bar-img {
@@ -858,6 +1042,25 @@
       font-size: 0.7rem;
     }
     
+    /* Upload Widget Mobile Fix */
+    .upload-widget-area {
+      padding: 0 8px 8px !important;
+    }
+    
+    .upload-widget-area button,
+    .upload-widget-area .dtf-upload-btn {
+      padding: 8px 8px !important;
+      font-size: 10px !important;
+      gap: 3px !important;
+      border-radius: 6px !important;
+    }
+    
+    .upload-widget-area button svg {
+      width: 11px !important;
+      height: 11px !important;
+      min-width: 11px !important;
+    }
+    
     .cp-product-upload-area {
       padding: 0 8px;
       margin-bottom: 6px;
@@ -923,35 +1126,44 @@
   
   /* Very small screens - single card focus */
   @media (max-width: 480px) {
+    .cp-product-bar .container {
+      padding: 0 10px !important;
+    }
+    
     .cp-product-bar-grid {
-      max-width: 340px;
-      gap: 1rem;
+      max-width: 100%;
+      gap: 8px;
+      margin: 0 auto;
+    }
+    
+    .cp-product-bar-grid.cols-1 {
+      max-width: 260px;
     }
     
     .cp-product-bar-item {
-      border-radius: 14px;
+      border-radius: 12px;
     }
     
     .cp-product-bar-content {
-      padding: 1rem 0.875rem;
+      padding: 8px;
     }
     
     .cp-product-bar-title {
-      font-size: 0.9375rem;
+      font-size: 0.8rem;
     }
     
     .cp-product-bar-price {
-      font-size: 1.125rem;
+      font-size: 1rem;
     }
     
     .cp-product-bar-add-btn {
-      padding: 0.75rem 1rem;
-      font-size: 0.875rem;
+      padding: 8px 6px;
+      font-size: 0.7rem;
     }
     
     .cp-upload-label {
-      padding: 0.75rem 1rem;
-      font-size: 0.875rem;
+      padding: 8px 6px;
+      font-size: 0.7rem;
     }
     
     .cp-floating-cart-btn {
@@ -1220,21 +1432,33 @@
     },
     {
       "type": "text",
-      "id": "pickup_location",
-      "label": "Location",
-      "default": "Dallas, TX"
+      "id": "pickup_location_1",
+      "label": "Location 1",
+      "default": "Garfield, NJ"
     },
     {
       "type": "text",
-      "id": "pickup_time",
-      "label": "Time",
-      "default": "Today until 7:00 PM"
+      "id": "pickup_time_1",
+      "label": "Time 1",
+      "default": "6pm"
+    },
+    {
+      "type": "text",
+      "id": "pickup_location_2",
+      "label": "Location 2",
+      "default": "Whippany, NJ"
+    },
+    {
+      "type": "text",
+      "id": "pickup_time_2",
+      "label": "Time 2",
+      "default": "24/7"
     },
     {
       "type": "text",
       "id": "pickup_btn_text",
-      "label": "Button Text",
-      "default": "Check Availability"
+      "label": "Status Badge Text",
+      "default": "Ready for Pickup"
     },
     {
       "type": "url",
@@ -1274,17 +1498,6 @@
         { "value": "go_to_product", "label": "Go to Product Page" }
       ],
       "default": "add_to_cart"
-    },
-    {
-      "type": "header",
-      "content": "Upload Settings (Global)"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_upload_mode_global",
-      "label": "Enable Upload Mode (All Cards)",
-      "default": false,
-      "info": "When enabled, shows Upload button and hides Add to Cart for ALL cards"
     },
     {
       "type": "header",
@@ -1418,17 +1631,6 @@
             { "value": "go_to_product", "label": "Go to Product Page" }
           ],
           "default": "default"
-        },
-        {
-          "type": "header",
-          "content": "Upload Settings"
-        },
-        {
-          "type": "checkbox",
-          "id": "enable_upload_mode",
-          "label": "Enable Upload Mode",
-          "default": false,
-          "info": "When enabled, shows Upload button and hides Add to Cart"
         },
         {
           "type": "textarea",
