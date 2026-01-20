@@ -1,0 +1,325 @@
+{% comment %}
+  ============================================
+  Social Proof Rotating Alerts
+  ============================================
+  
+  Fiyat altında gösterilen rotating social proof alerts:
+  1. Viewing Now - Kaç kişi görüntülüyor
+  2. Recent Orders - Son siparişler (isim + eyalet)
+  3. Stats - Haftalık/Aylık/Yıllık istatistikler
+  
+  Kullanım:
+  {% render 'social-proof-alerts', 
+     enabled: section.settings.social_proof_enabled,
+     viewing_text: section.settings.social_proof_viewing,
+     stats_weekly: section.settings.social_proof_weekly,
+     stats_monthly: section.settings.social_proof_monthly,
+     stats_yearly: section.settings.social_proof_yearly
+  %}
+{% endcomment %}
+
+{% if enabled %}
+<div class="social-proof-container" id="social-proof-alerts">
+  <div class="social-proof-alert" data-alert="viewing">
+    <span class="sp-dot"></span>
+    <span class="sp-text" id="sp-viewing-text">{{ viewing_text | default: '23 people viewing this right now' }}</span>
+  </div>
+  <div class="social-proof-alert" data-alert="order" style="display:none;">
+    <svg class="sp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+    <span class="sp-text" id="sp-order-text">Sarah from Texas ordered 3 min ago</span>
+  </div>
+  <div class="social-proof-alert" data-alert="stats" style="display:none;">
+    <svg class="sp-icon sp-icon-fire" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2c.3 2.3-.4 4.5-1.5 6.2-.7 1.1-1 2.5-.5 3.8.4 1.2 1.5 2 2.7 2.2 1.1.2 2.2-.2 3-.9.6-.5 1.1-1.2 1.3-2 .2-.7.2-1.5 0-2.2-.3-1-1-1.8-1.5-2.7-.5-.8-.8-1.8-.5-2.7.2-.7.7-1.3 1.2-1.8.6-.6 1.3-1 2-1.3.3-.1.5-.2.8-.4"/><path d="M9.5 22c-1.5 0-2.9-.6-4-1.5-1.1-.9-1.8-2.2-2-3.5-.2-1.2 0-2.5.5-3.6.4-.9 1-1.7 1.7-2.3.5-.4 1-.7 1.6-.9"/></svg>
+    <span class="sp-text" id="sp-stats-text">{{ stats_weekly | default: '247 orders this week' }}</span>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+  
+  // ═══════════════════════════════════════════════════════════════
+  // CONFIGURATION
+  // ═══════════════════════════════════════════════════════════════
+  const CONFIG = {
+    rotateInterval: 5000, // 5 saniye
+    viewingUpdateInterval: 30000, // 30 saniye
+    
+    // İsim pool'u
+    names: {
+      female: ['Sarah', 'Emily', 'Jessica', 'Ashley', 'Amanda', 'Jennifer', 'Michelle', 'Stephanie', 'Nicole', 'Lauren', 'Rachel', 'Samantha', 'Brittany', 'Megan', 'Hannah', 'Olivia', 'Emma', 'Sophia', 'Isabella', 'Ava'],
+      male: ['Michael', 'John', 'David', 'James', 'Robert', 'Chris', 'Daniel', 'Matthew', 'Anthony', 'Mark', 'Steven', 'Kevin', 'Brian', 'Jason', 'Ryan', 'Tyler', 'Brandon', 'Justin', 'Andrew', 'Jose']
+    },
+    
+    // Eyalet pool'u (ağırlıklı)
+    states: {
+      high: ['California', 'Texas', 'Florida', 'New York'],
+      medium: ['Ohio', 'Georgia', 'Pennsylvania', 'Illinois', 'North Carolina', 'Michigan', 'Arizona', 'Virginia'],
+      low: ['Colorado', 'Washington', 'Oregon', 'Nevada', 'Utah', 'Tennessee', 'Missouri', 'Indiana', 'Wisconsin', 'Minnesota', 'Alabama', 'Louisiana', 'Kentucky', 'Oklahoma', 'Connecticut', 'Iowa', 'Arkansas', 'Kansas', 'Nebraska', 'New Mexico']
+    },
+    
+    // Zaman pool'u
+    times: ['just now', '1 min ago', '2 min ago', '3 min ago', '5 min ago', '8 min ago', '12 min ago', '15 min ago'],
+    
+    // Stats base değerleri (Shopify'dan gelenler)
+    stats: {
+      weekly: {{ stats_weekly | default: '247 orders this week' | json }},
+      monthly: {{ stats_monthly | default: '1,284 orders this month' | json }},
+      yearly: {{ stats_yearly | default: '12,500+ happy customers this year' | json }}
+    }
+  };
+  
+  // ═══════════════════════════════════════════════════════════════
+  // STATE
+  // ═══════════════════════════════════════════════════════════════
+  let currentAlert = 0;
+  const alerts = ['viewing', 'order', 'stats'];
+  let lastNames = [];
+  let lastStates = [];
+  let currentViewing = 0;
+  let statsIndex = 0;
+  
+  // ═══════════════════════════════════════════════════════════════
+  // HELPERS
+  // ═══════════════════════════════════════════════════════════════
+  
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+  
+  function getRandomFromArray(arr, exclude = []) {
+    const filtered = arr.filter(item => !exclude.includes(item));
+    if (filtered.length === 0) return arr[getRandomInt(0, arr.length - 1)];
+    return filtered[getRandomInt(0, filtered.length - 1)];
+  }
+  
+  function getHourBasedBase() {
+    const hour = new Date().getHours();
+    if (hour >= 6 && hour < 12) return getRandomInt(15, 25);      // Sabah
+    if (hour >= 12 && hour < 17) return getRandomInt(25, 40);     // Öğlen
+    if (hour >= 17 && hour < 22) return getRandomInt(30, 50);     // Akşam
+    return getRandomInt(8, 15);                                     // Gece
+  }
+  
+  function getWeightedState() {
+    const rand = Math.random();
+    if (rand < 0.4) {
+      return getRandomFromArray(CONFIG.states.high, lastStates.slice(-3));
+    } else if (rand < 0.75) {
+      return getRandomFromArray(CONFIG.states.medium, lastStates.slice(-3));
+    } else {
+      return getRandomFromArray(CONFIG.states.low, lastStates.slice(-3));
+    }
+  }
+  
+  function getRandomName() {
+    const pool = Math.random() < 0.5 ? CONFIG.names.female : CONFIG.names.male;
+    const name = getRandomFromArray(pool, lastNames.slice(-10));
+    lastNames.push(name);
+    if (lastNames.length > 15) lastNames.shift();
+    return name;
+  }
+  
+  function getRandomState() {
+    const state = getWeightedState();
+    lastStates.push(state);
+    if (lastStates.length > 5) lastStates.shift();
+    return state;
+  }
+  
+  function getRandomTime() {
+    return CONFIG.times[getRandomInt(0, CONFIG.times.length - 1)];
+  }
+  
+  // ═══════════════════════════════════════════════════════════════
+  // UPDATE FUNCTIONS
+  // ═══════════════════════════════════════════════════════════════
+  
+  function updateViewing() {
+    if (currentViewing === 0) {
+      currentViewing = getHourBasedBase();
+    } else {
+      // ±1-2 değişim
+      const change = getRandomInt(-2, 2);
+      currentViewing = Math.max(8, Math.min(60, currentViewing + change));
+    }
+    
+    const viewingEl = document.getElementById('sp-viewing-text');
+    if (viewingEl) {
+      viewingEl.textContent = currentViewing + ' people viewing this right now';
+    }
+  }
+  
+  function updateOrder() {
+    const name = getRandomName();
+    const state = getRandomState();
+    const time = getRandomTime();
+    
+    const orderEl = document.getElementById('sp-order-text');
+    if (orderEl) {
+      orderEl.textContent = name + ' from ' + state + ' ordered ' + time;
+    }
+  }
+  
+  function updateStats() {
+    const statsPool = [CONFIG.stats.weekly, CONFIG.stats.monthly, CONFIG.stats.yearly];
+    statsIndex = (statsIndex + 1) % statsPool.length;
+    
+    const statsEl = document.getElementById('sp-stats-text');
+    if (statsEl) {
+      statsEl.textContent = statsPool[statsIndex];
+    }
+  }
+  
+  // ═══════════════════════════════════════════════════════════════
+  // ROTATION
+  // ═══════════════════════════════════════════════════════════════
+  
+  function rotateAlerts() {
+    const container = document.getElementById('social-proof-alerts');
+    if (!container) return;
+    
+    const alertEls = container.querySelectorAll('.social-proof-alert');
+    
+    // Fade out current
+    alertEls.forEach(el => {
+      el.classList.remove('active');
+      el.style.display = 'none';
+    });
+    
+    // Move to next
+    currentAlert = (currentAlert + 1) % alerts.length;
+    
+    // Update content based on type
+    switch(alerts[currentAlert]) {
+      case 'viewing':
+        updateViewing();
+        break;
+      case 'order':
+        updateOrder();
+        break;
+      case 'stats':
+        updateStats();
+        break;
+    }
+    
+    // Fade in new
+    const nextEl = container.querySelector(`[data-alert="${alerts[currentAlert]}"]`);
+    if (nextEl) {
+      nextEl.style.display = 'flex';
+      setTimeout(() => nextEl.classList.add('active'), 50);
+    }
+  }
+  
+  // ═══════════════════════════════════════════════════════════════
+  // INIT
+  // ═══════════════════════════════════════════════════════════════
+  
+  function init() {
+    // Initial viewing count
+    updateViewing();
+    
+    // Show first alert
+    const firstEl = document.querySelector('[data-alert="viewing"]');
+    if (firstEl) {
+      firstEl.style.display = 'flex';
+      setTimeout(() => firstEl.classList.add('active'), 100);
+    }
+    
+    // Start rotation
+    setInterval(rotateAlerts, CONFIG.rotateInterval);
+    
+    // Update viewing periodically
+    setInterval(updateViewing, CONFIG.viewingUpdateInterval);
+  }
+  
+  // Run
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+  
+})();
+</script>
+
+<style>
+  /* ═══ SOCIAL PROOF CONTAINER ═══ */
+  .social-proof-container {
+    margin-top: 12px;
+    min-height: 32px;
+    position: relative;
+  }
+  
+  .social-proof-alert {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #495057;
+    opacity: 0;
+    transform: translateY(5px);
+    transition: all 0.3s ease;
+  }
+  
+  .social-proof-alert.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Pulse dot for viewing */
+  .sp-dot {
+    width: 8px;
+    height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: spPulse 2s ease-in-out infinite;
+  }
+  
+  @keyframes spPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.3); }
+  }
+  
+  /* Icons */
+  .sp-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    color: #16a34a;
+  }
+  
+  .sp-icon-fire {
+    color: #f59e0b;
+  }
+  
+  .sp-text {
+    flex: 1;
+    line-height: 1.3;
+  }
+  
+  /* ═══ MOBILE ═══ */
+  @media (max-width: 768px) {
+    .social-proof-alert {
+      padding: 6px 10px;
+      font-size: 12px;
+      border-radius: 6px;
+    }
+    
+    .sp-dot {
+      width: 6px;
+      height: 6px;
+    }
+    
+    .sp-icon {
+      width: 14px;
+      height: 14px;
+    }
+  }
+</style>
+{% endif %}

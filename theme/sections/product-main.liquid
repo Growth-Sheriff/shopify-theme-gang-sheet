@@ -292,6 +292,15 @@
           </div>
           {% render 'delivery-data', product: product %}
           
+          {% comment %} ═══ SOCIAL PROOF ALERTS ═══ {% endcomment %}
+          {% render 'social-proof-alerts',
+             enabled: section.settings.social_proof_enabled,
+             viewing_text: section.settings.social_proof_viewing,
+             stats_weekly: section.settings.social_proof_weekly,
+             stats_monthly: section.settings.social_proof_monthly,
+             stats_yearly: section.settings.social_proof_yearly
+          %}
+          
           {% comment %} ═══ VARIANTS ═══ {% endcomment %}
           {% if product.has_only_default_variant == false and section.settings.show_variants %}
             <div class="variants-wrapper">
@@ -2462,6 +2471,41 @@
       "id": "price_badge",
       "label": "Price Badge",
       "default": "LIMITED TIME OFFER"
+    },
+    {
+      "type": "header",
+      "content": "📊 Social Proof Alerts"
+    },
+    {
+      "type": "checkbox",
+      "id": "social_proof_enabled",
+      "label": "Enable Social Proof Alerts",
+      "default": true,
+      "info": "Rotating alerts: viewing now, recent orders, stats"
+    },
+    {
+      "type": "text",
+      "id": "social_proof_viewing",
+      "label": "Viewing Text (auto-updates)",
+      "default": "23 people viewing this right now"
+    },
+    {
+      "type": "text",
+      "id": "social_proof_weekly",
+      "label": "Weekly Stats",
+      "default": "247 orders this week"
+    },
+    {
+      "type": "text",
+      "id": "social_proof_monthly",
+      "label": "Monthly Stats",
+      "default": "1,284 orders this month"
+    },
+    {
+      "type": "text",
+      "id": "social_proof_yearly",
+      "label": "Yearly Stats",
+      "default": "12,500+ happy customers this year"
     },
     {
       "type": "header",
