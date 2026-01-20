@@ -93,6 +93,18 @@
               {% endif %}
               
               <button class="wishlist-btn" type="button"><i class="ti ti-heart"></i></button>
+              
+              {% comment %} ═══ MOBILE THUMBNAIL OVERLAY ═══ {% endcomment %}
+              {% if section.settings.mobile_thumbnail_overlay and product.images.size > 1 %}
+              <div class="mobile-thumb-overlay">
+                {% for image in product.images %}
+                  <div class="mobile-thumb-item {% if forloop.first %}active{% endif %}" 
+                       onclick="pmGallery.change('{{ image | image_url: width: 800 }}', this)">
+                    <img src="{{ image | image_url: width: 80 }}" alt="{{ product.title }}" width="35" height="35" loading="lazy">
+                  </div>
+                {% endfor %}
+              </div>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -1525,16 +1537,63 @@
     }
     
     .gallery-thumbnails-vertical {
-      flex-direction: row;
-      width: 100%;
-      max-height: none;
-      overflow-x: auto;
-      overflow-y: hidden;
+      display: none; /* Hide on mobile - using overlay instead */
+    }
+  }
+  
+  /* ═══ MOBILE THUMBNAIL OVERLAY ═══ */
+  .mobile-thumb-overlay {
+    display: none; /* Hidden on desktop */
+  }
+  
+  @media (max-width: 767px) {
+    .mobile-thumb-overlay {
+      display: flex;
+      flex-direction: column-reverse; /* Bottom to top ordering */
+      position: absolute;
+      left: 8px;
+      bottom: 8px;
+      gap: 6px;
+      max-height: calc(100% - 60px); /* Leave space for badges at top */
+      overflow-y: auto;
+      z-index: 15;
+      padding: 4px;
+      
+      /* Hide scrollbar but keep functionality */
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE/Edge */
     }
     
-    .gallery-thumbnails-vertical .thumbnail {
-      width: 56px;
-      height: 56px;
+    .mobile-thumb-overlay::-webkit-scrollbar {
+      display: none; /* Chrome/Safari */
+    }
+    
+    .mobile-thumb-item {
+      width: 38px;
+      height: 38px;
+      min-height: 38px; /* Prevent shrinking */
+      border-radius: 6px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0; /* Prevent shrinking */
+    }
+    
+    .mobile-thumb-item:hover,
+    .mobile-thumb-item.active {
+      border-color: var(--pm-accent, #2563eb);
+      transform: scale(1.05);
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+    }
+    
+    .mobile-thumb-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
   }
   
@@ -2205,10 +2264,21 @@
   window.pmGallery = {
     change: function(src, el) {
       document.getElementById('pm-main-image').src = src;
-      document.querySelectorAll('.gallery-thumbnails-vertical .thumbnail').forEach(function(t) {
-        t.classList.remove('active');
+      
+      // Find index of clicked element
+      var parent = el.parentElement;
+      var siblings = parent.children;
+      var index = Array.prototype.indexOf.call(siblings, el);
+      
+      // Update desktop thumbnails
+      document.querySelectorAll('.gallery-thumbnails-vertical .thumbnail').forEach(function(t, i) {
+        t.classList.toggle('active', i === index);
       });
-      el.classList.add('active');
+      
+      // Update mobile overlay thumbnails
+      document.querySelectorAll('.mobile-thumb-overlay .mobile-thumb-item').forEach(function(t, i) {
+        t.classList.toggle('active', i === index);
+      });
     }
   };
   
@@ -2475,7 +2545,18 @@
     },
     {
       "type": "header",
-      "content": "📊 Social Proof Alerts"
+      "content": "� Mobile Gallery"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_thumbnail_overlay",
+      "label": "Mobile Thumbnail Overlay",
+      "default": true,
+      "info": "Show thumbnails inside main image on mobile (bottom-left corner)"
+    },
+    {
+      "type": "header",
+      "content": "�📊 Social Proof Alerts"
     },
     {
       "type": "checkbox",
