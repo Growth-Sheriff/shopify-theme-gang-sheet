@@ -268,19 +268,9 @@
           {% comment %} Title {% endcomment %}
           <h1 class="product-title">{{ product.title }}</h1>
           
-          {% comment %} Rating {% endcomment %}
-          {% if section.settings.show_rating %}
-          <div class="rating-section">
-            <div class="rating-stars">
-              <i class="ti ti-star-filled"></i>
-              <i class="ti ti-star-filled"></i>
-              <i class="ti ti-star-filled"></i>
-              <i class="ti ti-star-filled"></i>
-              <i class="ti ti-star-half-filled"></i>
-            </div>
-            <span class="rating-count">{{ section.settings.rating_score }} ({{ section.settings.review_count }} reviews)</span>
-            <span class="cloudy-badge badge-success"><i class="ti ti-thumb-up me-1"></i>{{ section.settings.recommend_percent }}</span>
-          </div>
+          {% comment %} Review Badge - Judge.me/Yotpo Widget {% endcomment %}
+          {% if section.settings.show_review_badge %}
+            {% render 'review-badge-collapsible', product: product %}
           {% endif %}
           
           {% comment %} Price Box - Delivery Mini Strip will auto-inject here {% endcomment %}
@@ -2512,31 +2502,46 @@
     },
     {
       "type": "header",
-      "content": "⭐ Rating"
+      "content": "⭐ Review Badge"
     },
     {
       "type": "checkbox",
-      "id": "show_rating",
-      "label": "Show Rating",
-      "default": true
+      "id": "show_review_badge",
+      "label": "Show Review Badge",
+      "default": true,
+      "info": "Shows Judge.me/Yotpo reviews widget"
+    },
+    {
+      "type": "select",
+      "id": "reviews_provider",
+      "label": "Reviews Provider",
+      "default": "judgeme",
+      "options": [
+        { "value": "judgeme", "label": "Judge.me" },
+        { "value": "yotpo", "label": "Yotpo" },
+        { "value": "loox", "label": "Loox" },
+        { "value": "stamped", "label": "Stamped.io" }
+      ]
     },
     {
       "type": "text",
       "id": "rating_score",
-      "label": "Rating Score",
-      "default": "4.8"
+      "label": "Fallback Rating Score",
+      "default": "4.8",
+      "info": "Used if no real reviews"
     },
     {
       "type": "text",
       "id": "review_count",
-      "label": "Review Count",
-      "default": "2,847"
+      "label": "Fallback Review Count",
+      "default": "2,847",
+      "info": "Used if no real reviews"
     },
     {
       "type": "text",
       "id": "recommend_percent",
       "label": "Recommend %",
-      "default": "99% recommend"
+      "default": "99%"
     },
     {
       "type": "header",
