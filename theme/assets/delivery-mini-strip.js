@@ -907,17 +907,19 @@
         padding: 0;
         margin-left: auto;
       }
-      .dip-zip-row.editing .dip-zip-text {
-        display: none;
-      }
-      .dip-zip-row.editing .dip-zip-change {
-        display: none;
-      }
-      .dip-zip-row.editing .dip-zip-inline-input {
-        display: flex;
-      }
       .dip-zip-change:hover {
         color: #5a50d9;
+      }
+      
+      /* When inline input is active, hide change button */
+      .dip-zip-row .dip-zip-inline-input.active ~ .dip-zip-change,
+      .dip-zip-row:has(.dip-zip-inline-input.active) .dip-zip-change {
+        display: none;
+      }
+      
+      /* No-zip state - always show input */
+      .dip-zip-row.no-zip .dip-zip-inline-input {
+        display: flex;
       }
     `;
     document.head.appendChild(styles);
@@ -1261,7 +1263,10 @@
     html += '</div>';
 
     // ─── ZIP INPUT POPUP ───
-    // Removed - using unified ZIP input from shipping tab widget
+    html += `<div class="dip-zip-popup" id="dip-zip-popup">
+      <input type="text" placeholder="ZIP code" maxlength="5" pattern="[0-9]*" inputmode="numeric" id="dip-zip-input" />
+      <button id="dip-zip-submit">✓</button>
+    </div>`;
 
     html += '</div>'; // close shipping-section
 
@@ -1272,12 +1277,20 @@
       html += `<div class="dip-zip-row">
         <span class="dip-zip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;color:#666"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
         <span class="dip-zip-text">Delivering to <strong>${zipCode}</strong> (${stateCode || 'US'})</span>
-        <button class="dip-zip-change" data-action="open-shipping-tab">Change</button>
+        <button class="dip-zip-change" data-action="toggle-zip-input">Change</button>
+        <div class="dip-zip-inline-input" id="dip-zip-inline">
+          <input type="text" placeholder="ZIP" maxlength="5" pattern="[0-9]*" inputmode="numeric" id="dip-zip-input-inline" value="${zipCode}" />
+          <button id="dip-zip-submit-inline">✓</button>
+        </div>
       </div>`;
     } else {
-      html += `<div class="dip-zip-row">
+      html += `<div class="dip-zip-row no-zip">
         <span class="dip-zip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;color:#666"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
-        <span class="dip-zip-text dip-zip-trigger" data-action="open-shipping-tab">Enter your ZIP code for rates</span>
+        <span class="dip-zip-text">Enter your ZIP code</span>
+        <div class="dip-zip-inline-input active" id="dip-zip-inline">
+          <input type="text" placeholder="ZIP" maxlength="5" pattern="[0-9]*" inputmode="numeric" id="dip-zip-input-inline" />
+          <button id="dip-zip-submit-inline">✓</button>
+        </div>
       </div>`;
     }
 
@@ -1345,28 +1358,121 @@
       });
     }
 
-    // Event: Open shipping tab (unified ZIP entry)
-    const openShippingActions = panel.querySelectorAll('[data-action="open-shipping-tab"], .dip-zip-trigger');
-    openShippingActions.forEach(el => {
-      el.addEventListener('click', (e) => {
+    // Event: Change button - toggle inline ZIP input
+    const zipRow = panel.querySelector('.dip-zip-row');
+    const zipChangeBtn = panel.querySelector('.dip-zip-change');
+    const zipInlineWrapper = panel.querySelector('#dip-zip-inline');
+    const zipInlineInput = panel.querySelector('#dip-zip-input-inline');
+    const zipInlineSubmit = panel.querySelector('#dip-zip-submit-inline');
+
+    if (zipChangeBtn && zipRow && zipInlineWrapper) {
+      zipChangeBtn.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        // Find and click the Shipping tab
-        const shippingTab = document.querySelector('[data-tab="ship"], [data-tab="shipping"], .product-tab-btn[data-tab="ship"]');
-        if (shippingTab) {
-          shippingTab.click();
-          // Scroll to tabs area
-          const tabsSection = document.querySelector('.product-tabs-section, .pm-accordion-section');
-          if (tabsSection) {
-            tabsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-          // Focus on ZIP input in the delivery widget
-          setTimeout(() => {
-            const widgetZipInput = document.querySelector('.dw-zip-input input, [data-zip-input]');
-            if (widgetZipInput) widgetZipInput.focus();
-          }, 300);
+        zipInlineWrapper.classList.toggle('active');
+        if (zipInlineWrapper.classList.contains('active') && zipInlineInput) {
+          zipInlineInput.focus();
+          zipInlineInput.select();
         }
       });
+    }
+
+    // Handle inline ZIP submit
+    const handleZipSubmit = async (inputEl) => {
+      const zip = inputEl.value.trim();
+      if (!/^\d{5}$/.test(zip)) {
+        inputEl.style.borderColor = '#f44336';
+        setTimeout(() => inputEl.style.borderColor = '', 1500);
+        return;
+      }
+
+      try {
+        // Save ZIP
+        localStorage.setItem('customerZip', zip);
+        
+        // Calculate state from ZIP
+        const ZIP_TO_STATE = {
+          '0': 'CT', '1': 'NY', '2': 'DC', '3': 'FL', '4': 'KY',
+          '5': 'IA', '6': 'IL', '7': 'TX', '8': 'CO', '9': 'CA',
+          '00': 'PR', '01': 'MA', '02': 'MA', '03': 'NH', '04': 'ME',
+          '05': 'VT', '06': 'CT', '07': 'NJ', '08': 'NJ', '09': 'PR',
+          '10': 'NY', '11': 'NY', '12': 'NY', '13': 'NY', '14': 'NY',
+          '15': 'PA', '16': 'PA', '17': 'PA', '18': 'PA', '19': 'PA',
+          '20': 'DC', '21': 'MD', '22': 'VA', '23': 'VA', '24': 'VA',
+          '25': 'WV', '26': 'WV', '27': 'NC', '28': 'NC', '29': 'SC',
+          '30': 'GA', '31': 'GA', '32': 'FL', '33': 'FL', '34': 'FL',
+          '35': 'AL', '36': 'AL', '37': 'TN', '38': 'TN', '39': 'MS',
+          '40': 'KY', '41': 'KY', '42': 'KY', '43': 'OH', '44': 'OH',
+          '45': 'OH', '46': 'IN', '47': 'IN', '48': 'MI', '49': 'MI',
+          '50': 'IA', '51': 'IA', '52': 'IA', '53': 'WI', '54': 'WI',
+          '55': 'MN', '56': 'MN', '57': 'SD', '58': 'ND', '59': 'MT',
+          '60': 'IL', '61': 'IL', '62': 'IL', '63': 'MO', '64': 'MO',
+          '65': 'MO', '66': 'KS', '67': 'KS', '68': 'NE', '69': 'NE',
+          '70': 'LA', '71': 'LA', '72': 'AR', '73': 'OK', '74': 'OK',
+          '75': 'TX', '76': 'TX', '77': 'TX', '78': 'TX', '79': 'TX',
+          '80': 'CO', '81': 'CO', '82': 'WY', '83': 'ID', '84': 'UT',
+          '85': 'AZ', '86': 'AZ', '87': 'NM', '88': 'TX', '89': 'NV',
+          '90': 'CA', '91': 'CA', '92': 'CA', '93': 'CA', '94': 'CA',
+          '95': 'CA', '96': 'CA', '97': 'OR', '98': 'WA', '99': 'WA'
+        };
+        const state = ZIP_TO_STATE[zip.substring(0,2)] || ZIP_TO_STATE[zip.charAt(0)] || 'NJ';
+        localStorage.setItem('customerState', state);
+
+        // Dispatch event for all widgets to sync
+        document.dispatchEvent(new CustomEvent('deliveryLocationChanged', {
+          detail: { zip, state, source: 'panel' }
+        }));
+
+        // Refresh this panel
+        refreshPanel();
+
+        // Also trigger delivery widget refresh
+        if (window.DeliveryWidget && window.DeliveryWidget.setZip) {
+          window.DeliveryWidget.setZip(zip);
+        }
+
+      } catch(e) {
+        console.error('[Panel] ZIP submit error:', e);
+      }
+    };
+
+    if (zipInlineSubmit && zipInlineInput) {
+      zipInlineSubmit.addEventListener('click', () => handleZipSubmit(zipInlineInput));
+      zipInlineInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleZipSubmit(zipInlineInput);
+      });
+    }
+
+    // ZIP popup (for "Enter ZIP code" link)
+    const zipTrigger = panel.querySelector('.dip-zip-trigger');
+    const zipPopup = panel.querySelector('#dip-zip-popup');
+    const zipPopupInput = panel.querySelector('#dip-zip-input');
+    const zipPopupSubmit = panel.querySelector('#dip-zip-submit');
+
+    if (zipTrigger && zipPopup) {
+      zipTrigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        zipPopup.classList.toggle('active');
+        if (zipPopupInput) zipPopupInput.focus();
+      });
+    }
+
+    if (zipPopupSubmit && zipPopupInput) {
+      zipPopupSubmit.addEventListener('click', () => handleZipSubmit(zipPopupInput));
+      zipPopupInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleZipSubmit(zipPopupInput);
+      });
+    }
+
+    // Close popup/inline when clicking outside
+    document.addEventListener('click', (e) => {
+      if (zipPopup && !zipPopup.contains(e.target) && !zipTrigger?.contains(e.target)) {
+        zipPopup.classList.remove('active');
+      }
+      if (zipInlineWrapper && !zipInlineWrapper.contains(e.target) && !zipChangeBtn?.contains(e.target) && !zipRow?.classList.contains('no-zip')) {
+        zipInlineWrapper.classList.remove('active');
+      }
     });
 
     return panel;
