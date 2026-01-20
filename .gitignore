@@ -1,0 +1,28 @@
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# FuncLib
+.funclib/
+
+# Temp files
+temp*/
+*-check/
+*-backup/
+live-*/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+
+# Logs
+*.log
+
+# Local config
+.env
+.env.local
