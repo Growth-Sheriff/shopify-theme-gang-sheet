@@ -25,7 +25,177 @@
 {% endif %}
 
 <!-- Main Header -->
-<header class="main-header {% if section.settings.sticky_header %}sticky-header{% endif %}" id="mainHeader">
+<header class="main-header {% if section.settings.sticky_header %}sticky-header{% endif %} header-layout-{{ section.settings.header_layout | default: 'default' }}" id="mainHeader">
+
+  {% if section.settings.header_layout == 'stacked' %}
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       STACKED LAYOUT (Mode 2): Top Row + Bottom Row
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="header-top-row">
+    <div class="container">
+      <div class="header-top-inner">
+        <!-- Logo (Center) -->
+        <a href="{{ routes.root_url }}" class="header-logo-stacked">
+          {% if section.settings.logo %}
+            <img src="{{ section.settings.logo | image_url: width: 200 }}"
+                 alt="{{ shop.name }}"
+                 width="200"
+                 height="55"
+                 class="logo-img">
+          {% else %}
+            <span class="logo-text">{{ shop.name }}</span>
+          {% endif %}
+        </a>
+
+        <!-- Rich Search Bar -->
+        <div class="header-search-stacked">
+          <form action="{{ routes.search_url }}" method="get" class="stacked-search-form">
+            <div class="stacked-search-wrapper">
+              <i class="fa-solid fa-magnifying-glass stacked-search-icon"></i>
+              <input type="text"
+                     name="q"
+                     placeholder="{{ section.settings.search_placeholder | default: 'Search products...' }}"
+                     class="stacked-search-input"
+                     autocomplete="off">
+              <button type="submit" class="stacked-search-btn">
+                Search
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Actions (Right) -->
+        <div class="header-actions-stacked">
+          {% if section.settings.show_account %}
+          <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}"
+             class="stacked-action-btn"
+             aria-label="Account">
+            <i class="fa-regular fa-user"></i>
+            <span class="stacked-action-label">Account</span>
+          </a>
+          {% endif %}
+
+          {% if section.settings.show_wishlist %}
+          <a href="/pages/wishlist" class="stacked-action-btn" aria-label="Wishlist">
+            <i class="fa-regular fa-heart"></i>
+            <span class="stacked-action-label">Wishlist</span>
+            <span class="stacked-action-badge wishlist-count">0</span>
+          </a>
+          {% endif %}
+
+          <a href="{{ routes.cart_url }}" class="stacked-action-btn cart-stacked" aria-label="Cart" data-cart-trigger>
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span class="stacked-action-label">Cart</span>
+            <span class="stacked-action-badge cart-count">{{ cart.item_count }}</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Row: Navigation -->
+  <div class="header-bottom-row">
+    <div class="container">
+      <nav class="header-nav-stacked" id="headerNavStacked">
+        <ul class="nav-menu nav-menu-stacked">
+          {% if section.settings.menu != blank and linklists[section.settings.menu] %}
+          {% for link in linklists[section.settings.menu].links %}
+            {% assign has_mega = false %}
+            {% assign mega_block = nil %}
+            {% for block in section.blocks %}
+              {% if block.type == 'mega_menu' %}
+                {% assign block_title = block.settings.menu_title | downcase | strip %}
+                {% assign link_title = link.title | downcase | strip %}
+                {% if block_title == link_title %}
+                  {% assign has_mega = true %}
+                  {% assign mega_block = block %}
+                  {% break %}
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+
+            <li class="nav-item {% if link.links.size > 0 or has_mega %}has-mega{% endif %}" data-nav-item="{{ link.title | handleize }}">
+              <a href="{{ link.url }}" class="nav-link {% if link.active %}active{% endif %}">
+                <span>{{ link.title }}</span>
+                {% if link.links.size > 0 or has_mega %}
+                  <i class="fa-solid fa-chevron-down nav-arrow"></i>
+                {% endif %}
+              </a>
+
+              {% if link.links.size > 0 or has_mega %}
+              <div class="mega-dropdown" data-mega="{{ link.title | handleize }}">
+                <div class="mega-container">
+                  <div class="mega-inner">
+                    <div class="mega-gradient-bar"></div>
+                    <div class="mega-tabbed-layout">
+                      <div class="mega-tabs-col">
+                        <div class="mega-col-header">
+                          <div class="mega-icon-wrap">
+                            <i class="fa-solid fa-layer-group"></i>
+                          </div>
+                          <span>{{ link.title }}</span>
+                        </div>
+                        <ul class="mega-tabs-list">
+                          {% for childlink in link.links %}
+                            <li class="mega-tab-item {% if forloop.first %}active{% endif %}"
+                                data-tab="{{ childlink.title | handleize }}"
+                                data-parent="{{ link.title | handleize }}">
+                              <span class="mega-tab-dot"></span>
+                              <span class="mega-tab-text">{{ childlink.title }}</span>
+                              <i class="fa-solid fa-chevron-right mega-tab-arrow"></i>
+                            </li>
+                          {% endfor %}
+                          {% if link.links.size == 0 %}
+                            <li class="mega-tab-item active"
+                                data-tab="all-{{ link.title | handleize }}"
+                                data-parent="{{ link.title | handleize }}">
+                              <span class="mega-tab-dot"></span>
+                              <span class="mega-tab-text">View All</span>
+                              <i class="fa-solid fa-chevron-right mega-tab-arrow"></i>
+                            </li>
+                          {% endif %}
+                        </ul>
+                      </div>
+                      <div class="mega-products-col">
+                        {% for childlink in link.links %}
+                          <div class="mega-products-panel {% if forloop.first %}active{% endif %}"
+                               data-panel="{{ childlink.title | handleize }}"
+                               data-parent="{{ link.title | handleize }}">
+                            <div class="mega-panel-header">
+                              <h4>{{ childlink.title }}</h4>
+                              <a href="{{ childlink.url }}" class="mega-view-all">
+                                View All <i class="fa-solid fa-arrow-right"></i>
+                              </a>
+                            </div>
+                            <div class="mega-products-grid-3">
+                              {% comment %} Products loaded from submenu_item blocks {% endcomment %}
+                            </div>
+                          </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            </li>
+          {% endfor %}
+          {% endif %}
+        </ul>
+      </nav>
+
+      <!-- Mobile Toggle for Stacked -->
+      <button class="mobile-toggle mobile-toggle-stacked" id="mobileToggleStacked" aria-label="Menu">
+        <span class="toggle-bar"></span>
+        <span class="toggle-bar"></span>
+        <span class="toggle-bar"></span>
+      </button>
+    </div>
+  </div>
+  {% else %}
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       DEFAULT LAYOUT (Mode 1): Single Row
+       ═══════════════════════════════════════════════════════════════════════ -->
   <div class="container">
     <div class="header-inner">
       
@@ -336,6 +506,7 @@
       </form>
     </div>
   </div>
+  {% endif %}
 </header>
 
 <!-- Mobile Menu - Full Featured -->
@@ -664,7 +835,7 @@
 
 .mega-inner {
   background: linear-gradient(165deg, #ffffff 0%, #fafbfc 100%);
-  border-radius: 24px;
+  border-radius: 5px;
   box-shadow: 
     0 30px 90px rgba(102, 126, 234, 0.15),
     0 15px 40px rgba(0, 0, 0, 0.08),
@@ -675,6 +846,7 @@
   max-width: 900px;
   overflow: hidden;
   position: relative;
+  padding: 5px;
 }
 
 /* Animated Gradient Bar */
@@ -840,7 +1012,7 @@
   width: 220px;
   flex-shrink: 0;
   border-right: 1px solid rgba(102, 126, 234, 0.1);
-  padding-right: 0;
+  padding: 5px;
 }
 
 .mega-tabs-list {
@@ -915,7 +1087,7 @@
 /* Products Panel */
 .mega-products-col {
   flex: 1;
-  padding: 0 24px;
+  padding: 5px 24px;
   position: relative;
   min-width: 420px;
 }
@@ -2231,6 +2403,269 @@
     display: none;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   STACKED LAYOUT (MODE 2) STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+.header-layout-stacked .header-top-row {
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--header-border);
+  padding: 16px 0;
+}
+
+.header-layout-stacked .header-top-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* Logo Stacked */
+.header-logo-stacked {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.header-logo-stacked .logo-img {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+}
+
+.header-logo-stacked .logo-text {
+  font-size: 1.6rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--header-gradient-1), var(--header-gradient-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Stacked Search */
+.header-search-stacked {
+  flex: 1;
+  max-width: 600px;
+}
+
+.stacked-search-form {
+  width: 100%;
+}
+
+.stacked-search-wrapper {
+  display: flex;
+  align-items: center;
+  background: #f8f9fc;
+  border: 2px solid transparent;
+  border-radius: 50px;
+  padding: 4px 4px 4px 20px;
+  transition: all 0.3s ease;
+}
+
+.stacked-search-wrapper:focus-within {
+  border-color: var(--header-gradient-1);
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
+}
+
+.stacked-search-icon {
+  color: var(--header-text-light);
+  font-size: 1rem;
+  margin-right: 12px;
+}
+
+.stacked-search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 0.95rem;
+  color: var(--header-text);
+  outline: none;
+  padding: 10px 0;
+}
+
+.stacked-search-input::placeholder {
+  color: #9ca3af;
+}
+
+.stacked-search-btn {
+  background: linear-gradient(135deg, var(--header-gradient-1), var(--header-gradient-2));
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.stacked-search-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* Stacked Actions */
+.header-actions-stacked {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stacked-action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 16px;
+  text-decoration: none;
+  color: var(--header-text);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.stacked-action-btn:hover {
+  background: rgba(102, 126, 234, 0.08);
+  color: var(--header-gradient-1);
+}
+
+.stacked-action-btn i {
+  font-size: 1.25rem;
+}
+
+.stacked-action-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.stacked-action-badge {
+  position: absolute;
+  top: 2px;
+  right: 8px;
+  min-width: 18px;
+  height: 18px;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stacked-action-badge:empty,
+.stacked-action-badge[data-count="0"] {
+  display: none;
+}
+
+/* Bottom Row - Navigation */
+.header-layout-stacked .header-bottom-row {
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--header-border);
+  position: relative;
+}
+
+.header-layout-stacked .header-bottom-row .container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-nav-stacked {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-menu-stacked {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-menu-stacked .nav-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 20px;
+  color: var(--header-text);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.nav-menu-stacked .nav-link:hover,
+.nav-menu-stacked .nav-link.active {
+  color: var(--header-gradient-1);
+}
+
+.mobile-toggle-stacked {
+  display: none;
+}
+
+/* Stacked Layout Responsive */
+@media (max-width: 1024px) {
+  .header-layout-stacked .header-search-stacked {
+    display: none;
+  }
+  
+  .header-layout-stacked .header-bottom-row {
+    display: none;
+  }
+  
+  .mobile-toggle-stacked {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+  }
+  
+  .mobile-toggle-stacked .toggle-bar {
+    width: 22px;
+    height: 2px;
+    background: var(--header-text);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  
+  .header-layout-stacked .stacked-action-label {
+    display: none;
+  }
+  
+  .stacked-action-btn {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-layout-stacked .header-top-inner {
+    gap: 12px;
+  }
+  
+  .header-logo-stacked .logo-img {
+    height: 38px;
+  }
+  
+  .stacked-action-btn i {
+    font-size: 1.1rem;
+  }
+}
 </style>
 
 <script>
@@ -2239,6 +2674,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // MOBILE MENU
   // ============================================
   const mobileToggle = document.getElementById('mobileToggle');
+  const mobileToggleStacked = document.getElementById('mobileToggleStacked');
   const mobileClose = document.getElementById('mobileClose');
   const mobileMenu = document.getElementById('mobileMenu');
   const mobileOverlay = document.getElementById('mobileOverlay');
@@ -2248,6 +2684,7 @@ document.addEventListener('DOMContentLoaded', function() {
     mobileOverlay?.classList.add('active');
     document.body.style.overflow = 'hidden';
     mobileToggle?.classList.add('active');
+    mobileToggleStacked?.classList.add('active');
   }
   
   function closeMobileMenu() {
@@ -2255,9 +2692,11 @@ document.addEventListener('DOMContentLoaded', function() {
     mobileOverlay?.classList.remove('active');
     document.body.style.overflow = '';
     mobileToggle?.classList.remove('active');
+    mobileToggleStacked?.classList.remove('active');
   }
   
   mobileToggle?.addEventListener('click', openMobileMenu);
+  mobileToggleStacked?.addEventListener('click', openMobileMenu);
   mobileClose?.addEventListener('click', closeMobileMenu);
   mobileOverlay?.addEventListener('click', closeMobileMenu);
   
@@ -2449,6 +2888,27 @@ document.addEventListener('DOMContentLoaded', function() {
 {
   "name": "Header",
   "settings": [
+    {
+      "type": "header",
+      "content": "📐 Layout Mode"
+    },
+    {
+      "type": "select",
+      "id": "header_layout",
+      "label": "Header Layout",
+      "options": [
+        { "value": "default", "label": "Default (Single Row)" },
+        { "value": "stacked", "label": "Stacked (Logo + Search + Menu)" }
+      ],
+      "default": "default",
+      "info": "Stacked: Top row with logo, search, actions. Bottom row with menu."
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search Placeholder",
+      "default": "Search products..."
+    },
     {
       "type": "header",
       "content": "Logo"

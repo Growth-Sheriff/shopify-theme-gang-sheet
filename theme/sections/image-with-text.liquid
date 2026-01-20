@@ -1,0 +1,692 @@
+{%- render 'custom-css-renderer', section: section -%}
+
+<section class="iwt-section section-{{ section.id }}" style="
+  --iwt-bg: {{ section.settings.background_color }};
+  --iwt-text: {{ section.settings.text_color }};
+  --iwt-heading: {{ section.settings.heading_color }};
+  --iwt-accent: {{ section.settings.accent_color }};
+  padding-top: {{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+">
+  <div class="container">
+    <div class="iwt-wrapper {% if section.settings.image_position == 'right' %}iwt-reverse{% endif %}" style="gap: {{ section.settings.content_gap }}px;">
+      
+      <!-- Image Side -->
+      <div class="iwt-image-side">
+        {% if section.settings.image_2 != blank %}
+          <!-- Two Images Layout -->
+          <div class="iwt-images-duo">
+            <div class="iwt-image-primary">
+              {% if section.settings.image != blank %}
+                <img src="{{ section.settings.image | image_url: width: 800 }}" 
+                     alt="{{ section.settings.image.alt | default: section.settings.heading }}"
+                     width="800"
+                     height="{{ 800 | divided_by: section.settings.image.aspect_ratio | round }}"
+                     loading="lazy">
+              {% else %}
+                <div class="iwt-placeholder"><i class="fa-solid fa-image"></i></div>
+              {% endif %}
+            </div>
+            <div class="iwt-image-secondary">
+              <img src="{{ section.settings.image_2 | image_url: width: 500 }}" 
+                   alt="{{ section.settings.image_2.alt | default: section.settings.heading }}"
+                   width="500"
+                   height="{{ 500 | divided_by: section.settings.image_2.aspect_ratio | round }}"
+                   loading="lazy">
+            </div>
+          </div>
+        {% else %}
+          <!-- Single Image Layout -->
+          <div class="iwt-image-single">
+            {% if section.settings.image != blank %}
+              <img src="{{ section.settings.image | image_url: width: 900 }}" 
+                   alt="{{ section.settings.image.alt | default: section.settings.heading }}"
+                   width="900"
+                   height="{{ 900 | divided_by: section.settings.image.aspect_ratio | round }}"
+                   loading="lazy">
+            {% else %}
+              <div class="iwt-placeholder"><i class="fa-solid fa-image"></i></div>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+      
+      <!-- Content Side -->
+      <div class="iwt-content-side">
+        {% if section.settings.show_label and section.settings.label != blank %}
+          <span class="iwt-label">{{ section.settings.label }}</span>
+        {% endif %}
+        
+        {% if section.settings.show_heading and section.settings.heading != blank %}
+          <{{ section.settings.heading_tag }} class="iwt-heading">{{ section.settings.heading }}</{{ section.settings.heading_tag }}>
+        {% endif %}
+        
+        {% if section.settings.show_text and section.settings.text != blank %}
+          <div class="iwt-text">{{ section.settings.text }}</div>
+        {% endif %}
+        
+        <!-- Feature List -->
+        {% if section.settings.show_features %}
+          <ul class="iwt-features">
+            {% for block in section.blocks %}
+              {% if block.type == 'feature' %}
+                <li class="iwt-feature" {{ block.shopify_attributes }}>
+                  {% if block.settings.icon != blank %}
+                    <span class="iwt-feature-icon"><i class="{{ block.settings.icon }}"></i></span>
+                  {% else %}
+                    <span class="iwt-feature-icon"><i class="fa-solid fa-check"></i></span>
+                  {% endif %}
+                  <span>{{ block.settings.text }}</span>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        {% endif %}
+        
+        {% if section.settings.show_button and section.settings.button_text != blank %}
+          <div class="iwt-button-wrap">
+            <a href="{{ section.settings.button_link }}" class="iwt-btn {% if section.settings.button_style == 'outline' %}iwt-btn-outline{% endif %}">
+              {% if section.settings.button_icon != blank %}
+                <i class="{{ section.settings.button_icon }}"></i>
+              {% endif %}
+              {{ section.settings.button_text }}
+            </a>
+            
+            {% if section.settings.show_button_2 and section.settings.button_2_text != blank %}
+              <a href="{{ section.settings.button_2_link }}" class="iwt-btn iwt-btn-secondary">
+                {{ section.settings.button_2_text }}
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<style>
+  .iwt-section {
+    background: var(--iwt-bg);
+    color: var(--iwt-text);
+  }
+  
+  .iwt-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+  
+  .iwt-wrapper.iwt-reverse {
+    direction: rtl;
+  }
+  
+  .iwt-wrapper.iwt-reverse > * {
+    direction: ltr;
+  }
+  
+  /* Image Styles */
+  .iwt-image-side {
+    position: relative;
+  }
+  
+  .iwt-image-single img {
+    width: 100%;
+    height: auto;
+    border-radius: {{ section.settings.image_radius }}px;
+    box-shadow: {{ section.settings.image_shadow }};
+    object-fit: cover;
+  }
+  
+  .iwt-images-duo {
+    position: relative;
+    padding-bottom: 80px;
+    padding-right: 60px;
+  }
+  
+  .iwt-wrapper.iwt-reverse .iwt-images-duo {
+    padding-right: 0;
+    padding-left: 60px;
+  }
+  
+  .iwt-image-primary img {
+    width: 100%;
+    height: auto;
+    border-radius: {{ section.settings.image_radius }}px;
+    box-shadow: {{ section.settings.image_shadow }};
+    object-fit: cover;
+  }
+  
+  .iwt-image-secondary {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 55%;
+    z-index: 2;
+  }
+  
+  .iwt-wrapper.iwt-reverse .iwt-image-secondary {
+    right: auto;
+    left: 0;
+  }
+  
+  .iwt-image-secondary img {
+    width: 100%;
+    height: auto;
+    border-radius: {{ section.settings.image_radius }}px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    border: 4px solid var(--iwt-bg);
+    object-fit: cover;
+  }
+  
+  .iwt-placeholder {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+    border-radius: {{ section.settings.image_radius }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    color: #ccc;
+  }
+  
+  /* Content Styles */
+  .iwt-content-side {
+    padding: 20px 0;
+  }
+  
+  .iwt-label {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--iwt-accent);
+    margin-bottom: 16px;
+  }
+  
+  .iwt-heading {
+    font-size: {{ section.settings.heading_size }}px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--iwt-heading);
+    margin: 0 0 24px;
+  }
+  
+  .iwt-text {
+    font-size: {{ section.settings.text_size }}px;
+    line-height: 1.8;
+    color: var(--iwt-text);
+  }
+  
+  .iwt-text p {
+    margin-bottom: 16px;
+  }
+  
+  .iwt-text p:last-child {
+    margin-bottom: 0;
+  }
+  
+  /* Features */
+  .iwt-features {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .iwt-feature {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+  }
+  
+  .iwt-feature-icon {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--iwt-accent);
+    color: white;
+    border-radius: 50%;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+  
+  /* Buttons */
+  .iwt-button-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+  }
+  
+  .iwt-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background: var(--iwt-accent);
+    color: white;
+    border: 2px solid var(--iwt-accent);
+  }
+  
+  .iwt-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  
+  .iwt-btn-outline {
+    background: transparent;
+    color: var(--iwt-accent);
+  }
+  
+  .iwt-btn-outline:hover {
+    background: var(--iwt-accent);
+    color: white;
+  }
+  
+  .iwt-btn-secondary {
+    background: transparent;
+    border-color: var(--iwt-text);
+    color: var(--iwt-text);
+  }
+  
+  .iwt-btn-secondary:hover {
+    background: var(--iwt-text);
+    color: var(--iwt-bg);
+  }
+  
+  /* Responsive */
+  @media (max-width: 991px) {
+    .iwt-wrapper {
+      grid-template-columns: 1fr;
+      gap: 40px !important;
+    }
+    
+    .iwt-wrapper.iwt-reverse {
+      direction: ltr;
+    }
+    
+    .iwt-image-side {
+      order: {% if section.settings.mobile_image_first %}0{% else %}1{% endif %};
+    }
+    
+    .iwt-content-side {
+      order: {% if section.settings.mobile_image_first %}1{% else %}0{% endif %};
+      text-align: {{ section.settings.mobile_text_align }};
+    }
+    
+    .iwt-heading {
+      font-size: calc({{ section.settings.heading_size }}px * 0.75);
+    }
+    
+    .iwt-images-duo {
+      padding-right: 40px;
+      padding-bottom: 60px;
+    }
+    
+    .iwt-button-wrap {
+      justify-content: {{ section.settings.mobile_text_align }};
+    }
+    
+    .iwt-features {
+      {% if section.settings.mobile_text_align == 'center' %}
+      align-items: center;
+      {% endif %}
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .iwt-heading {
+      font-size: calc({{ section.settings.heading_size }}px * 0.6);
+    }
+    
+    .iwt-images-duo {
+      padding-right: 30px;
+      padding-bottom: 50px;
+    }
+    
+    .iwt-image-secondary {
+      width: 50%;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Görsel + Metin",
+  "tag": "section",
+  "class": "section-image-with-text",
+  "settings": [
+    {
+      "type": "header",
+      "content": "📷 Görsel Ayarları"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Ana Görsel"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "İkinci Görsel (Opsiyonel)",
+      "info": "Eklenirse iki görsel üst üste binecek şekilde görünür"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Görsel Konumu",
+      "options": [
+        { "value": "left", "label": "Sol" },
+        { "value": "right", "label": "Sağ" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Görsel Köşe Yuvarlaklığı",
+      "default": 8
+    },
+    {
+      "type": "select",
+      "id": "image_shadow",
+      "label": "Görsel Gölgesi",
+      "options": [
+        { "value": "none", "label": "Yok" },
+        { "value": "0 4px 15px rgba(0,0,0,0.1)", "label": "Hafif" },
+        { "value": "0 10px 40px rgba(0,0,0,0.15)", "label": "Orta" },
+        { "value": "0 20px 60px rgba(0,0,0,0.2)", "label": "Güçlü" }
+      ],
+      "default": "0 10px 40px rgba(0,0,0,0.15)"
+    },
+    {
+      "type": "header",
+      "content": "📝 Etiket"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_label",
+      "label": "Etiketi Göster",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Etiket Metni",
+      "default": "OUR MISSION"
+    },
+    {
+      "type": "header",
+      "content": "📌 Başlık"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_heading",
+      "label": "Başlığı Göster",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Başlık",
+      "default": "Combining Great Customer Service With The Fastest Delivery"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Başlık HTML Etiketi",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 24,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Başlık Boyutu",
+      "default": 38
+    },
+    {
+      "type": "header",
+      "content": "📄 İçerik"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_text",
+      "label": "İçeriği Göster",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "İçerik Metni",
+      "default": "<p>We launched over a decade ago with a clear mission: Use technology to combine an unparalleled level of customer service with the fastest delivery the industry has ever seen.</p><p>We are continuing to work towards this mission every day. Our focus on providing superior value and customer service remains as strong as ever.</p>"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 14,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Metin Boyutu",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "✅ Özellik Listesi"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_features",
+      "label": "Özellik Listesini Göster",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "🔘 Buton 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Butonu Göster",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Buton Metni",
+      "default": "Learn More"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Buton Linki"
+    },
+    {
+      "type": "text",
+      "id": "button_icon",
+      "label": "Buton İkonu",
+      "info": "FontAwesome class (örn: fa-solid fa-arrow-right)"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Buton Stili",
+      "options": [
+        { "value": "solid", "label": "Dolgulu" },
+        { "value": "outline", "label": "Çerçeveli" }
+      ],
+      "default": "solid"
+    },
+    {
+      "type": "header",
+      "content": "🔘 Buton 2 (Opsiyonel)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button_2",
+      "label": "İkinci Butonu Göster",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "button_2_text",
+      "label": "İkinci Buton Metni",
+      "default": "Contact Us"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "İkinci Buton Linki"
+    },
+    {
+      "type": "header",
+      "content": "🎨 Renkler"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Arka Plan Rengi",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Başlık Rengi",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Metin Rengi",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Vurgu Rengi",
+      "default": "#7367F0"
+    },
+    {
+      "type": "header",
+      "content": "📐 Düzen"
+    },
+    {
+      "type": "range",
+      "id": "content_gap",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "İçerik Arası Boşluk",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Üst Boşluk",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Alt Boşluk",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "📱 Mobil Ayarları"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_image_first",
+      "label": "Mobilde Görsel Önce",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "mobile_text_align",
+      "label": "Mobil Metin Hizalama",
+      "options": [
+        { "value": "left", "label": "Sol" },
+        { "value": "center", "label": "Orta" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Özellik Maddesi",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Özellik Metni",
+          "default": "Quality products and materials"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "İkon",
+          "info": "FontAwesome class (örn: fa-solid fa-check)",
+          "default": "fa-solid fa-check"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Görsel + Metin",
+      "settings": {
+        "label": "OUR MISSION",
+        "heading": "Combining Great Customer Service With The Fastest Delivery",
+        "text": "<p>We launched over a decade ago with a clear mission: Use technology to combine an unparalleled level of customer service with the fastest delivery the industry has ever seen.</p><p>We are continuing to work towards this mission every day. Our focus on providing superior value and customer service remains as strong as ever.</p>"
+      }
+    }
+  ]
+}
+{% endschema %}

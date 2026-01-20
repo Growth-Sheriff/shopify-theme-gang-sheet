@@ -1,6 +1,7 @@
 {% comment %}
   Collection Banner Section - Modern Vuexy Design
 {% endcomment %}
+{%- render 'custom-css-renderer', section: section -%}
 
 <section class="collection-banner-section">
   <!-- Background with Gradient Overlay -->
@@ -502,6 +503,16 @@ document.addEventListener('DOMContentLoaded', function() {
       "id": "rating_stat_label",
       "label": "Rating Stat Label",
       "default": "Rating"
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "presets": [

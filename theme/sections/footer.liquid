@@ -2,6 +2,8 @@
   Premium Footer - Luxury Soft Design
 {% endcomment %}
 
+{%- render 'custom-css-renderer', section: section -%}
+
 <footer class="main-footer">
   <!-- Newsletter Section -->
   {% if section.settings.show_newsletter %}
@@ -18,18 +20,32 @@
           </div>
         </div>
         <div class="newsletter-form-wrapper">
-          {% form 'customer', class: 'newsletter-form' %}
+          {% form 'customer', id: 'newsletter-form', class: 'newsletter-form' %}
+            <input type="hidden" name="contact[tags]" value="newsletter">
             <div class="form-group">
               <input type="email" 
                      name="contact[email]" 
                      placeholder="Enter your email address" 
                      class="newsletter-input"
+                     autocomplete="email"
                      required>
               <button type="submit" class="newsletter-btn">
                 <span>Subscribe</span>
                 <i class="fa-solid fa-arrow-right"></i>
               </button>
             </div>
+            {% if form.posted_successfully? %}
+            <p class="newsletter-success">
+              <i class="fa-solid fa-check-circle"></i>
+              Thank you for subscribing!
+            </p>
+            {% endif %}
+            {% if form.errors %}
+            <p class="newsletter-error">
+              <i class="fa-solid fa-exclamation-circle"></i>
+              {{ form.errors.messages['email'] | default: 'Please enter a valid email.' }}
+            </p>
+            {% endif %}
             <p class="newsletter-privacy">
               <i class="fa-solid fa-shield-check"></i>
               We respect your privacy. Unsubscribe anytime.
@@ -65,29 +81,44 @@
           
           <!-- Social Links -->
           <div class="footer-social">
-            {% if section.settings.facebook %}
-            <a href="{{ section.settings.facebook }}" class="social-link" target="_blank" rel="noopener" aria-label="Facebook">
+            {% if settings.social_facebook %}
+            <a href="{{ settings.social_facebook }}" class="social-link" target="_blank" rel="noopener" aria-label="Facebook">
               <i class="fa-brands fa-facebook-f"></i>
             </a>
             {% endif %}
-            {% if section.settings.instagram %}
-            <a href="{{ section.settings.instagram }}" class="social-link" target="_blank" rel="noopener" aria-label="Instagram">
+            {% if settings.social_instagram %}
+            <a href="{{ settings.social_instagram }}" class="social-link" target="_blank" rel="noopener" aria-label="Instagram">
               <i class="fa-brands fa-instagram"></i>
             </a>
             {% endif %}
-            {% if section.settings.twitter %}
-            <a href="{{ section.settings.twitter }}" class="social-link" target="_blank" rel="noopener" aria-label="Twitter">
+            {% if settings.social_twitter %}
+            <a href="{{ settings.social_twitter }}" class="social-link" target="_blank" rel="noopener" aria-label="Twitter">
               <i class="fa-brands fa-x-twitter"></i>
             </a>
             {% endif %}
-            {% if section.settings.youtube %}
-            <a href="{{ section.settings.youtube }}" class="social-link" target="_blank" rel="noopener" aria-label="YouTube">
+            {% if settings.social_youtube %}
+            <a href="{{ settings.social_youtube }}" class="social-link" target="_blank" rel="noopener" aria-label="YouTube">
               <i class="fa-brands fa-youtube"></i>
             </a>
             {% endif %}
-            {% if section.settings.tiktok %}
-            <a href="{{ section.settings.tiktok }}" class="social-link" target="_blank" rel="noopener" aria-label="TikTok">
+            {% if settings.social_tiktok %}
+            <a href="{{ settings.social_tiktok }}" class="social-link" target="_blank" rel="noopener" aria-label="TikTok">
               <i class="fa-brands fa-tiktok"></i>
+            </a>
+            {% endif %}
+            {% if settings.social_pinterest %}
+            <a href="{{ settings.social_pinterest }}" class="social-link" target="_blank" rel="noopener" aria-label="Pinterest">
+              <i class="fa-brands fa-pinterest-p"></i>
+            </a>
+            {% endif %}
+            {% if settings.social_linkedin %}
+            <a href="{{ settings.social_linkedin }}" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <i class="fa-brands fa-linkedin-in"></i>
+            </a>
+            {% endif %}
+            {% if settings.social_whatsapp %}
+            <a href="{{ settings.social_whatsapp }}" class="social-link" target="_blank" rel="noopener" aria-label="WhatsApp">
+              <i class="fa-brands fa-whatsapp"></i>
             </a>
             {% endif %}
           </div>
@@ -388,6 +419,38 @@
 
 .newsletter-privacy i {
   color: rgba(255, 255, 255, 0.8);
+}
+
+.newsletter-success {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: rgba(40, 199, 111, 0.15);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #28c76f;
+}
+
+.newsletter-success i {
+  font-size: 1rem;
+}
+
+.newsletter-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: rgba(234, 84, 85, 0.15);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #ea5455;
+}
+
+.newsletter-error i {
+  font-size: 1rem;
 }
 
 /* Main Footer */
@@ -879,32 +942,13 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     {
       "type": "header",
-      "content": "Social Media"
+      "content": "⚙️ Gelişmiş"
     },
     {
-      "type": "url",
-      "id": "facebook",
-      "label": "Facebook URL"
-    },
-    {
-      "type": "url",
-      "id": "instagram",
-      "label": "Instagram URL"
-    },
-    {
-      "type": "url",
-      "id": "twitter",
-      "label": "Twitter/X URL"
-    },
-    {
-      "type": "url",
-      "id": "youtube",
-      "label": "YouTube URL"
-    },
-    {
-      "type": "url",
-      "id": "tiktok",
-      "label": "TikTok URL"
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "blocks": [
@@ -922,6 +966,12 @@ document.addEventListener('DOMContentLoaded', function() {
           "type": "link_list",
           "id": "menu",
           "label": "Menu"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "Özel CSS (Block)",
+          "info": "Bu block için özel CSS"
         }
       ]
     },
@@ -956,6 +1006,12 @@ document.addEventListener('DOMContentLoaded', function() {
           "id": "hours",
           "label": "Business Hours",
           "default": "Mon - Fri: 9AM - 6PM"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "Özel CSS (Block)",
+          "info": "Bu block için özel CSS"
         }
       ]
     }

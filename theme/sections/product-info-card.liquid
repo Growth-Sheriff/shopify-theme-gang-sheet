@@ -2,6 +2,7 @@
   Product Info Card Section - CloudyPrints
   Ürün bilgisi, fiyat, rating ve sepete ekle kartı
 {% endcomment %}
+{%- render 'custom-css-renderer', section: section -%}
 
 {{ 'product-page.css' | asset_url | stylesheet_tag }}
 
@@ -37,10 +38,13 @@
       <span class="price-badge">{{ section.settings.price_badge }}</span>
     {% endif %}
     <div class="price-row">
-      <span class="current-price">{{ product.price | money }}</span>
-      {% if product.compare_at_price > product.price %}
-        <span class="compare-price">{{ product.compare_at_price | money }}</span>
-        <span class="save-badge">Save {{ product.compare_at_price | minus: product.price | money }}</span>
+      <span class="current-price" id="mainPrice">{{ product.selected_or_first_available_variant.price | money }}</span>
+      {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
+        <span class="compare-price" id="comparePrice">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
+        <span class="save-badge" id="saveBadge">Save {{ product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price | money }}</span>
+      {% else %}
+        <span class="compare-price" id="comparePrice" style="display:none;"></span>
+        <span class="save-badge" id="saveBadge" style="display:none;"></span>
       {% endif %}
     </div>
   </div>
@@ -87,7 +91,7 @@
               <button type="button" class="qty-btn" onclick="changeQuantity(-1)">
                 <i class="ti ti-minus"></i>
               </button>
-              <input type="number" id="productQuantity" name="quantity" value="1" min="1" max="999" class="qty-input">
+              <input type="number" id="productQuantityDropdown" name="quantity" value="1" min="1" max="999" class="qty-input product-qty-input">
               <button type="button" class="qty-btn" onclick="changeQuantity(1)">
                 <i class="ti ti-plus"></i>
               </button>
@@ -142,7 +146,7 @@
       <button type="button" class="qty-btn" onclick="changeQuantity(-1)">
         <i class="ti ti-minus"></i>
       </button>
-      <input type="number" id="productQuantity" name="quantity" value="1" min="1" max="999" class="qty-input">
+      <input type="number" id="productQuantityNormal" name="quantity" value="1" min="1" max="999" class="qty-input product-qty-input">
       <button type="button" class="qty-btn" onclick="changeQuantity(1)">
         <i class="ti ti-plus"></i>
       </button>
@@ -822,8 +826,10 @@
 </style>
 
 <script>
-// Store product variants for lookup
+// Store product variants and option names for lookup
 window.productVariants = {{ product.variants | json }};
+window.productOptionNames = {{ product.options | json }};
+window.moneyFormat = {{ shop.money_format | json }};
 
 function selectVariantOption(optionName, optionValue, btn) {
   // Update active state on buttons
@@ -842,24 +848,37 @@ function updateSelectedVariant() {
   // Collect all selected options (from buttons and dropdowns)
   const selectedOptions = {};
   
+  // Check buttons in variant-option-section
   document.querySelectorAll('.variant-option-section').forEach(sec => {
-    // Check for active button
     const activeBtn = sec.querySelector('.variant-btn.active');
     if (activeBtn) {
       selectedOptions[activeBtn.dataset.optionName] = activeBtn.dataset.optionValue;
     }
-    
-    // Check for dropdown
-    const select = sec.querySelector('.variant-select');
-    if (select) {
+  });
+  
+  // Check dropdowns in size-quantity-row (separate from variant-option-section)
+  document.querySelectorAll('.size-quantity-row .variant-select, .size-dropdown-col .variant-select').forEach(select => {
+    if (select && select.dataset.optionName) {
+      selectedOptions[select.dataset.optionName] = select.value;
+    }
+  });
+  
+  // Also check any standalone dropdowns
+  document.querySelectorAll('.variant-option-section .variant-select').forEach(select => {
+    if (select && select.dataset.optionName) {
       selectedOptions[select.dataset.optionName] = select.value;
     }
   });
   
   // Find variant matching all selected options
+  // Shopify stores options as option1, option2, option3 in order of product.options
+  const optionNames = window.productOptionNames || [];
+  
   const matchingVariant = window.productVariants.find(variant => {
-    return Object.keys(selectedOptions).every((optName, index) => {
-      return variant['option' + (index + 1)] === selectedOptions[optName];
+    return optionNames.every((optName, index) => {
+      const optionKey = 'option' + (index + 1);
+      const selectedValue = selectedOptions[optName];
+      return !selectedValue || variant[optionKey] === selectedValue;
     });
   });
   
@@ -867,15 +886,41 @@ function updateSelectedVariant() {
     // Update hidden variant input
     document.getElementById('selectedVariant').value = matchingVariant.id;
     
-    // Update price display
-    const priceDisplay = document.getElementById('cartBtnPrice');
+    // Format price helper
     const formatPrice = (price) => {
-      if (window.Shopify && Shopify.formatMoney) {
-        return Shopify.formatMoney(price);
+      if (window.Shopify && window.Shopify.formatMoney) {
+        return Shopify.formatMoney(price, window.moneyFormat || '${{amount}}');
       }
       return '$' + (price / 100).toFixed(2);
     };
     
+    // Update MAIN price display
+    const mainPrice = document.getElementById('mainPrice');
+    if (mainPrice) {
+      mainPrice.textContent = formatPrice(matchingVariant.price);
+    }
+    
+    // Update compare price and save badge
+    const comparePrice = document.getElementById('comparePrice');
+    const saveBadge = document.getElementById('saveBadge');
+    
+    if (matchingVariant.compare_at_price && matchingVariant.compare_at_price > matchingVariant.price) {
+      const savings = matchingVariant.compare_at_price - matchingVariant.price;
+      if (comparePrice) {
+        comparePrice.textContent = formatPrice(matchingVariant.compare_at_price);
+        comparePrice.style.display = '';
+      }
+      if (saveBadge) {
+        saveBadge.textContent = 'Save ' + formatPrice(savings);
+        saveBadge.style.display = '';
+      }
+    } else {
+      if (comparePrice) comparePrice.style.display = 'none';
+      if (saveBadge) saveBadge.style.display = 'none';
+    }
+    
+    // Update button price
+    const priceDisplay = document.getElementById('cartBtnPrice');
     if (priceDisplay) {
       priceDisplay.textContent = formatPrice(matchingVariant.price);
     }
@@ -892,31 +937,74 @@ function updateSelectedVariant() {
       }
     }
     
+    // Update Buy Now button state
+    const buyBtn = document.querySelector('.buy-now-btn');
+    if (buyBtn) {
+      buyBtn.disabled = !matchingVariant.available;
+    }
+    
     // Update URL with variant
     if (history.replaceState) {
       const url = new URL(window.location.href);
       url.searchParams.set('variant', matchingVariant.id);
       history.replaceState({}, '', url);
     }
+    
+    // Update product images if variant has image
+    if (matchingVariant.featured_image) {
+      const mainImg = document.querySelector('.main-image img, .product-image-main img');
+      if (mainImg) {
+        mainImg.src = matchingVariant.featured_image.src;
+      }
+    }
   }
 }
 
 function changeQuantity(delta) {
-  const input = document.getElementById('productQuantity');
+  // Find the active quantity input (either dropdown or normal version)
+  const dropdownInput = document.getElementById('productQuantityDropdown');
+  const normalInput = document.getElementById('productQuantityNormal');
+  const input = dropdownInput || normalInput;
   const cartQty = document.getElementById('cartQuantity');
+  
+  if (!input) return;
+  
   let value = parseInt(input.value) + delta;
   if (value < 1) value = 1;
   if (value > 999) value = 999;
   input.value = value;
   if (cartQty) cartQty.value = value;
+  
+  // Update button price with quantity
+  updatePriceWithQuantity();
+}
+
+function updatePriceWithQuantity() {
+  const dropdownInput = document.getElementById('productQuantityDropdown');
+  const normalInput = document.getElementById('productQuantityNormal');
+  const input = dropdownInput || normalInput;
+  const quantity = input ? parseInt(input.value) : 1;
+  const cartQty = document.getElementById('cartQuantity');
+  if (cartQty) cartQty.value = quantity;
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  const qtyInput = document.getElementById('productQuantity');
+  // Sync quantity inputs with hidden cart quantity
+  const dropdownInput = document.getElementById('productQuantityDropdown');
+  const normalInput = document.getElementById('productQuantityNormal');
+  const qtyInput = dropdownInput || normalInput;
   const cartQty = document.getElementById('cartQuantity');
   
   if (qtyInput) {
     qtyInput.addEventListener('change', function() {
+      let val = parseInt(this.value);
+      if (val < 1) val = 1;
+      if (val > 999) val = 999;
+      this.value = val;
+      if (cartQty) cartQty.value = val;
+    });
+    
+    qtyInput.addEventListener('input', function() {
       if (cartQty) cartQty.value = this.value;
     });
   }
@@ -926,7 +1014,8 @@ document.addEventListener('DOMContentLoaded', function() {
   if (buyNowBtn && !buyNowBtn.disabled) {
     buyNowBtn.addEventListener('click', async function() {
       const variantId = document.getElementById('selectedVariant')?.value;
-      const quantity = document.getElementById('productQuantity')?.value || 1;
+      const qtyInputNow = document.getElementById('productQuantityDropdown') || document.getElementById('productQuantityNormal');
+      const quantity = qtyInputNow?.value || 1;
       
       if (!variantId) return;
       
@@ -1060,6 +1149,16 @@ document.addEventListener('DOMContentLoaded', function() {
       "id": "badge_3",
       "label": "Badge 3",
       "default": "Easy Returns"
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "presets": [

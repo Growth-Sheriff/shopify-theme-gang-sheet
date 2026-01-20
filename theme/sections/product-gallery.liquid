@@ -2,6 +2,7 @@
   Product Gallery & Info Section - CloudyPrints
   Standard product gallery with thumbnails and product info
 {% endcomment %}
+{%- render 'custom-css-renderer', section: section -%}
 
 {{ 'product-page.css' | asset_url | stylesheet_tag }}
 
@@ -860,63 +861,13 @@
     },
     {
       "type": "header",
-      "content": "Delivery"
+      "content": "⚙️ Gelişmiş"
     },
     {
-      "type": "checkbox",
-      "id": "show_delivery",
-      "label": "Show Delivery Card",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "delivery_time",
-      "label": "Delivery Time",
-      "default": "Tomorrow 5PM – 9PM"
-    },
-    {
-      "type": "text",
-      "id": "order_by",
-      "label": "Order By Text",
-      "default": "Order by 3PM"
-    },
-    {
-      "type": "header",
-      "content": "Price Box"
-    },
-    {
-      "type": "text",
-      "id": "price_badge",
-      "label": "Price Badge Text",
-      "default": "Limited Time Offer"
-    },
-    {
-      "type": "header",
-      "content": "Trust Badges"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_trust_badges",
-      "label": "Show Trust Badges",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "badge_1",
-      "label": "Badge 1",
-      "default": "Secure Checkout"
-    },
-    {
-      "type": "text",
-      "id": "badge_2",
-      "label": "Badge 2",
-      "default": "Fast Shipping"
-    },
-    {
-      "type": "text",
-      "id": "badge_3",
-      "label": "Badge 3",
-      "default": "Easy Returns"
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "presets": [

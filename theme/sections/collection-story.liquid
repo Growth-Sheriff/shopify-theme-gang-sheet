@@ -2,6 +2,7 @@
   Collection Story Section
   A storytelling section for collection pages
 {% endcomment %}
+{%- render 'custom-css-renderer', section: section -%}
 
 {% if section.settings.show_section %}
 <section class="cp-collection-story {% if section.settings.layout == 'image-right' %}cp-story-reversed{% endif %}">
@@ -439,6 +440,16 @@
       "step": 10,
       "default": 60,
       "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "presets": [

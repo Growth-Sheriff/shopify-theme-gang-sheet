@@ -7,6 +7,7 @@
   - Care Instructions: Product Metafields → Section Blocks → Defaults
   - Shipping: Theme Settings (global for all products)
 {% endcomment %}
+{%- render 'custom-css-renderer', section: section -%}
 
 {% comment %} === Assign Press Values (Metafield > Section > Theme Settings) === {% endcomment %}
 {% assign press_temp = product.metafields.custom.press_temperature | default: section.settings.press_temp | default: settings.press_temperature | default: '285°F - 300°F' %}
@@ -336,6 +337,16 @@
       "id": "free_shipping_threshold",
       "label": "Free Shipping Threshold",
       "default": "Orders $59+"
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "blocks": [
@@ -354,6 +365,12 @@
           "id": "text",
           "label": "Instruction Text",
           "default": "Wash inside out"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "Özel CSS (Block)",
+          "info": "Bu block için özel CSS"
         }
       ]
     }

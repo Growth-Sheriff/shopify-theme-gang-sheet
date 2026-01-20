@@ -1,0 +1,35 @@
+{
+  "name": "Press Instructions",
+  "namespace": "custom",
+  "description": "Product-specific press/heat transfer instructions for DTF products",
+  "metafields": [
+    {
+      "key": "press_temp",
+      "name": "Press Temperature",
+      "description": "Heat press temperature (e.g., 275°F - 285°F)",
+      "type": "single_line_text_field",
+      "ownerType": "PRODUCT"
+    },
+    {
+      "key": "press_time",
+      "name": "Press Time",
+      "description": "Heat press duration (e.g., 10-15 Seconds)",
+      "type": "single_line_text_field",
+      "ownerType": "PRODUCT"
+    },
+    {
+      "key": "press_pressure",
+      "name": "Press Pressure",
+      "description": "Heat press pressure level (e.g., Medium-High)",
+      "type": "single_line_text_field",
+      "ownerType": "PRODUCT"
+    },
+    {
+      "key": "press_peel",
+      "name": "Peel Method",
+      "description": "How to peel after pressing (e.g., Cold Peel)",
+      "type": "single_line_text_field",
+      "ownerType": "PRODUCT"
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{% comment %}
+  ============================================
+  Delivery Calculator - Cart Page Snippet
+  ============================================
+  
+  Bu snippet, sepet sayfasında teslimat hesaplaması için 
+  gerekli verileri JavaScript'e aktarır.
+  
+  Kullanım:
+  {% render 'delivery-cart-data' %}
+  
+{% endcomment %}
+
+{% liquid
+  # Sepet boş mu kontrol
+  assign cart_has_items = false
+  if cart.item_count > 0
+    assign cart_has_items = true
+  endif
+%}
+
+{% if cart_has_items %}
+  <script type="application/json" id="delivery-cart-data">
+  {
+    "itemCount": {{ cart.item_count }},
+    "totalWeight": {{ cart.total_weight }},
+    "items": [
+      {% for item in cart.items %}
+        {
+          "id": {{ item.product.id | json }},
+          "variantId": {{ item.variant.id | json }},
+          "title": {{ item.product.title | json }},
+          "quantity": {{ item.quantity }},
+          "vendor": {{ item.vendor | json }},
+          "weight": {{ item.variant.weight | json }},
+          "carrier": {{ item.product.metafields.shipping.carrier | default: nil | json }},
+          "processingDays": {{ item.product.metafields.shipping.processing_days | default: 0 | json }},
+          "shipsFrom": {{ item.product.metafields.shipping.ships_from | default: nil | json }},
+          "isPreorder": {% if item.product.tags contains 'preorder' %}true{% else %}false{% endif %},
+          "requiresShipping": {{ item.requires_shipping | json }}
+        }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ],
+    "requiresShipping": {{ cart.requires_shipping | json }}
+  }
+  </script>
+{% else %}
+  <script type="application/json" id="delivery-cart-data">
+  {
+    "itemCount": 0,
+    "items": [],
+    "requiresShipping": false
+  }
+  </script>
+{% endif %}
+
+{% comment %} Müşteri lokasyon bilgisi {% endcomment %}
+{% if customer and customer.default_address %}
+  <script type="application/json" id="delivery-customer-location">
+  {
+    "hasAddress": true,
+    "city": {{ customer.default_address.city | json }},
+    "state": {{ customer.default_address.province_code | json }},
+    "zip": {{ customer.default_address.zip | json }},
+    "country": {{ customer.default_address.country_code | json }}
+  }
+  </script>
+{% endif %}

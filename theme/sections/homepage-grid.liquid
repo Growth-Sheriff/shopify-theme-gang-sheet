@@ -3,6 +3,8 @@
   Fully Customizable Product Cards with cp Design System
 {% endcomment %}
 
+{%- render 'custom-css-renderer', section: section -%}
+
 <section class="cp-product-grid-section" style="background: {{ section.settings.section_bg }}; padding: {{ section.settings.section_padding | default: '2rem 0' }};">
   <div class="container">
     <!-- Section Header -->
@@ -71,7 +73,12 @@
             <div class="cp-product-image">
               <a href="{{ product.url }}">
                 {% if product.featured_image %}
-                  <img src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.title }}" width="400" height="400" loading="lazy">
+                  <img src="{{ product.featured_image | image_url: width: 400 }}" 
+                       alt="{{ product.title }}" 
+                       width="400" 
+                       height="400" 
+                       loading="{% if forloop.index <= 4 %}eager{% else %}lazy{% endif %}"
+                       decoding="async">
                 {% else %}
                   <div class="cp-placeholder"><i class="fa-solid fa-image"></i></div>
                 {% endif %}
@@ -156,16 +163,23 @@
                 </div>
               {% endif %}
               
-              {%- comment -%} Add to Cart (Hidden when upload mode is enabled) {%- endcomment -%}
+              {%- comment -%} Add to Cart or Go to Product (Hidden when upload mode is enabled) {%- endcomment -%}
               {% if section.settings.show_add_to_cart %}
               {% unless section.settings.enable_upload_mode %}
-              <form action="{{ routes.cart_add_url }}" method="post" class="cp-add-form">
-                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-                <button type="submit" class="sb-btn" {% unless product.available %}disabled{% endunless %}>
-                  <i class="fa-solid fa-shopping-cart"></i>
-                  {{ section.settings.add_to_cart_text }}
-                </button>
-              </form>
+              {% if section.settings.button_action == 'go_to_product' %}
+                <a href="{{ product.url }}" class="sb-btn">
+                  <i class="fa-solid fa-arrow-right"></i>
+                  {{ section.settings.view_product_text | default: 'View Product' }}
+                </a>
+              {% else %}
+                <form action="{{ routes.cart_add_url }}" method="post" class="cp-add-form">
+                  <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                  <button type="submit" class="sb-btn" {% unless product.available %}disabled{% endunless %}>
+                    <i class="fa-solid fa-shopping-cart"></i>
+                    {{ section.settings.add_to_cart_text }}
+                  </button>
+                </form>
+              {% endif %}
               {% endunless %}
               {% endif %}
             </div>
@@ -253,16 +267,28 @@
                     </div>
                   {% endif %}
                   
-                  {%- comment -%} Add to Cart (Hidden when upload mode is enabled) {%- endcomment -%}
+                  {%- comment -%} Add to Cart or Go to Product (Hidden when upload mode is enabled) {%- endcomment -%}
                   {% if section.settings.show_add_to_cart %}
                   {% unless block.settings.enable_upload_mode %}
-                  <form action="{{ routes.cart_add_url }}" method="post" class="cp-add-form">
-                    <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
-                    <button type="submit" class="sb-btn" {% unless card_product.available %}disabled{% endunless %}>
-                      <i class="fa-solid fa-shopping-cart"></i>
-                      {{ section.settings.add_to_cart_text }}
-                    </button>
-                  </form>
+                  {%- assign grid_btn_action = block.settings.button_action | default: 'default' -%}
+                  {%- if grid_btn_action == 'default' -%}
+                    {%- assign grid_btn_action = section.settings.button_action | default: 'add_to_cart' -%}
+                  {%- endif -%}
+                  
+                  {% if grid_btn_action == 'go_to_product' %}
+                    <a href="{{ card_product.url }}" class="sb-btn">
+                      <i class="fa-solid fa-arrow-right"></i>
+                      {{ section.settings.view_product_text | default: 'View Product' }}
+                    </a>
+                  {% else %}
+                    <form action="{{ routes.cart_add_url }}" method="post" class="cp-add-form">
+                      <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+                      <button type="submit" class="sb-btn" {% unless card_product.available %}disabled{% endunless %}>
+                        <i class="fa-solid fa-shopping-cart"></i>
+                        {{ section.settings.add_to_cart_text }}
+                      </button>
+                    </form>
+                  {% endif %}
                   {% endunless %}
                   {% endif %}
                 </div>
@@ -389,7 +415,7 @@
     font-size: 1.4rem;
     font-weight: 600;
     margin-bottom: 0.35rem;
-    font-family: 'Public Sans', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     color: #2d2d2d !important;
     letter-spacing: 0.01em;
   }
@@ -779,59 +805,6 @@
       "default": "Our Products"
     },
     {
-      "type": "color",
-      "id": "badge_bg",
-      "label": "Badge Background",
-      "default": "#e5e3fb"
-    },
-    {
-      "type": "color",
-      "id": "badge_color",
-      "label": "Badge Text Color",
-      "default": "#7367F0"
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Title",
-      "default": "Popular Transfer Types"
-    },
-    {
-      "type": "color",
-      "id": "title_color",
-      "label": "Title Color",
-      "default": "#5d596c"
-    },
-    {
-      "type": "textarea",
-      "id": "subtitle",
-      "label": "Subtitle",
-      "default": "Choose from our wide selection of high-quality transfer products."
-    },
-    {
-      "type": "color",
-      "id": "subtitle_color",
-      "label": "Subtitle Color",
-      "default": "#6e6b7b"
-    },
-    {
-      "type": "select",
-      "id": "header_align",
-      "label": "Header Alignment",
-      "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" },
-        { "value": "right", "label": "Right" }
-      ],
-      "default": "center"
-    },
-    {
-      "type": "text",
-      "id": "header_margin",
-      "label": "Header Bottom Margin",
-      "default": "2.5rem"
-    },
-    {
       "type": "header",
       "content": "Product Source"
     },
@@ -1033,6 +1006,24 @@
     },
     {
       "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "paragraph",
+      "content": "⚠️ These settings only work when 'Enable Upload Mode' is OFF"
+    },
+    {
+      "type": "select",
+      "id": "button_action",
+      "label": "Button Action",
+      "options": [
+        { "value": "add_to_cart", "label": "Add to Cart" },
+        { "value": "go_to_product", "label": "Go to Product Page" }
+      ],
+      "default": "add_to_cart"
+    },
+    {
+      "type": "header",
       "content": "Upload Settings"
     },
     {
@@ -1041,6 +1032,16 @@
       "label": "Enable Upload Mode",
       "default": false,
       "info": "When enabled, shows Upload button and hides Add to Cart for auto-loaded collection products"
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "blocks": [
@@ -1135,6 +1136,21 @@
         },
         {
           "type": "header",
+          "content": "Button Settings"
+        },
+        {
+          "type": "select",
+          "id": "button_action",
+          "label": "Button Action",
+          "options": [
+            { "value": "default", "label": "Use Global Setting" },
+            { "value": "add_to_cart", "label": "Add to Cart" },
+            { "value": "go_to_product", "label": "Go to Product Page" }
+          ],
+          "default": "default"
+        },
+        {
+          "type": "header",
           "content": "Upload Settings"
         },
         {
@@ -1143,6 +1159,12 @@
           "label": "Enable Upload Mode",
           "default": false,
           "info": "When enabled, shows Upload button and hides Add to Cart"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "Özel CSS (Block)",
+          "info": "Bu block için özel CSS"
         }
       ]
     }

@@ -3,6 +3,8 @@
   All elements customizable via Theme Editor
 {% endcomment %}
 
+{%- render 'custom-css-renderer', section: section -%}
+
 <section class="cp-features" id="features" style="background: {{ section.settings.section_bg | default: '#ffffff' }};">
   <div class="container">
     {%- comment -%} Desktop Elegant Header - Coral Theme {%- endcomment -%}
@@ -242,58 +244,10 @@
       "default": "Why Choose Us"
     },
     {
-      "type": "color",
-      "id": "badge_bg",
-      "label": "Badge Background",
-      "default": "#e5e3fb"
-    },
-    {
-      "type": "color",
-      "id": "badge_color",
-      "label": "Badge Text Color",
-      "default": "#7367F0"
-    },
-    {
       "type": "text",
       "id": "title",
       "label": "Section Title",
       "default": "Everything You Need for Custom Printing"
-    },
-    {
-      "type": "color",
-      "id": "title_color",
-      "label": "Title Color",
-      "default": "#5d596c"
-    },
-    {
-      "type": "textarea",
-      "id": "subtitle",
-      "label": "Section Subtitle",
-      "default": "From design to delivery, we provide the best DTF transfer experience in the industry."
-    },
-    {
-      "type": "color",
-      "id": "subtitle_color",
-      "label": "Subtitle Color",
-      "default": "#6e6b7b"
-    },
-    {
-      "type": "header",
-      "content": "Grid Layout"
-    },
-    {
-      "type": "range",
-      "id": "columns",
-      "label": "Columns",
-      "min": 2,
-      "max": 4,
-      "default": 3
-    },
-    {
-      "type": "text",
-      "id": "grid_gap",
-      "label": "Grid Gap",
-      "default": "1.5rem"
     },
     {
       "type": "header",
@@ -322,6 +276,16 @@
       "id": "card_desc_color",
       "label": "Card Description Color",
       "default": "#6e6b7b"
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "blocks": [
@@ -359,6 +323,12 @@
           "id": "description",
           "label": "Feature Description",
           "default": "Vibrant colors, soft feel, and exceptional durability. Our transfers last through hundreds of washes."
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "Özel CSS (Block)",
+          "info": "Bu block için özel CSS"
         }
       ]
     }

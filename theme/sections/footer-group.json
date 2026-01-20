@@ -5,32 +5,53 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "column_customer_care": {
+        "links_customer_care": {
           "type": "link_column",
           "settings": {
             "title": "Customer Care",
             "menu": "customer-care"
           }
         },
-        "column_custom_transfers": {
+        "links_custom_transfers": {
           "type": "link_column",
           "settings": {
             "title": "Custom Transfers",
             "menu": "custom-transfers"
           }
         },
-        "column_dtf_supplies": {
+        "links_dtf_supplies": {
           "type": "link_column",
           "settings": {
             "title": "DTF Supplies",
             "menu": "dtf-supplies"
           }
         },
-        "column_dtf_transfer": {
+        "links_dtf_transfer": {
           "type": "link_column",
           "settings": {
             "title": "DTF Transfer",
             "menu": "dtf-transfer"
+          }
+        },
+        "links_custom_dtf": {
+          "type": "link_column",
+          "settings": {
+            "title": "Custom DTF Transfer",
+            "menu": "custom-dtf-transfer"
+          }
+        },
+        "links_uv_dtf": {
+          "type": "link_column",
+          "settings": {
+            "title": "UV DTF Transfer",
+            "menu": "uv-dtf-transfer"
+          }
+        },
+        "links_quick_access": {
+          "type": "link_column",
+          "settings": {
+            "title": "Quick Access",
+            "menu": "quick-access-to-products-1"
           }
         },
         "contact_info": {
@@ -45,10 +66,13 @@
         }
       },
       "block_order": [
-        "column_customer_care",
-        "column_custom_transfers",
-        "column_dtf_supplies",
-        "column_dtf_transfer",
+        "links_customer_care",
+        "links_custom_transfers",
+        "links_dtf_supplies",
+        "links_dtf_transfer",
+        "links_custom_dtf",
+        "links_uv_dtf",
+        "links_quick_access",
         "contact_info"
       ],
       "settings": {

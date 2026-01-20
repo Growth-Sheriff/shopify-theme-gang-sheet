@@ -1,0 +1,856 @@
+{% comment %}
+  ╔══════════════════════════════════════════════════════════════════════════════╗
+  ║  MEVLUTV1 - Icon Card Grid Section                                            ║
+  ║  Version: 1.0.0                                                               ║
+  ║  Features:                                                                    ║
+  ║  • Flexible icon cards with blocks                                            ║
+  ║  • Icon + Title + Description + Button per card                               ║
+  ║  • Linkable icons and titles                                                  ║
+  ║  • Rich customization options                                                 ║
+  ║  • Fully responsive grid                                                      ║
+  ╚══════════════════════════════════════════════════════════════════════════════╝
+{% endcomment %}
+
+{%- liquid
+  assign section_id = 'mevlutv1-' | append: section.id
+  assign columns_desktop = section.settings.columns_desktop | default: 4
+  assign columns_tablet = section.settings.columns_tablet | default: 2
+  assign columns_mobile = section.settings.columns_mobile | default: 1
+-%}
+
+<style>
+  /* ═══════════════════════════════════════════════════════════════════════════
+     CSS VARIABLES
+     ═══════════════════════════════════════════════════════════════════════════ */
+  #{{ section_id }} {
+    --mv1-bg: {{ section.settings.section_bg }};
+    --mv1-padding-top: {{ section.settings.padding_top }}px;
+    --mv1-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --mv1-gap: {{ section.settings.card_gap }}px;
+    --mv1-columns-desktop: {{ columns_desktop }};
+    --mv1-columns-tablet: {{ columns_tablet }};
+    --mv1-columns-mobile: {{ columns_mobile }};
+    
+    --mv1-card-bg: {{ section.settings.card_bg }};
+    --mv1-card-radius: {{ section.settings.card_radius }}px;
+    --mv1-card-padding: {{ section.settings.card_padding }}px;
+    --mv1-card-shadow: {{ section.settings.card_shadow }};
+    --mv1-card-border: {{ section.settings.card_border }};
+    
+    --mv1-icon-size: {{ section.settings.icon_size }}px;
+    --mv1-icon-color: {{ section.settings.icon_color }};
+    --mv1-icon-bg: {{ section.settings.icon_bg }};
+    --mv1-icon-radius: {{ section.settings.icon_radius }}px;
+    
+    --mv1-title-color: {{ section.settings.title_color }};
+    --mv1-title-size: {{ section.settings.title_size }}px;
+    --mv1-text-color: {{ section.settings.text_color }};
+    --mv1-text-size: {{ section.settings.text_size }}px;
+    
+    --mv1-btn-bg: {{ section.settings.button_bg }};
+    --mv1-btn-color: {{ section.settings.button_color }};
+    --mv1-btn-radius: {{ section.settings.button_radius }}px;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════
+     BASE STYLES
+     ═══════════════════════════════════════════════════════════════════════════ */
+  #{{ section_id }} {
+    background: var(--mv1-bg);
+    padding-top: var(--mv1-padding-top);
+    padding-bottom: var(--mv1-padding-bottom);
+  }
+
+  #{{ section_id }} .mv1-container {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* Section Header */
+  #{{ section_id }} .mv1-header {
+    text-align: {{ section.settings.header_align }};
+    margin-bottom: {{ section.settings.header_spacing }}px;
+  }
+
+  #{{ section_id }} .mv1-section-badge {
+    display: inline-block;
+    background: {{ section.settings.badge_bg }};
+    color: {{ section.settings.badge_color }};
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+
+  #{{ section_id }} .mv1-section-title {
+    font-size: clamp(1.5rem, 4vw, {{ section.settings.section_title_size }}px);
+    font-weight: {{ section.settings.section_title_weight }};
+    color: {{ section.settings.section_title_color }};
+    margin: 0 0 12px 0;
+    line-height: 1.3;
+  }
+
+  #{{ section_id }} .mv1-section-subtitle {
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    color: {{ section.settings.section_subtitle_color }};
+    margin: 0;
+    max-width: 600px;
+    {% if section.settings.header_align == 'center' %}
+    margin-left: auto;
+    margin-right: auto;
+    {% endif %}
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════
+     CARDS GRID
+     ═══════════════════════════════════════════════════════════════════════════ */
+  #{{ section_id }} .mv1-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--mv1-columns-desktop), 1fr);
+    gap: var(--mv1-gap);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════
+     CARD STYLES
+     ═══════════════════════════════════════════════════════════════════════════ */
+  #{{ section_id }} .mv1-card {
+    background: var(--mv1-card-bg);
+    border-radius: var(--mv1-card-radius);
+    padding: var(--mv1-card-padding);
+    text-align: {{ section.settings.card_align }};
+    box-shadow: var(--mv1-card-shadow);
+    border: var(--mv1-card-border);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: {{ section.settings.card_align }};
+    height: 100%;
+  }
+
+  #{{ section_id }} .mv1-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+  }
+
+  /* Icon */
+  #{{ section_id }} .mv1-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(var(--mv1-icon-size) + 24px);
+    height: calc(var(--mv1-icon-size) + 24px);
+    background: var(--mv1-icon-bg);
+    border-radius: var(--mv1-icon-radius);
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+  }
+
+  #{{ section_id }} .mv1-card:hover .mv1-icon-wrap {
+    transform: scale(1.05);
+  }
+
+  #{{ section_id }} .mv1-icon-wrap i {
+    font-size: var(--mv1-icon-size);
+    color: var(--mv1-icon-color);
+  }
+
+  #{{ section_id }} .mv1-icon-wrap img,
+  #{{ section_id }} .mv1-icon-wrap svg {
+    width: var(--mv1-icon-size);
+    height: var(--mv1-icon-size);
+    object-fit: contain;
+  }
+
+  #{{ section_id }} .mv1-icon-link {
+    text-decoration: none;
+    display: block;
+  }
+
+  /* Title */
+  #{{ section_id }} .mv1-title {
+    font-size: var(--mv1-title-size);
+    font-weight: 600;
+    color: var(--mv1-title-color);
+    margin: 0 0 12px 0;
+    line-height: 1.3;
+  }
+
+  #{{ section_id }} .mv1-title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  #{{ section_id }} .mv1-title a:hover {
+    color: var(--mv1-icon-color);
+  }
+
+  /* Description */
+  #{{ section_id }} .mv1-description {
+    font-size: var(--mv1-text-size);
+    color: var(--mv1-text-color);
+    line-height: 1.6;
+    margin: 0 0 16px 0;
+    flex-grow: 1;
+  }
+
+  #{{ section_id }} .mv1-description p {
+    margin: 0 0 10px 0;
+  }
+
+  #{{ section_id }} .mv1-description p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Button */
+  #{{ section_id }} .mv1-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: var(--mv1-btn-bg);
+    color: var(--mv1-btn-color);
+    border: none;
+    border-radius: var(--mv1-btn-radius);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: auto;
+  }
+
+  #{{ section_id }} .mv1-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    opacity: 0.9;
+  }
+
+  #{{ section_id }} .mv1-btn-outline {
+    background: transparent;
+    border: 2px solid var(--mv1-btn-bg);
+    color: var(--mv1-btn-bg);
+  }
+
+  #{{ section_id }} .mv1-btn-outline:hover {
+    background: var(--mv1-btn-bg);
+    color: var(--mv1-btn-color);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════
+     RESPONSIVE
+     ═══════════════════════════════════════════════════════════════════════════ */
+  @media (max-width: 1024px) {
+    #{{ section_id }} .mv1-grid {
+      grid-template-columns: repeat(var(--mv1-columns-tablet), 1fr);
+    }
+  }
+
+  @media (max-width: 767px) {
+    #{{ section_id }} .mv1-grid {
+      grid-template-columns: repeat(var(--mv1-columns-mobile), 1fr);
+      gap: calc(var(--mv1-gap) * 0.75);
+    }
+
+    #{{ section_id }} .mv1-card {
+      padding: calc(var(--mv1-card-padding) * 0.8);
+    }
+
+    #{{ section_id }} .mv1-icon-wrap {
+      width: calc(var(--mv1-icon-size) * 0.9 + 20px);
+      height: calc(var(--mv1-icon-size) * 0.9 + 20px);
+      margin-bottom: 16px;
+    }
+
+    #{{ section_id }} .mv1-icon-wrap i {
+      font-size: calc(var(--mv1-icon-size) * 0.9);
+    }
+
+    #{{ section_id }} .mv1-title {
+      font-size: calc(var(--mv1-title-size) * 0.9);
+    }
+
+    #{{ section_id }} .mv1-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+
+<section id="{{ section_id }}" class="mevlutv1-section">
+  <div class="mv1-container">
+    
+    {%- comment -%} Section Header {%- endcomment -%}
+    {% if section.settings.show_header %}
+    <div class="mv1-header">
+      {% if section.settings.badge_text != blank %}
+        <span class="mv1-section-badge">{{ section.settings.badge_text }}</span>
+      {% endif %}
+      {% if section.settings.section_title != blank %}
+        <h2 class="mv1-section-title">{{ section.settings.section_title }}</h2>
+      {% endif %}
+      {% if section.settings.section_subtitle != blank %}
+        <p class="mv1-section-subtitle">{{ section.settings.section_subtitle }}</p>
+      {% endif %}
+    </div>
+    {% endif %}
+    
+    {%- comment -%} Cards Grid {%- endcomment -%}
+    <div class="mv1-grid">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'card' %}
+            <div class="mv1-card" {{ block.shopify_attributes }}>
+              
+              {%- comment -%} Icon {%- endcomment -%}
+              {% if block.settings.icon_type != 'none' %}
+                {% if block.settings.icon_link != blank %}
+                  <a href="{{ block.settings.icon_link }}" class="mv1-icon-link">
+                {% endif %}
+                
+                <div class="mv1-icon-wrap" {% if block.settings.icon_bg_custom != blank %}style="background: {{ block.settings.icon_bg_custom }};"{% endif %}>
+                  {% if block.settings.icon_type == 'font' %}
+                    <i class="{{ block.settings.icon_class | default: 'fa-solid fa-star' }}" {% if block.settings.icon_color_custom != blank %}style="color: {{ block.settings.icon_color_custom }};"{% endif %}></i>
+                  {% elsif block.settings.icon_type == 'image' and block.settings.icon_image != blank %}
+                    <img src="{{ block.settings.icon_image | image_url: width: 100 }}" alt="{{ block.settings.title }}" loading="lazy">
+                  {% elsif block.settings.icon_type == 'svg' %}
+                    {{ block.settings.icon_svg }}
+                  {% endif %}
+                </div>
+                
+                {% if block.settings.icon_link != blank %}
+                  </a>
+                {% endif %}
+              {% endif %}
+              
+              {%- comment -%} Title {%- endcomment -%}
+              {% if block.settings.title != blank %}
+                <h3 class="mv1-title" {% if block.settings.title_color_custom != blank %}style="color: {{ block.settings.title_color_custom }};"{% endif %}>
+                  {% if block.settings.title_link != blank %}
+                    <a href="{{ block.settings.title_link }}">{{ block.settings.title }}</a>
+                  {% else %}
+                    {{ block.settings.title }}
+                  {% endif %}
+                </h3>
+              {% endif %}
+              
+              {%- comment -%} Description / RichText {%- endcomment -%}
+              {% if block.settings.description != blank %}
+                <div class="mv1-description">
+                  {{ block.settings.description }}
+                </div>
+              {% endif %}
+              
+              {%- comment -%} Button {%- endcomment -%}
+              {% if block.settings.show_button and block.settings.button_text != blank %}
+                <a href="{{ block.settings.button_link | default: '#' }}" 
+                   class="mv1-btn {% if block.settings.button_style == 'outline' %}mv1-btn-outline{% endif %}"
+                   {% if block.settings.button_bg_custom != blank %}style="{% if block.settings.button_style != 'outline' %}background: {{ block.settings.button_bg_custom }};{% else %}border-color: {{ block.settings.button_bg_custom }}; color: {{ block.settings.button_bg_custom }};{% endif %}"{% endif %}>
+                  {% if block.settings.button_icon != blank %}
+                    <i class="{{ block.settings.button_icon }}"></i>
+                  {% endif %}
+                  {{ block.settings.button_text }}
+                </a>
+              {% endif %}
+              
+            </div>
+        {% endcase %}
+      {% endfor %}
+    </div>
+    
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "MevlutV1 - Icon Cards",
+  "tag": "section",
+  "class": "section-mevlutv1",
+  "settings": [
+    {
+      "type": "header",
+      "content": "📐 Section Layout"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max Width (px)",
+      "min": 800,
+      "max": 1600,
+      "step": 50,
+      "default": 1400
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top (px)",
+      "min": 0,
+      "max": 150,
+      "step": 10,
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom (px)",
+      "min": 0,
+      "max": 150,
+      "step": 10,
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "📰 Section Header"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_header",
+      "label": "Show Section Header",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg",
+      "label": "Badge Background",
+      "default": "#7367F0"
+    },
+    {
+      "type": "color",
+      "id": "badge_color",
+      "label": "Badge Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "How Can We Help?"
+    },
+    {
+      "type": "range",
+      "id": "section_title_size",
+      "label": "Title Size (px)",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "default": 36
+    },
+    {
+      "type": "select",
+      "id": "section_title_weight",
+      "label": "Title Weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra Bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "color",
+      "id": "section_title_color",
+      "label": "Title Color",
+      "default": "#1a1a2e"
+    },
+    {
+      "type": "textarea",
+      "id": "section_subtitle",
+      "label": "Section Subtitle"
+    },
+    {
+      "type": "color",
+      "id": "section_subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#6c757d"
+    },
+    {
+      "type": "select",
+      "id": "header_align",
+      "label": "Header Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "header_spacing",
+      "label": "Header Bottom Spacing (px)",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "🎛️ Grid Settings"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns (Desktop)",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "label": "Columns (Tablet)",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "label": "Columns (Mobile)",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Card Gap (px)",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "🃏 Card Styles"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card Border Radius (px)",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "card_padding",
+      "label": "Card Padding (px)",
+      "min": 15,
+      "max": 60,
+      "step": 5,
+      "default": 35
+    },
+    {
+      "type": "text",
+      "id": "card_shadow",
+      "label": "Card Shadow",
+      "default": "0 2px 15px rgba(0,0,0,0.06)"
+    },
+    {
+      "type": "text",
+      "id": "card_border",
+      "label": "Card Border",
+      "default": "1px solid #f0f0f0"
+    },
+    {
+      "type": "select",
+      "id": "card_align",
+      "label": "Card Content Alignment",
+      "options": [
+        { "value": "flex-start", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "🎨 Default Icon Styles"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon Size (px)",
+      "min": 24,
+      "max": 80,
+      "step": 4,
+      "default": 40
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon Color",
+      "default": "#1a1a2e"
+    },
+    {
+      "type": "color",
+      "id": "icon_bg",
+      "label": "Icon Background",
+      "default": "transparent"
+    },
+    {
+      "type": "range",
+      "id": "icon_radius",
+      "label": "Icon Border Radius (px)",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "✏️ Default Text Styles"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#1a1a2e"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title Size (px)",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Description Color",
+      "default": "#6c757d"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Description Size (px)",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "🔘 Default Button Styles"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button Background",
+      "default": "#7367F0"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "label": "Button Border Radius (px)",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 8
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "header",
+          "content": "🎨 Icon"
+        },
+        {
+          "type": "select",
+          "id": "icon_type",
+          "label": "Icon Type",
+          "options": [
+            { "value": "none", "label": "No Icon" },
+            { "value": "font", "label": "Font Icon (FontAwesome/Tabler)" },
+            { "value": "image", "label": "Image" },
+            { "value": "svg", "label": "Custom SVG" }
+          ],
+          "default": "font"
+        },
+        {
+          "type": "text",
+          "id": "icon_class",
+          "label": "Icon Class",
+          "info": "e.g., fa-solid fa-user, ti ti-home",
+          "default": "fa-regular fa-user"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Icon Image"
+        },
+        {
+          "type": "html",
+          "id": "icon_svg",
+          "label": "Custom SVG Code"
+        },
+        {
+          "type": "color",
+          "id": "icon_color_custom",
+          "label": "Icon Color (Override)"
+        },
+        {
+          "type": "color",
+          "id": "icon_bg_custom",
+          "label": "Icon Background (Override)"
+        },
+        {
+          "type": "url",
+          "id": "icon_link",
+          "label": "Icon Link"
+        },
+        {
+          "type": "header",
+          "content": "📝 Content"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "My Account"
+        },
+        {
+          "type": "color",
+          "id": "title_color_custom",
+          "label": "Title Color (Override)"
+        },
+        {
+          "type": "url",
+          "id": "title_link",
+          "label": "Title Link"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Manage your personal information and view your order history all in one place.</p>"
+        },
+        {
+          "type": "header",
+          "content": "🔘 Button"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_button",
+          "label": "Show Button",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Learn More"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        },
+        {
+          "type": "text",
+          "id": "button_icon",
+          "label": "Button Icon Class",
+          "info": "e.g., fa-solid fa-arrow-right"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button Style",
+          "options": [
+            { "value": "filled", "label": "Filled" },
+            { "value": "outline", "label": "Outline" }
+          ],
+          "default": "filled"
+        },
+        {
+          "type": "color",
+          "id": "button_bg_custom",
+          "label": "Button Color (Override)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "MevlutV1 - Icon Cards",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "icon_type": "font",
+            "icon_class": "fa-regular fa-user",
+            "title": "MY ACCOUNT",
+            "description": "<p>Manage your personal information and view your order history all in one place.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon_type": "font",
+            "icon_class": "fa-regular fa-comments",
+            "title": "CONTACT US",
+            "description": "<p>Contact us for any inquiries or support requests. We're here to assist you!</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon_type": "font",
+            "icon_class": "fa-regular fa-envelope-open",
+            "title": "ORDER SUPPORT",
+            "description": "<p>Create a case and get assistance with order issues like delays, missing items, or concerns.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon_type": "font",
+            "icon_class": "fa-regular fa-file-lines",
+            "title": "TAX EXEMPTION",
+            "description": "<p>Learn more about our tax exemption process and how to apply for eligibility.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

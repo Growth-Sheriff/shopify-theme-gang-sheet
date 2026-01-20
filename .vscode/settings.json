@@ -1,0 +1,76 @@
+{
+  // ===================================
+  // VS Code Editor Ayarları
+  // ===================================
+  
+  // Dosyaları editlerken sol panelde AÇMA
+  "workbench.editor.enablePreview": true,
+  "workbench.editor.enablePreviewFromQuickOpen": false,
+  "workbench.editor.enablePreviewFromCodeNavigation": false,
+  "workbench.editor.revealIfOpen": true,
+  
+  // Explorer'da dosyaları otomatik reveal YAPMA
+  "explorer.autoReveal": false,
+  
+  // Yeni dosyaları otomatik gösterme
+  "explorer.autoRevealExclude": {
+    "**/node_modules": true,
+    "**/.git": true,
+    "**/temp-*": true,
+    "**/.funclib": true
+  },
+  
+  // Tab limiti - çok fazla tab açılmasın
+  "workbench.editor.limit.enabled": true,
+  "workbench.editor.limit.value": 10,
+  "workbench.editor.limit.perEditorGroup": true,
+  
+  // Fokus değişikliğinde sidebar scroll yapmasın
+  "workbench.tree.enableStickyScroll": false,
+  
+  // ===================================
+  // Performans Ayarları (OOM önleme)
+  // ===================================
+  
+  // Büyük dosyaları işleme
+  "editor.largeFileOptimizations": true,
+  
+  // Search optimizasyonu
+  "search.followSymlinks": false,
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.git": true,
+    "**/temp-*": true,
+    "**/live-*": true,
+    "**/backup-*": true,
+    "**/.funclib": true,
+    "**/assets/vendor": true
+  },
+  
+  // File watcher exclude
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    "**/temp-*/**": true,
+    "**/live-*/**": true,
+    "**/backup-*/**": true,
+    "**/.funclib/**": true
+  },
+  
+  // ===================================
+  // Liquid/Shopify Ayarları
+  // ===================================
+  "files.associations": {
+    "*.liquid": "liquid"
+  },
+  
+  // JSON with comments (settings_schema için)
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": false
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}

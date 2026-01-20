@@ -8,6 +8,70 @@
     "theme_support_url": "https://cloudyprints.com/support"
   },
   {
+    "name": "Sosyal Medya",
+    "settings": [
+      {
+        "type": "header",
+        "content": "📱 Sosyal Medya Linkleri"
+      },
+      {
+        "type": "paragraph",
+        "content": "Bu ayarlar tüm temada (header, footer vb.) otomatik olarak kullanılır."
+      },
+      {
+        "type": "url",
+        "id": "social_facebook",
+        "label": "Facebook URL"
+      },
+      {
+        "type": "url",
+        "id": "social_instagram",
+        "label": "Instagram URL"
+      },
+      {
+        "type": "url",
+        "id": "social_twitter",
+        "label": "Twitter/X URL"
+      },
+      {
+        "type": "url",
+        "id": "social_youtube",
+        "label": "YouTube URL"
+      },
+      {
+        "type": "url",
+        "id": "social_tiktok",
+        "label": "TikTok URL"
+      },
+      {
+        "type": "url",
+        "id": "social_pinterest",
+        "label": "Pinterest URL"
+      },
+      {
+        "type": "url",
+        "id": "social_linkedin",
+        "label": "LinkedIn URL"
+      },
+      {
+        "type": "url",
+        "id": "social_snapchat",
+        "label": "Snapchat URL"
+      },
+      {
+        "type": "url",
+        "id": "social_whatsapp",
+        "label": "WhatsApp URL",
+        "info": "Örnek: https://wa.me/15551234567"
+      },
+      {
+        "type": "url",
+        "id": "social_telegram",
+        "label": "Telegram URL"
+      }
+    ]
+  },
+  {
     "name": "Typography",
     "settings": [
       {
@@ -211,36 +275,7 @@
       }
     ]
   },
-  {
-    "name": "Social Media",
-    "settings": [
-      {
-        "type": "text",
-        "id": "social_facebook",
-        "label": "Facebook URL"
-      },
-      {
-        "type": "text",
-        "id": "social_instagram",
-        "label": "Instagram URL"
-      },
-      {
-        "type": "text",
-        "id": "social_twitter",
-        "label": "Twitter/X URL"
-      },
-      {
-        "type": "text",
-        "id": "social_youtube",
-        "label": "YouTube URL"
-      },
-      {
-        "type": "text",
-        "id": "social_tiktok",
-        "label": "TikTok URL"
-      }
-    ]
-  },
+
   {
     "name": "Cart & Checkout",
     "settings": [
@@ -330,6 +365,29 @@
         "id": "chat_messenger_username",
         "label": "Facebook Page Username",
         "info": "Your Facebook page username for Messenger"
+      },
+      {
+        "type": "header",
+        "content": "Shopify Inbox"
+      },
+      {
+        "type": "checkbox",
+        "id": "chat_shopify_inbox_enabled",
+        "label": "Enable Shopify Inbox in Widget",
+        "default": false,
+        "info": "Show Shopify Inbox option in chat menu. Make sure Shopify Inbox is installed and enabled in your store."
+      },
+      {
+        "type": "text",
+        "id": "chat_shopify_inbox_label",
+        "label": "Inbox Button Label",
+        "default": "Live Chat"
+      },
+      {
+        "type": "text",
+        "id": "chat_shopify_inbox_subtitle",
+        "label": "Inbox Button Subtitle",
+        "default": "Chat with our team"
       }
     ]
   },

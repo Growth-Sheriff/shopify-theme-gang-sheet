@@ -1477,7 +1477,10 @@ body {
   pointer-events: none !important;
 }
 
+/* SHIMMER EFFECT DISABLED - Light animation turned off */
 .sb-btn .sb-shimmer {
+  display: none !important; /* Hide shimmer element completely */
+  /* Original styles preserved below for future re-enable:
   position: absolute !important;
   inset: calc(var(--sb-inset) * -1) !important;
   border-radius: inherit !important;
@@ -1510,6 +1513,7 @@ body {
   -webkit-mask-size: cover !important;
   mix-blend-mode: plus-lighter !important;
   animation: sb-shimmer-rotate 1s linear infinite both !important;
+  */
 }
 
 .sb-btn:hover .sb-shimmer::before,
@@ -2070,11 +2074,11 @@ body {
    ══════════════════════════════════════════════════════════════ */
 
 .upload-widget-area {
-  margin: 16px 0;
-  padding: 16px;
-  border-radius: var(--cp-radius-md, 8px);
-  background: linear-gradient(135deg, rgba(115, 103, 240, 0.05) 0%, rgba(115, 103, 240, 0.02) 100%);
-  border: 1px dashed var(--cp-primary, #7367F0);
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  border: none;
 }
 
 .upload-widget-area:empty {

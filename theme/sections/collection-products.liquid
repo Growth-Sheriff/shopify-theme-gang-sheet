@@ -2,6 +2,8 @@
   Collection Products Grid - Modern Vuexy Design
 {% endcomment %}
 
+{%- render 'custom-css-renderer', section: section -%}
+
 {% paginate collection.products by section.settings.products_per_page %}
 <section class="collection-products-section">
   <div class="container">
@@ -57,7 +59,8 @@
                   alt="{{ product.title | escape }}"
                   width="600"
                   height="600"
-                  loading="lazy"
+                  loading="{% if forloop.index <= 8 %}eager{% else %}lazy{% endif %}"
+                  decoding="async"
                   class="product-image primary"
                 >
                 {% if product.images.size > 1 and section.settings.show_second_image %}
@@ -67,6 +70,7 @@
                     width="600"
                     height="600"
                     loading="lazy"
+                    decoding="async"
                     class="product-image secondary"
                   >
                 {% endif %}
@@ -95,9 +99,11 @@
                 <button class="action-btn quickview-btn" title="Quick View" data-product-handle="{{ product.handle }}">
                   <i class="fa-regular fa-eye"></i>
                 </button>
+                {% if section.settings.show_compare %}
                 <button class="action-btn compare-btn" title="Compare">
                   <i class="fa-solid fa-arrows-rotate"></i>
                 </button>
+                {% endif %}
               </div>
               
               <!-- Hover Overlay -->
@@ -120,17 +126,41 @@
             <!-- Rating -->
             {% if section.settings.show_rating %}
             <div class="product-rating">
-              {% assign rating = product.metafields.reviews.rating.value | default: 5 | round %}
-              <div class="stars">
-                {% for i in (1..5) %}
-                  {% if i <= rating %}
-                    <i class="fa-solid fa-star"></i>
-                  {% else %}
+              {% comment %} Handle different rating metafield formats {% endcomment %}
+              {% assign rating_metafield = product.metafields.reviews.rating %}
+              {% assign rating_count = product.metafields.reviews.rating_count.value | default: product.metafields.reviews.rating_count %}
+              
+              {% comment %} Check if rating is an object with .value property (Shopify native format) {% endcomment %}
+              {% if rating_metafield.value.value %}
+                {% assign rating_value = rating_metafield.value.value | times: 1.0 %}
+              {% elsif rating_metafield.value %}
+                {% assign rating_value = rating_metafield.value | times: 1.0 %}
+              {% else %}
+                {% assign rating_value = 0 %}
+              {% endif %}
+              
+              {% assign rating_count_num = rating_count | times: 1 %}
+              
+              {% if rating_value > 0 and rating_count_num > 0 %}
+                {% assign rating = rating_value | round %}
+                <div class="stars">
+                  {% for i in (1..5) %}
+                    {% if i <= rating %}
+                      <i class="fa-solid fa-star"></i>
+                    {% else %}
+                      <i class="fa-regular fa-star"></i>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+                <span class="rating-count">({{ rating_count_num }})</span>
+              {% else %}
+                <div class="stars no-reviews">
+                  {% for i in (1..5) %}
                     <i class="fa-regular fa-star"></i>
-                  {% endif %}
-                {% endfor %}
-              </div>
-              <span class="rating-count">({{ product.metafields.reviews.rating_count | default: 0 }})</span>
+                  {% endfor %}
+                </div>
+                <span class="rating-count">(0)</span>
+              {% endif %}
             </div>
             {% endif %}
             
@@ -163,9 +193,9 @@
                   <span>Add to Cart</span>
                 </button>
               {% else %}
-                <a href="{{ product.url }}" class="select-options-btn">
-                  <i class="fa-solid fa-sliders"></i>
-                  <span>Select Options</span>
+                <a href="{{ product.url }}" class="sb-btn add-to-cart-btn">
+                  <i class="fa-solid fa-cart-plus"></i>
+                  <span>Add to Cart</span>
                 </a>
               {% endif %}
             {% else %}
@@ -662,14 +692,13 @@
   background: linear-gradient(135deg, #28c76f 0%, #1e9d58 100%);
 }
 
-.select-options-btn {
-  background: #1a1a2e;
-  color: #fff;
+/* Link style for add to cart (multi-variant products) */
+a.add-to-cart-btn {
+  text-decoration: none;
 }
 
-.select-options-btn:hover {
-  background: #2d2d44;
-  transform: translateY(-2px);
+a.add-to-cart-btn:hover {
+  color: #fff;
 }
 
 .sold-out-btn {
@@ -803,6 +832,73 @@
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
+/* ══════════════════════════════════════════════════════════════
+   LIST VIEW STYLES
+   ══════════════════════════════════════════════════════════════ */
+.products-grid.list-view {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.products-grid.list-view .product-card {
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  gap: 24px;
+  align-items: center;
+  padding: 16px;
+}
+
+.products-grid.list-view .product-image-wrapper {
+  aspect-ratio: 1;
+  max-width: 200px;
+  border-radius: 12px;
+}
+
+.products-grid.list-view .product-info {
+  padding: 0;
+  text-align: left;
+}
+
+.products-grid.list-view .product-title {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.products-grid.list-view .product-price {
+  justify-content: flex-start;
+}
+
+.products-grid.list-view .product-actions {
+  padding: 0;
+  min-width: 140px;
+}
+
+.products-grid.list-view .quick-actions {
+  position: static;
+  opacity: 1;
+  transform: none;
+  flex-direction: row;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+@media (max-width: 768px) {
+  .products-grid.list-view .product-card {
+    grid-template-columns: 120px 1fr;
+    gap: 16px;
+  }
+  
+  .products-grid.list-view .product-image-wrapper {
+    max-width: 120px;
+  }
+  
+  .products-grid.list-view .product-actions {
+    grid-column: 1 / -1;
+    min-width: auto;
+  }
+}
+
 /* Responsive */
 @media (max-width: 1200px) {
   .products-grid.cols-5 { grid-template-columns: repeat(4, 1fr); }
@@ -848,8 +944,8 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Add to Cart AJAX
-  document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+  // Add to Cart AJAX - Only for buttons with variant ID (not links)
+  document.querySelectorAll('button.add-to-cart-btn[data-variant-id]').forEach(btn => {
     btn.addEventListener('click', async (e) => {
       e.preventDefault();
       const variantId = btn.dataset.variantId;
@@ -968,6 +1064,23 @@ document.addEventListener('DOMContentLoaded', function() {
       "id": "show_quick_add",
       "label": "Show Quick Add Button",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_compare",
+      "label": "Show Compare Button",
+      "default": false,
+      "info": "Shows compare button on product hover"
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "presets": [

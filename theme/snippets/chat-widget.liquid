@@ -86,6 +86,19 @@
       </div>
     </a>
     {% endif %}
+    
+    <!-- Shopify Inbox Option -->
+    {% if settings.chat_shopify_inbox_enabled %}
+    <button type="button" class="chat-option shopify-inbox" id="openShopifyInbox">
+      <div class="chat-option-icon">
+        <i class="fa-solid fa-headset"></i>
+      </div>
+      <div class="chat-option-text">
+        <span class="chat-option-title">{{ settings.chat_shopify_inbox_label | default: 'Live Chat' }}</span>
+        <span class="chat-option-subtitle">{{ settings.chat_shopify_inbox_subtitle | default: 'Chat with our team' }}</span>
+      </div>
+    </button>
+    {% endif %}
   </div>
 </div>
 
@@ -253,6 +266,38 @@
   color: #fff;
 }
 
+/* Shopify Inbox */
+.chat-option.shopify-inbox {
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.chat-option.shopify-inbox .chat-option-icon {
+  background: linear-gradient(135deg, #5C6AC4 0%, #8B5CF6 100%);
+  color: #fff;
+}
+
+/* Hide default Shopify Inbox button when our widget controls it */
+{% if settings.chat_shopify_inbox_enabled %}
+#ShopifyChat,
+#shopify-chat,
+.shopify-chat,
+[id^="ShopifyChat"],
+.shopify-chat-button,
+iframe[title*="Shopify"][title*="Chat"],
+iframe[src*="shopify"][src*="chat"] {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+  position: fixed !important;
+  bottom: -9999px !important;
+  right: -9999px !important;
+}
+{% endif %}
+
 .chat-option-text {
   display: flex;
   flex-direction: column;
@@ -322,6 +367,72 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
+  
+  // Shopify Inbox Integration
+  {% if settings.chat_shopify_inbox_enabled %}
+  const inboxBtn = document.getElementById('openShopifyInbox');
+  if (inboxBtn) {
+    inboxBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      // Close our widget menu
+      chatWidget.classList.remove('active');
+      
+      // Try multiple methods to open Shopify Inbox
+      const opened = openShopifyInbox();
+      
+      if (!opened) {
+        console.warn('Shopify Inbox not found. Make sure it is installed and enabled.');
+      }
+    });
+  }
+  
+  function openShopifyInbox() {
+    // Method 1: Try ShopifyChat global API
+    if (typeof window.ShopifyChat !== 'undefined' && window.ShopifyChat.open) {
+      window.ShopifyChat.open();
+      return true;
+    }
+    
+    // Method 2: Try clicking the hidden Shopify Inbox button
+    const shopifyBtn = document.querySelector('#ShopifyChat button, #shopify-chat button, .shopify-chat button, [id^="ShopifyChat"] button');
+    if (shopifyBtn) {
+      // Temporarily make it clickable
+      const parent = shopifyBtn.closest('#ShopifyChat, #shopify-chat, .shopify-chat, [id^="ShopifyChat"]');
+      if (parent) {
+        const originalStyle = parent.getAttribute('style') || '';
+        parent.style.cssText = 'opacity:0!important;pointer-events:auto!important;visibility:visible!important;position:fixed!important;bottom:20px!important;right:20px!important;';
+        shopifyBtn.click();
+        // Restore after a short delay
+        setTimeout(() => {
+          parent.style.cssText = originalStyle || 'opacity:0!important;pointer-events:none!important;visibility:hidden!important;position:fixed!important;bottom:-9999px!important;right:-9999px!important;';
+        }, 100);
+      } else {
+        shopifyBtn.click();
+      }
+      return true;
+    }
+    
+    // Method 3: Try Shopify.Chat or shopifyChat
+    if (typeof window.Shopify !== 'undefined' && window.Shopify.Chat && window.Shopify.Chat.open) {
+      window.Shopify.Chat.open();
+      return true;
+    }
+    
+    // Method 4: Look for iframe and try to interact
+    const chatIframe = document.querySelector('iframe[title*="Shopify"][title*="Chat"], iframe[src*="inbox"], iframe[src*="chat.shopify"]');
+    if (chatIframe) {
+      // Can't directly control iframe due to cross-origin, but we can show it
+      const parent = chatIframe.parentElement;
+      if (parent) {
+        parent.style.cssText = 'opacity:1!important;pointer-events:auto!important;visibility:visible!important;position:fixed!important;bottom:20px!important;right:20px!important;z-index:99999!important;';
+        return true;
+      }
+    }
+    
+    return false;
+  }
+  {% endif %}
 });
 </script>
 {% endif %}

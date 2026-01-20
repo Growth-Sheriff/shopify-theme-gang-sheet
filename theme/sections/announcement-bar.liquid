@@ -5,6 +5,8 @@
   ============================================
 {% endcomment %}
 
+{%- render 'custom-css-renderer', section: section -%}
+
 <style>
 /* ===== ANNOUNCEMENT BAR STYLES ===== */
 .announcement-bar {
@@ -423,6 +425,16 @@ document.addEventListener('DOMContentLoaded', function() {
       "id": "show_close",
       "label": "Show Close Button",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "blocks": [
@@ -447,6 +459,12 @@ document.addEventListener('DOMContentLoaded', function() {
           "label": "Icon Class (optional)",
           "default": "fa-solid fa-truck",
           "info": "Font Awesome icon class"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "Özel CSS (Block)",
+          "info": "Bu block için özel CSS"
         }
       ]
     }

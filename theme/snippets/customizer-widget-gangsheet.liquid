@@ -60,22 +60,25 @@
       <!-- Size Selection -->
       <div class="gs-option-group">
         <p class="gs-label">Sheet Size:</p>
-        <div class="gs-size-options">
-          <button type="button" class="gs-size-btn active" data-width="22" data-height="12" data-price="12.99">
-            <span class="gs-size-name">Small</span>
-            <span class="gs-size-dim">22" x 12"</span>
-            <span class="gs-size-price">$12.99</span>
-          </button>
-          <button type="button" class="gs-size-btn" data-width="22" data-height="24" data-price="24.99">
-            <span class="gs-size-name">Medium</span>
-            <span class="gs-size-dim">22" x 24"</span>
-            <span class="gs-size-price">$24.99</span>
-          </button>
-          <button type="button" class="gs-size-btn" data-width="22" data-height="40" data-price="39.99">
-            <span class="gs-size-name">Large</span>
-            <span class="gs-size-dim">22" x 40"</span>
-            <span class="gs-size-price">$39.99</span>
-          </button>
+        <div class="gs-size-dropdown-wrapper">
+          <select id="gs-size-select-{{ product.id }}" class="gs-size-dropdown">
+            <option value="22x12" data-width="22" data-height="12" data-price="12.99" selected>
+              Small — 22" x 12" — $12.99
+            </option>
+            <option value="22x24" data-width="22" data-height="24" data-price="24.99">
+              Medium — 22" x 24" — $24.99
+            </option>
+            <option value="22x40" data-width="22" data-height="40" data-price="39.99">
+              Large — 22" x 40" — $39.99
+            </option>
+            <option value="22x60" data-width="22" data-height="60" data-price="54.99">
+              X-Large — 22" x 60" — $54.99
+            </option>
+            <option value="22x100" data-width="22" data-height="100" data-price="89.99">
+              XXL — 22" x 100" — $89.99
+            </option>
+          </select>
+          <i class="ti ti-chevron-down gs-dropdown-icon"></i>
         </div>
       </div>
 
@@ -258,25 +261,40 @@
     margin: 0 0 10px;
   }
 
-  .gs-size-options { display: flex; flex-direction: column; gap: 8px; }
+  .gs-size-dropdown-wrapper {
+    position: relative;
+  }
 
-  .gs-size-btn {
-    display: flex;
-    align-items: center;
-    padding: 12px 16px;
+  .gs-size-dropdown {
+    width: 100%;
+    padding: 14px 40px 14px 16px;
     border: 2px solid #e5e7eb;
     border-radius: 12px;
     background: white;
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
     cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
     transition: all 0.2s;
   }
 
-  .gs-size-btn:hover { border-color: var(--gs-primary); }
-  .gs-size-btn.active { border-color: var(--gs-primary); background: #f8f7ff; }
+  .gs-size-dropdown:hover,
+  .gs-size-dropdown:focus {
+    border-color: var(--gs-primary);
+    outline: none;
+  }
 
-  .gs-size-name { flex: 1; font-weight: 600; color: #333; }
-  .gs-size-dim { font-size: 13px; color: #666; margin-right: 12px; }
-  .gs-size-price { font-weight: 700; color: var(--gs-primary); }
+  .gs-dropdown-icon {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    pointer-events: none;
+    font-size: 18px;
+  }
 
   .gs-upload-area {
     border: 2px dashed #d1d5db;
@@ -508,26 +526,25 @@
   }
 
   function setupEvents() {
-    // Size selection
-    document.querySelectorAll('#customizer-gangsheet-' + productId + ' .gs-size-btn').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        document.querySelectorAll('#customizer-gangsheet-' + productId + ' .gs-size-btn').forEach(function(b) {
-          b.classList.remove('active');
-        });
-        this.classList.add('active');
-
+    // Size selection (dropdown)
+    var sizeSelect = document.getElementById('gs-size-select-' + productId);
+    if (sizeSelect) {
+      sizeSelect.addEventListener('change', function() {
+        var selectedOption = this.options[this.selectedIndex];
+        
         selectedSize = {
-          width: parseFloat(this.dataset.width),
-          height: parseFloat(this.dataset.height),
-          price: parseFloat(this.dataset.price)
+          width: parseFloat(selectedOption.dataset.width),
+          height: parseFloat(selectedOption.dataset.height),
+          price: parseFloat(selectedOption.dataset.price)
         };
 
         document.getElementById('gs-size-badge-' + productId).textContent =
           selectedSize.width + '" x ' + selectedSize.height + '"';
 
         setupCanvas();
+        updatePrice();
       });
-    });
+    }
 
     // File upload
     const fileInput = document.querySelector('#gs-upload-' + productId + ' .gs-file-input');

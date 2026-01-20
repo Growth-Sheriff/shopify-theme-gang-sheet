@@ -1,0 +1,59 @@
+{
+  "sections": {
+    "product-main": {
+      "type": "product-main",
+      
+      "settings": {
+        "show_breadcrumb": true,
+        "show_rating": true,
+        "rating_score": "4.9",
+        "review_count": "567",
+        "recommend_percent": "99% recommend",
+        "price_badge": "⏰ PRE-ORDER NOW",
+        "show_delivery": true,
+        "delivery_time": "Ships When Available",
+        "order_by": "Limited Quantities",
+        "show_tabs": true,
+        "processing_time": "Pre-Order Item",
+        "standard_shipping": "Ships when ready",
+        "express_shipping": "Priority Processing",
+        "free_shipping": "Orders $100+",
+        "show_instructions": true,
+        "press_title": "Press Instructions",
+        "press_temp": "285°F - 310°F",
+        "press_time": "15 seconds",
+        "press_pressure": "Medium",
+        "press_peel": "Cold Peel",
+        "show_trust_badges": true,
+        "badge_1": "Secure Checkout",
+        "badge_2": "Reserve Your Spot",
+        "badge_3": "First to Receive",
+        "show_variants": true,
+        "color_display_mode": "swatches",
+        "size_display_mode": "dropdown",
+        "show_quantity": true,
+        "show_add_to_cart": true,
+        "show_buy_now": false
+      }
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "heading": "Available Now",
+        "products_count": 4
+      }
+    },
+    "recently-viewed": {
+      "type": "recently-viewed",
+      "settings": {
+        "title": "Recently Viewed",
+        "products_to_show": 8
+      }
+    }
+  },
+  "order": [
+    "product-main",
+    "recommendations",
+    "recently-viewed"
+  ]
+}

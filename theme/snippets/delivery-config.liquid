@@ -1,0 +1,127 @@
+{% comment %}
+  ============================================
+  Delivery Calculator - Global Configuration
+  ============================================
+  
+  Bu snippet, tema ayarlarından alınan değerleri
+  JavaScript konfigürasyonuna aktarır.
+  
+  Kullanım:
+  {% render 'delivery-config' %}
+  
+  Bu snippet'i theme.liquid veya layout dosyasının
+  </body> tagından hemen önce ekleyin.
+  
+{% endcomment %}
+
+{% liquid
+  # Enable kontrolü
+  assign delivery_enabled = settings.delivery_enabled | default: false
+%}
+
+{% if delivery_enabled %}
+{% liquid
+  # Tema ayarlarından değerler (settings_schema.json'da tanımlanmalı)
+  assign cutoff_hour = settings.delivery_cutoff_hour | default: 14
+  assign cutoff_minute = settings.delivery_cutoff_minute | default: 0
+  assign default_carrier = settings.delivery_default_carrier | default: 'ups_ground'
+  assign express_enabled = settings.delivery_express_enabled | default: true
+  assign weekend_delivery = settings.delivery_weekend | default: false
+  assign debug_mode = settings.delivery_debug | default: false
+  
+  # Depo lokasyonları
+  assign warehouse_1_enabled = settings.warehouse_1_enabled | default: true
+  assign warehouse_1_id = settings.warehouse_1_id | default: 'east'
+  assign warehouse_1_name = settings.warehouse_1_name | default: 'East Coast Warehouse'
+  assign warehouse_1_zip = settings.warehouse_1_zip | default: '07001'
+  assign warehouse_1_state = settings.warehouse_1_state | default: 'NJ'
+  
+  assign warehouse_2_enabled = settings.warehouse_2_enabled | default: false
+  assign warehouse_2_id = settings.warehouse_2_id | default: 'west'
+  assign warehouse_2_name = settings.warehouse_2_name | default: 'West Coast Warehouse'
+  assign warehouse_2_zip = settings.warehouse_2_zip | default: '90001'
+  assign warehouse_2_state = settings.warehouse_2_state | default: 'CA'
+  
+  # Özel tatil günleri
+  assign custom_holidays = settings.delivery_holidays | default: ''
+%}
+
+<script>
+window.DELIVERY_CONFIG = {
+  // Cut-off ayarları
+  cutoffHour: {{ cutoff_hour }},
+  cutoffMinute: {{ cutoff_minute }},
+  timezone: 'America/New_York',
+  
+  // Varsayılan kargo
+  defaultCarrier: {{ default_carrier | json }},
+  
+  // Özellikler
+  expressEnabled: {{ express_enabled | json }},
+  weekendDelivery: {{ weekend_delivery | json }},
+  debug: {{ debug_mode | json }},
+  
+  // Depolar
+  warehouses: [
+    {% if warehouse_1_enabled %}
+    {
+      id: {{ warehouse_1_id | json }},
+      name: {{ warehouse_1_name | json }},
+      zipCode: {{ warehouse_1_zip | json }},
+      state: {{ warehouse_1_state | json }}
+    }{% if warehouse_2_enabled %},{% endif %}
+    {% endif %}
+    {% if warehouse_2_enabled %}
+    {
+      id: {{ warehouse_2_id | json }},
+      name: {{ warehouse_2_name | json }},
+      zipCode: {{ warehouse_2_zip | json }},
+      state: {{ warehouse_2_state | json }}
+    }
+    {% endif %}
+  ],
+  
+  // Özel tatil günleri
+  customHolidays: {{ custom_holidays | split: ',' | json }}
+};
+
+// Calculator'ı başlat - Hybrid Mode (Live Shopify Rates + Static Fallback)
+document.addEventListener('DOMContentLoaded', function() {
+  // Statik calculator her zaman hazır
+  if (typeof DeliveryCalculator !== 'undefined') {
+    window.staticDeliveryCalculator = new DeliveryCalculator(window.DELIVERY_CONFIG);
+  }
+  
+  // Hybrid calculator (önce live rates, sonra fallback)
+  if (typeof HybridDeliveryCalculator !== 'undefined' && typeof DeliveryCalculator !== 'undefined') {
+    window.deliveryCalculator = new HybridDeliveryCalculator({
+      static: window.DELIVERY_CONFIG,
+      live: {
+        debug: window.DELIVERY_CONFIG.debug,
+        cacheDuration: 300000, // 5 dakika
+        maxRetries: 3
+      },
+      preferLiveRates: true,
+      fallbackToStatic: true,
+      debug: window.DELIVERY_CONFIG.debug
+    });
+    
+    console.log('[Delivery] Hybrid mode initialized - Live Shopify rates enabled');
+  } else if (window.staticDeliveryCalculator) {
+    // Fallback: sadece statik calculator
+    window.deliveryCalculator = window.staticDeliveryCalculator;
+    console.log('[Delivery] Static mode initialized');
+  }
+  
+  // Custom event fırlat
+  if (window.deliveryCalculator) {
+    document.dispatchEvent(new CustomEvent('delivery:ready', {
+      detail: { 
+        calculator: window.deliveryCalculator,
+        mode: typeof HybridDeliveryCalculator !== 'undefined' ? 'hybrid' : 'static'
+      }
+    }));
+  }
+});
+</script>
+{% endif %}

@@ -1,0 +1,233 @@
+{%- render 'custom-css-renderer', section: section -%}
+
+<section class="cp-page-section section-{{ section.id }}" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+  <div class="container">
+    {% if section.settings.show_title %}
+    <div class="cp-page-header">
+      <h1 class="cp-page-title">{{ page.title }}</h1>
+    </div>
+    {% endif %}
+    
+    <div class="cp-page-content {% if section.settings.full_width %}full-width{% endif %}">
+      {{ page.content }}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cp-page-section {
+    padding: 3rem 0 5rem;
+    background: {{ section.settings.background_color }};
+  }
+  
+  .cp-page-header {
+    text-align: {{ section.settings.title_align }};
+    margin-bottom: 3rem;
+  }
+  
+  .cp-page-title {
+    font-size: {{ section.settings.title_size }}px;
+    font-weight: 700;
+    color: {{ section.settings.title_color }};
+  }
+  
+  .cp-page-content {
+    max-width: {{ section.settings.content_max_width }}px;
+    margin: 0 auto;
+    line-height: 1.8;
+    color: {{ section.settings.text_color }};
+  }
+  
+  .cp-page-content.full-width {
+    max-width: none;
+  }
+  
+  .cp-page-content h2,
+  .cp-page-content h3,
+  .cp-page-content h4 {
+    color: {{ section.settings.title_color }};
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .cp-page-content p {
+    margin-bottom: 1rem;
+  }
+  
+  .cp-page-content a {
+    color: {{ section.settings.link_color }};
+  }
+  
+  .cp-page-content a:hover {
+    text-decoration: underline;
+  }
+  
+  .cp-page-content ul,
+  .cp-page-content ol {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+  }
+  
+  .cp-page-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+  }
+  
+  .cp-page-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+  }
+  
+  .cp-page-content table th,
+  .cp-page-content table td {
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+    text-align: left;
+  }
+  
+  .cp-page-content table th {
+    background: #f9fafb;
+    font-weight: 600;
+  }
+  
+  @media (max-width: 768px) {
+    .cp-page-title {
+      font-size: calc({{ section.settings.title_size }}px * 0.7);
+    }
+    
+    .cp-page-section {
+      padding: 2rem 0 3rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Sayfa İçeriği",
+  "tag": "section",
+  "class": "section-main-page",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Başlık Ayarları"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Sayfa Başlığını Göster",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Başlık Boyutu",
+      "default": 40
+    },
+    {
+      "type": "select",
+      "id": "title_align",
+      "label": "Başlık Hizalama",
+      "options": [
+        { "value": "left", "label": "Sol" },
+        { "value": "center", "label": "Orta" },
+        { "value": "right", "label": "Sağ" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Başlık Rengi",
+      "default": "#5d596c"
+    },
+    {
+      "type": "header",
+      "content": "İçerik Ayarları"
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "min": 600,
+      "max": 1400,
+      "step": 50,
+      "unit": "px",
+      "label": "Maksimum İçerik Genişliği",
+      "default": 800
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Tam Genişlik",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Metin Rengi",
+      "default": "#6e6b7b"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link Rengi",
+      "default": "#7367F0"
+    },
+    {
+      "type": "header",
+      "content": "Arka Plan"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Arka Plan Rengi",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Boşluklar"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Üst Boşluk",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Alt Boşluk",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sayfa İçeriği"
+    }
+  ]
+}
+{% endschema %}

@@ -590,11 +590,11 @@
               </p>
             {% endif %}
 
-            <!-- Title -->
+            <!-- Title (visual heading only - not semantic H tag for SEO hierarchy) -->
             {% if block.settings.title != blank %}
-              <h2 class="slide-title" style="color: {{ block.settings.title_color }};">
+              <span class="slide-title" role="heading" aria-level="2" style="color: {{ block.settings.title_color }};">
                 {{ block.settings.title }}
-              </h2>
+              </span>
             {% endif %}
 
             <!-- Description -->

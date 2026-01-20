@@ -3,6 +3,8 @@
   Product picker ile otomatik bilgi çekme
 {% endcomment %}
 
+{%- render 'custom-css-renderer', section: section -%}
+
 {% assign selected_product = section.settings.product %}
 
 <section class="cp-featured-section" style="background: {{ section.settings.section_bg | default: '#ffffff' }}; padding: {{ section.settings.section_padding | default: '2rem 0' }};">
@@ -173,19 +175,26 @@
           {% endfor %}
         {% endif %}
         
-        <!-- Add to Cart -->
+        <!-- Add to Cart or Go to Product -->
         <div class="cp-cart-row">
-          <form action="{{ routes.cart_add_url }}" method="post" class="cp-add-form">
-            <input type="hidden" name="id" value="{{ selected_product.selected_or_first_available_variant.id }}">
-            <input type="hidden" name="quantity" value="1" id="featured-form-qty">
-            <button type="submit" class="sb-btn cp-add-to-cart-btn" {% unless selected_product.available %}disabled{% endunless %}>
-              {% if selected_product.available %}
-                {{ section.settings.add_to_cart_text | default: 'Add to cart' }} – {{ selected_product.price | money }}
-              {% else %}
-                {{ section.settings.sold_out_text | default: 'Sold Out' }}
-              {% endif %}
-            </button>
-          </form>
+          {% if section.settings.button_action == 'go_to_product' %}
+            <a href="{{ selected_product.url }}" class="sb-btn cp-view-product-btn">
+              <i class="fa-solid fa-arrow-right"></i>
+              {{ section.settings.view_product_text | default: 'View Product' }}
+            </a>
+          {% else %}
+            <form action="{{ routes.cart_add_url }}" method="post" class="cp-add-form">
+              <input type="hidden" name="id" value="{{ selected_product.selected_or_first_available_variant.id }}">
+              <input type="hidden" name="quantity" value="1" id="featured-form-qty">
+              <button type="submit" class="sb-btn cp-add-to-cart-btn" {% unless selected_product.available %}disabled{% endunless %}>
+                {% if selected_product.available %}
+                  {{ section.settings.add_to_cart_text | default: 'Add to cart' }} – {{ selected_product.price | money }}
+                {% else %}
+                  {{ section.settings.sold_out_text | default: 'Sold Out' }}
+                {% endif %}
+              </button>
+            </form>
+          {% endif %}
         </div>
         {% endunless %}
         
@@ -1199,12 +1208,6 @@
       "default": "Featured add-on"
     },
     {
-      "type": "textarea",
-      "id": "subtitle",
-      "label": "Subtitle",
-      "default": "Enhance and protect your product with our premium accessories"
-    },
-    {
       "type": "header",
       "content": "Product Display"
     },
@@ -1368,6 +1371,24 @@
     },
     {
       "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "paragraph",
+      "content": "⚠️ These settings only work when 'Enable Upload Mode' is OFF"
+    },
+    {
+      "type": "select",
+      "id": "button_action",
+      "label": "Button Action",
+      "options": [
+        { "value": "add_to_cart", "label": "Add to Cart" },
+        { "value": "go_to_product", "label": "Go to Product Page" }
+      ],
+      "default": "add_to_cart"
+    },
+    {
+      "type": "header",
       "content": "Upload Settings"
     },
     {
@@ -1376,6 +1397,16 @@
       "label": "Enable Upload Mode",
       "default": false,
       "info": "When enabled, shows Upload button and hides Add to Cart, Quantity, Size and Color selectors"
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "presets": [

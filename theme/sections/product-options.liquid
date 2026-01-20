@@ -2,13 +2,25 @@
   Product Options Section - Placeholder/Deprecated
   This section is no longer used, replaced by product-info-card
 {% endcomment %}
+{%- render 'custom-css-renderer', section: section -%}
 
 {% schema %}
 {
   "name": "Product Options",
   "tag": "section",
   "class": "product-options-section",
-  "settings": [],
+  "settings": [
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
+    }
+  ],
   "presets": [
     {
       "name": "Product Options"

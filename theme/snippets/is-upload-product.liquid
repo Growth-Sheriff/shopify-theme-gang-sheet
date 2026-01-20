@@ -1,0 +1,68 @@
+{% comment %}
+  ============================================
+  IS UPLOAD PRODUCT - Merkezi Upload Mode Kontrolü
+  ============================================
+  
+  DİKKAT: Shopify Liquid'de render ile çağrılan snippet'ler 
+  değişken döndüremez! Bu snippet sadece referans amaçlıdır.
+  
+  Section'larda şu kodu kullanın:
+  
+  {%- liquid
+    assign is_upload_product = false
+    if settings.upload_mode_enabled and product != blank
+      assign check_handle = product.handle
+      if settings.upload_mode_product_1.handle == check_handle
+        assign is_upload_product = true
+      elsif settings.upload_mode_product_2.handle == check_handle
+        assign is_upload_product = true
+      elsif settings.upload_mode_product_3.handle == check_handle
+        assign is_upload_product = true
+      elsif settings.upload_mode_product_4.handle == check_handle
+        assign is_upload_product = true
+      elsif settings.upload_mode_product_5.handle == check_handle
+        assign is_upload_product = true
+      elsif settings.upload_mode_product_6.handle == check_handle
+        assign is_upload_product = true
+      elsif settings.upload_mode_product_7.handle == check_handle
+        assign is_upload_product = true
+      elsif settings.upload_mode_product_8.handle == check_handle
+        assign is_upload_product = true
+      elsif settings.upload_mode_product_9.handle == check_handle
+        assign is_upload_product = true
+      elsif settings.upload_mode_product_10.handle == check_handle
+        assign is_upload_product = true
+      endif
+    endif
+  -%}
+{% endcomment %}
+
+{% liquid
+  assign is_upload_product = false
+  
+  if settings.upload_mode_enabled and product != blank
+    assign check_handle = product.handle
+    
+    if settings.upload_mode_product_1 != blank and settings.upload_mode_product_1.handle == check_handle
+      assign is_upload_product = true
+    elsif settings.upload_mode_product_2 != blank and settings.upload_mode_product_2.handle == check_handle
+      assign is_upload_product = true
+    elsif settings.upload_mode_product_3 != blank and settings.upload_mode_product_3.handle == check_handle
+      assign is_upload_product = true
+    elsif settings.upload_mode_product_4 != blank and settings.upload_mode_product_4.handle == check_handle
+      assign is_upload_product = true
+    elsif settings.upload_mode_product_5 != blank and settings.upload_mode_product_5.handle == check_handle
+      assign is_upload_product = true
+    elsif settings.upload_mode_product_6 != blank and settings.upload_mode_product_6.handle == check_handle
+      assign is_upload_product = true
+    elsif settings.upload_mode_product_7 != blank and settings.upload_mode_product_7.handle == check_handle
+      assign is_upload_product = true
+    elsif settings.upload_mode_product_8 != blank and settings.upload_mode_product_8.handle == check_handle
+      assign is_upload_product = true
+    elsif settings.upload_mode_product_9 != blank and settings.upload_mode_product_9.handle == check_handle
+      assign is_upload_product = true
+    elsif settings.upload_mode_product_10 != blank and settings.upload_mode_product_10.handle == check_handle
+      assign is_upload_product = true
+    endif
+  endif
+%}

@@ -1,4 +1,6 @@
 <!-- Product Recommendations -->
+{%- render 'custom-css-renderer', section: section -%}
+
 <style>
   /* Recommendations her zaman en altta */
   .cp-product-recommendations {
@@ -46,6 +48,16 @@
       "id": "title",
       "label": "Section Title",
       "default": "You May Also Like"
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ]
 }

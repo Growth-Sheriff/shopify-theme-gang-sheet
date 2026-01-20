@@ -15,37 +15,140 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="{{ canonical_url }}" />
     
+    <!-- DNS Prefetch for third-party resources -->
+    <link rel="dns-prefetch" href="https://cdn.shopify.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Preconnect for performance (critical resources) -->
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
     <!-- Favicon -->
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
     {%- endif -%}
     
-    <!-- Preconnect for performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin />
-    
-    <!-- Google Fonts - All Available Heading Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    
-    <!-- Tabler Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
-    
-    <!-- Font Awesome (for star ratings and icons) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    
-    <!-- Theme CSS -->
+    <!-- Theme CSS - Critical (must load first) -->
     {{ 'theme.css' | asset_url | stylesheet_tag }}
     
-    <!-- Page-specific CSS -->
+    <!-- Page-specific CSS - Only load when needed -->
     {% if template.name == 'product' %}
       {{ 'product-page.css' | asset_url | stylesheet_tag }}
     {% endif %}
     
-    <!-- Shopify Content for Header -->
+    <!-- Shopify Content for Header - Will be delayed by our script -->
     {{ content_for_header }}
     
+    <!-- SEO Schema 2026 - JSON-LD Structured Data -->
+    {% render 'seo-schema-2026' %}
+    
+    <!-- Third-Party Script Delay: Pause heavy scripts until user interaction -->
+    <script>
+      // Delay third-party scripts until user interaction (scroll, click, touch, keydown)
+      // This significantly improves LCP and INP scores
+      (function() {
+        var delayedScripts = [];
+        var userInteracted = false;
+        var delayTime = 5000; // Fallback: 5 seconds if no interaction
+        
+        // Find and pause third-party scripts from apps
+        var thirdPartyDomains = [
+          'klaviyo',
+          'judge.me', 
+          'judgeme',
+          'clarity.ms',
+          'facebook',
+          'fbevents',
+          'drip',
+          'googletagmanager',
+          'google-analytics',
+          'hotjar',
+          'loox',
+          'yotpo',
+          'stamped',
+          'okendo'
+        ];
+        
+        // Function to check if script is third-party
+        function isThirdParty(src) {
+          if (!src) return false;
+          return thirdPartyDomains.some(function(domain) {
+            return src.toLowerCase().indexOf(domain) !== -1;
+          });
+        }
+        
+        // Override script execution for third-party
+        var originalCreateElement = document.createElement;
+        document.createElement = function(tagName) {
+          var element = originalCreateElement.call(document, tagName);
+          
+          if (tagName.toLowerCase() === 'script') {
+            var originalSetAttribute = element.setAttribute;
+            element.setAttribute = function(name, value) {
+              if (name === 'src' && isThirdParty(value) && !userInteracted) {
+                // Store for later execution
+                delayedScripts.push({ element: element, src: value });
+                return;
+              }
+              return originalSetAttribute.call(this, name, value);
+            };
+          }
+          
+          return element;
+        };
+        
+        // Load delayed scripts
+        function loadDelayedScripts() {
+          if (userInteracted) return;
+          userInteracted = true;
+          
+          // Restore original createElement
+          document.createElement = originalCreateElement;
+          
+          // Load stored scripts with slight delay between each
+          delayedScripts.forEach(function(item, index) {
+            setTimeout(function() {
+              var script = document.createElement('script');
+              script.src = item.src;
+              if (item.element.async) script.async = true;
+              if (item.element.defer) script.defer = true;
+              document.head.appendChild(script);
+            }, index * 100);
+          });
+          
+          // Remove event listeners
+          ['scroll', 'click', 'touchstart', 'keydown', 'mousemove'].forEach(function(event) {
+            window.removeEventListener(event, loadDelayedScripts);
+          });
+        }
+        
+        // Add event listeners for user interaction
+        ['scroll', 'click', 'touchstart', 'keydown', 'mousemove'].forEach(function(event) {
+          window.addEventListener(event, loadDelayedScripts, { once: true, passive: true });
+        });
+        
+        // Fallback: Load after delay if no interaction
+        setTimeout(loadDelayedScripts, delayTime);
+      })();
+    </script>
+    
     <style>
+      /* FOUC Prevention - Hide body until CSS loads */
+      html:not(.loaded) body {
+        visibility: hidden;
+        opacity: 0;
+      }
+      
+      html.loaded body {
+        visibility: visible;
+        opacity: 1;
+        transition: opacity 0.15s ease;
+      }
+      
       /* Critical CSS - Above the fold */
       :root {
         --cp-primary: {{ settings.color_primary | default: '#7367F0' }};
@@ -160,8 +263,78 @@
     <!-- Bottom Navigation (Mobile) -->
     {% render 'bottom-nav' %}
     
-    <!-- Theme JavaScript -->
+    <!-- Theme JavaScript - Deferred for performance -->
     <script src="{{ 'theme.js' | asset_url }}" defer></script>
+    
+    <!-- Delivery Widget System (Product & Cart pages only) -->
+    {% if template.name == 'product' or template.name == 'cart' %}
+      <script src="{{ 'delivery-mini-strip.js' | asset_url }}" defer></script>
+      <script src="{{ 'delivery-widget.js' | asset_url }}" defer></script>
+      {% render 'delivery-config' %}
+    {% endif %}
+    
+    <!-- Performance: Instant page transitions (prefetch on hover) -->
+    <script>
+      // FOUC Prevention
+      document.documentElement.classList.add('loaded');
+      
+      // Load non-critical CSS asynchronously (fonts, icons)
+      (function() {
+        var nonCriticalCSS = [
+          'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap',
+          'https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css',
+          'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css'
+        ];
+        
+        // Use requestIdleCallback for best performance, fallback to setTimeout
+        var loadCSS = function() {
+          nonCriticalCSS.forEach(function(href) {
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = href;
+            document.head.appendChild(link);
+          });
+        };
+        
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(loadCSS, { timeout: 2000 });
+        } else {
+          setTimeout(loadCSS, 100);
+        }
+      })();
+      
+      // Prefetch pages on link hover for instant navigation
+      if ('IntersectionObserver' in window) {
+        const prefetchedUrls = new Set();
+        document.addEventListener('mouseover', function(e) {
+          const link = e.target.closest('a');
+          if (link && link.href && link.href.startsWith(window.location.origin) && !prefetchedUrls.has(link.href)) {
+            prefetchedUrls.add(link.href);
+            const prefetch = document.createElement('link');
+            prefetch.rel = 'prefetch';
+            prefetch.href = link.href;
+            document.head.appendChild(prefetch);
+          }
+        }, { passive: true });
+      }
+      
+      // Lazy load images that enter viewport (fallback for older browsers)
+      if ('loading' in HTMLImageElement.prototype === false) {
+        document.addEventListener('DOMContentLoaded', function() {
+          const images = document.querySelectorAll('img[loading="lazy"]');
+          const imageObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src || img.src;
+                imageObserver.unobserve(img);
+              }
+            });
+          });
+          images.forEach(function(img) { imageObserver.observe(img); });
+        });
+      }
+    </script>
     
   </body>
 </html>

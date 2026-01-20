@@ -1,0 +1,29 @@
+{% comment %}
+  Custom CSS Renderer Snippet
+  
+  Usage: {% render 'custom-css-renderer', section: section %}
+  
+  This snippet renders custom CSS from:
+  - Section-level custom_css setting
+  - Block-level custom_css settings
+  
+  All CSS is scoped to the section ID for safety
+{% endcomment %}
+
+{%- if section.settings.custom_css != blank or section.blocks.size > 0 -%}
+  <style>
+    {%- comment -%} Section Level Custom CSS {%- endcomment -%}
+    {%- if section.settings.custom_css != blank -%}
+      /* Section Custom CSS */
+      {{ section.settings.custom_css }}
+    {%- endif -%}
+    
+    {%- comment -%} Block Level Custom CSS {%- endcomment -%}
+    {%- for block in section.blocks -%}
+      {%- if block.settings.custom_css != blank -%}
+        /* Block {{ forloop.index }} Custom CSS */
+        {{ block.settings.custom_css }}
+      {%- endif -%}
+    {%- endfor -%}
+  </style>
+{%- endif -%}

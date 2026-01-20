@@ -3,6 +3,8 @@
   Local Pickup Alert + Add to Cart Buttons
 {% endcomment %}
 
+{%- render 'custom-css-renderer', section: section -%}
+
 <section class="cp-product-bar" style="background: {{ section.settings.section_bg | default: '#ffffff' }}; padding: {{ section.settings.section_padding | default: '1.5rem 0' }};">
   <div class="container">
     {% if section.settings.show_header %}
@@ -87,19 +89,31 @@
                 </div>
               {% endif %}
 
-              {%- comment -%} Add to Cart Button (Hidden when upload mode is enabled) {%- endcomment -%}
+              {%- comment -%} Add to Cart or Go to Product Button (Hidden when upload mode is enabled) {%- endcomment -%}
               {% unless show_upload_bar %}
-              <form action="{{ routes.cart_add_url }}" method="post" class="cp-product-bar-cart-form">
-                <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
-                <button type="submit" class="sb-btn cp-product-bar-add-btn" {% unless card_product.available %}disabled{% endunless %}>
-                  <i class="fa-solid fa-cart-plus"></i>
-                  {% if card_product.available %}
-                    {{ section.settings.add_to_cart_text | default: 'Add to Cart' }}
-                  {% else %}
-                    {{ section.settings.sold_out_text | default: 'Sold Out' }}
-                  {% endif %}
-                </button>
-              </form>
+              {%- assign btn_action = block.settings.button_action | default: 'default' -%}
+              {%- if btn_action == 'default' -%}
+                {%- assign btn_action = section.settings.button_action_global | default: 'add_to_cart' -%}
+              {%- endif -%}
+              
+              {% if btn_action == 'go_to_product' %}
+                <a href="{{ card_product.url }}" class="sb-btn cp-product-bar-add-btn">
+                  <i class="fa-solid fa-arrow-right"></i>
+                  {{ section.settings.view_product_text | default: 'View Product' }}
+                </a>
+              {% else %}
+                <form action="{{ routes.cart_add_url }}" method="post" class="cp-product-bar-cart-form">
+                  <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+                  <button type="submit" class="sb-btn cp-product-bar-add-btn" {% unless card_product.available %}disabled{% endunless %}>
+                    <i class="fa-solid fa-cart-plus"></i>
+                    {% if card_product.available %}
+                      {{ section.settings.add_to_cart_text | default: 'Add to Cart' }}
+                    {% else %}
+                      {{ section.settings.sold_out_text | default: 'Sold Out' }}
+                    {% endif %}
+                  </button>
+                </form>
+              {% endif %}
               {% endunless %}
             </div>
           {% else %}
@@ -159,10 +173,22 @@
                   {% render 'dtf-quick-upload-btn', product: manual_product, button_text: 'Upload Design' %}
                 </div>
               {% else %}
-                <button class="sb-btn cp-product-bar-add-btn" onclick="window.location.href='{{ block.settings.link | default: '#' }}'">
-                  <i class="fa-solid fa-cart-plus"></i>
-                  {{ section.settings.add_to_cart_text | default: 'Add to Cart' }}
-                </button>
+                {%- assign btn_action_manual = block.settings.button_action | default: 'default' -%}
+                {%- if btn_action_manual == 'default' -%}
+                  {%- assign btn_action_manual = section.settings.button_action_global | default: 'add_to_cart' -%}
+                {%- endif -%}
+                
+                {% if btn_action_manual == 'go_to_product' %}
+                  <a href="{{ block.settings.link | default: '#' }}" class="sb-btn cp-product-bar-add-btn">
+                    <i class="fa-solid fa-arrow-right"></i>
+                    {{ section.settings.view_product_text | default: 'View Product' }}
+                  </a>
+                {% else %}
+                  <button class="sb-btn cp-product-bar-add-btn" onclick="window.location.href='{{ block.settings.link | default: '#' }}'">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    {{ section.settings.add_to_cart_text | default: 'Add to Cart' }}
+                  </button>
+                {% endif %}
               {% endif %}
             </div>
           {% endif %}
@@ -1162,20 +1188,7 @@
     },
     {
       "type": "header",
-      "content": "Upload Feature"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_upload_area",
-      "label": "Show Upload Area",
-      "default": true,
-      "info": "Allows customers to upload files from device"
-    },
-    {
-      "type": "text",
-      "id": "upload_text",
-      "label": "Upload Button Text",
-      "default": "Upload from Device"
+      "content": "Cart Settings"
     },
     {
       "type": "text",
@@ -1246,6 +1259,24 @@
     },
     {
       "type": "header",
+      "content": "Button Settings (Global)"
+    },
+    {
+      "type": "paragraph",
+      "content": "⚠️ These settings only work when 'Enable Upload Mode' is OFF"
+    },
+    {
+      "type": "select",
+      "id": "button_action_global",
+      "label": "Button Action (All Cards)",
+      "options": [
+        { "value": "add_to_cart", "label": "Add to Cart" },
+        { "value": "go_to_product", "label": "Go to Product Page" }
+      ],
+      "default": "add_to_cart"
+    },
+    {
+      "type": "header",
       "content": "Upload Settings (Global)"
     },
     {
@@ -1254,6 +1285,16 @@
       "label": "Enable Upload Mode (All Cards)",
       "default": false,
       "info": "When enabled, shows Upload button and hides Add to Cart for ALL cards"
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "blocks": [
@@ -1365,6 +1406,21 @@
         },
         {
           "type": "header",
+          "content": "Button Settings"
+        },
+        {
+          "type": "select",
+          "id": "button_action",
+          "label": "Button Action",
+          "options": [
+            { "value": "default", "label": "Use Global Setting" },
+            { "value": "add_to_cart", "label": "Add to Cart" },
+            { "value": "go_to_product", "label": "Go to Product Page" }
+          ],
+          "default": "default"
+        },
+        {
+          "type": "header",
           "content": "Upload Settings"
         },
         {
@@ -1373,6 +1429,12 @@
           "label": "Enable Upload Mode",
           "default": false,
           "info": "When enabled, shows Upload button and hides Add to Cart"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "Özel CSS (Block)",
+          "info": "Bu block için özel CSS"
         }
       ]
     }

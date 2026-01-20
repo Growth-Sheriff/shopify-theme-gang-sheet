@@ -5,6 +5,8 @@
   ============================================
 {% endcomment %}
 
+{%- render 'custom-css-renderer', section: section -%}
+
 <style>
 /* ===== COUNTDOWN SECTION STYLES ===== */
 .countdown-section {
@@ -412,6 +414,16 @@
         { "value": "light", "label": "Light" }
       ],
       "default": ""
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "presets": [

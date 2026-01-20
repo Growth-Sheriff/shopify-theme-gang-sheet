@@ -1,0 +1,705 @@
+{% comment %}
+  Review Badge Collapsible v1.0
+  Soft badge under price that expands to show Judge.me reviews widget
+  
+  Usage: {% render 'review-badge-collapsible', product: product %}
+{% endcomment %}
+
+{% liquid
+  assign provider = section.settings.reviews_provider | default: 'judgeme'
+  assign show_badge = section.settings.show_review_badge | default: true
+  assign rating_score = section.settings.rating_score | default: '4.8'
+  assign review_count = section.settings.review_count | default: '250'
+  assign recommend_percent = section.settings.recommend_percent | default: '98%'
+%}
+
+{% if show_badge %}
+<div class="review-badge-wrapper">
+  <!-- Clickable Badge Trigger -->
+  <button type="button" class="review-badge-trigger" id="review-badge-trigger" aria-expanded="false" aria-controls="review-dropdown">
+    <div class="badge-stars">
+      <svg class="star-icon filled" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+      </svg>
+      <svg class="star-icon filled" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+      </svg>
+      <svg class="star-icon filled" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+      </svg>
+      <svg class="star-icon filled" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+      </svg>
+      <svg class="star-icon half" viewBox="0 0 20 20">
+        <defs>
+          <linearGradient id="halfStar">
+            <stop offset="50%" stop-color="currentColor"/>
+            <stop offset="50%" stop-color="#D1D5DB"/>
+          </linearGradient>
+        </defs>
+        <path fill="url(#halfStar)" d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+      </svg>
+    </div>
+    <span class="badge-rating">{{ rating_score }}</span>
+    <span class="badge-divider">•</span>
+    <span class="badge-reviews">{{ review_count }} Reviews</span>
+    <span class="badge-recommend">
+      <svg class="thumb-icon" viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
+        <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z"/>
+      </svg>
+      {{ recommend_percent }} recommend
+    </span>
+    <svg class="badge-arrow" viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+    </svg>
+  </button>
+
+  <!-- Collapsible Review Dropdown -->
+  <div class="review-dropdown" id="review-dropdown" aria-hidden="true">
+    <div class="review-dropdown-inner">
+      {% case provider %}
+        {% when 'judgeme' %}
+          <!-- Judge.me Official Review Widget Code -->
+          {% assign has_legacy = false %}
+          {% if product.metafields.judgeme.widget.size > 20 %}
+            {% assign has_legacy = true %}
+          {% endif %}
+          <div style='clear:both'></div>
+          <div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget'
+            data-product-title='{{ product.title | escape }}'
+            data-id='{{ product.id }}'
+            data-product-id='{{ product.id }}'
+            data-widget='review'
+            data-auto-install='false'
+            data-shop-reviews-count='{{ shop.metafields.judgeme.shop_reviews_count | default: 0 | escape }}'
+            data-entry-point='review_widget.js'
+            data-entry-key='review-widget/main.js'>
+            {% if has_legacy %}
+              <div class='jdgm-legacy-widget-content' style='display: none;'>{{ product.metafields.judgeme.widget }}</div>
+            {% endif %}
+            <div class="jdgm-widget-loading">
+              <div class="review-loading-spinner"></div>
+              <span>Loading reviews...</span>
+            </div>
+          </div>
+          {% if product.metafields.judgeme.review_widget_data %}
+            <script>jdgm.data ||= {}; jdgm.data.reviewWidget ||= {}; jdgm.data.reviewWidget[{{ product.id }}] = {{ product.metafields.judgeme.review_widget_data }}</script>
+          {% endif %}
+        
+        {% when 'loox' %}
+          <!-- Loox Widget Container -->
+          <div class="loox-reviews-default" data-product-id="{{ product.id }}">
+            <div class="review-loading-spinner"></div>
+            <span>Loading Loox reviews...</span>
+          </div>
+        
+        {% when 'stamped' %}
+          <!-- Stamped Widget Container -->
+          <div class="stamped-reviews" data-product-id="{{ product.id }}" data-product-sku="{{ product.selected_or_first_available_variant.sku }}">
+            <div class="review-loading-spinner"></div>
+            <span>Loading Stamped reviews...</span>
+          </div>
+        
+        {% when 'yotpo' %}
+          <!-- Yotpo Widget Container -->
+          <div class="yotpo yotpo-main-widget" data-product-id="{{ product.id }}" data-name="{{ product.title | escape }}" data-url="{{ shop.url }}{{ product.url }}">
+            <div class="review-loading-spinner"></div>
+            <span>Loading Yotpo reviews...</span>
+          </div>
+        
+        {% when 'static' %}
+          <!-- Static Reviews (No 3rd Party App) -->
+          <div class="static-reviews-container">
+            <div class="static-review-summary">
+              <div class="summary-score">
+                <span class="big-score">{{ rating_score }}</span>
+                <div class="summary-stars">
+                  <i class="ti ti-star-filled"></i>
+                  <i class="ti ti-star-filled"></i>
+                  <i class="ti ti-star-filled"></i>
+                  <i class="ti ti-star-filled"></i>
+                  <i class="ti ti-star-half-filled"></i>
+                </div>
+                <span class="total-reviews">Based on {{ review_count }} reviews</span>
+              </div>
+              <div class="summary-bars">
+                <div class="bar-row"><span>5★</span><div class="bar"><div class="bar-fill" style="width: 72%"></div></div><span>72%</span></div>
+                <div class="bar-row"><span>4★</span><div class="bar"><div class="bar-fill" style="width: 18%"></div></div><span>18%</span></div>
+                <div class="bar-row"><span>3★</span><div class="bar"><div class="bar-fill" style="width: 6%"></div></div><span>6%</span></div>
+                <div class="bar-row"><span>2★</span><div class="bar"><div class="bar-fill" style="width: 2%"></div></div><span>2%</span></div>
+                <div class="bar-row"><span>1★</span><div class="bar"><div class="bar-fill" style="width: 2%"></div></div><span>2%</span></div>
+              </div>
+            </div>
+            
+            <!-- Sample Static Reviews -->
+            <div class="static-reviews-list">
+              <div class="static-review-item">
+                <div class="review-header">
+                  <div class="review-stars">
+                    <i class="ti ti-star-filled"></i>
+                    <i class="ti ti-star-filled"></i>
+                    <i class="ti ti-star-filled"></i>
+                    <i class="ti ti-star-filled"></i>
+                    <i class="ti ti-star-filled"></i>
+                  </div>
+                  <span class="verified-badge"><i class="ti ti-circle-check"></i> Verified Purchase</span>
+                </div>
+                <h4 class="review-title">Amazing Quality!</h4>
+                <p class="review-body">The print quality is outstanding. Colors are vibrant and the transfer was smooth. Highly recommend for anyone doing DTF printing.</p>
+                <div class="review-footer">
+                  <span class="reviewer-name">Mike S.</span>
+                  <span class="review-date">2 days ago</span>
+                </div>
+              </div>
+              
+              <div class="static-review-item">
+                <div class="review-header">
+                  <div class="review-stars">
+                    <i class="ti ti-star-filled"></i>
+                    <i class="ti ti-star-filled"></i>
+                    <i class="ti ti-star-filled"></i>
+                    <i class="ti ti-star-filled"></i>
+                    <i class="ti ti-star-filled"></i>
+                  </div>
+                  <span class="verified-badge"><i class="ti ti-circle-check"></i> Verified Purchase</span>
+                </div>
+                <h4 class="review-title">Fast shipping, great product</h4>
+                <p class="review-body">Received my order quickly and everything was packaged perfectly. The gang sheets are exactly what I needed for my small business.</p>
+                <div class="review-footer">
+                  <span class="reviewer-name">Sarah T.</span>
+                  <span class="review-date">5 days ago</span>
+                </div>
+              </div>
+              
+              <div class="static-review-item">
+                <div class="review-header">
+                  <div class="review-stars">
+                    <i class="ti ti-star-filled"></i>
+                    <i class="ti ti-star-filled"></i>
+                    <i class="ti ti-star-filled"></i>
+                    <i class="ti ti-star-filled"></i>
+                    <i class="ti ti-star"></i>
+                  </div>
+                  <span class="verified-badge"><i class="ti ti-circle-check"></i> Verified Purchase</span>
+                </div>
+                <h4 class="review-title">Good value for money</h4>
+                <p class="review-body">Great prints at a reasonable price. Will definitely order again. Only minor issue was slightly longer wait time than expected.</p>
+                <div class="review-footer">
+                  <span class="reviewer-name">James R.</span>
+                  <span class="review-date">1 week ago</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+      {% endcase %}
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Review Badge Wrapper */
+  .review-badge-wrapper {
+    margin: 12px 0 16px;
+    display: block;
+    width: 100%;
+  }
+
+  /* Badge Trigger Button */
+  .review-badge-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    padding: 8px 14px;
+    background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+    border: 1px solid #F59E0B;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    font-size: 13px;
+    color: #92400E;
+    box-shadow: 0 1px 2px rgba(245, 158, 11, 0.15);
+  }
+
+  .review-badge-trigger:hover {
+    background: linear-gradient(135deg, #FDE68A 0%, #FCD34D 100%);
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.25);
+    transform: translateY(-1px);
+  }
+
+  .review-badge-trigger[aria-expanded="true"] {
+    border-radius: 24px 24px 0 0;
+    border-bottom-color: transparent;
+    background: linear-gradient(135deg, #FDE68A 0%, #FCD34D 100%);
+  }
+
+  .review-badge-trigger[aria-expanded="true"] .badge-arrow {
+    transform: rotate(180deg);
+  }
+
+  /* Badge Stars */
+  .badge-stars {
+    display: flex;
+    gap: 1px;
+  }
+
+  .star-icon {
+    width: 14px;
+    height: 14px;
+    color: #F59E0B;
+  }
+
+  .star-icon.half {
+    color: #F59E0B;
+  }
+
+  /* Badge Text */
+  .badge-rating {
+    font-weight: 700;
+    color: #92400E;
+  }
+
+  .badge-divider {
+    color: #D97706;
+    opacity: 0.5;
+  }
+
+  .badge-reviews {
+    color: #B45309;
+    font-weight: 500;
+  }
+
+  .badge-recommend {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    color: #059669;
+    font-weight: 500;
+    font-size: 12px;
+    padding-left: 6px;
+    border-left: 1px solid rgba(217, 119, 6, 0.3);
+    margin-left: 2px;
+  }
+
+  .thumb-icon {
+    color: #059669;
+  }
+
+  .badge-arrow {
+    color: #B45309;
+    transition: transform 0.3s ease;
+    margin-left: 4px;
+  }
+
+  /* Dropdown Container */
+  .review-dropdown {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #FFFBEB;
+    border: 1px solid #F59E0B;
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    margin-top: -1px;
+    width: 100%;
+  }
+
+  .review-dropdown[aria-hidden="false"] {
+    max-height: 500px;
+    overflow-y: auto;
+  }
+
+  .review-dropdown-inner {
+    padding: 16px;
+    max-height: 460px;
+    overflow-y: auto;
+  }
+
+  /* Custom Scrollbar */
+  .review-dropdown-inner::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .review-dropdown-inner::-webkit-scrollbar-track {
+    background: #FEF3C7;
+    border-radius: 3px;
+  }
+
+  .review-dropdown-inner::-webkit-scrollbar-thumb {
+    background: #F59E0B;
+    border-radius: 3px;
+  }
+
+  .review-dropdown-inner::-webkit-scrollbar-thumb:hover {
+    background: #D97706;
+  }
+
+  /* Judge.me Widget Scroll */
+  .jdgm-widget.jdgm-review-widget {
+    max-height: 440px;
+    overflow-y: auto;
+  }
+
+  .jdgm-widget.jdgm-review-widget::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .jdgm-widget.jdgm-review-widget::-webkit-scrollbar-track {
+    background: #FEF3C7;
+    border-radius: 3px;
+  }
+
+  .jdgm-widget.jdgm-review-widget::-webkit-scrollbar-thumb {
+    background: #F59E0B;
+    border-radius: 3px;
+  }
+
+  /* Loading Spinner */
+  .review-loading-spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid #FDE68A;
+    border-top-color: #F59E0B;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 8px;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .jdgm-widget-loading,
+  .loox-reviews-default > span,
+  .stamped-reviews > span,
+  .yotpo > span {
+    text-align: center;
+    padding: 40px 20px;
+    color: #92400E;
+    font-size: 14px;
+  }
+
+  /* Static Reviews Styling */
+  .static-reviews-container {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .static-review-summary {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 24px;
+    padding: 20px;
+    background: #F9FAFB;
+    border-bottom: 1px solid #E5E7EB;
+  }
+
+  .summary-score {
+    text-align: center;
+  }
+
+  .big-score {
+    display: block;
+    font-size: 48px;
+    font-weight: 700;
+    color: #1F2937;
+    line-height: 1;
+  }
+
+  .summary-stars {
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+    margin: 8px 0;
+  }
+
+  .summary-stars i {
+    color: #F59E0B;
+    font-size: 18px;
+  }
+
+  .total-reviews {
+    font-size: 12px;
+    color: #6B7280;
+  }
+
+  .summary-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    justify-content: center;
+  }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #6B7280;
+  }
+
+  .bar-row > span:first-child {
+    width: 24px;
+    text-align: right;
+  }
+
+  .bar-row > span:last-child {
+    width: 32px;
+  }
+
+  .bar {
+    flex: 1;
+    height: 8px;
+    background: #E5E7EB;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #F59E0B, #FBBF24);
+    border-radius: 4px;
+  }
+
+  /* Review Items */
+  .static-reviews-list {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
+  .static-review-item {
+    padding: 16px;
+    background: #F9FAFB;
+    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+  }
+
+  .review-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .review-stars i {
+    color: #F59E0B;
+    font-size: 14px;
+  }
+
+  .review-stars i.ti-star {
+    color: #D1D5DB;
+  }
+
+  .verified-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: #059669;
+    background: #D1FAE5;
+    padding: 3px 8px;
+    border-radius: 12px;
+  }
+
+  .review-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1F2937;
+    margin: 0 0 6px;
+  }
+
+  .review-body {
+    font-size: 13px;
+    color: #4B5563;
+    line-height: 1.5;
+    margin: 0 0 10px;
+  }
+
+  .review-footer {
+    display: flex;
+    gap: 12px;
+    font-size: 12px;
+    color: #9CA3AF;
+  }
+
+  .reviewer-name {
+    font-weight: 500;
+    color: #6B7280;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .review-badge-trigger {
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 10px 12px;
+      gap: 4px;
+    }
+
+    .badge-recommend {
+      display: none;
+    }
+
+    .static-review-summary {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .summary-bars {
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
+    .review-dropdown[aria-hidden="false"] {
+      max-height: 600px;
+    }
+
+    .static-reviews-list {
+      max-height: 300px;
+    }
+  }
+
+  /* Dark Mode Support */
+  @media (prefers-color-scheme: dark) {
+    .static-reviews-container {
+      background: #1F2937;
+    }
+
+    .static-review-summary {
+      background: #374151;
+      border-bottom-color: #4B5563;
+    }
+
+    .big-score,
+    .review-title {
+      color: #F9FAFB;
+    }
+
+    .total-reviews,
+    .bar-row {
+      color: #9CA3AF;
+    }
+
+    .bar {
+      background: #4B5563;
+    }
+
+    .static-review-item {
+      background: #374151;
+      border-color: #4B5563;
+    }
+
+    .review-body {
+      color: #D1D5DB;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    const trigger = document.getElementById('review-badge-trigger');
+    const dropdown = document.getElementById('review-dropdown');
+    let widgetLoaded = false;
+
+    if (!trigger || !dropdown) return;
+
+    trigger.addEventListener('click', function() {
+      const isExpanded = this.getAttribute('aria-expanded') === 'true';
+      
+      // Toggle state
+      this.setAttribute('aria-expanded', !isExpanded);
+      dropdown.setAttribute('aria-hidden', isExpanded);
+
+      // Lazy load widget on first open
+      if (!isExpanded && !widgetLoaded) {
+        loadReviewWidget();
+        widgetLoaded = true;
+      }
+    });
+
+    function loadReviewWidget() {
+      // Hide loading indicator after widget loads
+      const hideLoading = () => {
+        const loadingEl = dropdown.querySelector('.jdgm-widget-loading');
+        if (loadingEl) loadingEl.style.display = 'none';
+      };
+
+      // Trigger Judge.me widget initialization
+      if (typeof jdgm !== 'undefined') {
+        // Try multiple initialization methods
+        setTimeout(() => {
+          if (jdgm.init) jdgm.init();
+          if (jdgm.SHOP_DOMAIN) {
+            // Force widget refresh
+            const widget = document.getElementById('judgeme_product_reviews');
+            if (widget && jdgm.initializeWidgets) {
+              jdgm.initializeWidgets([widget]);
+            }
+          }
+          // Dispatch custom event that Judge.me listens for
+          window.dispatchEvent(new Event('jdgm:loaded'));
+          hideLoading();
+        }, 200);
+      } else {
+        // Judge.me script not loaded yet - wait and retry
+        let retryCount = 0;
+        const retryInterval = setInterval(() => {
+          retryCount++;
+          if (typeof jdgm !== 'undefined') {
+            clearInterval(retryInterval);
+            if (jdgm.init) jdgm.init();
+            hideLoading();
+          } else if (retryCount > 10) {
+            clearInterval(retryInterval);
+            // Show fallback message
+            const loadingEl = dropdown.querySelector('.jdgm-widget-loading');
+            if (loadingEl) {
+              loadingEl.innerHTML = '<span style="color: #92400E;">Judge.me app not installed. Please install from Shopify App Store.</span>';
+            }
+          }
+        }, 500);
+      }
+      
+      // Trigger Loox if available
+      if (typeof LooxReviews !== 'undefined') {
+        setTimeout(() => LooxReviews.init(), 100);
+      }
+
+      // Trigger Stamped if available
+      if (typeof StampedFn !== 'undefined') {
+        setTimeout(() => StampedFn.init(), 100);
+      }
+
+      // Trigger Yotpo if available
+      if (typeof yotpo !== 'undefined' && yotpo.initWidgets) {
+        setTimeout(() => yotpo.initWidgets(), 100);
+      }
+    }
+
+    // Close on outside click
+    document.addEventListener('click', function(e) {
+      if (!trigger.contains(e.target) && !dropdown.contains(e.target)) {
+        trigger.setAttribute('aria-expanded', 'false');
+        dropdown.setAttribute('aria-hidden', 'true');
+      }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && trigger.getAttribute('aria-expanded') === 'true') {
+        trigger.setAttribute('aria-expanded', 'false');
+        dropdown.setAttribute('aria-hidden', 'true');
+        trigger.focus();
+      }
+    });
+  })();
+</script>
+{% endif %}

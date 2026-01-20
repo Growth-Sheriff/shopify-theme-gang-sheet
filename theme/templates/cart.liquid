@@ -8,6 +8,7 @@
 {% endcomment %}
 
 {{ 'cart-premium.css' | asset_url | stylesheet_tag }}
+{{ 'delivery-widget.js' | asset_url | script_tag }}
 
 {% assign free_shipping_threshold = settings.free_shipping_threshold | default: 5000 %}
 {% assign cart_urgency_enabled = settings.cart_urgency_timer | default: false %}
@@ -153,6 +154,13 @@
                     {%- endif -%}
                     <span class="price-each">/ {{ 'cart.label.each' | t | default: 'each' }}</span>
                   </div>
+                  
+                  {%- comment -%} Quantity Display {%- endcomment -%}
+                  <div class="line-item-qty-display">
+                    <i class="fa-solid fa-xmark"></i>
+                    <span class="qty-number">{{ item.quantity }}</span>
+                    <span class="qty-label">{{ item.quantity | pluralize: 'item', 'items' }}</span>
+                  </div>
                 </div>
                 
                 {%- comment -%} Actions Column {%- endcomment -%}
@@ -238,6 +246,9 @@
                   {%- endif -%}
                 </span>
               </div>
+              
+              {%- comment -%} ═══ DELIVERY ESTIMATE WIDGET ═══ {%- endcomment -%}
+              <div class="cart-delivery-widget" data-delivery-widget data-cart-total="{{ cart.total_price }}"></div>
               
               {%- comment -%} Tax Estimate {%- endcomment -%}
               {%- if cart.taxes_included -%}
@@ -430,6 +441,10 @@
   
   // Format money helper
   function formatMoney(cents) {
+    // Null/NaN check to prevent display issues
+    if (cents == null || isNaN(cents)) {
+      cents = 0;
+    }
     const amount = (cents / 100).toFixed(2);
     return moneyFormat
       .replace(/\{\{\s*amount\s*\}\}/g, amount)
@@ -518,21 +533,51 @@
     }
   }
   
-  // Cart API update
+  // Cart API update with debounce tracking
+  let pendingUpdates = {};
+  let updateTimeouts = {};
+  
   function updateCart(key, quantity) {
-    return fetch('/cart/change.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: key, quantity: quantity })
-    })
-    .then(r => r.json())
-    .then(cart => {
-      updateCartDisplay(cart);
-      return cart;
+    // Cancel any pending update for this item
+    if (updateTimeouts[key]) {
+      clearTimeout(updateTimeouts[key]);
+    }
+    
+    // Store pending quantity
+    pendingUpdates[key] = quantity;
+    
+    // Debounce: wait 300ms before sending request
+    return new Promise((resolve) => {
+      updateTimeouts[key] = setTimeout(() => {
+        const finalQuantity = pendingUpdates[key];
+        delete pendingUpdates[key];
+        delete updateTimeouts[key];
+        
+        // Add loading state
+        const lineItem = document.querySelector(`.cart-line-item[data-key="${key}"]`);
+        if (lineItem) lineItem.classList.add('updating');
+        
+        fetch('/cart/change.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: key, quantity: finalQuantity })
+        })
+        .then(r => r.json())
+        .then(cart => {
+          if (lineItem) lineItem.classList.remove('updating');
+          updateCartDisplay(cart);
+          resolve(cart);
+        })
+        .catch(err => {
+          if (lineItem) lineItem.classList.remove('updating');
+          console.error('Cart update failed:', err);
+          resolve(null);
+        });
+      }, 300);
     });
   }
   
-  // Quantity buttons
+  // Quantity buttons with instant UI update
   document.querySelectorAll('.qty-btn').forEach(btn => {
     btn.addEventListener('click', function() {
       const key = this.dataset.key;
@@ -545,7 +590,13 @@
         val--;
       }
       
+      // Instant UI update
       input.value = val;
+      
+      // Update quantity display badge
+      updateQtyDisplay(key, val);
+      
+      // Debounced API call
       updateCart(key, val);
     });
   });
@@ -556,9 +607,24 @@
       const key = this.dataset.key;
       const val = parseInt(this.value) || 1;
       this.value = Math.max(1, val);
+      
+      // Update quantity display badge
+      updateQtyDisplay(key, this.value);
+      
       updateCart(key, this.value);
     });
   });
+  
+  // Function to update quantity display badge
+  function updateQtyDisplay(key, quantity) {
+    const lineItem = document.querySelector(`.cart-line-item[data-key="${key}"]`);
+    if (lineItem) {
+      const qtyNumber = lineItem.querySelector('.line-item-qty-display .qty-number');
+      const qtyLabel = lineItem.querySelector('.line-item-qty-display .qty-label');
+      if (qtyNumber) qtyNumber.textContent = quantity;
+      if (qtyLabel) qtyLabel.textContent = quantity == 1 ? 'item' : 'items';
+    }
+  }
   
   // Remove buttons
   document.querySelectorAll('.line-item-remove').forEach(btn => {

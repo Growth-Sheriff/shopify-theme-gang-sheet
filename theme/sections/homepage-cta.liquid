@@ -3,6 +3,8 @@
   All elements customizable via Theme Editor
 {% endcomment %}
 
+{%- render 'custom-css-renderer', section: section -%}
+
 <section class="cp-cta" style="background: {{ section.settings.background | default: 'linear-gradient(135deg, #7367F0 0%, #9e95f5 100%)' }};">
   <div class="container" style="text-align: center;">
     <h2 class="cp-cta-title" style="color: {{ section.settings.title_color | default: '#ffffff' }};">{{ section.settings.title }}</h2>
@@ -179,16 +181,14 @@
       "default": "#7367F0"
     },
     {
-      "type": "text",
-      "id": "button_padding",
-      "label": "Button Padding",
-      "default": "0.875rem 2rem"
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
     },
     {
-      "type": "text",
-      "id": "button_radius",
-      "label": "Button Border Radius",
-      "default": "8px"
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "presets": [

@@ -8,6 +8,8 @@
   ============================================
 {% endcomment %}
 
+{%- render 'custom-css-renderer', section: section -%}
+
 {{ 'homepage-product-showcase.css' | asset_url | stylesheet_tag }}
 
 <section class="product-showcase-section py-3" id="showcase-{{ section.id }}">
@@ -148,18 +150,30 @@
 
                         {%- comment -%} Actions (Hidden when upload mode is enabled) {%- endcomment -%}
                         {% unless show_upload %}
+                        {%- assign showcase_btn_action = block.settings.button_action | default: 'default' -%}
+                        {%- if showcase_btn_action == 'default' -%}
+                          {%- assign showcase_btn_action = section.settings.button_action_global | default: 'add_to_cart' -%}
+                        {%- endif -%}
+                        
                         <div class="showcase-card-actions">
-                          <a href="{{ product.url }}" class="btn-view-product">
-                            <i class="ti ti-eye"></i>
-                            <span>View</span>
-                          </a>
-                          <form method="post" action="{{ routes.cart_add_url }}" class="quick-add-form">
-                            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-                            <input type="hidden" name="quantity" value="1">
-                            <button type="submit" class="btn-quick-add" {% unless product.available %}disabled{% endunless %}>
-                              <i class="ti ti-shopping-cart-plus"></i>
-                            </button>
-                          </form>
+                          {% if showcase_btn_action == 'go_to_product' %}
+                            <a href="{{ product.url }}" class="btn-view-product btn-full">
+                              <i class="ti ti-arrow-right"></i>
+                              <span>View Product</span>
+                            </a>
+                          {% else %}
+                            <a href="{{ product.url }}" class="btn-view-product">
+                              <i class="ti ti-eye"></i>
+                              <span>View</span>
+                            </a>
+                            <form method="post" action="{{ routes.cart_add_url }}" class="quick-add-form">
+                              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                              <input type="hidden" name="quantity" value="1">
+                              <button type="submit" class="btn-quick-add" {% unless product.available %}disabled{% endunless %}>
+                                <i class="ti ti-shopping-cart-plus"></i>
+                              </button>
+                            </form>
+                          {% endif %}
                         </div>
                         {% endunless %}
                       </div>
@@ -280,19 +294,31 @@
 
                     {%- comment -%} Actions (Hidden when upload mode is enabled) {%- endcomment -%}
                     {% unless show_upload_main %}
+                    {%- assign main_btn_action = block.settings.button_action | default: 'default' -%}
+                    {%- if main_btn_action == 'default' -%}
+                      {%- assign main_btn_action = section.settings.button_action_global | default: 'add_to_cart' -%}
+                    {%- endif -%}
+                    
                     <div class="main-card-actions">
-                      <a href="{{ product.url }}" class="btn-view-details">
-                        <i class="ti ti-eye"></i>
-                        <span>View Details</span>
-                      </a>
-                      <form method="post" action="{{ routes.cart_add_url }}" class="quick-add-form-main">
-                        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-                        <input type="hidden" name="quantity" value="1">
-                        <button type="submit" class="sb-btn{% unless product.available %} sb-sold-out{% endunless %}" {% unless product.available %}disabled{% endunless %}>
-                          <i class="ti ti-shopping-cart-plus"></i>
-                          <span>{% if product.available %}Add to Cart{% else %}Sold Out{% endif %}</span>
-                        </button>
-                      </form>
+                      {% if main_btn_action == 'go_to_product' %}
+                        <a href="{{ product.url }}" class="sb-btn btn-view-full">
+                          <i class="ti ti-arrow-right"></i>
+                          <span>View Product</span>
+                        </a>
+                      {% else %}
+                        <a href="{{ product.url }}" class="btn-view-details">
+                          <i class="ti ti-eye"></i>
+                          <span>View Details</span>
+                        </a>
+                        <form method="post" action="{{ routes.cart_add_url }}" class="quick-add-form-main">
+                          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                          <input type="hidden" name="quantity" value="1">
+                          <button type="submit" class="sb-btn{% unless product.available %} sb-sold-out{% endunless %}" {% unless product.available %}disabled{% endunless %}>
+                            <i class="ti ti-shopping-cart-plus"></i>
+                            <span>{% if product.available %}Add to Cart{% else %}Sold Out{% endif %}</span>
+                          </button>
+                        </form>
+                      {% endif %}
                     </div>
                     {% endunless %}
                   </div>
@@ -439,30 +465,22 @@ document.addEventListener('DOMContentLoaded', function() {
       "default": "Handpicked products just for you"
     },
     {
-      "type": "color",
-      "id": "section_bg",
-      "label": "Section Background",
-      "default": "#f8f9fa"
+      "type": "header",
+      "content": "Button Settings (Global)"
     },
     {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "label": "Padding Top",
-      "default": 60
+      "type": "paragraph",
+      "content": "⚠️ These settings only work when 'Enable Upload Mode' is OFF"
     },
     {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "label": "Padding Bottom",
-      "default": 60
+      "type": "select",
+      "id": "button_action_global",
+      "label": "Button Action (All Cards)",
+      "options": [
+        { "value": "add_to_cart", "label": "Add to Cart" },
+        { "value": "go_to_product", "label": "Go to Product Page" }
+      ],
+      "default": "add_to_cart"
     },
     {
       "type": "header",
@@ -474,6 +492,16 @@ document.addEventListener('DOMContentLoaded', function() {
       "label": "Enable Upload Mode (All Cards)",
       "default": false,
       "info": "When enabled, shows Upload button and hides Add to Cart for ALL cards"
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "blocks": [
@@ -530,6 +558,12 @@ document.addEventListener('DOMContentLoaded', function() {
           "label": "Enable Upload Mode",
           "default": false,
           "info": "When enabled, shows Upload button and hides Add to Cart"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "Özel CSS (Block)",
+          "info": "Bu block için özel CSS"
         }
       ]
     },
@@ -578,6 +612,21 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         {
           "type": "header",
+          "content": "Button Settings"
+        },
+        {
+          "type": "select",
+          "id": "button_action",
+          "label": "Button Action",
+          "options": [
+            { "value": "default", "label": "Use Global Setting" },
+            { "value": "add_to_cart", "label": "Add to Cart" },
+            { "value": "go_to_product", "label": "Go to Product Page" }
+          ],
+          "default": "default"
+        },
+        {
+          "type": "header",
           "content": "Upload Settings"
         },
         {
@@ -586,6 +635,12 @@ document.addEventListener('DOMContentLoaded', function() {
           "label": "Enable Upload Mode",
           "default": false,
           "info": "When enabled, shows Upload button and hides Add to Cart"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "Özel CSS (Block)",
+          "info": "Bu block için özel CSS"
         }
       ]
     }

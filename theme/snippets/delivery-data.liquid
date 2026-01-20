@@ -1,0 +1,96 @@
+{% comment %}
+  ============================================
+  Delivery Calculator - Product Page Snippet
+  ============================================
+  
+  Bu snippet, ürün sayfasında teslimat badge'i için 
+  gerekli verileri JavaScript'e aktarır.
+  
+  Kullanım:
+  {% render 'delivery-data', product: product %}
+  
+  Gerekli Metafield'lar (opsiyonel):
+  - product.metafields.shipping.carrier (text) - Kargo firması kodu
+  - product.metafields.shipping.processing_days (number) - Hazırlık süresi
+  - product.metafields.shipping.express_available (boolean) - Express var mı
+  - product.metafields.shipping.ships_from (text) - Depo ID
+  
+{% endcomment %}
+
+{% liquid
+  # Ürün kargo ayarlarını al
+  assign product_carrier = product.metafields.shipping.carrier | default: nil
+  assign processing_days = product.metafields.shipping.processing_days | default: 0
+  assign express_available = product.metafields.shipping.express_available | default: true
+  assign ships_from = product.metafields.shipping.ships_from | default: nil
+  
+  # Stok durumu kontrolü
+  assign is_in_stock = false
+  if product.available
+    assign is_in_stock = true
+  endif
+  
+  # Preorder kontrolü
+  assign is_preorder = false
+  if product.tags contains 'preorder' or product.tags contains 'pre-order'
+    assign is_preorder = true
+  endif
+  
+  # Ağır ürün kontrolü (kargo firması otomatik seçimi için)
+  assign is_heavy = false
+  if product.metafields.shipping.weight_class == 'heavy'
+    assign is_heavy = true
+  elsif product.variants.first.weight > 50000
+    assign is_heavy = true
+  endif
+  
+  # Vendor bazlı kargo firması (opsiyonel)
+  assign vendor_carrier = nil
+  case product.vendor
+    when 'VendorA'
+      assign vendor_carrier = 'ups_ground'
+    when 'VendorB'
+      assign vendor_carrier = 'fedex_ground'
+  endcase
+  
+  # Final kargo firması
+  assign final_carrier = product_carrier | default: vendor_carrier | default: nil
+%}
+
+<script type="application/json" id="delivery-product-data-{{ product.id }}">
+{
+  "productId": {{ product.id | json }},
+  "productHandle": {{ product.handle | json }},
+  "title": {{ product.title | json }},
+  "vendor": {{ product.vendor | json }},
+  "carrier": {{ final_carrier | json }},
+  "processingDays": {{ processing_days | json }},
+  "expressAvailable": {{ express_available | json }},
+  "shipsFrom": {{ ships_from | json }},
+  "inStock": {{ is_in_stock | json }},
+  "isPreorder": {{ is_preorder | json }},
+  "isHeavy": {{ is_heavy | json }},
+  "weight": {{ product.variants.first.weight | json }},
+  "variantId": {{ product.selected_or_first_available_variant.id | json }},
+  "tags": {{ product.tags | json }}
+}
+</script>
+
+{% comment %} Müşteri lokasyon bilgisi (giriş yapmışsa) {% endcomment %}
+{% if customer and customer.default_address %}
+  <script type="application/json" id="delivery-customer-location">
+  {
+    "hasAddress": true,
+    "city": {{ customer.default_address.city | json }},
+    "state": {{ customer.default_address.province_code | json }},
+    "zip": {{ customer.default_address.zip | json }},
+    "country": {{ customer.default_address.country_code | json }}
+  }
+  </script>
+{% else %}
+  <script type="application/json" id="delivery-customer-location">
+  {
+    "hasAddress": false
+  }
+  </script>
+{% endif %}

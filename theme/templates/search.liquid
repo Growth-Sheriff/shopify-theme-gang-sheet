@@ -84,6 +84,13 @@
     padding: 3rem 0 5rem;
   }
   
+  .cp-search-section .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+  
   .cp-search-header {
     text-align: center;
     margin-bottom: 3rem;
@@ -226,6 +233,77 @@
     .cp-search-results {
       grid-template-columns: repeat(2, 1fr);
     }
+  }
+  
+  @media (max-width: 480px) {
+    .cp-search-results {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+  
+  /* Pagination */
+  .cp-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+  }
+  
+  .cp-pagination a,
+  .cp-pagination span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 0.75rem;
+    border-radius: 8px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  
+  .cp-pagination a {
+    background: #fff;
+    color: #5d596c;
+    border: 1px solid #ebe9f1;
+  }
+  
+  .cp-pagination a:hover {
+    background: #7367F0;
+    color: #fff;
+    border-color: #7367F0;
+  }
+  
+  .cp-pagination span.current {
+    background: #7367F0;
+    color: #fff;
+    border: 1px solid #7367F0;
+  }
+  
+  /* Button Styles */
+  .cp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  
+  .cp-btn-primary {
+    background: linear-gradient(135deg, #7367F0, #5e50ee);
+    color: #fff;
+  }
+  
+  .cp-btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(115, 103, 240, 0.4);
   }
 </style>
 

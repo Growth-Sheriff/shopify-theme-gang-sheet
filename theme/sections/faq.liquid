@@ -5,6 +5,8 @@
   ============================================
 {% endcomment %}
 
+{%- render 'custom-css-renderer', section: section -%}
+
 <style>
 /* ===== FAQ SECTION STYLES ===== */
 .faq-section {
@@ -339,6 +341,28 @@
   </div>
 </section>
 
+<!-- FAQPage Schema for SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'faq_item' -%}
+    {
+      "@type": "Question",
+      "name": {{ block.settings.question | json }},
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": {{ block.settings.answer | strip_html | json }}
+      }
+    }{% unless forloop.last %},{% endunless %}
+      {%- endif -%}
+    {%- endfor -%}
+  ]
+}
+</script>
+
 <script>
 function toggleFaq(element) {
   const item = element.closest('.faq-item');
@@ -414,6 +438,16 @@ document.addEventListener('DOMContentLoaded', function() {
       "type": "url",
       "id": "cta_link",
       "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "blocks": [
@@ -438,6 +472,12 @@ document.addEventListener('DOMContentLoaded', function() {
           "id": "category",
           "label": "Category (optional)",
           "info": "Group FAQs by category"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "Özel CSS (Block)",
+          "info": "Bu block için özel CSS"
         }
       ]
     }

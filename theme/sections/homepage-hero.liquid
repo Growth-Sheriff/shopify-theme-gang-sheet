@@ -3,6 +3,8 @@
   All elements customizable via Theme Editor
 {% endcomment %}
 
+{%- render 'custom-css-renderer', section: section -%}
+
 <section class="cp-hero" id="hero" style="{% if section.settings.section_bg %}background: {{ section.settings.section_bg }};{% endif %}">
   <div class="container">
     <div class="cp-hero-grid">
@@ -392,6 +394,16 @@
       "id": "upload_btn_text",
       "label": "Upload Button Tooltip",
       "default": "Upload Logo"
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "blocks": [
@@ -410,6 +422,12 @@
           "id": "label",
           "label": "Label",
           "default": "End Users"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "Özel CSS (Block)",
+          "info": "Bu block için özel CSS"
         }
       ]
     },
@@ -428,6 +446,12 @@
           "id": "name",
           "label": "Color Name",
           "default": "Light Blue"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "Özel CSS (Block)",
+          "info": "Bu block için özel CSS"
         }
       ]
     }

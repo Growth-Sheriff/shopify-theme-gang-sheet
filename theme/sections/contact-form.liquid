@@ -5,11 +5,19 @@
   ============================================
 {% endcomment %}
 
+{%- render 'custom-css-renderer', section: section -%}
+
 <style>
 /* ===== CONTACT SECTION STYLES ===== */
 .contact-section {
-  padding: 60px 0 80px;
+  padding: 60px 24px 80px;
   background: linear-gradient(180deg, #f8f9fc 0%, #fff 100%);
+}
+
+.contact-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
 }
 
 .contact-header {
@@ -104,31 +112,68 @@
 /* Social Links */
 .contact-social {
   display: flex;
+  flex-wrap: wrap;
   gap: 12px;
   margin-top: 16px;
+  padding: 24px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+  border: 1px solid rgba(115, 103, 240, 0.08);
+}
+
+.contact-social-title {
+  width: 100%;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2d2d3a;
+  margin: 0 0 12px 0;
 }
 
 .social-link {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fff;
+  background: linear-gradient(135deg, #f8f9fc 0%, #fff 100%);
   border: 1px solid rgba(115, 103, 240, 0.15);
   border-radius: 12px;
   color: #5d596c;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   text-decoration: none;
   transition: all 0.3s ease;
 }
 
-.social-link:hover {
-  background: #7367f0;
-  color: #fff;
-  border-color: #7367f0;
-  transform: translateY(-3px);
+/* Social icon varsayılan renkler */
+.social-link i {
+  display: flex !important;
+  color: inherit;
 }
+.social-link.facebook { color: #1877f2; }
+.social-link.instagram { color: #e4405f; }
+.social-link.twitter { color: #1da1f2; }
+.social-link.youtube { color: #ff0000; }
+.social-link.tiktok { color: #000; }
+.social-link.pinterest { color: #e60023; }
+.social-link.linkedin { color: #0077b5; }
+.social-link.whatsapp { color: #25d366; }
+.social-link.telegram { color: #0088cc; }
+
+.social-link:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.social-link.facebook:hover { background: #1877f2; color: #fff; border-color: #1877f2; }
+.social-link.instagram:hover { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; border-color: #dc2743; }
+.social-link.twitter:hover { background: #000; color: #fff; border-color: #000; }
+.social-link.youtube:hover { background: #ff0000; color: #fff; border-color: #ff0000; }
+.social-link.tiktok:hover { background: #000; color: #fff; border-color: #000; }
+.social-link.pinterest:hover { background: #e60023; color: #fff; border-color: #e60023; }
+.social-link.linkedin:hover { background: #0077b5; color: #fff; border-color: #0077b5; }
+.social-link.whatsapp:hover { background: #25d366; color: #fff; border-color: #25d366; }
+.social-link.telegram:hover { background: #0088cc; color: #fff; border-color: #0088cc; }
 
 /* Form Column */
 .contact-form-card {
@@ -345,29 +390,63 @@
           </div>
         {%- endif -%}
         
-        <!-- Social Links -->
+        <!-- Social Links - Global Theme Settings -->
+        {% assign has_social = false %}
+        {% if settings.social_facebook != blank or settings.social_instagram != blank or settings.social_twitter != blank or settings.social_youtube != blank or settings.social_tiktok != blank or settings.social_pinterest != blank or settings.social_linkedin != blank or settings.social_whatsapp != blank or settings.social_telegram != blank %}
+          {% assign has_social = true %}
+        {% endif %}
+        
+        {% if has_social %}
         <div class="contact-social">
-          {%- if section.settings.facebook != blank -%}
-            <a href="{{ section.settings.facebook }}" class="social-link" target="_blank" rel="noopener" aria-label="Facebook">
+          <h3 class="contact-social-title">{{ section.settings.social_title | default: 'Follow Us' }}</h3>
+          
+          {%- if settings.social_facebook != blank -%}
+            <a href="{{ settings.social_facebook }}" class="social-link facebook" target="_blank" rel="noopener" aria-label="Facebook">
               <i class="fa-brands fa-facebook-f"></i>
             </a>
           {%- endif -%}
-          {%- if section.settings.instagram != blank -%}
-            <a href="{{ section.settings.instagram }}" class="social-link" target="_blank" rel="noopener" aria-label="Instagram">
+          {%- if settings.social_instagram != blank -%}
+            <a href="{{ settings.social_instagram }}" class="social-link instagram" target="_blank" rel="noopener" aria-label="Instagram">
               <i class="fa-brands fa-instagram"></i>
             </a>
           {%- endif -%}
-          {%- if section.settings.twitter != blank -%}
-            <a href="{{ section.settings.twitter }}" class="social-link" target="_blank" rel="noopener" aria-label="Twitter">
+          {%- if settings.social_twitter != blank -%}
+            <a href="{{ settings.social_twitter }}" class="social-link twitter" target="_blank" rel="noopener" aria-label="Twitter">
               <i class="fa-brands fa-x-twitter"></i>
             </a>
           {%- endif -%}
-          {%- if section.settings.youtube != blank -%}
-            <a href="{{ section.settings.youtube }}" class="social-link" target="_blank" rel="noopener" aria-label="YouTube">
+          {%- if settings.social_youtube != blank -%}
+            <a href="{{ settings.social_youtube }}" class="social-link youtube" target="_blank" rel="noopener" aria-label="YouTube">
               <i class="fa-brands fa-youtube"></i>
             </a>
           {%- endif -%}
+          {%- if settings.social_tiktok != blank -%}
+            <a href="{{ settings.social_tiktok }}" class="social-link tiktok" target="_blank" rel="noopener" aria-label="TikTok">
+              <i class="fa-brands fa-tiktok"></i>
+            </a>
+          {%- endif -%}
+          {%- if settings.social_pinterest != blank -%}
+            <a href="{{ settings.social_pinterest }}" class="social-link pinterest" target="_blank" rel="noopener" aria-label="Pinterest">
+              <i class="fa-brands fa-pinterest-p"></i>
+            </a>
+          {%- endif -%}
+          {%- if settings.social_linkedin != blank -%}
+            <a href="{{ settings.social_linkedin }}" class="social-link linkedin" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <i class="fa-brands fa-linkedin-in"></i>
+            </a>
+          {%- endif -%}
+          {%- if settings.social_whatsapp != blank -%}
+            <a href="{{ settings.social_whatsapp }}" class="social-link whatsapp" target="_blank" rel="noopener" aria-label="WhatsApp">
+              <i class="fa-brands fa-whatsapp"></i>
+            </a>
+          {%- endif -%}
+          {%- if settings.social_telegram != blank -%}
+            <a href="{{ settings.social_telegram }}" class="social-link telegram" target="_blank" rel="noopener" aria-label="Telegram">
+              <i class="fa-brands fa-telegram"></i>
+            </a>
+          {%- endif -%}
         </div>
+        {% endif %}
         
       </div>
       
@@ -492,24 +571,24 @@
       "content": "Social Links"
     },
     {
-      "type": "url",
-      "id": "facebook",
-      "label": "Facebook URL"
+      "type": "text",
+      "id": "social_title",
+      "label": "Sosyal Medya Başlığı",
+      "default": "Follow Us"
     },
     {
-      "type": "url",
-      "id": "instagram",
-      "label": "Instagram URL"
+      "type": "paragraph",
+      "content": "Sosyal medya linkleri Tema Ayarları → Sosyal Medya bölümünden yönetilir."
     },
     {
-      "type": "url",
-      "id": "twitter",
-      "label": "Twitter/X URL"
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
     },
     {
-      "type": "url",
-      "id": "youtube",
-      "label": "YouTube URL"
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "presets": [

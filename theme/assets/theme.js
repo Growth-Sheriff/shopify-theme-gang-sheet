@@ -2,13 +2,15 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Sticky navbar scroll effect
   const navbar = document.querySelector('.cp-navbar');
-  window.addEventListener('scroll', function() {
-    if (window.scrollY > 50) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-  });
+  if (navbar) {
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+  }
   
   // Color picker
   document.querySelectorAll('.cp-color-btn').forEach(btn => {

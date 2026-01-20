@@ -3,6 +3,8 @@
   All elements customizable via Theme Editor
 {% endcomment %}
 
+{%- render 'custom-css-renderer', section: section -%}
+
 <section class="cp-testimonials" id="reviews" style="background: {{ section.settings.section_bg | default: '#f8f7fa' }}; padding: {{ section.settings.section_padding | default: '2rem 0' }};">
   <div class="container">
     {%- comment -%} Desktop Elegant Header - Blue Theme {%- endcomment -%}
@@ -221,40 +223,16 @@
       "default": "Customer Reviews"
     },
     {
-      "type": "color",
-      "id": "badge_bg",
-      "label": "Badge Background",
-      "default": "#e5e3fb"
-    },
-    {
-      "type": "color",
-      "id": "badge_color",
-      "label": "Badge Text Color",
-      "default": "#7367F0"
-    },
-    {
       "type": "text",
       "id": "title",
       "label": "Section Title",
       "default": "What Our Customers Say"
     },
     {
-      "type": "color",
-      "id": "title_color",
-      "label": "Title Color",
-      "default": "#5d596c"
-    },
-    {
       "type": "textarea",
       "id": "subtitle",
       "label": "Section Subtitle",
       "default": "Join thousands of satisfied customers who trust CloudyPrints for their printing needs."
-    },
-    {
-      "type": "color",
-      "id": "subtitle_color",
-      "label": "Subtitle Color",
-      "default": "#6e6b7b"
     },
     {
       "type": "header",
@@ -289,6 +267,16 @@
       "id": "role_color",
       "label": "Role Color",
       "default": "#6e6b7b"
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "blocks": [
@@ -331,6 +319,12 @@
           "id": "role",
           "label": "Customer Role",
           "default": "Small Business Owner"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "Özel CSS (Block)",
+          "info": "Bu block için özel CSS"
         }
       ]
     }

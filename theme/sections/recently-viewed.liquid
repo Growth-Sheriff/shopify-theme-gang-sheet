@@ -4,6 +4,7 @@
   localStorage-based recently viewed tracker
   ============================================
 {% endcomment %}
+{%- render 'custom-css-renderer', section: section -%}
 
 <style>
 /* ===== RECENTLY VIEWED STYLES ===== */
@@ -395,6 +396,16 @@ document.addEventListener('DOMContentLoaded', function() {
       "step": 1,
       "default": 10,
       "info": "Maximum products to keep in memory"
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "presets": [

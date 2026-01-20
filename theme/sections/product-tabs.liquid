@@ -2,6 +2,7 @@
   Product Tabs Section - Details, Shipping, Care
   Separate section for product information tabs
 {% endcomment %}
+{%- render 'custom-css-renderer', section: section -%}
 
 <style>
 .product-tabs-section {
@@ -253,6 +254,16 @@ function switchProductTab(tabId, btn) {
       "id": "free_shipping",
       "label": "Free Shipping Threshold",
       "default": "Orders $59+"
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "blocks": [
@@ -271,6 +282,12 @@ function switchProductTab(tabId, btn) {
           "id": "text",
           "label": "Instruction Text",
           "default": "Wait 24hrs before washing"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "Özel CSS (Block)",
+          "info": "Bu block için özel CSS"
         }
       ]
     }

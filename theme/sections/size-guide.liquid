@@ -4,6 +4,7 @@
   Modal-based size chart with multiple options
   ============================================
 {% endcomment %}
+{%- render 'custom-css-renderer', section: section -%}
 
 <style>
 /* ===== SIZE GUIDE STYLES ===== */
@@ -552,6 +553,16 @@ document.addEventListener('click', function(e) {
       "id": "tips_text",
       "label": "Tips Text",
       "default": "For a relaxed fit, we recommend sizing up. If you're between sizes, choose the larger size for comfort or the smaller size for a more fitted look."
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "blocks": [
@@ -578,6 +589,12 @@ document.addEventListener('click', function(e) {
           "label": "Values (cm, comma-separated)",
           "default": "86, 91, 97, 102, 107, 112",
           "info": "Enter values for each size in order"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "Özel CSS (Block)",
+          "info": "Bu block için özel CSS"
         }
       ]
     },
@@ -603,6 +620,12 @@ document.addEventListener('click', function(e) {
           "label": "Icon Class",
           "default": "fa-solid fa-ruler-horizontal",
           "info": "Font Awesome icon class"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "Özel CSS (Block)",
+          "info": "Bu block için özel CSS"
         }
       ]
     }

@@ -5,6 +5,8 @@
   ============================================
 {% endcomment %}
 
+{%- render 'custom-css-renderer', section: section -%}
+
 <style>
 /* ===== TRUST BADGES STYLES ===== */
 .trust-badges-section {
@@ -285,6 +287,16 @@
       "id": "show_payment_icons",
       "label": "Show Payment Icons",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "blocks": [
@@ -322,6 +334,12 @@
           "id": "subtitle",
           "label": "Subtitle",
           "default": "256-bit SSL encryption"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "Özel CSS (Block)",
+          "info": "Bu block için özel CSS"
         }
       ]
     }

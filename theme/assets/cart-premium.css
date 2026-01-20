@@ -453,6 +453,36 @@
   color: var(--cart-text-muted);
 }
 
+/* Quantity Display (inline) */
+.line-item-qty-display {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 8px 14px;
+  background: linear-gradient(135deg, rgba(115, 103, 240, 0.08), rgba(115, 103, 240, 0.04));
+  border-radius: 20px;
+  border: 1px solid rgba(115, 103, 240, 0.15);
+  width: fit-content;
+}
+
+.line-item-qty-display i {
+  font-size: 0.7rem;
+  color: var(--cart-accent);
+}
+
+.line-item-qty-display .qty-number {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--cart-accent);
+}
+
+.line-item-qty-display .qty-label {
+  font-size: 0.8rem;
+  color: var(--cart-text-secondary);
+  font-weight: 500;
+}
+
 /* Line Item Actions */
 .line-item-actions {
   display: flex;
@@ -1381,4 +1411,40 @@
     padding: 12px 20px;
     font-size: 0.9rem;
   }
+}
+
+/* ═══ LOADING STATE ═══ */
+.cart-line-item.updating {
+  opacity: 0.6;
+  pointer-events: none;
+  position: relative;
+}
+
+.cart-line-item.updating::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  margin: -12px 0 0 -12px;
+  border: 3px solid var(--cart-border);
+  border-top-color: var(--cart-accent);
+  border-radius: 50%;
+  animation: cartSpinner 0.8s linear infinite;
+}
+
+@keyframes cartSpinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Quantity button active state */
+.qty-btn:active {
+  transform: scale(0.9);
+}
+
+.qty-input {
+  transition: none;
 }

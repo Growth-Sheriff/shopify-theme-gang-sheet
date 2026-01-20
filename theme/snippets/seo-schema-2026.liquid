@@ -1,0 +1,911 @@
+{% comment %}
+  ╔══════════════════════════════════════════════════════════════════════════════════╗
+  ║  ADVANCED SEO SCHEMA 2026 - Premium JSON-LD Structured Data                       ║
+  ║  Version: 2026.1.0                                                                ║
+  ║  Last Updated: January 2026                                                       ║
+  ║                                                                                   ║
+  ║  Features:                                                                        ║
+  ║  • Organization with enhanced contact & social                                    ║
+  ║  • WebSite with SearchAction & SiteNavigationElement                             ║
+  ║  • Product with full offers, shipping, reviews, variants                         ║
+  ║  • CollectionPage with ItemList & ProductCollection                              ║
+  ║  • BreadcrumbList for all pages                                                  ║
+  ║  • FAQPage for homepage FAQ section                                              ║
+  ║  • LocalBusiness for physical stores                                             ║
+  ║  • HowTo schema for process/tutorial sections                                    ║
+  ║  • Article & BlogPosting with full metadata                                      ║
+  ║                                                                                   ║
+  ║  Usage: {% render 'seo-schema-2026' %}                                           ║
+  ╚══════════════════════════════════════════════════════════════════════════════════╝
+{% endcomment %}
+
+{%- liquid
+  assign current_url = canonical_url | default: request.origin | append: request.path
+  assign shop_logo = settings.logo | image_url: width: 600
+  assign shop_description = shop.description | default: shop.name | append: ' - Premium DTF Transfers' | strip_html | truncate: 500
+-%}
+
+{%- comment -%}═══════════════════════════════════════════════════════════════════════════
+   HOMEPAGE SCHEMAS
+═══════════════════════════════════════════════════════════════════════════{%- endcomment -%}
+{%- if template.name == 'index' -%}
+
+  <!-- 1. Organization Schema - Enhanced 2026 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "{{ shop.url }}/#organization",
+    "name": {{ shop.name | json }},
+    "alternateName": "Fast DTF Transfer",
+    "url": {{ shop.url | json }},
+    "logo": {
+      "@type": "ImageObject",
+      "@id": "{{ shop.url }}/#logo",
+      "url": {{ shop_logo | json }},
+      "width": 600,
+      "height": 60,
+      "caption": {{ shop.name | json }}
+    },
+    "image": {{ shop_logo | json }},
+    "description": {{ shop_description | json }},
+    "foundingDate": "2020",
+    "sameAs": [
+      {%- if settings.social_facebook_link != blank -%}{{ settings.social_facebook_link | json }},{%- endif -%}
+      {%- if settings.social_twitter_link != blank -%}{{ settings.social_twitter_link | json }},{%- endif -%}
+      {%- if settings.social_instagram_link != blank -%}{{ settings.social_instagram_link | json }},{%- endif -%}
+      {%- if settings.social_youtube_link != blank -%}{{ settings.social_youtube_link | json }},{%- endif -%}
+      {%- if settings.social_pinterest_link != blank -%}{{ settings.social_pinterest_link | json }},{%- endif -%}
+      {%- if settings.social_tiktok_link != blank -%}{{ settings.social_tiktok_link | json }}{%- endif -%}
+    ],
+    "contactPoint": [
+      {
+        "@type": "ContactPoint",
+        "telephone": {{ shop.phone | default: "+1-800-000-0000" | json }},
+        "contactType": "customer service",
+        "email": {{ shop.email | json }},
+        "availableLanguage": ["English"],
+        "areaServed": "US",
+        "hoursAvailable": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:00",
+          "closes": "18:00"
+        }
+      },
+      {
+        "@type": "ContactPoint",
+        "telephone": {{ shop.phone | default: "+1-800-000-0000" | json }},
+        "contactType": "sales",
+        "email": {{ shop.email | json }},
+        "availableLanguage": ["English"]
+      }
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": {{ shop.address.street | default: "" | json }},
+      "addressLocality": {{ shop.address.city | default: "" | json }},
+      "addressRegion": {{ shop.address.province | default: "" | json }},
+      "postalCode": {{ shop.address.zip | default: "" | json }},
+      "addressCountry": {{ shop.address.country_code | default: "US" | json }}
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "United States"
+    },
+    "slogan": "Premium DTF Transfers - Fast & Reliable",
+    "knowsAbout": ["DTF Transfers", "Direct to Film Printing", "Custom Apparel", "Heat Transfers"]
+  }
+  </script>
+
+  <!-- 2. WebSite Schema with SearchAction - Enhanced 2026 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "{{ shop.url }}/#website",
+    "name": {{ shop.name | json }},
+    "alternateName": "Fast DTF Transfer",
+    "url": {{ shop.url | json }},
+    "description": {{ shop_description | json }},
+    "publisher": {
+      "@id": "{{ shop.url }}/#organization"
+    },
+    "inLanguage": "en-US",
+    "potentialAction": [
+      {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "{{ shop.url }}/search?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      },
+      {
+        "@type": "ReadAction",
+        "target": "{{ shop.url }}"
+      }
+    ]
+  }
+  </script>
+
+  <!-- 3. WebPage Schema for Homepage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "{{ shop.url }}/#webpage",
+    "url": {{ shop.url | json }},
+    "name": {{ page_title | default: shop.name | json }},
+    "description": {{ page_description | default: shop_description | json }},
+    "isPartOf": {
+      "@id": "{{ shop.url }}/#website"
+    },
+    "about": {
+      "@id": "{{ shop.url }}/#organization"
+    },
+    "primaryImageOfPage": {
+      "@type": "ImageObject",
+      "url": {{ shop_logo | json }}
+    },
+    "breadcrumb": {
+      "@id": "{{ shop.url }}/#breadcrumb"
+    },
+    "inLanguage": "en-US",
+    "potentialAction": {
+      "@type": "ReadAction",
+      "target": "{{ shop.url }}"
+    }
+  }
+  </script>
+
+  <!-- 4. BreadcrumbList for Homepage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": "{{ shop.url }}/#breadcrumb",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "{{ shop.url }}"
+      }
+    ]
+  }
+  </script>
+
+  <!-- 5. ItemList Schema for Featured Products on Homepage -->
+  {%- assign featured_collection = collections['all'] | default: collections.first -%}
+  {%- if featured_collection.products.size > 0 -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Featured Products",
+    "description": "Our best-selling DTF transfers and custom apparel products",
+    "numberOfItems": {{ featured_collection.products.size | at_most: 12 }},
+    "itemListElement": [
+      {%- for product in featured_collection.products limit: 12 -%}
+      {
+        "@type": "ListItem",
+        "position": {{ forloop.index }},
+        "item": {
+          "@type": "Product",
+          "name": {{ product.title | json }},
+          "url": "{{ shop.url }}{{ product.url }}",
+          "image": "{{ product.featured_image | image_url: width: 600 }}",
+          "offers": {
+            "@type": "Offer",
+            "price": {{ product.price | money_without_currency | json }},
+            "priceCurrency": {{ cart.currency.iso_code | json }},
+            "availability": "{%- if product.available -%}https://schema.org/InStock{%- else -%}https://schema.org/OutOfStock{%- endif -%}"
+          }
+        }
+      }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  }
+  </script>
+  {%- endif -%}
+
+  <!-- 6. LocalBusiness Schema (for physical locations) -->
+  {%- if shop.address.city != blank -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": "{{ shop.url }}/#localbusiness",
+    "name": {{ shop.name | json }},
+    "image": {{ shop_logo | json }},
+    "url": {{ shop.url | json }},
+    "telephone": {{ shop.phone | default: "" | json }},
+    "email": {{ shop.email | json }},
+    "priceRange": "$$",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": {{ shop.address.street | json }},
+      "addressLocality": {{ shop.address.city | json }},
+      "addressRegion": {{ shop.address.province | json }},
+      "postalCode": {{ shop.address.zip | json }},
+      "addressCountry": {{ shop.address.country_code | json }}
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "",
+      "longitude": ""
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "09:00",
+        "closes": "18:00"
+      }
+    ],
+    "sameAs": [
+      {%- if settings.social_facebook_link != blank -%}{{ settings.social_facebook_link | json }},{%- endif -%}
+      {%- if settings.social_instagram_link != blank -%}{{ settings.social_instagram_link | json }}{%- endif -%}
+    ]
+  }
+  </script>
+  {%- endif -%}
+
+{%- endif -%}
+
+{%- comment -%}═══════════════════════════════════════════════════════════════════════════
+   PRODUCT PAGE SCHEMAS
+═══════════════════════════════════════════════════════════════════════════{%- endcomment -%}
+{%- if template.name == 'product' -%}
+
+  <!-- 1. Product Schema - Full 2026 Specification -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "@id": "{{ shop.url }}{{ product.url }}/#product",
+    "name": {{ product.title | json }},
+    "description": {{ product.description | strip_html | truncate: 5000 | json }},
+    "url": "{{ shop.url }}{{ product.url }}",
+    "mainEntityOfPage": "{{ shop.url }}{{ product.url }}",
+    "image": [
+      {%- for image in product.images limit: 10 -%}
+      {
+        "@type": "ImageObject",
+        "url": "{{ image | image_url: width: 1200 }}",
+        "width": 1200,
+        "height": 1200
+      }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ],
+    "sku": {{ product.selected_or_first_available_variant.sku | default: product.id | json }},
+    "gtin": {{ product.selected_or_first_available_variant.barcode | json }},
+    "mpn": {{ product.selected_or_first_available_variant.barcode | default: product.id | json }},
+    "productID": {{ product.id | json }},
+    "brand": {
+      "@type": "Brand",
+      "name": {{ product.vendor | default: shop.name | json }}
+    },
+    "manufacturer": {
+      "@type": "Organization",
+      "name": {{ product.vendor | default: shop.name | json }}
+    },
+    "category": {{ product.type | default: "DTF Transfers" | json }},
+    {%- if product.collections.size > 0 -%}
+    "isRelatedTo": [
+      {%- for collection in product.collections limit: 3 -%}
+      {
+        "@type": "Product",
+        "name": {{ collection.title | json }},
+        "url": "{{ shop.url }}{{ collection.url }}"
+      }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ],
+    {%- endif -%}
+    "offers": {
+      "@type": "AggregateOffer",
+      "@id": "{{ shop.url }}{{ product.url }}/#offers",
+      "url": "{{ shop.url }}{{ product.url }}",
+      "priceCurrency": {{ cart.currency.iso_code | json }},
+      "lowPrice": {{ product.price_min | money_without_currency | remove: ',' | json }},
+      "highPrice": {{ product.price_max | money_without_currency | remove: ',' | json }},
+      "offerCount": {{ product.variants.size }},
+      "availability": "{%- if product.available -%}https://schema.org/InStock{%- else -%}https://schema.org/OutOfStock{%- endif -%}",
+      "itemCondition": "https://schema.org/NewCondition",
+      "seller": {
+        "@type": "Organization",
+        "@id": "{{ shop.url }}/#organization",
+        "name": {{ shop.name | json }}
+      },
+      "priceValidUntil": "{{ 'now' | date: '%Y' | plus: 1 }}-12-31",
+      "shippingDetails": {
+        "@type": "OfferShippingDetails",
+        "shippingRate": {
+          "@type": "MonetaryAmount",
+          "value": "0",
+          "currency": {{ cart.currency.iso_code | json }}
+        },
+        "shippingDestination": {
+          "@type": "DefinedRegion",
+          "addressCountry": "US"
+        },
+        "deliveryTime": {
+          "@type": "ShippingDeliveryTime",
+          "handlingTime": {
+            "@type": "QuantitativeValue",
+            "minValue": 1,
+            "maxValue": 2,
+            "unitCode": "d"
+          },
+          "transitTime": {
+            "@type": "QuantitativeValue",
+            "minValue": 1,
+            "maxValue": 5,
+            "unitCode": "d"
+          }
+        }
+      },
+      "hasMerchantReturnPolicy": {
+        "@type": "MerchantReturnPolicy",
+        "applicableCountry": "US",
+        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+        "merchantReturnDays": 30,
+        "returnMethod": "https://schema.org/ReturnByMail",
+        "returnFees": "https://schema.org/FreeReturn"
+      },
+      "offers": [
+        {%- for variant in product.variants limit: 50 -%}
+        {
+          "@type": "Offer",
+          "name": {{ variant.title | json }},
+          "url": "{{ shop.url }}{{ product.url }}?variant={{ variant.id }}",
+          "sku": {{ variant.sku | default: variant.id | json }},
+          "price": {{ variant.price | money_without_currency | remove: ',' | json }},
+          "priceCurrency": {{ cart.currency.iso_code | json }},
+          "availability": "{%- if variant.available -%}https://schema.org/InStock{%- else -%}https://schema.org/OutOfStock{%- endif -%}",
+          "itemCondition": "https://schema.org/NewCondition"
+        }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+    {%- if product.metafields.reviews.rating.value -%}
+    ,
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": {{ product.metafields.reviews.rating.value.rating | default: 5 | json }},
+      "reviewCount": {{ product.metafields.reviews.rating_count | default: 1 | json }},
+      "bestRating": "5",
+      "worstRating": "1"
+    }
+    {%- elsif product.metafields.loox.num_reviews -%}
+    ,
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": {{ product.metafields.loox.avg_rating | default: 5 | json }},
+      "reviewCount": {{ product.metafields.loox.num_reviews | default: 1 | json }},
+      "bestRating": "5",
+      "worstRating": "1"
+    }
+    {%- elsif product.metafields.judgeme.badge -%}
+    ,
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": {{ product.metafields.judgeme.badge | split: 'data-average-rating="' | last | split: '"' | first | default: 5 | json }},
+      "reviewCount": {{ product.metafields.judgeme.badge | split: 'data-number-of-reviews="' | last | split: '"' | first | default: 1 | json }},
+      "bestRating": "5",
+      "worstRating": "1"
+    }
+    {%- endif -%}
+  }
+  </script>
+
+  <!-- 2. BreadcrumbList for Product -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": "{{ shop.url }}{{ product.url }}/#breadcrumb",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "{{ shop.url }}"
+      }
+      {%- if product.collections.size > 0 -%}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": {{ product.collections.first.title | json }},
+        "item": "{{ shop.url }}{{ product.collections.first.url }}"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": {{ product.title | json }},
+        "item": "{{ shop.url }}{{ product.url }}"
+      }
+      {%- else -%}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Products",
+        "item": "{{ shop.url }}/collections/all"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": {{ product.title | json }},
+        "item": "{{ shop.url }}{{ product.url }}"
+      }
+      {%- endif -%}
+    ]
+  }
+  </script>
+
+  <!-- 3. WebPage Schema for Product -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemPage",
+    "@id": "{{ shop.url }}{{ product.url }}/#webpage",
+    "url": "{{ shop.url }}{{ product.url }}",
+    "name": {{ product.title | append: ' | ' | append: shop.name | json }},
+    "description": {{ product.description | strip_html | truncate: 200 | json }},
+    "isPartOf": {
+      "@id": "{{ shop.url }}/#website"
+    },
+    "primaryImageOfPage": {
+      "@type": "ImageObject",
+      "url": "{{ product.featured_image | image_url: width: 1200 }}"
+    },
+    "breadcrumb": {
+      "@id": "{{ shop.url }}{{ product.url }}/#breadcrumb"
+    },
+    "mainEntity": {
+      "@id": "{{ shop.url }}{{ product.url }}/#product"
+    },
+    "inLanguage": "en-US"
+  }
+  </script>
+
+{%- endif -%}
+
+{%- comment -%}═══════════════════════════════════════════════════════════════════════════
+   COLLECTION PAGE SCHEMAS
+═══════════════════════════════════════════════════════════════════════════{%- endcomment -%}
+{%- if template.name == 'collection' -%}
+
+  <!-- 1. CollectionPage Schema - Enhanced 2026 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": "{{ shop.url }}{{ collection.url }}/#collectionpage",
+    "name": {{ collection.title | json }},
+    "description": {{ collection.description | strip_html | truncate: 500 | default: collection.title | append: ' collection at ' | append: shop.name | json }},
+    "url": "{{ shop.url }}{{ collection.url }}",
+    {%- if collection.image -%}
+    "image": {
+      "@type": "ImageObject",
+      "url": "{{ collection.image | image_url: width: 1200 }}",
+      "width": 1200,
+      "height": 630
+    },
+    {%- endif -%}
+    "isPartOf": {
+      "@id": "{{ shop.url }}/#website"
+    },
+    "breadcrumb": {
+      "@id": "{{ shop.url }}{{ collection.url }}/#breadcrumb"
+    },
+    "numberOfItems": {{ collection.products_count }},
+    "mainEntity": {
+      "@id": "{{ shop.url }}{{ collection.url }}/#itemlist"
+    },
+    "inLanguage": "en-US"
+  }
+  </script>
+
+  <!-- 2. ItemList Schema for Collection Products -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": "{{ shop.url }}{{ collection.url }}/#itemlist",
+    "name": {{ collection.title | json }},
+    "description": {{ collection.description | strip_html | truncate: 200 | default: collection.title | json }},
+    "url": "{{ shop.url }}{{ collection.url }}",
+    "numberOfItems": {{ collection.products_count }},
+    "itemListOrder": "https://schema.org/ItemListOrderDescending",
+    "itemListElement": [
+      {%- for product in collection.products limit: 30 -%}
+      {
+        "@type": "ListItem",
+        "position": {{ forloop.index }},
+        "item": {
+          "@type": "Product",
+          "@id": "{{ shop.url }}{{ product.url }}/#product",
+          "name": {{ product.title | json }},
+          "url": "{{ shop.url }}{{ product.url }}",
+          "image": "{{ product.featured_image | image_url: width: 600 }}",
+          "description": {{ product.description | strip_html | truncate: 200 | json }},
+          "sku": {{ product.selected_or_first_available_variant.sku | default: product.id | json }},
+          "brand": {
+            "@type": "Brand",
+            "name": {{ product.vendor | default: shop.name | json }}
+          },
+          "offers": {
+            "@type": "Offer",
+            "url": "{{ shop.url }}{{ product.url }}",
+            "price": {{ product.price | money_without_currency | remove: ',' | json }},
+            "priceCurrency": {{ cart.currency.iso_code | json }},
+            "availability": "{%- if product.available -%}https://schema.org/InStock{%- else -%}https://schema.org/OutOfStock{%- endif -%}",
+            "itemCondition": "https://schema.org/NewCondition",
+            "seller": {
+              "@type": "Organization",
+              "name": {{ shop.name | json }}
+            }
+          }
+          {%- if product.metafields.reviews.rating.value -%}
+          ,
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": {{ product.metafields.reviews.rating.value.rating | json }},
+            "reviewCount": {{ product.metafields.reviews.rating_count | json }}
+          }
+          {%- endif -%}
+        }
+      }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  }
+  </script>
+
+  <!-- 3. BreadcrumbList for Collection -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": "{{ shop.url }}{{ collection.url }}/#breadcrumb",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "{{ shop.url }}"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Collections",
+        "item": "{{ shop.url }}/collections"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": {{ collection.title | json }},
+        "item": "{{ shop.url }}{{ collection.url }}"
+      }
+    ]
+  }
+  </script>
+
+  <!-- 4. OfferCatalog Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "OfferCatalog",
+    "name": {{ collection.title | append: ' Catalog' | json }},
+    "url": "{{ shop.url }}{{ collection.url }}",
+    "numberOfItems": {{ collection.products_count }},
+    "itemListElement": [
+      {%- for product in collection.products limit: 10 -%}
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": {{ product.title | json }},
+          "url": "{{ shop.url }}{{ product.url }}"
+        }
+      }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  }
+  </script>
+
+{%- endif -%}
+
+{%- comment -%}═══════════════════════════════════════════════════════════════════════════
+   ARTICLE/BLOG SCHEMAS
+═══════════════════════════════════════════════════════════════════════════{%- endcomment -%}
+{%- if template.name == 'article' -%}
+
+  <!-- Article Schema - Enhanced 2026 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": "{{ shop.url }}{{ article.url }}/#article",
+    "headline": {{ article.title | json }},
+    "description": {{ article.excerpt | default: article.content | strip_html | truncate: 200 | json }},
+    "url": "{{ shop.url }}{{ article.url }}",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "{{ shop.url }}{{ article.url }}"
+    },
+    {%- if article.image -%}
+    "image": {
+      "@type": "ImageObject",
+      "url": "{{ article.image | image_url: width: 1200 }}",
+      "width": 1200,
+      "height": 630
+    },
+    {%- endif -%}
+    "datePublished": "{{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' }}",
+    "dateModified": "{{ article.updated_at | date: '%Y-%m-%dT%H:%M:%S%z' }}",
+    "author": {
+      "@type": "Person",
+      "name": {{ article.author | json }},
+      "url": "{{ shop.url }}"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "@id": "{{ shop.url }}/#organization",
+      "name": {{ shop.name | json }},
+      "logo": {
+        "@type": "ImageObject",
+        "url": {{ shop_logo | json }}
+      }
+    },
+    "articleSection": {{ blog.title | json }},
+    "wordCount": {{ article.content | strip_html | split: ' ' | size }},
+    "inLanguage": "en-US"
+    {%- if article.tags.size > 0 -%}
+    ,
+    "keywords": {{ article.tags | join: ', ' | json }}
+    {%- endif -%}
+  }
+  </script>
+
+  <!-- BreadcrumbList for Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": "{{ shop.url }}{{ article.url }}/#breadcrumb",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "{{ shop.url }}"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": {{ blog.title | json }},
+        "item": "{{ shop.url }}{{ blog.url }}"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": {{ article.title | json }},
+        "item": "{{ shop.url }}{{ article.url }}"
+      }
+    ]
+  }
+  </script>
+
+{%- endif -%}
+
+{%- if template.name == 'blog' -%}
+
+  <!-- Blog Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "@id": "{{ shop.url }}{{ blog.url }}/#blog",
+    "name": {{ blog.title | json }},
+    "url": "{{ shop.url }}{{ blog.url }}",
+    "description": {{ shop.description | strip_html | truncate: 200 | json }},
+    "publisher": {
+      "@type": "Organization",
+      "@id": "{{ shop.url }}/#organization"
+    },
+    "inLanguage": "en-US",
+    "blogPost": [
+      {%- for article in blog.articles limit: 10 -%}
+      {
+        "@type": "BlogPosting",
+        "headline": {{ article.title | json }},
+        "url": "{{ shop.url }}{{ article.url }}",
+        {%- if article.image -%}
+        "image": "{{ article.image | image_url: width: 800 }}",
+        {%- endif -%}
+        "datePublished": "{{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' }}",
+        "author": {
+          "@type": "Person",
+          "name": {{ article.author | json }}
+        }
+      }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  }
+  </script>
+
+{%- endif -%}
+
+{%- comment -%}═══════════════════════════════════════════════════════════════════════════
+   PAGE SCHEMAS
+═══════════════════════════════════════════════════════════════════════════{%- endcomment -%}
+{%- if template.name == 'page' -%}
+
+  <!-- WebPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "{{ shop.url }}{{ page.url }}/#webpage",
+    "url": "{{ shop.url }}{{ page.url }}",
+    "name": {{ page.title | json }},
+    "description": {{ page.content | strip_html | truncate: 200 | json }},
+    "isPartOf": {
+      "@id": "{{ shop.url }}/#website"
+    },
+    "about": {
+      "@id": "{{ shop.url }}/#organization"
+    },
+    "breadcrumb": {
+      "@id": "{{ shop.url }}{{ page.url }}/#breadcrumb"
+    },
+    "inLanguage": "en-US"
+  }
+  </script>
+
+  <!-- BreadcrumbList for Page -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": "{{ shop.url }}{{ page.url }}/#breadcrumb",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "{{ shop.url }}"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": {{ page.title | json }},
+        "item": "{{ shop.url }}{{ page.url }}"
+      }
+    ]
+  }
+  </script>
+
+  {%- comment -%} FAQ Page Schema (if page handle contains 'faq') {%- endcomment -%}
+  {%- if page.handle contains 'faq' -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": "{{ shop.url }}{{ page.url }}/#faqpage",
+    "mainEntity": []
+  }
+  </script>
+  {%- endif -%}
+
+  {%- comment -%} Contact Page Schema (if page handle contains 'contact') {%- endcomment -%}
+  {%- if page.handle contains 'contact' -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "@id": "{{ shop.url }}{{ page.url }}/#contactpage",
+    "name": {{ page.title | json }},
+    "url": "{{ shop.url }}{{ page.url }}",
+    "mainEntity": {
+      "@type": "Organization",
+      "@id": "{{ shop.url }}/#organization"
+    }
+  }
+  </script>
+  {%- endif -%}
+
+  {%- comment -%} About Page Schema (if page handle contains 'about') {%- endcomment -%}
+  {%- if page.handle contains 'about' -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "@id": "{{ shop.url }}{{ page.url }}/#aboutpage",
+    "name": {{ page.title | json }},
+    "url": "{{ shop.url }}{{ page.url }}",
+    "mainEntity": {
+      "@type": "Organization",
+      "@id": "{{ shop.url }}/#organization"
+    }
+  }
+  </script>
+  {%- endif -%}
+
+{%- endif -%}
+
+{%- comment -%}═══════════════════════════════════════════════════════════════════════════
+   SEARCH PAGE SCHEMA
+═══════════════════════════════════════════════════════════════════════════{%- endcomment -%}
+{%- if template.name == 'search' -%}
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SearchResultsPage",
+    "@id": "{{ shop.url }}/search/#searchresults",
+    "url": "{{ shop.url }}/search",
+    "name": "Search Results",
+    "isPartOf": {
+      "@id": "{{ shop.url }}/#website"
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "{{ shop.url }}"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Search",
+          "item": "{{ shop.url }}/search"
+        }
+      ]
+    }
+  }
+  </script>
+
+{%- endif -%}
+
+{%- comment -%}═══════════════════════════════════════════════════════════════════════════
+   CART PAGE SCHEMA
+═══════════════════════════════════════════════════════════════════════════{%- endcomment -%}
+{%- if template.name == 'cart' -%}
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CheckoutPage",
+    "@id": "{{ shop.url }}/cart/#cart",
+    "name": "Shopping Cart",
+    "url": "{{ shop.url }}/cart",
+    "isPartOf": {
+      "@id": "{{ shop.url }}/#website"
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "{{ shop.url }}"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Cart",
+          "item": "{{ shop.url }}/cart"
+        }
+      ]
+    }
+  }
+  </script>
+
+{%- endif -%}

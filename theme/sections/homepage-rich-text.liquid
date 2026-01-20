@@ -1,0 +1,203 @@
+{% comment %}
+  Homepage Rich Text Content Block
+  Editable via Theme Editor
+{% endcomment %}
+
+{%- render 'custom-css-renderer', section: section -%}
+
+<section class="rich-text-section">
+  <div class="container">
+    <div class="rich-text-wrapper">
+      <div class="rich-text-content">
+        {% if section.settings.subtitle != blank %}
+          <p class="rich-text-subtitle">{{ section.settings.subtitle }}</p>
+        {% endif %}
+        
+        {% if section.settings.title != blank %}
+          <h2 class="rich-text-title">{{ section.settings.title }}</h2>
+        {% endif %}
+        
+        {% if section.settings.content != blank %}
+          <div class="rich-text-body">
+            {{ section.settings.content }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.rich-text-section {
+  padding: 60px 20px;
+  background: #ffffff;
+}
+
+.rich-text-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.rich-text-content {
+  background: #ffffff;
+  padding: 40px 50px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: none;
+}
+
+.rich-text-subtitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #667eea;
+  margin: 0 0 12px 0;
+}
+
+.rich-text-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin: 0 0 24px 0;
+  line-height: 1.3;
+}
+
+.rich-text-body {
+  font-size: 1rem;
+  color: #475569;
+  line-height: 1.8;
+  text-align: left;
+}
+
+.rich-text-body p {
+  margin: 0 0 16px 0;
+}
+
+.rich-text-body p:last-child {
+  margin-bottom: 0;
+}
+
+.rich-text-body strong {
+  color: #1a1a2e;
+  font-weight: 600;
+}
+
+.rich-text-body ol,
+.rich-text-body ul {
+  margin: 16px 0;
+  padding-left: 24px;
+}
+
+.rich-text-body li {
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.rich-text-body ol {
+  counter-reset: item;
+  list-style: none;
+  padding-left: 0;
+}
+
+.rich-text-body ol li {
+  counter-increment: item;
+  padding-left: 36px;
+  position: relative;
+}
+
+.rich-text-body ol li::before {
+  content: counter(item);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rich-text-body h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 24px 0 12px 0;
+}
+
+@media (max-width: 768px) {
+  .rich-text-section {
+    padding: 40px 16px;
+  }
+  
+  .rich-text-content {
+    padding: 28px 20px;
+  }
+  
+  .rich-text-title {
+    font-size: 1.5rem;
+  }
+  
+  .rich-text-body {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .rich-text-section {
+    padding: 32px 12px;
+  }
+  
+  .rich-text-content {
+    padding: 24px 16px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Rich Text Block",
+  "tag": "section",
+  "class": "section-rich-text-block",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Section Title"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content",
+      "default": "<p>Add your content here.</p>"
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rich Text Block"
+    }
+  ]
+}
+{% endschema %}

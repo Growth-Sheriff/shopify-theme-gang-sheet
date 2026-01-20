@@ -3,6 +3,8 @@
   Allows adding custom Liquid code anywhere in the theme
 {% endcomment %}
 
+{%- render 'custom-css-renderer', section: section -%}
+
 <div class="custom-liquid-section" {{ section.shopify_attributes }}>
   {{ section.settings.custom_liquid }}
 </div>
@@ -54,6 +56,16 @@
       "id": "full_width",
       "label": "Full Width",
       "default": false
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "presets": [

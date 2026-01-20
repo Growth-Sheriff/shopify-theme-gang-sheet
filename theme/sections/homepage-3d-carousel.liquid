@@ -3,6 +3,8 @@
   Features: 4D hover effects, gold foil header, individual product blocks, banner slider, My Device upload, Add to Cart
 {% endcomment %}
 
+{%- render 'custom-css-renderer', section: section -%}
+
 {{ 'homepage-3d-carousel.css' | asset_url | stylesheet_tag }}
 
 <section class="carousel-3d-section" id="carousel3d-{{ section.id }}">
@@ -15,15 +17,39 @@
         {% if block.type == 'banner' %}
         <div class="banner-slide{% if forloop.first %} active{% endif %}" data-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
           <div class="banner-content" style="
-            {% if block.settings.bg_image != blank %}background-image: url('{{ block.settings.bg_image | image_url: width: 1920 }}');{% endif %}
             background-color: {{ block.settings.bg_color | default: '#7367f0' }};
           ">
+            <!-- Desktop Background -->
+            {% if block.settings.bg_image != blank %}
+            <picture class="banner-bg-picture">
+              {% if block.settings.bg_image_mobile != blank %}
+              <source media="(max-width: 767px)" srcset="{{ block.settings.bg_image_mobile | image_url: width: 800 }}">
+              {% endif %}
+              <img 
+                src="{{ block.settings.bg_image | image_url: width: 1920 }}" 
+                alt="{{ block.settings.heading | default: 'Banner' }}"
+                class="banner-bg-img banner-bg-img--{{ block.settings.image_fit | default: 'cover' }}"
+                loading="lazy"
+              >
+            </picture>
+            {% endif %}
+            
             <div class="banner-overlay" style="background: {{ block.settings.overlay_color | default: 'rgba(0,0,0,0.3)' }};"></div>
-            <div class="banner-text" style="color: {{ block.settings.text_color | default: '#ffffff' }};">
+            
+            {% comment %} Sadece içerik varsa banner-text göster {% endcomment %}
+            {% assign has_banner_content = false %}
+            {% if block.settings.badge_text != blank or block.settings.heading != blank or block.settings.subheading != blank or block.settings.button_text != blank %}
+              {% assign has_banner_content = true %}
+            {% endif %}
+            
+            {% if has_banner_content %}
+            <div class="banner-text" style="color: {{ block.settings.text_color | default: '#ffffff' }}; text-align: {{ block.settings.text_align | default: 'center' }}; {% if block.settings.text_align == 'left' %}align-items: flex-start;{% elsif block.settings.text_align == 'right' %}align-items: flex-end;{% endif %}">
               {% if block.settings.badge_text != blank %}
               <span class="banner-badge">{{ block.settings.badge_text }}</span>
               {% endif %}
-              <h2 class="banner-heading">{{ block.settings.heading | default: 'Amazing Deals' }}</h2>
+              {% if block.settings.heading != blank %}
+              <h2 class="banner-heading">{{ block.settings.heading }}</h2>
+              {% endif %}
               {% if block.settings.subheading != blank %}
               <p class="banner-subheading">{{ block.settings.subheading }}</p>
               {% endif %}
@@ -34,6 +60,7 @@
               </a>
               {% endif %}
             </div>
+            {% endif %}
           </div>
         </div>
         {% endif %}
@@ -205,18 +232,25 @@
                       </div>
                     {% endif %}
                     
-                    <!-- Add to Cart (Hidden when upload mode is enabled) -->
+                    <!-- Product Action Button (Add to Cart or Go to Product) -->
                     {% unless block.settings.enable_upload_mode %}
                     <div class="product-actions">
-                      {% if product.available %}
-                        <button class="sb-btn add-to-cart-btn" data-variant-id="{{ product.first_available_variant.id }}">
-                          <i class="fa-solid fa-cart-plus"></i>
-                          <span>Add to Cart</span>
-                        </button>
+                      {% if block.settings.button_action == 'go_to_product' %}
+                        <a href="{{ product.url }}" class="sb-btn view-product-btn">
+                          <i class="fa-solid fa-arrow-right"></i>
+                          <span>{{ block.settings.button_text | default: 'View Product' }}</span>
+                        </a>
                       {% else %}
-                        <button class="sb-btn sb-sold-out" disabled>
-                          <span>Sold Out</span>
-                        </button>
+                        {% if product.available %}
+                          <button class="sb-btn add-to-cart-btn" data-variant-id="{{ product.first_available_variant.id }}">
+                            <i class="fa-solid fa-cart-plus"></i>
+                            <span>{{ block.settings.button_text | default: 'Add to Cart' }}</span>
+                          </button>
+                        {% else %}
+                          <button class="sb-btn sb-sold-out" disabled>
+                            <span>Sold Out</span>
+                          </button>
+                        {% endif %}
                       {% endif %}
                     </div>
                     {% endunless %}
@@ -530,18 +564,33 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   // Autoplay
+  let autoPlayStopped = false;
+  
   function startAutoPlay() {
+    if (autoPlayStopped) return; // Don't restart if manually stopped
     if ({{ section.settings.autoplay | json }}) {
       autoPlayInterval = setInterval(nextSlide, autoPlayDelay);
     }
   }
+  function stopAutoPlay() {
+    clearInterval(autoPlayInterval);
+    autoPlayStopped = true;
+  }
   function resetAutoPlay() {
+    if (autoPlayStopped) return;
     clearInterval(autoPlayInterval);
     startAutoPlay();
   }
   
   section.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
   section.addEventListener('mouseleave', startAutoPlay);
+  
+  // Stop autoplay when Upload Design button is clicked
+  section.querySelectorAll('.upload-widget-area button, [onclick*="openUploadModal"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      stopAutoPlay();
+    });
+  });
   
   // Particles
   const particles = section.querySelector('.ambient-particles');
@@ -627,6 +676,16 @@ document.addEventListener('DOMContentLoaded', function() {
       "default": 5000,
       "unit": "ms",
       "label": "Auto-play speed"
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Gelişmiş"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Özel CSS",
+      "info": "Bu section için özel CSS kodları ekleyin"
     }
   ],
   "blocks": [
@@ -635,68 +694,119 @@ document.addEventListener('DOMContentLoaded', function() {
       "name": "Banner Slide",
       "settings": [
         {
+          "type": "header",
+          "content": "📷 Görsel Ayarları"
+        },
+        {
           "type": "image_picker",
           "id": "bg_image",
-          "label": "Background Image"
+          "label": "Arka Plan Görseli (Desktop)"
+        },
+        {
+          "type": "image_picker",
+          "id": "bg_image_mobile",
+          "label": "Mobil Görsel (Opsiyonel)",
+          "info": "768px altında bu görsel kullanılır"
+        },
+        {
+          "type": "select",
+          "id": "image_fit",
+          "label": "Görsel Uyum Modu",
+          "options": [
+            { "value": "cover", "label": "Kapla (Cover) - Kırpılır" },
+            { "value": "contain", "label": "Sığdır (Contain) - Tam görünür" },
+            { "value": "fill", "label": "Doldur (Fill) - Esnetilir" }
+          ],
+          "default": "cover",
+          "info": "Cover: Alanı kaplar, kenarlar kırpılabilir. Contain: Görsel tam görünür. Fill: Oranı bozarak doldurur."
         },
         {
           "type": "color",
           "id": "bg_color",
-          "label": "Background Color (if no image)",
+          "label": "Arka Plan Rengi (görsel yoksa)",
           "default": "#7367f0"
+        },
+        {
+          "type": "header",
+          "content": "📝 İçerik"
         },
         {
           "type": "color_background",
           "id": "overlay_color",
-          "label": "Overlay Color",
+          "label": "Overlay Rengi",
           "default": "linear-gradient(135deg, rgba(115, 103, 240, 0.8), rgba(102, 126, 234, 0.8))"
         },
         {
           "type": "text",
           "id": "badge_text",
-          "label": "Badge Text",
+          "label": "Rozet Metni",
           "default": "🔥 HOT DEAL"
         },
         {
           "type": "text",
           "id": "heading",
-          "label": "Heading",
+          "label": "Başlık",
           "default": "Amazing Deals"
         },
         {
           "type": "textarea",
           "id": "subheading",
-          "label": "Subheading",
+          "label": "Alt Başlık",
           "default": "Up to 50% off on all products"
         },
         {
           "type": "color",
           "id": "text_color",
-          "label": "Text Color",
+          "label": "Metin Rengi",
           "default": "#ffffff"
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Metin Hizalama",
+          "options": [
+            { "value": "left", "label": "Sol" },
+            { "value": "center", "label": "Orta" },
+            { "value": "right", "label": "Sağ" }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "header",
+          "content": "🔘 Buton"
         },
         {
           "type": "text",
           "id": "button_text",
-          "label": "Button Text",
+          "label": "Buton Metni",
           "default": "Shop Now"
         },
         {
           "type": "url",
           "id": "button_link",
-          "label": "Button Link"
+          "label": "Buton Linki"
         },
         {
           "type": "color",
           "id": "button_bg",
-          "label": "Button Background",
+          "label": "Buton Arka Planı",
           "default": "#ffffff"
         },
         {
           "type": "color",
           "id": "button_color",
-          "label": "Button Text Color",
+          "label": "Buton Metin Rengi",
           "default": "#7367f0"
+        },
+        {
+          "type": "header",
+          "content": "⚙️ Gelişmiş"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "Özel CSS (Block)",
+          "info": "Bu block için özel CSS"
         }
       ]
     },
@@ -773,6 +883,30 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         {
           "type": "header",
+          "content": "Button Settings"
+        },
+        {
+          "type": "paragraph",
+          "content": "⚠️ These settings only work when 'Enable Upload Mode' is OFF"
+        },
+        {
+          "type": "select",
+          "id": "button_action",
+          "label": "Button Action",
+          "options": [
+            { "value": "add_to_cart", "label": "Add to Cart" },
+            { "value": "go_to_product", "label": "Go to Product Page" }
+          ],
+          "default": "add_to_cart"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "placeholder": "Add to Cart / View Product"
+        },
+        {
+          "type": "header",
           "content": "Upload Settings"
         },
         {
@@ -780,7 +914,13 @@ document.addEventListener('DOMContentLoaded', function() {
           "id": "enable_upload_mode",
           "label": "Enable Upload Mode",
           "default": false,
-          "info": "When enabled, shows Upload button and hides Add to Cart"
+          "info": "When enabled, shows Upload button and hides other buttons"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_css",
+          "label": "Özel CSS (Block)",
+          "info": "Bu block için özel CSS"
         }
       ]
     }

@@ -1,0 +1,59 @@
+{
+  "sections": {
+    "product-main": {
+      "type": "product-main",
+      
+      "settings": {
+        "show_breadcrumb": true,
+        "show_rating": true,
+        "rating_score": "4.9",
+        "review_count": "2,156",
+        "recommend_percent": "99% recommend",
+        "price_badge": "✨ UV DTF BY SIZE",
+        "show_delivery": true,
+        "delivery_time": "Same Day Shipping",
+        "order_by": "Order by 3PM",
+        "show_tabs": true,
+        "processing_time": "Same Day",
+        "standard_shipping": "3-5 Business Days",
+        "express_shipping": "1-2 Business Days",
+        "free_shipping": "Orders $100+",
+        "show_instructions": true,
+        "press_title": "Application Instructions",
+        "press_temp": "No Heat Required",
+        "press_time": "Peel & Apply",
+        "press_pressure": "Light",
+        "press_peel": "Cold Application",
+        "show_trust_badges": true,
+        "badge_1": "Secure Checkout",
+        "badge_2": "Same Day Shipping",
+        "badge_3": "Premium Quality",
+        "show_variants": true,
+        "color_display_mode": "swatches",
+        "size_display_mode": "dropdown",
+        "show_quantity": true,
+        "show_add_to_cart": true,
+        "show_buy_now": true
+      }
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "heading": "More UV DTF Sizes",
+        "products_count": 4
+      }
+    },
+    "recently-viewed": {
+      "type": "recently-viewed",
+      "settings": {
+        "title": "Recently Viewed",
+        "products_to_show": 8
+      }
+    }
+  },
+  "order": [
+    "product-main",
+    "recommendations",
+    "recently-viewed"
+  ]
+}

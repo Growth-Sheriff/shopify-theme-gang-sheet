@@ -7,3 +7,30 @@ config/settings_data.json
 
 # Template ayarları (sayfa düzenleri, section sıralamaları)
 templates/*.json
+
+# ═══════════════════════════════════════════════════════════
+# BACKUP KLASÖRLER - Bu klasörler Shopify'a gönderilmez
+# ═══════════════════════════════════════════════════════════
+live-restore-backup/
+live-theme-backup/
+temp-*/
+temp-check/
+temp-footer-check/
+temp-full/
+temp-header-check/
+temp-index-check/
+temp-js-check/
+temp-live-check/
+temp-verify/
+
+# ═══════════════════════════════════════════════════════════
+# MANUEL YÖNETİLEN DOSYALAR - Shopify Admin'den düzenlenir
+# ═══════════════════════════════════════════════════════════
+snippets/dtf-quick-upload-btn.liquid
+
+# ═══════════════════════════════════════════════════════════
+# GELİŞTİRME DOSYALARI
+# ═══════════════════════════════════════════════════════════
+config/metafields/
+*.md
+theme-check-report.txt

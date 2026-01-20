@@ -58,11 +58,37 @@
   position: relative;
   width: 100%;
   height: 100%;
-  background-size: cover;
-  background-position: center;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Banner Background Image */
+.banner-bg-picture {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.banner-bg-img {
+  width: 100%;
+  height: 100%;
+}
+
+.banner-bg-img--cover {
+  object-fit: cover;
+  object-position: center;
+}
+
+.banner-bg-img--contain {
+  object-fit: contain;
+  object-position: center;
+}
+
+.banner-bg-img--fill {
+  object-fit: fill;
 }
 
 .banner-overlay {

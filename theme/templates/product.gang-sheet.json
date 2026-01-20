@@ -1,0 +1,66 @@
+{
+  "sections": {
+    "product-main": {
+      "type": "product-main",
+      "blocks": {
+        "customizer_gangsheet": {
+          "type": "customizer_gangsheet"
+        }
+      },
+      "block_order": [
+        "customizer_gangsheet"
+      ],
+      "settings": {
+        "show_breadcrumb": true,
+        "show_rating": true,
+        "rating_score": "4.9",
+        "review_count": "18,624",
+        "recommend_percent": "99% recommend",
+        "price_badge": "🔥 BUILD YOUR OWN",
+        "show_delivery": true,
+        "delivery_time": "Same Day Shipping",
+        "order_by": "Order by 3PM",
+        "show_tabs": true,
+        "processing_time": "Same Day",
+        "standard_shipping": "3-5 Business Days",
+        "express_shipping": "1-2 Business Days",
+        "free_shipping": "Orders $100+",
+        "show_instructions": true,
+        "press_title": "Press Instructions",
+        "press_temp": "285°F - 310°F",
+        "press_time": "15 seconds",
+        "press_pressure": "Medium",
+        "press_peel": "Cold Peel",
+        "show_trust_badges": true,
+        "badge_1": "Secure Checkout",
+        "badge_2": "Same Day Shipping",
+        "badge_3": "Satisfaction Guarantee",
+        "show_variants": true,
+        "color_display_mode": "swatches",
+        "size_display_mode": "dropdown",
+        "show_quantity": true,
+        "show_add_to_cart": true,
+        "show_buy_now": false
+      }
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "heading": "You May Also Like",
+        "products_count": 4
+      }
+    },
+    "recently-viewed": {
+      "type": "recently-viewed",
+      "settings": {
+        "title": "Recently Viewed",
+        "products_to_show": 8
+      }
+    }
+  },
+  "order": [
+    "product-main",
+    "recommendations",
+    "recently-viewed"
+  ]
+}
