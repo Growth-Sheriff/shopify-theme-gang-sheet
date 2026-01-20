@@ -1533,11 +1533,11 @@
   /* Mobile gallery */
   @media (max-width: 767px) {
     .gallery-layout {
-      flex-direction: column-reverse;
+      flex-direction: column;
     }
     
     .gallery-thumbnails-vertical {
-      display: none; /* Hide on mobile - using overlay instead */
+      display: none !important; /* Hide on mobile - using overlay instead */
     }
   }
   
@@ -1556,8 +1556,12 @@
       gap: 6px;
       max-height: calc(100% - 60px); /* Leave space for badges at top */
       overflow-y: auto;
-      z-index: 15;
+      overflow-x: hidden;
+      z-index: 50;
       padding: 4px;
+      pointer-events: auto;
+      touch-action: pan-y;
+      -webkit-overflow-scrolling: touch; /* Smooth iOS scrolling */
       
       /* Hide scrollbar but keep functionality */
       scrollbar-width: none; /* Firefox */
@@ -1569,17 +1573,18 @@
     }
     
     .mobile-thumb-item {
-      width: 38px;
-      height: 38px;
-      min-height: 38px; /* Prevent shrinking */
+      width: 42px;
+      height: 42px;
+      min-height: 42px; /* Prevent shrinking */
       border-radius: 6px;
       overflow: hidden;
-      border: 2px solid rgba(255, 255, 255, 0.6);
-      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.95);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
       cursor: pointer;
       transition: all 0.2s ease;
       flex-shrink: 0; /* Prevent shrinking */
+      pointer-events: auto;
     }
     
     .mobile-thumb-item:hover,
