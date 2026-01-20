@@ -2,16 +2,16 @@
   ============================================
   Delivery Calculator - Global Configuration
   ============================================
-  
+
   Bu snippet, tema ayarlarından alınan değerleri
   JavaScript konfigürasyonuna aktarır.
-  
+
   Kullanım:
   {% render 'delivery-config' %}
-  
+
   Bu snippet'i theme.liquid veya layout dosyasının
   </body> tagından hemen önce ekleyin.
-  
+
 {% endcomment %}
 
 {% liquid
@@ -28,22 +28,32 @@
   assign express_enabled = settings.delivery_express_enabled | default: true
   assign weekend_delivery = settings.delivery_weekend | default: false
   assign debug_mode = settings.delivery_debug | default: false
-  
+
   # Depo lokasyonları
   assign warehouse_1_enabled = settings.warehouse_1_enabled | default: true
   assign warehouse_1_id = settings.warehouse_1_id | default: 'east'
   assign warehouse_1_name = settings.warehouse_1_name | default: 'East Coast Warehouse'
   assign warehouse_1_zip = settings.warehouse_1_zip | default: '07001'
   assign warehouse_1_state = settings.warehouse_1_state | default: 'NJ'
-  
+
   assign warehouse_2_enabled = settings.warehouse_2_enabled | default: false
   assign warehouse_2_id = settings.warehouse_2_id | default: 'west'
   assign warehouse_2_name = settings.warehouse_2_name | default: 'West Coast Warehouse'
   assign warehouse_2_zip = settings.warehouse_2_zip | default: '90001'
   assign warehouse_2_state = settings.warehouse_2_state | default: 'CA'
-  
+
   # Özel tatil günleri
   assign custom_holidays = settings.delivery_holidays | default: ''
+
+  # Widget Display Settings
+  assign widget_location_text = settings.delivery_widget_location_text | default: 'NJ'
+  assign widget_pickup_location = settings.delivery_widget_pickup_location | default: 'Garfield, NJ'
+  assign widget_pickup_map_url = settings.delivery_widget_pickup_map_url | default: 'https://maps.app.goo.gl/CRMkNFqWB57YPpxG6'
+  assign widget_pickup_bg = settings.delivery_widget_pickup_bg | default: '#fef3c7'
+  assign widget_pickup_border = settings.delivery_widget_pickup_border | default: '#fbbf24'
+  assign widget_success_color = settings.delivery_widget_success_color | default: '#22c55e'
+  assign widget_mobile_collapsed = settings.delivery_widget_mobile_collapsed | default: true
+  assign widget_mobile_title = settings.delivery_widget_mobile_title | default: '🚚 Shipping Info'
 %}
 
 <script>
@@ -52,15 +62,15 @@ window.DELIVERY_CONFIG = {
   cutoffHour: {{ cutoff_hour }},
   cutoffMinute: {{ cutoff_minute }},
   timezone: 'America/New_York',
-  
+
   // Varsayılan kargo
   defaultCarrier: {{ default_carrier | json }},
-  
+
   // Özellikler
   expressEnabled: {{ express_enabled | json }},
   weekendDelivery: {{ weekend_delivery | json }},
   debug: {{ debug_mode | json }},
-  
+
   // Depolar
   warehouses: [
     {% if warehouse_1_enabled %}
@@ -80,9 +90,25 @@ window.DELIVERY_CONFIG = {
     }
     {% endif %}
   ],
-  
+
   // Özel tatil günleri
-  customHolidays: {{ custom_holidays | split: ',' | json }}
+  customHolidays: {{ custom_holidays | split: ',' | json }},
+
+  // Widget Display Settings
+  display: {
+    locationText: {{ widget_location_text | json }},
+    pickupLocation: {{ widget_pickup_location | json }},
+    pickupMapUrl: {{ widget_pickup_map_url | json }},
+    colors: {
+      pickupBg: {{ widget_pickup_bg | json }},
+      pickupBorder: {{ widget_pickup_border | json }},
+      success: {{ widget_success_color | json }}
+    },
+    mobile: {
+      collapsed: {{ widget_mobile_collapsed | json }},
+      title: {{ widget_mobile_title | json }}
+    }
+  }
 };
 
 // Calculator'ı başlat - Hybrid Mode (Live Shopify Rates + Static Fallback)
@@ -91,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (typeof DeliveryCalculator !== 'undefined') {
     window.staticDeliveryCalculator = new DeliveryCalculator(window.DELIVERY_CONFIG);
   }
-  
+
   // Hybrid calculator (önce live rates, sonra fallback)
   if (typeof HybridDeliveryCalculator !== 'undefined' && typeof DeliveryCalculator !== 'undefined') {
     window.deliveryCalculator = new HybridDeliveryCalculator({
@@ -105,18 +131,18 @@ document.addEventListener('DOMContentLoaded', function() {
       fallbackToStatic: true,
       debug: window.DELIVERY_CONFIG.debug
     });
-    
+
     console.log('[Delivery] Hybrid mode initialized - Live Shopify rates enabled');
   } else if (window.staticDeliveryCalculator) {
     // Fallback: sadece statik calculator
     window.deliveryCalculator = window.staticDeliveryCalculator;
     console.log('[Delivery] Static mode initialized');
   }
-  
+
   // Custom event fırlat
   if (window.deliveryCalculator) {
     document.dispatchEvent(new CustomEvent('delivery:ready', {
-      detail: { 
+      detail: {
         calculator: window.deliveryCalculator,
         mode: typeof HybridDeliveryCalculator !== 'undefined' ? 'hybrid' : 'static'
       }

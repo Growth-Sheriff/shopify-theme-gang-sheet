@@ -755,6 +755,70 @@
         "label": "Additional Holidays",
         "info": "Add custom holidays in YYYY-MM-DD format, separated by commas. Example: 2026-12-26,2026-12-31",
         "placeholder": "2026-12-26,2026-12-31"
+      },
+      {
+        "type": "header",
+        "content": "📍 Delivery Widget Display"
+      },
+      {
+        "type": "text",
+        "id": "delivery_widget_location_text",
+        "label": "Ships From Location",
+        "default": "NJ",
+        "info": "Text shown as shipping origin (e.g., 'NJ', 'Garfield, NJ', 'Newark, NJ')"
+      },
+      {
+        "type": "text",
+        "id": "delivery_widget_pickup_location",
+        "label": "Pickup Location Text",
+        "default": "Garfield, NJ",
+        "info": "Location shown for in-store pickup option"
+      },
+      {
+        "type": "url",
+        "id": "delivery_widget_pickup_map_url",
+        "label": "Pickup Map URL",
+        "info": "Google Maps link for pickup location"
+      },
+      {
+        "type": "header",
+        "content": "🎨 Widget Colors"
+      },
+      {
+        "type": "color",
+        "id": "delivery_widget_pickup_bg",
+        "label": "Pickup Alert Background",
+        "default": "#fef3c7"
+      },
+      {
+        "type": "color",
+        "id": "delivery_widget_pickup_border",
+        "label": "Pickup Alert Border",
+        "default": "#fbbf24"
+      },
+      {
+        "type": "color",
+        "id": "delivery_widget_success_color",
+        "label": "Success/Available Color",
+        "default": "#22c55e"
+      },
+      {
+        "type": "header",
+        "content": "📱 Mobile Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "delivery_widget_mobile_collapsed",
+        "label": "Collapsed on Mobile",
+        "default": true,
+        "info": "Widget starts collapsed on mobile devices (tap to expand)"
+      },
+      {
+        "type": "text",
+        "id": "delivery_widget_mobile_title",
+        "label": "Mobile Collapsed Title",
+        "default": "🚚 Shipping Info",
+        "info": "Title shown when widget is collapsed on mobile"
       }
     ]
   },

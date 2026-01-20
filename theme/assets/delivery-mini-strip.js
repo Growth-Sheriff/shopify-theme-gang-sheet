@@ -10,10 +10,18 @@
   // ═══════════════════════════════════════════════════════════════
   // CONFIGURATION
   // ═══════════════════════════════════════════════════════════════
+  // Get config from Shopify settings or use defaults
+  const SHOPIFY_CONFIG = window.DELIVERY_CONFIG || {};
+  const DISPLAY_CONFIG = SHOPIFY_CONFIG.display || {};
+
   const CONFIG = {
     freeShippingThreshold: 10000,
-    warehouseZip: '07105',
-    warehouseCity: 'Newark, NJ',
+    warehouseZip: SHOPIFY_CONFIG.warehouses?.[0]?.zipCode || '07105',
+    warehouseCity: DISPLAY_CONFIG.locationText || 'NJ',
+    pickupLocation: DISPLAY_CONFIG.pickupLocation || 'Garfield, NJ',
+    pickupMapUrl: DISPLAY_CONFIG.pickupMapUrl || 'https://maps.app.goo.gl/CRMkNFqWB57YPpxG6',
+    mobileCollapsed: DISPLAY_CONFIG.mobile?.collapsed ?? true,
+    mobileTitle: DISPLAY_CONFIG.mobile?.title || '🚚 Shipping Info',
     timezone: 'America/New_York',
     
     sameDayRules: {
@@ -712,7 +720,25 @@
           gap: 8px;
         }
       }
-      
+      /* ═══ MOBILE COLLAPSED MODE ═══ */
+      @media (max-width: 768px) {
+        .delivery-info-panel.mobile-mode { padding: 0 !important; border-radius: 12px; overflow: hidden; }
+        .dip-mobile-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); cursor: pointer; user-select: none; border-bottom: 1px solid #fbbf24; }
+        .dip-mobile-header-left { display: flex; align-items: center; gap: 10px; }
+        .dip-mobile-header-icon { font-size: 20px; }
+        .dip-mobile-header-text { font-size: 14px; font-weight: 600; color: #92400e; }
+        .dip-mobile-header-badge { font-size: 10px; background: #22c55e; color: white; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+        .dip-mobile-header-arrow { font-size: 14px; color: #92400e; transition: transform 0.3s ease; }
+        .delivery-info-panel.mobile-mode.expanded .dip-mobile-header-arrow { transform: rotate(180deg); }
+        .dip-mobile-content { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+        .delivery-info-panel.mobile-mode.expanded .dip-mobile-content { max-height: 800px; }
+        .dip-mobile-inner { padding: 16px; }
+      }
+      @media (min-width: 769px) {
+        .dip-mobile-header { display: none !important; }
+        .dip-mobile-content { max-height: none !important; overflow: visible !important; }
+      }
+
       #delivery-mini-strip-container {
         display: none !important;
       }
@@ -1045,10 +1071,19 @@
     }
     
     const panel = document.createElement('div');
-    panel.className = 'delivery-info-panel';
+    panel.className = 'delivery-info-panel' + (CONFIG.mobileCollapsed ? ' mobile-mode' : '');
     panel.id = 'delivery-info-panel';
     
     let html = '';
+
+    // ─── MOBILE HEADER ───
+    html += '<div class="dip-mobile-header" data-action="toggle-mobile">';
+    html += '<div class="dip-mobile-header-left"><span class="dip-mobile-header-icon">🚚</span><div>';
+    html += '<div class="dip-mobile-header-text">' + CONFIG.mobileTitle + '</div>';
+    if (shippingStatus.eligible) { html += '<span class="dip-mobile-header-badge">Ships Today!</span>'; }
+    html += '</div></div><span class="dip-mobile-header-arrow">▼</span></div>';
+    html += '<div class="dip-mobile-content"><div class="dip-mobile-inner">';
+
     
     // ─── PICKUP ALERT ───
     html += '<div class="dip-pickup-alert">';
@@ -1057,13 +1092,13 @@
     if (pickupStatus.eligible) {
       const urgentClass = pickupStatus.urgency === 'critical' ? 'dip-countdown-urgent' : '';
       html += `<div class="dip-pickup-title">Same-Day Pickup Available <span class="dip-pickup-badge">FREE</span></div>`;
-      html += `<div class="dip-pickup-subtitle ${urgentClass}">Order within ${formatTimeRemaining(pickupStatus.timeRemaining)} • Newark, NJ</div>`;
+      html += `<div class="dip-pickup-subtitle ${urgentClass}">Order within ${formatTimeRemaining(pickupStatus.timeRemaining)} • ${CONFIG.pickupLocation}</div>`;
     } else {
       html += `<div class="dip-pickup-title">Pickup Available ${pickupStatus.nextDayName || 'Tomorrow'}</div>`;
-      html += `<div class="dip-pickup-subtitle">Cutoff ${pickupStatus.cutoffLabel} EST • Newark, NJ</div>`;
+      html += `<div class="dip-pickup-subtitle">Cutoff ${pickupStatus.cutoffLabel} EST • ${CONFIG.pickupLocation}</div>`;
     }
     html += '</div>';
-    html += `<a href="https://maps.app.goo.gl/CRMkNFqWB57YPpxG6" target="_blank" class="dip-pickup-link" onclick="event.stopPropagation();">
+    html += `<a href="${CONFIG.pickupMapUrl}" target="_blank" class="dip-pickup-link" onclick="event.stopPropagation();">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
       <span>Directions</span>
     </a>`;
@@ -1182,6 +1217,10 @@
     }
     html += '</div>';
     
+
+    // Close mobile wrapper
+    html += '</div></div>';
+
     panel.innerHTML = html;
     
     // Event: Toggle rates dropdown
@@ -1197,6 +1236,16 @@
       });
     }
     
+
+    // Event: Mobile header toggle
+    const mobileHeader = panel.querySelector('[data-action="toggle-mobile"]');
+    if (mobileHeader) {
+      mobileHeader.addEventListener('click', (e) => {
+        e.preventDefault();
+        panel.classList.toggle('expanded');
+      });
+    }
+
     // Event: ZIP input trigger (click to open popup) - for "Enter ZIP code" link
     const zipTrigger = panel.querySelector('.dip-zip-trigger');
     const zipPopup = panel.querySelector('#dip-zip-popup');

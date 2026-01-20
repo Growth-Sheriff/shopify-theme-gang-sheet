@@ -17,11 +17,15 @@
   // ============================================
   // CONFIGURATION
   // ============================================
+  // Get config from Shopify settings
+  const SHOPIFY_CONFIG = window.DELIVERY_CONFIG || {};
+  const DISPLAY_CONFIG = SHOPIFY_CONFIG.display || {};
+
   const CONFIG = {
-    cutoffHour: 14, // 2 PM ET - Bugün gönderim için son saat
-    timezone: 'America/New_York',
-    warehouseState: 'NJ',
-    warehouseCity: 'Newark',
+    cutoffHour: SHOPIFY_CONFIG.cutoffHour || 14,
+    timezone: SHOPIFY_CONFIG.timezone || 'America/New_York',
+    warehouseState: SHOPIFY_CONFIG.warehouses?.[0]?.state || 'NJ',
+    warehouseCity: DISPLAY_CONFIG.locationText || 'NJ',
     freeShippingThreshold: 10000, // $100 in cents (güncellenecek)
     geoIPCacheDuration: 30 * 60 * 1000,
     debug: false
