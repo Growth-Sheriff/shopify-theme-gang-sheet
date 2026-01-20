@@ -1523,6 +1523,9 @@
     const priceBadge = priceBox.querySelector('.price-badge');
     const priceRow = priceBox.querySelector('.price-row');
     const totalRow = priceBox.querySelector('.total-price-row');
+    
+    // Preserve social proof if it exists inside price-box
+    const socialProof = priceBox.querySelector('.social-proof-container');
 
     const wrapper = document.createElement('div');
     wrapper.className = 'price-delivery-wrapper';
@@ -1541,6 +1544,11 @@
 
     priceBox.innerHTML = '';
     priceBox.appendChild(wrapper);
+    
+    // Re-add social proof after delivery panel if it existed
+    if (socialProof) {
+      priceBox.appendChild(socialProof);
+    }
   }
 
   function refreshPanel() {

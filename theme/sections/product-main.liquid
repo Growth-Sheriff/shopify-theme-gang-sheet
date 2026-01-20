@@ -284,15 +284,6 @@
               {% endif %}
             </div>
             
-            {% comment %} ═══ SOCIAL PROOF ALERTS (inside price box) ═══ {% endcomment %}
-            {% render 'social-proof-alerts',
-               enabled: section.settings.social_proof_enabled,
-               viewing_text: section.settings.social_proof_viewing,
-               stats_weekly: section.settings.social_proof_weekly,
-               stats_monthly: section.settings.social_proof_monthly,
-               stats_yearly: section.settings.social_proof_yearly
-            %}
-            
             <!-- Total Price Row (Quantity × Price) -->
             <div class="total-price-row" id="pm-total-row" style="display: none;">
               <span class="total-label">Total:</span>
@@ -301,6 +292,15 @@
             </div>
           </div>
           {% render 'delivery-data', product: product %}
+          
+          {% comment %} ═══ SOCIAL PROOF ALERTS (after delivery widget) ═══ {% endcomment %}
+          {% render 'social-proof-alerts',
+             enabled: section.settings.social_proof_enabled,
+             viewing_text: section.settings.social_proof_viewing,
+             stats_weekly: section.settings.social_proof_weekly,
+             stats_monthly: section.settings.social_proof_monthly,
+             stats_yearly: section.settings.social_proof_yearly
+          %}
           
           {% comment %} ═══ VARIANTS ═══ {% endcomment %}
           {% if product.has_only_default_variant == false and section.settings.show_variants %}
