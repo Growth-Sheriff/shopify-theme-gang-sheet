@@ -110,6 +110,61 @@
     return null;
   }
 
+  // Fetch shipping rates from Shopify API
+  async function fetchShippingRatesFromAPI(zip, state) {
+    if (!zip) return [];
+    
+    try {
+      const params = new URLSearchParams({
+        'shipping_address[zip]': zip,
+        'shipping_address[country]': 'United States',
+        'shipping_address[province]': state || 'NJ'
+      });
+
+      // Prepare first
+      await fetch(`/cart/prepare_shipping_rates.json?${params}`, { method: 'POST' });
+      
+      // Wait a bit for Shopify to calculate
+      await new Promise(r => setTimeout(r, 800));
+      
+      // Fetch rates
+      const resp = await fetch(`/cart/shipping_rates.json?${params}`);
+      if (!resp.ok) return [];
+      
+      const data = await resp.json();
+      if (!data.shipping_rates) return [];
+      
+      const rates = data.shipping_rates.map(rate => ({
+        name: rate.name,
+        price: parseFloat(rate.price),
+        code: rate.code,
+        deliveryDays: rate.delivery_days,
+        deliveryDate: rate.delivery_date,
+        deliveryRange: rate.delivery_range
+      })).sort((a, b) => a.price - b.price);
+      
+      // Cache rates to localStorage for sync
+      try {
+        localStorage.setItem('delivery_shipping_rates', JSON.stringify({
+          rates: rates,
+          zip: zip,
+          state: state,
+          timestamp: Date.now()
+        }));
+        
+        // Dispatch event for other widgets
+        document.dispatchEvent(new CustomEvent('delivery:rates-updated', { 
+          detail: { rates, zip, state } 
+        }));
+      } catch(e) {}
+      
+      return rates;
+    } catch (e) {
+      console.error('[Panel] Rates fetch error:', e);
+      return [];
+    }
+  }
+
   function getCustomerState() {
     // Try to get state from delivery widget's cached location
     try {
@@ -1244,8 +1299,11 @@
       html += `<span class="dip-shipping-name">${bestRate.name || 'UPS Ground'}</span>`;
       html += `<span class="dip-shipping-days">${deliveryText}</span>`;
     } else {
-      html += '<span class="dip-shipping-name">Shipping</span>';
-      html += '<span class="dip-shipping-days dip-zip-trigger" data-action="open-zip-input">Enter ZIP code</span>';
+      // Show zone-based estimate when no rates but ZIP exists
+      const customerState = getCustomerState();
+      const zoneDays = getZoneDaysTextPanel(customerState);
+      html += '<span class="dip-shipping-name">Standard Shipping</span>';
+      html += `<span class="dip-shipping-days">${zoneDays} business days</span>`;
     }
     html += '</div></div>';
 
@@ -1418,12 +1476,17 @@
         const state = ZIP_TO_STATE[zip.substring(0,2)] || ZIP_TO_STATE[zip.charAt(0)] || 'NJ';
         localStorage.setItem('customerState', state);
 
+        // Fetch shipping rates from Shopify API
+        console.log('[Panel] Fetching rates for ZIP:', zip, 'State:', state);
+        const rates = await fetchShippingRatesFromAPI(zip, state);
+        console.log('[Panel] Received rates:', rates);
+
         // Dispatch event for all widgets to sync
         document.dispatchEvent(new CustomEvent('deliveryLocationChanged', {
           detail: { zip, state, source: 'panel' }
         }));
 
-        // Refresh this panel
+        // Refresh this panel with new rates
         refreshPanel();
 
         // Also trigger delivery widget refresh
